@@ -1,0 +1,48 @@
+name: Feature request
+description: Provide suggestions or ideas for projects
+title: "[Feature] My title"
+labels:
+  - "enhancement"
+assignees: Richasy
+body:
+- type: markdown
+  attributes: 
+    value: |
+      ## Written at the beginning
+      🚨 Please make sure to fill in all the necessary information below. If any essential information is missing, the developer may close the issue without further investigation. 🚨
+
+- type: textarea
+  id: problem-description
+  validations: 
+    required: true
+  attributes: 
+    label: Description
+    description: Describe the problem you want to solve or the use case for the feature
+    placeholder: |
+      Please describe the issues you have encountered or link to existing issues.
+      Starting from the user story, provide a concise description of the applicable scenarios for this feature.
+      Explain the difficulties you have faced with the current application without this feature and how this feature can create value for users.
+
+- type: textarea
+  id: solution-description
+  validations: 
+    required: true
+  attributes: 
+    label: Solution
+    description: Tell us what your expected solution to this problem is
+    placeholder: |
+      Please describe your expected solution as clearly as possible. This will help developers make updates that meet your expectations.
+
+- type: textarea
+  id: alternatives
+  attributes: 
+    label: Plan B
+    description: There is more than one solution to the problem, maybe you have a second best solution
+    placeholder: |
+      When a current solution is difficult to implement, have you considered alternative solutions? Is there a minimum acceptable implementation goal?
+
+- type: textarea
+  id: additional-info
+  attributes:
+    label: Additional
+    description: Add some notes you think are necessary, or show some sketches that show your ideas

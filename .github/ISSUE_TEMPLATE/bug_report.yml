@@ -1,0 +1,92 @@
+name: Bug Report
+description: Submit bugs to help us improve the app experience
+title: "[Bug] My title"
+assignees: Richasy
+labels:
+  - "bug"
+body:
+- type: markdown
+  attributes: 
+    value: |
+      ## Written at the beginning
+      🚨 Please make sure to fill in all the necessary information below. If any essential information is missing, the developer may close the issue without further investigation. 🚨
+      
+- type: textarea
+  id: description
+  validations:
+    required: true
+  attributes:
+     label: Bug description
+     description: Please briefly describe the problem you encountered
+- type: textarea
+  id: repro-steps
+  validations:
+    required: true
+  attributes:
+     label: Reproduce steps
+     render: plain text
+     description: Please provide steps to reproduce the problem, if not, please specify the reason
+     placeholder: |
+        Clear and concise steps for reproducing the issue can help developers quickly locate the problem, and the issue you encounter will also receive higher priority.
+
+        Example steps:
+        1. Open the application.
+        2. Navigate to '...'
+        3. Click on '....'
+        4. Scroll down to '....'
+        5. Encounter the issue.
+- type: textarea
+  id: expected-behavior
+  validations:
+    required: true
+  attributes:
+     label: Expected behavior
+     description: Briefly describe what results you would like to see
+- type: textarea
+  id: screenshots
+  attributes:
+     label: Screenshot
+     description: If possible, submitting screenshots will help us analyze the problem
+- type: checkboxes
+  id: environment-package-source
+  attributes:
+     label: Application source
+     description: Where did you download Fantasy Copilot from?
+     options:
+       - label: Microsoft Store
+       - label: Github
+       - label: Others
+- type: input
+  id: environment-package-other-source
+  attributes:
+     label: Other sources
+     description: If you downloaded Fantasy Copilot from elsewhere, please cite the source
+- type: checkboxes
+  id: environment-app-target-version
+  attributes:
+     label: System version
+     description: Choose a system version where you found the problem
+     options:
+       - label: Windows 11 21H2 (Build 22000)
+       - label: Windows 11 22H2 (Build 22621)
+       - label: Others
+- type: input
+  id: environment-app-target-other-version
+  attributes:
+     label: Other system versions
+     description: If you are running the application on a specific system version, please write it
+- type: dropdown
+  id: form-factor
+  attributes: 
+     multiple: true
+     label: Device
+     description: Select the type of device you are currently running Fantasy Copilot on
+     options:
+       - Desktop
+       - Tablet
+       - ARM64 device
+- type: textarea
+  id: additional-context
+  attributes:
+     label: Remark
+     description: Add the information you think is necessary

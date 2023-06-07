@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="FantasyCopilot.App.Controls.Knowledge.KnowledgeBaseSaveDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    CloseButtonText="{ext:Locale Name=Cancel}"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClick"
+    PrimaryButtonText="{ext:Locale Name=Save}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <StackPanel>
+        <TextBlock
+            x:Name="SourcePathBlock"
+            Margin="0,0,0,8"
+            Foreground="{ThemeResource TextFillColorDisabledBrush}"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            TextTrimming="CharacterEllipsis"
+            Visibility="Collapsed" />
+        <TextBox
+            x:Name="BaseNameBox"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=BaseName}"
+            PlaceholderText="{ext:Locale Name=BaseNamePlaceholderText}" />
+        <TextBox
+            x:Name="SearchPatternBox"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=SearchPattern}"
+            PlaceholderText="{ext:Locale Name=SearchPatternPlaceholderText}"
+            Text="*.md,*.txt"
+            Visibility="Collapsed" />
+        <TextBlock
+            Margin="0,0,0,8"
+            HorizontalAlignment="Left"
+            Text="{ext:Locale Name=DatabasePath}" />
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="DatabasePathBox"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                IsReadOnly="True"
+                PlaceholderText="{ext:Locale Name=DatabasePathPlaceholderText}" />
+            <Button
+                x:Name="SelectFileButton"
+                Grid.Column="1"
+                Padding="8,4"
+                Click="OnSelectFileButtonClickAsync">
+                <controls:FluentIcon Symbol="MoreHorizontal" />
+            </Button>
+        </Grid>
+    </StackPanel>
+</ContentDialog>

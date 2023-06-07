@@ -1,0 +1,1443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutThisApp" xml:space="preserve">
+    <value>关于此应用</value>
+  </data>
+  <data name="AddPrompt" xml:space="preserve">
+    <value>添加提示词</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>人与AI相互成就的一次探索</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>小幻助理</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="ChatOptions" xml:space="preserve">
+    <value>对话选项</value>
+  </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>清除对话记录</value>
+  </data>
+  <data name="ContinuousDialogue" xml:space="preserve">
+    <value>连续对话</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© {0} Richasy。保留所有权利。</value>
+  </data>
+  <data name="FavoritePrompts" xml:space="preserve">
+    <value>星标提示词</value>
+  </data>
+  <data name="DefaultConversationType" xml:space="preserve">
+    <value>默认对话类型</value>
+  </data>
+  <data name="DefaultConversationTypeDescription" xml:space="preserve">
+    <value>你可以选择连续或者单轮对话</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeletePrompt" xml:space="preserve">
+    <value>删除提示词</value>
+  </data>
+  <data name="DeletePromptTip" xml:space="preserve">
+    <value>是否删除当前自定义提示？</value>
+  </data>
+  <data name="DeleteSession" xml:space="preserve">
+    <value>删除会话</value>
+  </data>
+  <data name="DeleteSessionTip" xml:space="preserve">
+    <value>是否删除当前会话？</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="Generic" xml:space="preserve">
+    <value>通用</value>
+  </data>
+  <data name="LicenseTerms" xml:space="preserve">
+    <value>许可条款</value>
+  </data>
+  <data name="MaximumResponseTokens" xml:space="preserve">
+    <value>输出令牌最大值</value>
+  </data>
+  <data name="MaximumResponseTokensDescription" xml:space="preserve">
+    <value>大约4个字符为1个令牌</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>新的会话</value>
+  </data>
+  <data name="NoMessage" xml:space="preserve">
+    <value>还没有消息</value>
+  </data>
+  <data name="NoMessageDescription" xml:space="preserve">
+    <value>在下方的文本框中输入内容发送消息吧！</value>
+  </data>
+  <data name="NoPrompt" xml:space="preserve">
+    <value>还没有自定义提示词</value>
+  </data>
+  <data name="NoPromptDescription" xml:space="preserve">
+    <value>试着创建一个新的自定义提示词吧！</value>
+  </data>
+  <data name="NoSession" xml:space="preserve">
+    <value>还没有保存的会话</value>
+  </data>
+  <data name="NoSessionDescription" xml:space="preserve">
+    <value>试试将新会话保存吧！</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>隐私策略</value>
+  </data>
+  <data name="Prompt" xml:space="preserve">
+    <value>提示词</value>
+  </data>
+  <data name="PromptDescriptionPlaceholder" xml:space="preserve">
+    <value>描述一下提示词的作用</value>
+  </data>
+  <data name="PromptTitlePlaceholder" xml:space="preserve">
+    <value>提示词标题</value>
+  </data>
+  <data name="QuitApp" xml:space="preserve">
+    <value>退出应用</value>
+  </data>
+  <data name="Resent" xml:space="preserve">
+    <value>重新发送</value>
+  </data>
+  <data name="Sampling" xml:space="preserve">
+    <value>采样</value>
+  </data>
+  <data name="SamplingDescription" xml:space="preserve">
+    <value>设置采样参数，以此决定答案的随机性</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SavedSessions" xml:space="preserve">
+    <value>保存的会话</value>
+  </data>
+  <data name="SaveSession" xml:space="preserve">
+    <value>保存会话</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>发送反馈</value>
+  </data>
+  <data name="SessionDescriptionPlaceholder" xml:space="preserve">
+    <value>会话是做什么的？</value>
+  </data>
+  <data name="SessionPromptPlaceholder" xml:space="preserve">
+    <value>请输入预设的提示词内容</value>
+  </data>
+  <data name="SessionTitlePlaceholder" xml:space="preserve">
+    <value>给会话取个名字</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SingleConversation" xml:space="preserve">
+    <value>单次对话</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TemperatureDescription" xml:space="preserve">
+    <value>控制随机性，降低 temperature 会导致更少的随机完成。</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>标题</value>
+  </data>
+  <data name="TopP" xml:space="preserve">
+    <value>Top-P</value>
+  </data>
+  <data name="TopPDescription" xml:space="preserve">
+    <value>通过核采样控制多样性</value>
+  </data>
+  <data name="UserInputPlaceholderText" xml:space="preserve">
+    <value>请输入内容</value>
+  </data>
+  <data name="AccessKey" xml:space="preserve">
+    <value>访问密钥</value>
+  </data>
+  <data name="AccessKeyPlaceholderText" xml:space="preserve">
+    <value>访问服务的密钥</value>
+  </data>
+  <data name="AISetting" xml:space="preserve">
+    <value>AI 配置</value>
+  </data>
+  <data name="AISettingDescription" xml:space="preserve">
+    <value>AI 服务相关的设置项</value>
+  </data>
+  <data name="CustomPrompt" xml:space="preserve">
+    <value>自定义提示词</value>
+  </data>
+  <data name="ChatModelName" xml:space="preserve">
+    <value>对话模型名称</value>
+  </data>
+  <data name="ChatModelNamePlaceholderText" xml:space="preserve">
+    <value>部署的对话模型名称</value>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>终结点</value>
+  </data>
+  <data name="EndpointPlaceholderText" xml:space="preserve">
+    <value>访问接口的地址</value>
+  </data>
+  <data name="PromptLibrary" xml:space="preserve">
+    <value>提示词库</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>文本转语音</value>
+  </data>
+  <data name="Prompts" xml:space="preserve">
+    <value>提示词</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
+  </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>收藏</value>
+  </data>
+  <data name="OnlinePromptError" xml:space="preserve">
+    <value>在线提示获取失败</value>
+  </data>
+  <data name="OnlinePromptErrorDescription" xml:space="preserve">
+    <value>数据源可能出现了一些问题，请点击右上角刷新按钮重试</value>
+  </data>
+  <data name="PromptPinned" xml:space="preserve">
+    <value>提示已固定到收藏列表</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="RefreshFailed" xml:space="preserve">
+    <value>刷新失败</value>
+  </data>
+  <data name="AwesomePrompt" xml:space="preserve">
+    <value>Awesome ChatGPT Prompts</value>
+  </data>
+  <data name="AwesomePromptZh" xml:space="preserve">
+    <value>ChatGPT 中文调教指南</value>
+  </data>
+  <data name="CopyPrompt" xml:space="preserve">
+    <value>复制提示词</value>
+  </data>
+  <data name="FlowGptEnTrending" xml:space="preserve">
+    <value>Flow GPT 英文热榜</value>
+  </data>
+  <data name="FlowGptZhTrending" xml:space="preserve">
+    <value>Flow GPT 中文热榜</value>
+  </data>
+  <data name="PromptCopied" xml:space="preserve">
+    <value>提示词已复制</value>
+  </data>
+  <data name="ChatInvalid" xml:space="preserve">
+    <value>对话服务不可用</value>
+  </data>
+  <data name="ChatInvalidDescription" xml:space="preserve">
+    <value>请在设置中完善对话相关的服务配置</value>
+  </data>
+  <data name="AzureVoice" xml:space="preserve">
+    <value>Azure 语音服务配置</value>
+  </data>
+  <data name="AzureVoiceDescription" xml:space="preserve">
+    <value>Azure 文本转语音及语音识别的配置项</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>地区</value>
+  </data>
+  <data name="RegionPlaceholderText" xml:space="preserve">
+    <value>服务所处的地区</value>
+  </data>
+  <data name="FileSaved" xml:space="preserve">
+    <value>文件已保存</value>
+  </data>
+  <data name="GenerateSpeech" xml:space="preserve">
+    <value>生成语音</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="NeedInputText" xml:space="preserve">
+    <value>请先输入文本</value>
+  </data>
+  <data name="NeedSelectVoice" xml:space="preserve">
+    <value>需要先选择声音</value>
+  </data>
+  <data name="PlayAndPause" xml:space="preserve">
+    <value>播放/暂停</value>
+  </data>
+  <data name="SaveAudio" xml:space="preserve">
+    <value>保存音频</value>
+  </data>
+  <data name="SpeechConvertFailed" xml:space="preserve">
+    <value>语音转换失败</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>语音识别</value>
+  </data>
+  <data name="VoiceInvalid" xml:space="preserve">
+    <value>语音服务不可用</value>
+  </data>
+  <data name="VoiceInvalidDescription" xml:space="preserve">
+    <value>请在设置中完善语音相关的服务配置</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>声音</value>
+  </data>
+  <data name="VoiceService" xml:space="preserve">
+    <value>语音服务</value>
+  </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>自动检测</value>
+  </data>
+  <data name="RecognizedText" xml:space="preserve">
+    <value>识别出的文本</value>
+  </data>
+  <data name="StartRecording" xml:space="preserve">
+    <value>开始录音</value>
+  </data>
+  <data name="StopRecording" xml:space="preserve">
+    <value>停止录音</value>
+  </data>
+  <data name="VoiceRecognizeFailed" xml:space="preserve">
+    <value>语音识别失败</value>
+  </data>
+  <data name="AzureTranslate" xml:space="preserve">
+    <value>Azure 翻译服务配置</value>
+  </data>
+  <data name="AzureTranslateDescription" xml:space="preserve">
+    <value>Azure 文本翻译的配置项</value>
+  </data>
+  <data name="TranslateInvalid" xml:space="preserve">
+    <value>翻译服务不可用</value>
+  </data>
+  <data name="TranslateInvalidDescription" xml:space="preserve">
+    <value>请在设置中完善翻译相关的服务配置</value>
+  </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>输入内容</value>
+  </data>
+  <data name="SourceLanguage" xml:space="preserve">
+    <value>源语言</value>
+  </data>
+  <data name="TargetLanguage" xml:space="preserve">
+    <value>目标语言</value>
+  </data>
+  <data name="TranslatedContent" xml:space="preserve">
+    <value>翻译结果</value>
+  </data>
+  <data name="TranslatedContentPlaceholderText" xml:space="preserve">
+    <value>翻译后的文本将在这里显示</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="TranslationFailed" xml:space="preserve">
+    <value>翻译失败，请重试</value>
+  </data>
+  <data name="AudioSearch" xml:space="preserve">
+    <value>音频搜索</value>
+  </data>
+  <data name="FileSearch" xml:space="preserve">
+    <value>文件搜索</value>
+  </data>
+  <data name="ImageSearch" xml:space="preserve">
+    <value>图像搜索</value>
+  </data>
+  <data name="StorageInvalid" xml:space="preserve">
+    <value>存储搜索服务不可用</value>
+  </data>
+  <data name="StorageInvalidDescription" xml:space="preserve">
+    <value>存储搜索服务需要先在本机安装 Everything</value>
+  </data>
+  <data name="StorageSearch" xml:space="preserve">
+    <value>存储搜索</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>复制路径</value>
+  </data>
+  <data name="OpenInFileExplorer" xml:space="preserve">
+    <value>在文件管理器中打开</value>
+  </data>
+  <data name="BeginStorageSearch" xml:space="preserve">
+    <value>搜索本地文件</value>
+  </data>
+  <data name="BeginStorageSearchDescription" xml:space="preserve">
+    <value>利用 Everything 开始极速搜索本地文件吧！</value>
+  </data>
+  <data name="GenericSearch" xml:space="preserve">
+    <value>通用搜索</value>
+  </data>
+  <data name="NoFiles" xml:space="preserve">
+    <value>文件不存在</value>
+  </data>
+  <data name="NoFilesDescription" xml:space="preserve">
+    <value>没有找到符合条件的文件</value>
+  </data>
+  <data name="OpenFailed" xml:space="preserve">
+    <value>打开失败，可能是权限不足或目标文件/文件夹不存在</value>
+  </data>
+  <data name="PathCopied" xml:space="preserve">
+    <value>路径已复制</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>音频</value>
+  </data>
+  <data name="AudioPlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的音频</value>
+  </data>
+  <data name="Directory" xml:space="preserve">
+    <value>目录</value>
+  </data>
+  <data name="DirectoryPlaceholderText" xml:space="preserve">
+    <value>检索指定目录下的文件或文件夹</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>文档</value>
+  </data>
+  <data name="DocumentPlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的文档</value>
+  </data>
+  <data name="DuplicateFiles" xml:space="preserve">
+    <value>重名</value>
+  </data>
+  <data name="DuplicateFilesPlaceholderText" xml:space="preserve">
+    <value>搜索同名文件</value>
+  </data>
+  <data name="ExecuteFile" xml:space="preserve">
+    <value>程序</value>
+  </data>
+  <data name="ExecuteFilePlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的可执行文件</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="ImagePlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的图片</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>使用其它软件打开</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>视频</value>
+  </data>
+  <data name="VideoPlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的视频</value>
+  </data>
+  <data name="Zip" xml:space="preserve">
+    <value>压缩包</value>
+  </data>
+  <data name="ZipPlaceholderText" xml:space="preserve">
+    <value>搜索指定名称的压缩包</value>
+  </data>
+  <data name="Album" xml:space="preserve">
+    <value>专辑</value>
+  </data>
+  <data name="AlbumPlaceholderText" xml:space="preserve">
+    <value>搜索指定专辑的音乐</value>
+  </data>
+  <data name="Artist" xml:space="preserve">
+    <value>艺术家</value>
+  </data>
+  <data name="ArtistPlaceholderText" xml:space="preserve">
+    <value>搜索指定艺术家的音乐</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>流派</value>
+  </data>
+  <data name="GenrePlaceholderText" xml:space="preserve">
+    <value>搜索指定流派的音乐</value>
+  </data>
+  <data name="MusicCommentPlaceholderText" xml:space="preserve">
+    <value>搜索包含指定备注的音乐</value>
+  </data>
+  <data name="MusicTitlePlaceholderText" xml:space="preserve">
+    <value>搜索指定标题的音乐</value>
+  </data>
+  <data name="MusicTrack" xml:space="preserve">
+    <value>编号</value>
+  </data>
+  <data name="MusicTrackPlaceholderText" xml:space="preserve">
+    <value>搜索指定曲目编号的音乐</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="Bit1" xml:space="preserve">
+    <value>1 比特</value>
+  </data>
+  <data name="Bit16" xml:space="preserve">
+    <value>16 比特</value>
+  </data>
+  <data name="Bit24" xml:space="preserve">
+    <value>24 比特</value>
+  </data>
+  <data name="Bit32" xml:space="preserve">
+    <value>32 比特</value>
+  </data>
+  <data name="Bit8" xml:space="preserve">
+    <value>8 比特</value>
+  </data>
+  <data name="ColorDepth" xml:space="preserve">
+    <value>色深</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>高度</value>
+  </data>
+  <data name="Landscape" xml:space="preserve">
+    <value>横向</value>
+  </data>
+  <data name="Orientation" xml:space="preserve">
+    <value>方向</value>
+  </data>
+  <data name="Portrait" xml:space="preserve">
+    <value>纵向</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>宽度</value>
+  </data>
+  <data name="ModifiedTime" xml:space="preserve">
+    <value>修改时间</value>
+  </data>
+  <data name="NameAtoZ" xml:space="preserve">
+    <value>名称（A 到 Z）</value>
+  </data>
+  <data name="NameZtoA" xml:space="preserve">
+    <value>名称（Z 到 A）</value>
+  </data>
+  <data name="SizeLargeToSmall" xml:space="preserve">
+    <value>大小（从大到小）</value>
+  </data>
+  <data name="SizeSmallToLarge" xml:space="preserve">
+    <value>大小（从小到大）</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>排序依据</value>
+  </data>
+  <data name="TotalFileCount" xml:space="preserve">
+    <value>总数</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="ConfigImported" xml:space="preserve">
+    <value>配置文件已导入</value>
+  </data>
+  <data name="ExportConfig" xml:space="preserve">
+    <value>导出配置</value>
+  </data>
+  <data name="ExportConfigFailed" xml:space="preserve">
+    <value>导出配置文件失败</value>
+  </data>
+  <data name="ImportConfig" xml:space="preserve">
+    <value>导入配置</value>
+  </data>
+  <data name="ImportConfigFailed" xml:space="preserve">
+    <value>导入配置文件失败</value>
+  </data>
+  <data name="InvalidConfigFile" xml:space="preserve">
+    <value>无效的配置文件</value>
+  </data>
+  <data name="ConfigExported" xml:space="preserve">
+    <value>配置文件已导出</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>服务</value>
+  </data>
+  <data name="PromptsAndSessions" xml:space="preserve">
+    <value>提示与会话</value>
+  </data>
+  <data name="RemoveMessage" xml:space="preserve">
+    <value>移除消息</value>
+  </data>
+  <data name="SemanticSkill" xml:space="preserve">
+    <value>语义技能</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>工作流</value>
+  </data>
+  <data name="Workspace" xml:space="preserve">
+    <value>工作间</value>
+  </data>
+  <data name="AddSemanticSkill" xml:space="preserve">
+    <value>添加语义技能</value>
+  </data>
+  <data name="DeleteSemanticSkill" xml:space="preserve">
+    <value>删除语义技能</value>
+  </data>
+  <data name="DeleteSemanticSkillTip" xml:space="preserve">
+    <value>是否确认删除该语义技能？删除后，如果有工作流引用该技能，则该工作流将无法正常工作</value>
+  </data>
+  <data name="FrequencyPenalty" xml:space="preserve">
+    <value>文本重复</value>
+  </data>
+  <data name="FrequencyPenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续产生的文本越不容易出现重复字符</value>
+  </data>
+  <data name="HowToWriteSemanticSkill" xml:space="preserve">
+    <value>如何编写语义技能？</value>
+  </data>
+  <data name="NeedFillRequiredFields" xml:space="preserve">
+    <value>请完整填写内容</value>
+  </data>
+  <data name="NoSemanticSkill" xml:space="preserve">
+    <value>没有语义技能</value>
+  </data>
+  <data name="NoSemanticSkillDescription" xml:space="preserve">
+    <value>试着添加一个新的语义技能吧！</value>
+  </data>
+  <data name="PresencePenalty" xml:space="preserve">
+    <value>话题重复</value>
+  </data>
+  <data name="PresencePenaltyDescription" xml:space="preserve">
+    <value>值越高，则后续文本越容易讨论新的话题</value>
+  </data>
+  <data name="Repeatability" xml:space="preserve">
+    <value>重复度</value>
+  </data>
+  <data name="RepeatabilityDescription" xml:space="preserve">
+    <value>控制模型对文字或话题的重复度</value>
+  </data>
+  <data name="SemanticSkillEditor" xml:space="preserve">
+    <value>语义技能编辑</value>
+  </data>
+  <data name="SkillDescription" xml:space="preserve">
+    <value>技能描述</value>
+  </data>
+  <data name="SkillDescriptionPlaceholderText" xml:space="preserve">
+    <value>描述该技能的用途</value>
+  </data>
+  <data name="SkillName" xml:space="preserve">
+    <value>技能名</value>
+  </data>
+  <data name="SkillNamePlaceholderText" xml:space="preserve">
+    <value>给技能取个名字吧</value>
+  </data>
+  <data name="AddWorkflow" xml:space="preserve">
+    <value>添加工作流</value>
+  </data>
+  <data name="DeleteWorkflow" xml:space="preserve">
+    <value>删除工作流</value>
+  </data>
+  <data name="DeleteWorkflowTip" xml:space="preserve">
+    <value>是否删除该工作流？</value>
+  </data>
+  <data name="NoWorkflow" xml:space="preserve">
+    <value>没有工作流</value>
+  </data>
+  <data name="NoWorkflowDescription" xml:space="preserve">
+    <value>尝试添加一个新的工作流吧！</value>
+  </data>
+  <data name="FileInput" xml:space="preserve">
+    <value>文件输入</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>输入</value>
+  </data>
+  <data name="NeedAddStep" xml:space="preserve">
+    <value>需要添加至少一个步骤</value>
+  </data>
+  <data name="SourceText" xml:space="preserve">
+    <value>源文本</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>文本</value>
+  </data>
+  <data name="TextInput" xml:space="preserve">
+    <value>文本输入</value>
+  </data>
+  <data name="TextInputDescription" xml:space="preserve">
+    <value>在工作流开始时输入文本内容</value>
+  </data>
+  <data name="VoiceInput" xml:space="preserve">
+    <value>语音输入</value>
+  </data>
+  <data name="WorkflowEditor" xml:space="preserve">
+    <value>工作流编辑</value>
+  </data>
+  <data name="WorkflowFileOpenFailed" xml:space="preserve">
+    <value>工作流配置文件打开失败</value>
+  </data>
+  <data name="AddStep" xml:space="preserve">
+    <value>添加步骤</value>
+  </data>
+  <data name="WorkflowGoal" xml:space="preserve">
+    <value>目标</value>
+  </data>
+  <data name="WorkflowGoalPlaceholderText" xml:space="preserve">
+    <value>清晰的目标描述有助于“给我灵感”按钮自动生成工作流步骤</value>
+  </data>
+  <data name="WorkflowName" xml:space="preserve">
+    <value>工作流名称</value>
+  </data>
+  <data name="WorkflowNamePlaceholderText" xml:space="preserve">
+    <value>给工作流命名</value>
+  </data>
+  <data name="AddInput" xml:space="preserve">
+    <value>添加输入</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="Steps" xml:space="preserve">
+    <value>步骤</value>
+  </data>
+  <data name="ShowResult" xml:space="preserve">
+    <value>显示结果</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="MoveDownward" xml:space="preserve">
+    <value>向下移动</value>
+  </data>
+  <data name="MoveUpward" xml:space="preserve">
+    <value>向上移动</value>
+  </data>
+  <data name="NoValidResult" xml:space="preserve">
+    <value>未找到合适的结果</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>打开链接</value>
+  </data>
+  <data name="SaveAsHtml" xml:space="preserve">
+    <value>另存为 HTML</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>网页</value>
+  </data>
+  <data name="MarkupText" xml:space="preserve">
+    <value>标记文本</value>
+  </data>
+  <data name="NoOutputConfig" xml:space="preserve">
+    <value>没有输出配置</value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>输出</value>
+  </data>
+  <data name="PlainText" xml:space="preserve">
+    <value>纯文本</value>
+  </data>
+  <data name="AddOutput" xml:space="preserve">
+    <value>添加输出</value>
+  </data>
+  <data name="OutputText" xml:space="preserve">
+    <value>文本输出</value>
+  </data>
+  <data name="OutputTextDescription" xml:space="preserve">
+    <value>将最后的结果以文本的形式展示</value>
+  </data>
+  <data name="OutputVoice" xml:space="preserve">
+    <value>音频输出</value>
+  </data>
+  <data name="OutputVoiceDescription" xml:space="preserve">
+    <value>根据最后生成的文件路径播放音频</value>
+  </data>
+  <data name="VoiceInputDescription" xml:space="preserve">
+    <value>通过语音识别转换成文本输入</value>
+  </data>
+  <data name="PlayWithPlayer" xml:space="preserve">
+    <value>使用播放器播放</value>
+  </data>
+  <data name="InvalidFilePath" xml:space="preserve">
+    <value>无效的文件路径</value>
+  </data>
+  <data name="FileInputDescription" xml:space="preserve">
+    <value>选择指定的文件，将路径作为文本输入</value>
+  </data>
+  <data name="PickFolder" xml:space="preserve">
+    <value>选择文件夹</value>
+  </data>
+  <data name="PickFile" xml:space="preserve">
+    <value>选择文件</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>文件</value>
+  </data>
+  <data name="FileNameWithExtension" xml:space="preserve">
+    <value>文件名（含扩展名）</value>
+  </data>
+  <data name="OpenFile" xml:space="preserve">
+    <value>打开文件</value>
+  </data>
+  <data name="InspireMe" xml:space="preserve">
+    <value>来点灵感</value>
+  </data>
+  <data name="NoAutoPlan" xml:space="preserve">
+    <value>暂时无法自动生成计划</value>
+  </data>
+  <data name="TextOverwrite" xml:space="preserve">
+    <value>文本覆写</value>
+  </data>
+  <data name="TextOverwriteDescription" xml:space="preserve">
+    <value>覆写前一个步骤的输入</value>
+  </data>
+  <data name="ImageService" xml:space="preserve">
+    <value>图片服务</value>
+  </data>
+  <data name="ImageServiceInvalid" xml:space="preserve">
+    <value>图片服务不可用</value>
+  </data>
+  <data name="ImageServiceInvalidDescription" xml:space="preserve">
+    <value>请提供有效的图片生成服务地址</value>
+  </data>
+  <data name="ImageToImage" xml:space="preserve">
+    <value>图生图</value>
+  </data>
+  <data name="TextToImage" xml:space="preserve">
+    <value>文生图</value>
+  </data>
+  <data name="DeployUrl" xml:space="preserve">
+    <value>部署网址</value>
+  </data>
+  <data name="DeployUrlPlaceholderText" xml:space="preserve">
+    <value>服务部署后的访问链接</value>
+  </data>
+  <data name="InvalidUrl" xml:space="preserve">
+    <value>无效的链接</value>
+  </data>
+  <data name="StableDiffusion" xml:space="preserve">
+    <value>Stable Diffusion</value>
+  </data>
+  <data name="StableDiffusionDescription" xml:space="preserve">
+    <value>Stable Diffusion 的相关配置项 </value>
+  </data>
+  <data name="DataSourceComeFrom" xml:space="preserve">
+    <value>数据来自</value>
+  </data>
+  <data name="ImageGallery" xml:space="preserve">
+    <value>图片库</value>
+  </data>
+  <data name="AllTime" xml:space="preserve">
+    <value>全部时间</value>
+  </data>
+  <data name="CFGScale" xml:space="preserve">
+    <value>CFG Scale</value>
+  </data>
+  <data name="ClipSkip" xml:space="preserve">
+    <value>CLIP 终止层数</value>
+  </data>
+  <data name="FileSaveFailed" xml:space="preserve">
+    <value>文件保存失败</value>
+  </data>
+  <data name="GalleryEmpty" xml:space="preserve">
+    <value>图库为空</value>
+  </data>
+  <data name="GalleryEmptyDescription" xml:space="preserve">
+    <value>暂时无法获取图片列表，请稍后再试</value>
+  </data>
+  <data name="HasImageMetadata" xml:space="preserve">
+    <value>包含图片元数据</value>
+  </data>
+  <data name="MostComments" xml:space="preserve">
+    <value>最多评论</value>
+  </data>
+  <data name="MostReactions" xml:space="preserve">
+    <value>最多互动</value>
+  </data>
+  <data name="NegativePrompt" xml:space="preserve">
+    <value>负面提示词</value>
+  </data>
+  <data name="Newest" xml:space="preserve">
+    <value>最新</value>
+  </data>
+  <data name="OpenInText2ImageModule" xml:space="preserve">
+    <value>在文生图中打开</value>
+  </data>
+  <data name="RequestImageFailed" xml:space="preserve">
+    <value>尝试请求图片时失败</value>
+  </data>
+  <data name="Sampler" xml:space="preserve">
+    <value>采样算法</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>随机种子</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>本月</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>本周</value>
+  </data>
+  <data name="ThisYear" xml:space="preserve">
+    <value>今年</value>
+  </data>
+  <data name="TimePeriod" xml:space="preserve">
+    <value>时间范围</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>今日</value>
+  </data>
+  <data name="ModelName" xml:space="preserve">
+    <value>模型名称</value>
+  </data>
+  <data name="SaveImage" xml:space="preserve">
+    <value>保存图片</value>
+  </data>
+  <data name="RequestVoiceMetadataFailed" xml:space="preserve">
+    <value>请求语音元数据时发生了错误</value>
+  </data>
+  <data name="EnableImage" xml:space="preserve">
+    <value>启用图片服务</value>
+  </data>
+  <data name="EnableImageDescription" xml:space="preserve">
+    <value>关闭后将隐藏文生图等功能</value>
+  </data>
+  <data name="EnableChat" xml:space="preserve">
+    <value>启用聊天</value>
+  </data>
+  <data name="EnableChatDescription" xml:space="preserve">
+    <value>关闭后将隐藏聊天相关的功能</value>
+  </data>
+  <data name="EnableStorage" xml:space="preserve">
+    <value>启用文件服务</value>
+  </data>
+  <data name="EnableStorageDescription" xml:space="preserve">
+    <value>关闭后将隐藏文件搜索功能</value>
+  </data>
+  <data name="EnableTranslate" xml:space="preserve">
+    <value>启用翻译服务</value>
+  </data>
+  <data name="EnableTranslateDescription" xml:space="preserve">
+    <value>关闭后将隐藏文本翻译等功能</value>
+  </data>
+  <data name="EnableVoice" xml:space="preserve">
+    <value>启用音频服务</value>
+  </data>
+  <data name="EnableVoiceDescription" xml:space="preserve">
+    <value>关闭后将隐藏语音识别等功能</value>
+  </data>
+  <data name="FeatureEnabled" xml:space="preserve">
+    <value>启用功能</value>
+  </data>
+  <data name="FeatureEnabledDescription" xml:space="preserve">
+    <value>你可以选择启用或禁用部分功能模块</value>
+  </data>
+  <data name="NeedRestart" xml:space="preserve">
+    <value>需要重启应用</value>
+  </data>
+  <data name="NeedRestartDescription" xml:space="preserve">
+    <value>你更改的一个或多个设置需要重启后才能生效</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>重启</value>
+  </data>
+  <data name="ContextConversation" xml:space="preserve">
+    <value>上下文对话</value>
+  </data>
+  <data name="EmbeddingModelName" xml:space="preserve">
+    <value>嵌入模型名称</value>
+  </data>
+  <data name="EmbeddingModelNamePlaceholderText" xml:space="preserve">
+    <value>部署的嵌入模型名称</value>
+  </data>
+  <data name="TextCompletionModelName" xml:space="preserve">
+    <value>文本完成模型名称</value>
+  </data>
+  <data name="TextCompletionModelNamePlaceholderText" xml:space="preserve">
+    <value>部署的文本完成模型名称</value>
+  </data>
+  <data name="Reselect" xml:space="preserve">
+    <value>重新选择</value>
+  </data>
+  <data name="EmptyTextFile" xml:space="preserve">
+    <value>文本文件为空</value>
+  </data>
+  <data name="MustBeValidTextFile" xml:space="preserve">
+    <value>必须是有效的文本文件</value>
+  </data>
+  <data name="ConnectingImageService" xml:space="preserve">
+    <value>正在连接图片服务</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>已复制</value>
+  </data>
+  <data name="CopyExtraModelTip" xml:space="preserve">
+    <value>点击条目即可复制模型名称</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>嵌入式模型</value>
+  </data>
+  <data name="GenerateImage" xml:space="preserve">
+    <value>生成图片</value>
+  </data>
+  <data name="ImageGenerateFailed" xml:space="preserve">
+    <value>图片生成失败</value>
+  </data>
+  <data name="ImageModelDescription" xml:space="preserve">
+    <value>设置生成图片的模型</value>
+  </data>
+  <data name="ImageNegativePromptPlaceholderText" xml:space="preserve">
+    <value>请列举图片中不需要的内容</value>
+  </data>
+  <data name="ImagePromptPlaceholderText" xml:space="preserve">
+    <value>请输入图片描述</value>
+  </data>
+  <data name="ImageServiceDisconnected" xml:space="preserve">
+    <value>图片服务已断开</value>
+  </data>
+  <data name="ImageSize" xml:space="preserve">
+    <value>图片大小</value>
+  </data>
+  <data name="ImageSizeDescription" xml:space="preserve">
+    <value>设置生成图片的宽度和高度</value>
+  </data>
+  <data name="Lora" xml:space="preserve">
+    <value>Lora 模型</value>
+  </data>
+  <data name="Metadata" xml:space="preserve">
+    <value>元数据</value>
+  </data>
+  <data name="ModelSearch" xml:space="preserve">
+    <value>搜索模型</value>
+  </data>
+  <data name="OpenInBrowser" xml:space="preserve">
+    <value>在浏览器中打开</value>
+  </data>
+  <data name="OtherImageOptionsDescription" xml:space="preserve">
+    <value>其他用于生成图片的数值选项</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>其他选项</value>
+  </data>
+  <data name="Reconnect" xml:space="preserve">
+    <value>重新连接</value>
+  </data>
+  <data name="SamplerDescription" xml:space="preserve">
+    <value>选择合适的采样器</value>
+  </data>
+  <data name="ShowExtraModels" xml:space="preserve">
+    <value>显示附加模型</value>
+  </data>
+  <data name="EnableKnowledge" xml:space="preserve">
+    <value>启用知识库</value>
+  </data>
+  <data name="EnableKnowledgeDescription" xml:space="preserve">
+    <value>关闭后将隐藏知识库功能</value>
+  </data>
+  <data name="KnowledgeBase" xml:space="preserve">
+    <value>知识库</value>
+  </data>
+  <data name="CreateFromFile" xml:space="preserve">
+    <value>从文件创建</value>
+  </data>
+  <data name="CreateFromFolder" xml:space="preserve">
+    <value>从文件夹创建</value>
+  </data>
+  <data name="ImportKnowledgeBase" xml:space="preserve">
+    <value>导入知识库</value>
+  </data>
+  <data name="AlreadyHaveSameKnowledgeBase" xml:space="preserve">
+    <value>已经存在一个相同的知识库</value>
+  </data>
+  <data name="BaseName" xml:space="preserve">
+    <value>库名</value>
+  </data>
+  <data name="BaseNamePlaceholderText" xml:space="preserve">
+    <value>知识库名称</value>
+  </data>
+  <data name="ConnectDatabaseFailed" xml:space="preserve">
+    <value>连接数据库失败</value>
+  </data>
+  <data name="ConnectingDatabase" xml:space="preserve">
+    <value>正在连接数据库</value>
+  </data>
+  <data name="CreatingKnowledgeBase" xml:space="preserve">
+    <value>正在将数据导入知识库</value>
+  </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>数据库路径</value>
+  </data>
+  <data name="DatabasePathPlaceholderText" xml:space="preserve">
+    <value>选择数据库位置</value>
+  </data>
+  <data name="DeleteKnowledgeBase" xml:space="preserve">
+    <value>删除知识库</value>
+  </data>
+  <data name="DeleteKnowledgeBaseDescription" xml:space="preserve">
+    <value>是否删除该知识库？（这不会影响到数据库文件，仅是从列表中移除）</value>
+  </data>
+  <data name="ImportFileSucceed" xml:space="preserve">
+    <value>导入文件成功</value>
+  </data>
+  <data name="ImportFolderNotFullySucceed" xml:space="preserve">
+    <value>导入文件夹未完全成功，失败数：{0}/{1}</value>
+  </data>
+  <data name="ImportFolderSucceed" xml:space="preserve">
+    <value>导入文件夹成功</value>
+  </data>
+  <data name="KnowledgeInvalid" xml:space="preserve">
+    <value>知识库不可用</value>
+  </data>
+  <data name="KnowledgeInvalidDescription" xml:space="preserve">
+    <value>请在设置中完善嵌入模型的配置</value>
+  </data>
+  <data name="ModifyKnowledgeBase" xml:space="preserve">
+    <value>修改知识库</value>
+  </data>
+  <data name="NoKnowledgeBase" xml:space="preserve">
+    <value>没有可用的知识库</value>
+  </data>
+  <data name="NoKnowledgeBaseDescription" xml:space="preserve">
+    <value>你可以创建或者导入一个知识库</value>
+  </data>
+  <data name="SearchPattern" xml:space="preserve">
+    <value>文件过滤</value>
+  </data>
+  <data name="SearchPatternPlaceholderText" xml:space="preserve">
+    <value>如 *.txt, *.md，仅支持纯文本</value>
+  </data>
+  <data name="ImportFileFailed" xml:space="preserve">
+    <value>导入文件失败</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="ImportFile" xml:space="preserve">
+    <value>导入文件</value>
+  </data>
+  <data name="ImportFolder" xml:space="preserve">
+    <value>导入文件夹</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="ContextResponseTokenLength" xml:space="preserve">
+    <value>问答响应令牌数</value>
+  </data>
+  <data name="ContextResponseTokenLengthDescription" xml:space="preserve">
+    <value>知识库问答时模型的最大返回令牌数</value>
+  </data>
+  <data name="MaxParagraphTokenLength" xml:space="preserve">
+    <value>段落分割阈值</value>
+  </data>
+  <data name="MaxParagraphTokenLengthDescription" xml:space="preserve">
+    <value>在文本分割时，细分裁切段落的内容长度</value>
+  </data>
+  <data name="MaxSplitContentLength" xml:space="preserve">
+    <value>文本分割阈值</value>
+  </data>
+  <data name="MaxSplitContentLengthDescription" xml:space="preserve">
+    <value>导入知识库的字符数达到此阈值则会被拆分，这取决于你使用的嵌入模型能支持的令牌数量</value>
+  </data>
+  <data name="Accessibility" xml:space="preserve">
+    <value>可访问性</value>
+  </data>
+  <data name="CommandCount" xml:space="preserve">
+    <value>命令个数</value>
+  </data>
+  <data name="CommandIdMustBeGuid" xml:space="preserve">
+    <value>命令标识符必须为 GUID</value>
+  </data>
+  <data name="DeletePlugin" xml:space="preserve">
+    <value>删除插件</value>
+  </data>
+  <data name="DeletePluginDescription" xml:space="preserve">
+    <value>删除插件将会把插件的本地缓存一并清除，与插件关联的工作流需要重新配置，是否确认？</value>
+  </data>
+  <data name="ImportPlugin" xml:space="preserve">
+    <value>导入插件</value>
+  </data>
+  <data name="MustHaveCommand" xml:space="preserve">
+    <value>插件的命令不能为空</value>
+  </data>
+  <data name="MustHaveId" xml:space="preserve">
+    <value>必须具备标识符（Id）</value>
+  </data>
+  <data name="MustHaveNameOrDescription" xml:space="preserve">
+    <value>必须指定名称（Name）或描述（Description）</value>
+  </data>
+  <data name="Native" xml:space="preserve">
+    <value>本机</value>
+  </data>
+  <data name="NoPlugin" xml:space="preserve">
+    <value>没有插件</value>
+  </data>
+  <data name="NoPluginDescription" xml:space="preserve">
+    <value>可以导入后缀为 .fcpkg 的插件</value>
+  </data>
+  <data name="NoRepositoryWarning" xml:space="preserve">
+    <value>该插件没有对应的存储库，可能具备潜在的风险，请谨慎使用</value>
+  </data>
+  <data name="OpenAuthorSite" xml:space="preserve">
+    <value>打开作者网站</value>
+  </data>
+  <data name="OpenPluginFolder" xml:space="preserve">
+    <value>打开插件目录</value>
+  </data>
+  <data name="OpenRepository" xml:space="preserve">
+    <value>打开存储库</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>其它</value>
+  </data>
+  <data name="Plugins" xml:space="preserve">
+    <value>插件</value>
+  </data>
+  <data name="Tool" xml:space="preserve">
+    <value>工具</value>
+  </data>
+  <data name="InvalidStepRemoved" xml:space="preserve">
+    <value>已暂时移除无效的步骤，请在编辑器中重新配置</value>
+  </data>
+  <data name="NoStepError" xml:space="preserve">
+    <value>没有可以执行的步骤</value>
+  </data>
+  <data name="ChangeFolder" xml:space="preserve">
+    <value>更改文件夹</value>
+  </data>
+  <data name="OpenConsoleWhenPluginRunning" xml:space="preserve">
+    <value>插件命令运行时显示控制台</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>打开文件夹</value>
+  </data>
+  <data name="PluginFolder" xml:space="preserve">
+    <value>插件目录</value>
+  </data>
+  <data name="WorkflowOption" xml:space="preserve">
+    <value>工作流配置</value>
+  </data>
+  <data name="WorkflowOptionDescription" xml:space="preserve">
+    <value>工作流相关的配置项</value>
+  </data>
+  <data name="CanNotSelectSameFolder" xml:space="preserve">
+    <value>不能选择同一文件夹</value>
+  </data>
+  <data name="MoveCompleted" xml:space="preserve">
+    <value>已经移动完成</value>
+  </data>
+  <data name="EmbeddingModelEndpoint" xml:space="preserve">
+    <value>嵌入模型终结点</value>
+  </data>
+  <data name="OptionalOrganization" xml:space="preserve">
+    <value>组织（选填）</value>
+  </data>
+  <data name="OrganizationPlaceholderText" xml:space="preserve">
+    <value>填写组织名称</value>
+  </data>
+  <data name="TextCompletionModelEndpoint" xml:space="preserve">
+    <value>文本完成模型终结点</value>
+  </data>
+  <data name="AddImageSkill" xml:space="preserve">
+    <value>添加绘图技能</value>
+  </data>
+  <data name="DeleteImageSkill" xml:space="preserve">
+    <value>删除绘图技能</value>
+  </data>
+  <data name="DeleteImageSkillTip" xml:space="preserve">
+    <value>删除绘图技能后，引用该技能的工作流需要重新配置，是否确认？</value>
+  </data>
+  <data name="ImageSkill" xml:space="preserve">
+    <value>绘图技能</value>
+  </data>
+  <data name="ImageSkillEditor" xml:space="preserve">
+    <value>绘图技能编辑</value>
+  </data>
+  <data name="NoImageSkill" xml:space="preserve">
+    <value>没有绘图技能</value>
+  </data>
+  <data name="NoImageSkillDescription" xml:space="preserve">
+    <value>请创建一个新的绘图技能</value>
+  </data>
+  <data name="OpenImage" xml:space="preserve">
+    <value>打开图片</value>
+  </data>
+  <data name="OutputImage" xml:space="preserve">
+    <value>图片输出</value>
+  </data>
+  <data name="OutputImageDescription" xml:space="preserve">
+    <value>根据传入的链接/路径显示图片</value>
+  </data>
+  <data name="ImportFileToKnowledgeBase" xml:space="preserve">
+    <value>将文件导入知识库</value>
+  </data>
+  <data name="ImportFolderToKnowledgeBase" xml:space="preserve">
+    <value>将文件夹导入知识库</value>
+  </data>
+  <data name="KnowledgeBaseQA" xml:space="preserve">
+    <value>知识库问答</value>
+  </data>
+  <data name="ClickInput" xml:space="preserve">
+    <value>点击</value>
+  </data>
+  <data name="ClickInputDescription" xml:space="preserve">
+    <value>单击触发，不传入文本内容</value>
+  </data>
+  <data name="VariableName" xml:space="preserve">
+    <value>变量名</value>
+  </data>
+  <data name="VariableRedirect" xml:space="preserve">
+    <value>变量重定向</value>
+  </data>
+  <data name="TextNotification" xml:space="preserve">
+    <value>文本通知</value>
+  </data>
+  <data name="TextNotificationDescription" xml:space="preserve">
+    <value>发送一条纯文本系统通知</value>
+  </data>
+  <data name="VerifyIdentity" xml:space="preserve">
+    <value>需要验证你的身份</value>
+  </data>
+  <data name="CancelBecauseNotVerified" xml:space="preserve">
+    <value>已取消操作，因为无法验证你的身份</value>
+  </data>
+  <data name="AppLog" xml:space="preserve">
+    <value>应用日志</value>
+  </data>
+  <data name="AppLogDescription" xml:space="preserve">
+    <value>应用日志相关的配置项</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>打开日志文件夹</value>
+  </data>
+  <data name="CreateVariable" xml:space="preserve">
+    <value>创建变量</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="KnowledgeBaseSettings" xml:space="preserve">
+    <value>知识库设置</value>
+  </data>
+  <data name="KnowledgeBaseSettingsDescription" xml:space="preserve">
+    <value>知识库相关的配置项</value>
+  </data>
+  <data name="RepositoryLink" xml:space="preserve">
+    <value>Github 仓库</value>
+  </data>
+</root>

@@ -1,0 +1,28 @@
+<!--  Copyright (c) Fantasy Copilot and Contributors.  -->
+<!--  Licensed under the MIT License.  -->
+
+<Application
+    x:Class="FantasyCopilot.App.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:FantasyCopilot.App.Resources.Converters"
+    xmlns:local="using:FantasyCopilot.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+                <ResourceDictionary Source="ms-appx:///Styles/Style.Overwrite.xaml" />
+                <ResourceDictionary Source="ms-appx:///Styles/Style.TrayResources.xaml" />
+                <!--  Other merged dictionaries here  -->
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityReverseConverter" IsReverse="True" />
+            <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
+            <converters:ObjectToBoolConverter x:Key="ObjectToBoolReverseConverter" IsReverse="True" />
+            <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter" />
+            <converters:ObjectToVisibilityConverter x:Key="ObjectToVisibilityReverseConverter" IsReverse="True" />
+            <converters:OnlinePromptSourceConverter x:Key="OnlinePromptSourceConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

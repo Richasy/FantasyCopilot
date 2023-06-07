@@ -1,0 +1,112 @@
+{
+    "schema_version": 1,
+    "package_name": "{{$packageName}}",
+    "package_desc": "{{$packageDescription}}",
+    "package_id": "com.richasy.fantasycopilot.core",
+    "version": "0.0.1",
+    "author": "Richasy",
+    "author_site": "https://github.com/Richasy",
+    "repository": "https://github.com/Richasy/FantasyCopilot",
+    "logo_url": "https://img1.imgtp.com/2023/06/03/zTmYqHs7.png",
+    "commands": [
+        {
+            "command_name": "{{$fileRead}}",
+            "command_desc": "{{$fileReadDesc}}",
+            "command_id": "91A18E33-B19D-B071-0162-7467C574E831",
+            "category": "file",
+            "only_final_output": false,
+            "execute_name": "FileRead.exe",
+            "output": {
+                "type": "plain"
+            }
+        },
+        {
+            "command_name": "{{$getWebContent}}",
+            "command_desc": "{{$getWebContentDesc}}",
+            "command_id": "69A32121-587B-8951-84E5-8EFEF97FB496",
+            "category": "web",
+            "only_final_output": false,
+            "parameters": [
+                {
+                    "id": "CORE_GWC_TYPE",
+                    "name": "Type",
+                    "description": "Select whether the output method is readable text or full-html"
+                },
+                {
+                    "id": "CORE_GWC_ONLYTEXT",
+                    "name": "OnlyText"
+                }
+            ],
+            "config_set": [
+                {
+                    "type": "option",
+                    "variable_name": "CORE_GWC_TYPE",
+                    "default_value": "readable",
+                    "title": "{{$outputType}}",
+                    "options": [
+                        {
+                            "id": "readable",
+                            "display_name": "{{$readableContent}}"
+                        },
+                        {
+                            "id": "html",
+                            "display_name": "{{$htmlContent}}"
+                        }
+                    ]
+                },
+                {
+                    "type": "option",
+                    "variable_name": "CORE_GWC_ONLYTEXT",
+                    "default_value": "true",
+                    "title": "{{$onlyText}}",
+                    "options": [
+                        {
+                            "id": "true",
+                            "display_name": "{{$true}}"
+                        },
+                        {
+                            "id": "false",
+                            "display_name": "{{$false}}"
+                        }
+                    ]
+                }
+            ],
+            "execute_name": "GetWebContent.exe",
+            "output": {
+                "type": "plain"
+            }
+        }
+    ],
+    "resources": {
+        "en": {
+            "packageName": "Core Library",
+            "packageDescription": "Provides a set of basic native actions for Fantasy Copilot.",
+            "fileRead": "Read file",
+            "fileReadDesc": "Read the contents of the text file and output it.",
+            "inputDesc": "The path to the text file",
+            "getWebContent": "Get web content",
+            "getWebContentDesc": "Get the content of the web page from a link.",
+            "outputType": "Output type",
+            "readableContent": "Article content",
+            "htmlContent": "Full HTML",
+            "onlyText": "Only plain text is output",
+            "true": "Yes",
+            "false": "No"
+        },
+        "zh": {
+            "packageName": "核心库",
+            "packageDescription": "为小幻助理提供一组基础的本机操作",
+            "fileRead": "读取文件",
+            "fileReadDesc": "读取文本文件，并输出文本内容.",
+            "inputDesc": "文本文件的路径",
+            "getWebContent": "获取网页内容",
+            "getWebContentDesc": "解析网址，获取网页内容，并按预设的选项输出.",
+            "outputType": "输出类型",
+            "readableContent": "文章内容",
+            "htmlContent": "全部 HTML",
+            "onlyText": "仅输出纯文本",
+            "true": "是",
+            "false": "否"
+        }
+    }
+}

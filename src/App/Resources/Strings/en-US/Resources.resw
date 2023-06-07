@@ -1,0 +1,1443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutThisApp" xml:space="preserve">
+    <value>About this app</value>
+  </data>
+  <data name="Accessibility" xml:space="preserve">
+    <value>Accessibility</value>
+  </data>
+  <data name="AccessKey" xml:space="preserve">
+    <value>Access key</value>
+  </data>
+  <data name="AccessKeyPlaceholderText" xml:space="preserve">
+    <value>Service access key</value>
+  </data>
+  <data name="AddImageSkill" xml:space="preserve">
+    <value>Add drawing skill</value>
+  </data>
+  <data name="AddInput" xml:space="preserve">
+    <value>Add input</value>
+  </data>
+  <data name="AddOutput" xml:space="preserve">
+    <value>Add output</value>
+  </data>
+  <data name="AddPrompt" xml:space="preserve">
+    <value>Add prompt</value>
+  </data>
+  <data name="AddSemanticSkill" xml:space="preserve">
+    <value>Add semantic skill</value>
+  </data>
+  <data name="AddStep" xml:space="preserve">
+    <value>Add a step</value>
+  </data>
+  <data name="AddWorkflow" xml:space="preserve">
+    <value>Add a workflow</value>
+  </data>
+  <data name="AISetting" xml:space="preserve">
+    <value>AI configuration</value>
+  </data>
+  <data name="AISettingDescription" xml:space="preserve">
+    <value>AI service-related settings</value>
+  </data>
+  <data name="Album" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="AlbumPlaceholderText" xml:space="preserve">
+    <value>Searches for music for the specified album</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="AllTime" xml:space="preserve">
+    <value>All the time</value>
+  </data>
+  <data name="AlreadyHaveSameKnowledgeBase" xml:space="preserve">
+    <value>An identical knowledge base already exists</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>An exploration of mutual achievement between humans and AI.</value>
+  </data>
+  <data name="AppLog" xml:space="preserve">
+    <value>Application logs</value>
+  </data>
+  <data name="AppLogDescription" xml:space="preserve">
+    <value>Application log-related configuration items</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Fantasy Copilot</value>
+  </data>
+  <data name="Artist" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="ArtistPlaceholderText" xml:space="preserve">
+    <value>Search for music by the specified artist</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="AudioPlaceholderText" xml:space="preserve">
+    <value>Searches for audio of the specified name</value>
+  </data>
+  <data name="AudioSearch" xml:space="preserve">
+    <value>Audio search</value>
+  </data>
+  <data name="AutoDetect" xml:space="preserve">
+    <value>Automatically detect</value>
+  </data>
+  <data name="AwesomePrompt" xml:space="preserve">
+    <value>Awesome ChatGPT Prompts</value>
+  </data>
+  <data name="AwesomePromptZh" xml:space="preserve">
+    <value>Awesome ChatGPT Chinese Prompts</value>
+  </data>
+  <data name="AzureTranslate" xml:space="preserve">
+    <value>Azure Translation Service configuration</value>
+  </data>
+  <data name="AzureTranslateDescription" xml:space="preserve">
+    <value>Configuration items for Azure Translator Text</value>
+  </data>
+  <data name="AzureVoice" xml:space="preserve">
+    <value>Azure Speech Service configuration</value>
+  </data>
+  <data name="AzureVoiceDescription" xml:space="preserve">
+    <value>Configuration items for Azure text-to-speech and speech recognition</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BaseName" xml:space="preserve">
+    <value>Base name</value>
+  </data>
+  <data name="BaseNamePlaceholderText" xml:space="preserve">
+    <value>Knowledge base name</value>
+  </data>
+  <data name="BeginStorageSearch" xml:space="preserve">
+    <value>Search for local files</value>
+  </data>
+  <data name="BeginStorageSearchDescription" xml:space="preserve">
+    <value>Start searching for local files fast with Everything!</value>
+  </data>
+  <data name="Bit1" xml:space="preserve">
+    <value>1 bit</value>
+  </data>
+  <data name="Bit16" xml:space="preserve">
+    <value>16 bits</value>
+  </data>
+  <data name="Bit24" xml:space="preserve">
+    <value>24 bits</value>
+  </data>
+  <data name="Bit32" xml:space="preserve">
+    <value>32 bits</value>
+  </data>
+  <data name="Bit8" xml:space="preserve">
+    <value>8 bits</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelBecauseNotVerified" xml:space="preserve">
+    <value>The operation was canceled because your identity could not be verified</value>
+  </data>
+  <data name="CanNotSelectSameFolder" xml:space="preserve">
+    <value>You cannot select the same folder</value>
+  </data>
+  <data name="CFGScale" xml:space="preserve">
+    <value>CFG Scale</value>
+  </data>
+  <data name="ChangeFolder" xml:space="preserve">
+    <value>Change the folder</value>
+  </data>
+  <data name="ChatInvalid" xml:space="preserve">
+    <value>The chat service is not available</value>
+  </data>
+  <data name="ChatInvalidDescription" xml:space="preserve">
+    <value>Please complete the service configuration related to the chat in the settings</value>
+  </data>
+  <data name="ChatModelName" xml:space="preserve">
+    <value>Chat model name</value>
+  </data>
+  <data name="ChatModelNamePlaceholderText" xml:space="preserve">
+    <value>Model name</value>
+  </data>
+  <data name="ChatOptions" xml:space="preserve">
+    <value>Chat options</value>
+  </data>
+  <data name="ClearHistory" xml:space="preserve">
+    <value>Clear the chat history</value>
+  </data>
+  <data name="ClickInput" xml:space="preserve">
+    <value>Click</value>
+  </data>
+  <data name="ClickInputDescription" xml:space="preserve">
+    <value>Click to trigger and do not pass in text content</value>
+  </data>
+  <data name="ClipSkip" xml:space="preserve">
+    <value>CLIP skip</value>
+  </data>
+  <data name="ColorDepth" xml:space="preserve">
+    <value>Color depth</value>
+  </data>
+  <data name="CommandCount" xml:space="preserve">
+    <value>Number of commands</value>
+  </data>
+  <data name="CommandIdMustBeGuid" xml:space="preserve">
+    <value>The command identifier must be a GUID</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="ConfigExported" xml:space="preserve">
+    <value>The configuration file is exported</value>
+  </data>
+  <data name="ConfigImported" xml:space="preserve">
+    <value>The configuration file is imported</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ConnectDatabaseFailed" xml:space="preserve">
+    <value>Failed to connect to the database</value>
+  </data>
+  <data name="ConnectingDatabase" xml:space="preserve">
+    <value>Connecting to database</value>
+  </data>
+  <data name="ConnectingImageService" xml:space="preserve">
+    <value>Connecting to the image service</value>
+  </data>
+  <data name="ContextConversation" xml:space="preserve">
+    <value>Contextual conversations</value>
+  </data>
+  <data name="ContextResponseTokenLength" xml:space="preserve">
+    <value>Maxinum knowledge response tokens</value>
+  </data>
+  <data name="ContextResponseTokenLengthDescription" xml:space="preserve">
+    <value>The maximum number of return tokens for the model when the knowledge base is Q&amp;A</value>
+  </data>
+  <data name="ContinuousDialogue" xml:space="preserve">
+    <value>Continuous Conversation</value>
+  </data>
+  <data name="Copied" xml:space="preserve">
+    <value>Replicated</value>
+  </data>
+  <data name="CopyExtraModelTip" xml:space="preserve">
+    <value>Click on the entry to copy the model name</value>
+  </data>
+  <data name="CopyPath" xml:space="preserve">
+    <value>Copy the path</value>
+  </data>
+  <data name="CopyPrompt" xml:space="preserve">
+    <value>Copy the prompt</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>© {0} Richasy. All rights reserved.</value>
+  </data>
+  <data name="CreateFromFile" xml:space="preserve">
+    <value>Created from file</value>
+  </data>
+  <data name="CreateFromFolder" xml:space="preserve">
+    <value>Created from folder</value>
+  </data>
+  <data name="CreateVariable" xml:space="preserve">
+    <value>Create variable</value>
+  </data>
+  <data name="CreatingKnowledgeBase" xml:space="preserve">
+    <value>Data is being imported into the knowledge base</value>
+  </data>
+  <data name="CustomPrompt" xml:space="preserve">
+    <value>Custom prompt</value>
+  </data>
+  <data name="DatabasePath" xml:space="preserve">
+    <value>Database path</value>
+  </data>
+  <data name="DatabasePathPlaceholderText" xml:space="preserve">
+    <value>Select the database location</value>
+  </data>
+  <data name="DataSourceComeFrom" xml:space="preserve">
+    <value>Data from</value>
+  </data>
+  <data name="DefaultConversationType" xml:space="preserve">
+    <value>The default dialog type</value>
+  </data>
+  <data name="DefaultConversationTypeDescription" xml:space="preserve">
+    <value>You can choose between consecutive or single rounds of conversation</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteImageSkill" xml:space="preserve">
+    <value>Delete Drawing Skill</value>
+  </data>
+  <data name="DeleteImageSkillTip" xml:space="preserve">
+    <value>After deleting a drawing skill, the workflows referencing the skill need to be reconfigured, do you want to confirm?</value>
+  </data>
+  <data name="DeleteKnowledgeBase" xml:space="preserve">
+    <value>Delete Knowledge Base</value>
+  </data>
+  <data name="DeleteKnowledgeBaseDescription" xml:space="preserve">
+    <value>Delete the knowledge base? (This does not affect the database file, only removal from the list)</value>
+  </data>
+  <data name="DeletePlugin" xml:space="preserve">
+    <value>Remove Plugin</value>
+  </data>
+  <data name="DeletePluginDescription" xml:space="preserve">
+    <value>Deleting the plug-in will clear the local cache of the plug-in, and the workflow associated with the plug-in needs to be reconfigured, do you want to confirm?</value>
+  </data>
+  <data name="DeletePrompt" xml:space="preserve">
+    <value>Delete Prompt</value>
+  </data>
+  <data name="DeletePromptTip" xml:space="preserve">
+    <value>Delete the current custom prompt?</value>
+  </data>
+  <data name="DeleteSemanticSkill" xml:space="preserve">
+    <value>Delete Semantic Skill</value>
+  </data>
+  <data name="DeleteSemanticSkillTip" xml:space="preserve">
+    <value>Confirm the deletion of the semantic skill? Once deleted, if there is a workflow that references the skill, the workflow will not work</value>
+  </data>
+  <data name="DeleteSession" xml:space="preserve">
+    <value>Delete Session</value>
+  </data>
+  <data name="DeleteSessionTip" xml:space="preserve">
+    <value>Delete the current session?</value>
+  </data>
+  <data name="DeleteWorkflow" xml:space="preserve">
+    <value>Delete Workflow</value>
+  </data>
+  <data name="DeleteWorkflowTip" xml:space="preserve">
+    <value>Delete the workflow?</value>
+  </data>
+  <data name="DeployUrl" xml:space="preserve">
+    <value>Deployment URL</value>
+  </data>
+  <data name="DeployUrlPlaceholderText" xml:space="preserve">
+    <value>Service link</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Directory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="DirectoryPlaceholderText" xml:space="preserve">
+    <value>Get files or folders in the directory</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documentation</value>
+  </data>
+  <data name="DocumentPlaceholderText" xml:space="preserve">
+    <value>Searches for a document with the specified name</value>
+  </data>
+  <data name="DuplicateFiles" xml:space="preserve">
+    <value>Duplicate name</value>
+  </data>
+  <data name="DuplicateFilesPlaceholderText" xml:space="preserve">
+    <value>Search for a file with the same name</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EmbeddingModelEndpoint" xml:space="preserve">
+    <value>Embedding model endpoint</value>
+  </data>
+  <data name="EmbeddingModelName" xml:space="preserve">
+    <value>Embedding model name</value>
+  </data>
+  <data name="EmbeddingModelNamePlaceholderText" xml:space="preserve">
+    <value>Model name</value>
+  </data>
+  <data name="Embeddings" xml:space="preserve">
+    <value>Embedding models</value>
+  </data>
+  <data name="EmptyTextFile" xml:space="preserve">
+    <value>The text file is empty</value>
+  </data>
+  <data name="EnableChat" xml:space="preserve">
+    <value>Enable chat module</value>
+  </data>
+  <data name="EnableChatDescription" xml:space="preserve">
+    <value>When turned off, chat-related features will be hidden</value>
+  </data>
+  <data name="EnableImage" xml:space="preserve">
+    <value>Enable image module</value>
+  </data>
+  <data name="EnableImageDescription" xml:space="preserve">
+    <value>When turned off, features such as the txt2img will be hidden</value>
+  </data>
+  <data name="EnableKnowledge" xml:space="preserve">
+    <value>Enable knowledge base</value>
+  </data>
+  <data name="EnableKnowledgeDescription" xml:space="preserve">
+    <value>When closed, the knowledge base feature is hidden</value>
+  </data>
+  <data name="EnableStorage" xml:space="preserve">
+    <value>Enable file module</value>
+  </data>
+  <data name="EnableStorageDescription" xml:space="preserve">
+    <value>When turned off, the file search function is hidden</value>
+  </data>
+  <data name="EnableTranslate" xml:space="preserve">
+    <value>Enable translation module</value>
+  </data>
+  <data name="EnableTranslateDescription" xml:space="preserve">
+    <value>When turned off, text translation will be hidden</value>
+  </data>
+  <data name="EnableVoice" xml:space="preserve">
+    <value>Enable speech module</value>
+  </data>
+  <data name="EnableVoiceDescription" xml:space="preserve">
+    <value>When turned off, features such as speech recognition will be hidden</value>
+  </data>
+  <data name="Endpoint" xml:space="preserve">
+    <value>Endpoint</value>
+  </data>
+  <data name="EndpointPlaceholderText" xml:space="preserve">
+    <value>Service endpoint</value>
+  </data>
+  <data name="ExecuteFile" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="ExecuteFilePlaceholderText" xml:space="preserve">
+    <value>Searches for an executable file of the specified name</value>
+  </data>
+  <data name="ExportConfig" xml:space="preserve">
+    <value>Export configuration</value>
+  </data>
+  <data name="ExportConfigFailed" xml:space="preserve">
+    <value>Failed to export configuration file</value>
+  </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>Favorite</value>
+  </data>
+  <data name="FavoritePrompts" xml:space="preserve">
+    <value>Star Prompts</value>
+  </data>
+  <data name="FeatureEnabled" xml:space="preserve">
+    <value>Enable features</value>
+  </data>
+  <data name="FeatureEnabledDescription" xml:space="preserve">
+    <value>You can choose to enable or disable some feature modules</value>
+  </data>
+  <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FileInput" xml:space="preserve">
+    <value>File input</value>
+  </data>
+  <data name="FileInputDescription" xml:space="preserve">
+    <value>Select the specified file and enter the path as text</value>
+  </data>
+  <data name="FileNameWithExtension" xml:space="preserve">
+    <value>File name (with extension)</value>
+  </data>
+  <data name="FileSaved" xml:space="preserve">
+    <value>The file is saved</value>
+  </data>
+  <data name="FileSaveFailed" xml:space="preserve">
+    <value>File save failed</value>
+  </data>
+  <data name="FileSearch" xml:space="preserve">
+    <value>File search</value>
+  </data>
+  <data name="FlowGptEnTrending" xml:space="preserve">
+    <value>Flow GPT English hot list</value>
+  </data>
+  <data name="FlowGptZhTrending" xml:space="preserve">
+    <value>Flow GPT Chinese hot list</value>
+  </data>
+  <data name="FrequencyPenalty" xml:space="preserve">
+    <value>Frequency penalty</value>
+  </data>
+  <data name="FrequencyPenaltyDescription" xml:space="preserve">
+    <value>The higher the value, the less likely the resulting text is to have duplicate characters</value>
+  </data>
+  <data name="GalleryEmpty" xml:space="preserve">
+    <value>The gallery is empty</value>
+  </data>
+  <data name="GalleryEmptyDescription" xml:space="preserve">
+    <value>Can't get the list of images at the moment, please try again later</value>
+  </data>
+  <data name="GenerateImage" xml:space="preserve">
+    <value>Generate a image</value>
+  </data>
+  <data name="GenerateSpeech" xml:space="preserve">
+    <value>Generate speech</value>
+  </data>
+  <data name="Generic" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GenericSearch" xml:space="preserve">
+    <value>Universal search</value>
+  </data>
+  <data name="Genre" xml:space="preserve">
+    <value>Genre</value>
+  </data>
+  <data name="GenrePlaceholderText" xml:space="preserve">
+    <value>Search for music by genre</value>
+  </data>
+  <data name="HasImageMetadata" xml:space="preserve">
+    <value>Contains Image Metadata</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="HowToWriteSemanticSkill" xml:space="preserve">
+    <value>How to write semantic skills?</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageGallery" xml:space="preserve">
+    <value>Image Gallery</value>
+  </data>
+  <data name="ImageGenerateFailed" xml:space="preserve">
+    <value>Image generation failed</value>
+  </data>
+  <data name="ImageModelDescription" xml:space="preserve">
+    <value>Set the model for generating images</value>
+  </data>
+  <data name="ImageNegativePromptPlaceholderText" xml:space="preserve">
+    <value>Please list the contents that are not needed in the image</value>
+  </data>
+  <data name="ImagePlaceholderText" xml:space="preserve">
+    <value>Search for images by name</value>
+  </data>
+  <data name="ImagePromptPlaceholderText" xml:space="preserve">
+    <value>Please enter a description of the image</value>
+  </data>
+  <data name="ImageSearch" xml:space="preserve">
+    <value>Image search</value>
+  </data>
+  <data name="ImageService" xml:space="preserve">
+    <value>Image Service</value>
+  </data>
+  <data name="ImageServiceDisconnected" xml:space="preserve">
+    <value>Image Service Disconnected</value>
+  </data>
+  <data name="ImageServiceInvalid" xml:space="preserve">
+    <value>Image Service Unavailable</value>
+  </data>
+  <data name="ImageServiceInvalidDescription" xml:space="preserve">
+    <value>Please provide a valid image generation service address</value>
+  </data>
+  <data name="ImageSize" xml:space="preserve">
+    <value>Image Size</value>
+  </data>
+  <data name="ImageSizeDescription" xml:space="preserve">
+    <value>Set the width and height of the generated image</value>
+  </data>
+  <data name="ImageSkill" xml:space="preserve">
+    <value>Drawing Skills</value>
+  </data>
+  <data name="ImageSkillEditor" xml:space="preserve">
+    <value>Drawing skill editor</value>
+  </data>
+  <data name="ImageToImage" xml:space="preserve">
+    <value>Image to image</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportConfig" xml:space="preserve">
+    <value>Import configuration</value>
+  </data>
+  <data name="ImportConfigFailed" xml:space="preserve">
+    <value>Failed to import configuration file</value>
+  </data>
+  <data name="ImportFile" xml:space="preserve">
+    <value>Import file</value>
+  </data>
+  <data name="ImportFileFailed" xml:space="preserve">
+    <value>Failed to import file</value>
+  </data>
+  <data name="ImportFileSucceed" xml:space="preserve">
+    <value>File imported successfully</value>
+  </data>
+  <data name="ImportFileToKnowledgeBase" xml:space="preserve">
+    <value>Import file to knowledge base</value>
+  </data>
+  <data name="ImportFolder" xml:space="preserve">
+    <value>Import folder</value>
+  </data>
+  <data name="ImportFolderNotFullySucceed" xml:space="preserve">
+    <value>Import folder not fully successful, failure number: {0}/{1}</value>
+  </data>
+  <data name="ImportFolderSucceed" xml:space="preserve">
+    <value>Import folder successfully</value>
+  </data>
+  <data name="ImportFolderToKnowledgeBase" xml:space="preserve">
+    <value>Import folder to knowledge base</value>
+  </data>
+  <data name="ImportKnowledgeBase" xml:space="preserve">
+    <value>Import knowledge base</value>
+  </data>
+  <data name="ImportPlugin" xml:space="preserve">
+    <value>Import plugin</value>
+  </data>
+  <data name="Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="InputContent" xml:space="preserve">
+    <value>Input content</value>
+  </data>
+  <data name="InspireMe" xml:space="preserve">
+    <value>Inspire me</value>
+  </data>
+  <data name="InvalidConfigFile" xml:space="preserve">
+    <value>Invalid configuration file</value>
+  </data>
+  <data name="InvalidFilePath" xml:space="preserve">
+    <value>Invalid file path</value>
+  </data>
+  <data name="InvalidStepRemoved" xml:space="preserve">
+    <value>Temporarily removed invalid steps, please reconfigure in the editor</value>
+  </data>
+  <data name="InvalidUrl" xml:space="preserve">
+    <value>Invalid link</value>
+  </data>
+  <data name="KnowledgeBase" xml:space="preserve">
+    <value>Knowledge Base</value>
+  </data>
+  <data name="KnowledgeBaseQA" xml:space="preserve">
+    <value>Knowledge Base Q&amp;A</value>
+  </data>
+  <data name="KnowledgeBaseSettings" xml:space="preserve">
+    <value>Knowledge base settings</value>
+  </data>
+  <data name="KnowledgeBaseSettingsDescription" xml:space="preserve">
+    <value>Knowledge base-related configuration items</value>
+  </data>
+  <data name="KnowledgeInvalid" xml:space="preserve">
+    <value>Knowledge Base Unavailable</value>
+  </data>
+  <data name="KnowledgeInvalidDescription" xml:space="preserve">
+    <value>Please complete the configuration of the embedded model in the settings</value>
+  </data>
+  <data name="Landscape" xml:space="preserve">
+    <value>Landscape</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LicenseTerms" xml:space="preserve">
+    <value>License Terms</value>
+  </data>
+  <data name="Lora" xml:space="preserve">
+    <value>Lora Model</value>
+  </data>
+  <data name="MarkupText" xml:space="preserve">
+    <value>Markup Text</value>
+  </data>
+  <data name="MaximumResponseTokens" xml:space="preserve">
+    <value>Maximum Output Tokens</value>
+  </data>
+  <data name="MaximumResponseTokensDescription" xml:space="preserve">
+    <value>Approximately 4 characters for 1 token</value>
+  </data>
+  <data name="MaxParagraphTokenLength" xml:space="preserve">
+    <value>Paragraph Segmentation Threshold</value>
+  </data>
+  <data name="MaxParagraphTokenLengthDescription" xml:space="preserve">
+    <value>The content length of the sub-cut paragraph when text segmentation</value>
+  </data>
+  <data name="MaxSplitContentLength" xml:space="preserve">
+    <value>Text Segmentation Threshold</value>
+  </data>
+  <data name="MaxSplitContentLengthDescription" xml:space="preserve">
+    <value>The number of characters imported into the knowledge base will be split when it reaches this threshold, which depends on the number of tokens supported by the embedded model you are using</value>
+  </data>
+  <data name="Metadata" xml:space="preserve">
+    <value>Metadata</value>
+  </data>
+  <data name="ModelName" xml:space="preserve">
+    <value>Model Name</value>
+  </data>
+  <data name="ModelSearch" xml:space="preserve">
+    <value>Search model</value>
+  </data>
+  <data name="ModifiedTime" xml:space="preserve">
+    <value>Modified time</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="ModifyKnowledgeBase" xml:space="preserve">
+    <value>Modify Knowledge Base</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>More Options</value>
+  </data>
+  <data name="MostComments" xml:space="preserve">
+    <value>Most Comments</value>
+  </data>
+  <data name="MostReactions" xml:space="preserve">
+    <value>Most reactions</value>
+  </data>
+  <data name="MoveCompleted" xml:space="preserve">
+    <value>Move completed</value>
+  </data>
+  <data name="MoveDownward" xml:space="preserve">
+    <value>Move downward</value>
+  </data>
+  <data name="MoveUpward" xml:space="preserve">
+    <value>Move upward</value>
+  </data>
+  <data name="MusicCommentPlaceholderText" xml:space="preserve">
+    <value>Search for music with specified comment</value>
+  </data>
+  <data name="MusicTitlePlaceholderText" xml:space="preserve">
+    <value>Search for music with specified title</value>
+  </data>
+  <data name="MusicTrack" xml:space="preserve">
+    <value>Track number</value>
+  </data>
+  <data name="MusicTrackPlaceholderText" xml:space="preserve">
+    <value>Search for music with specified track number</value>
+  </data>
+  <data name="MustBeValidTextFile" xml:space="preserve">
+    <value>Must be a valid text file</value>
+  </data>
+  <data name="MustHaveCommand" xml:space="preserve">
+    <value>Plugin command cannot be empty</value>
+  </data>
+  <data name="MustHaveId" xml:space="preserve">
+    <value>Must have an identifier (Id)</value>
+  </data>
+  <data name="MustHaveNameOrDescription" xml:space="preserve">
+    <value>Must specify a name (Name) or description (Description)</value>
+  </data>
+  <data name="NameAtoZ" xml:space="preserve">
+    <value>Name (A to Z)</value>
+  </data>
+  <data name="NameZtoA" xml:space="preserve">
+    <value>Name (Z to A)</value>
+  </data>
+  <data name="Native" xml:space="preserve">
+    <value>Native</value>
+  </data>
+  <data name="NeedAddStep" xml:space="preserve">
+    <value>Need to add at least one step</value>
+  </data>
+  <data name="NeedFillRequiredFields" xml:space="preserve">
+    <value>Please fill in the content completely</value>
+  </data>
+  <data name="NeedInputText" xml:space="preserve">
+    <value>Please enter text first</value>
+  </data>
+  <data name="NeedRestart" xml:space="preserve">
+    <value>Need to restart the app</value>
+  </data>
+  <data name="NeedRestartDescription" xml:space="preserve">
+    <value>One or more of the settings you changed will take effect after restarting</value>
+  </data>
+  <data name="NeedSelectVoice" xml:space="preserve">
+    <value>Need to select a voice first</value>
+  </data>
+  <data name="NegativePrompt" xml:space="preserve">
+    <value>Negative prompt words</value>
+  </data>
+  <data name="Newest" xml:space="preserve">
+    <value>Newest</value>
+  </data>
+  <data name="NewSession" xml:space="preserve">
+    <value>New session</value>
+  </data>
+  <data name="NoAutoPlan" xml:space="preserve">
+    <value>Unable to automatically generate plan temporarily</value>
+  </data>
+  <data name="NoFiles" xml:space="preserve">
+    <value>Files do not exist</value>
+  </data>
+  <data name="NoFilesDescription" xml:space="preserve">
+    <value>No files that meet the criteria were found</value>
+  </data>
+  <data name="NoImageSkill" xml:space="preserve">
+    <value>No Drawing Skills</value>
+  </data>
+  <data name="NoImageSkillDescription" xml:space="preserve">
+    <value>Please create a new drawing skill</value>
+  </data>
+  <data name="NoKnowledgeBase" xml:space="preserve">
+    <value>No available knowledge base</value>
+  </data>
+  <data name="NoKnowledgeBaseDescription" xml:space="preserve">
+    <value>You can create or import a knowledge base</value>
+  </data>
+  <data name="NoMessage" xml:space="preserve">
+    <value>No messages yet</value>
+  </data>
+  <data name="NoMessageDescription" xml:space="preserve">
+    <value>Enter content in the text box below to send a message!</value>
+  </data>
+  <data name="NoOutputConfig" xml:space="preserve">
+    <value>No output configuration</value>
+  </data>
+  <data name="NoPlugin" xml:space="preserve">
+    <value>No plugins</value>
+  </data>
+  <data name="NoPluginDescription" xml:space="preserve">
+    <value>You can import plugins with the suffix .fcpkg</value>
+  </data>
+  <data name="NoPrompt" xml:space="preserve">
+    <value>No custom prompts yet</value>
+  </data>
+  <data name="NoPromptDescription" xml:space="preserve">
+    <value>Try creating a new custom prompt!</value>
+  </data>
+  <data name="NoRepositoryWarning" xml:space="preserve">
+    <value>This plugin does not have a corresponding repository, which may have potential risks, please use it with caution</value>
+  </data>
+  <data name="NoSemanticSkill" xml:space="preserve">
+    <value>No semantic skills</value>
+  </data>
+  <data name="NoSemanticSkillDescription" xml:space="preserve">
+    <value>Try adding a new semantic skill!</value>
+  </data>
+  <data name="NoSession" xml:space="preserve">
+    <value>No saved sessions yet</value>
+  </data>
+  <data name="NoSessionDescription" xml:space="preserve">
+    <value>Try saving a new session!</value>
+  </data>
+  <data name="NoStepError" xml:space="preserve">
+    <value>No steps to execute</value>
+  </data>
+  <data name="NoValidResult" xml:space="preserve">
+    <value>No suitable results found</value>
+  </data>
+  <data name="NoWorkflow" xml:space="preserve">
+    <value>No workflow</value>
+  </data>
+  <data name="NoWorkflowDescription" xml:space="preserve">
+    <value>Try adding a new workflow!</value>
+  </data>
+  <data name="OnlinePromptError" xml:space="preserve">
+    <value>Online prompt acquisition failed</value>
+  </data>
+  <data name="OnlinePromptErrorDescription" xml:space="preserve">
+    <value>There may be some problems with the data source, please click the refresh button in the upper right corner to try again</value>
+  </data>
+  <data name="OpenAuthorSite" xml:space="preserve">
+    <value>Open author website</value>
+  </data>
+  <data name="OpenConsoleWhenPluginRunning" xml:space="preserve">
+    <value>Show console when plugin command runs</value>
+  </data>
+  <data name="OpenFailed" xml:space="preserve">
+    <value>Open failed, may be due to insufficient permissions or target file/folder does not exist</value>
+  </data>
+  <data name="OpenFile" xml:space="preserve">
+    <value>Open file</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open folder</value>
+  </data>
+  <data name="OpenImage" xml:space="preserve">
+    <value>Open image</value>
+  </data>
+  <data name="OpenInBrowser" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="OpenInFileExplorer" xml:space="preserve">
+    <value>Open in file explorer</value>
+  </data>
+  <data name="OpenInText2ImageModule" xml:space="preserve">
+    <value>Open in Text to Image</value>
+  </data>
+  <data name="OpenLink" xml:space="preserve">
+    <value>Open link</value>
+  </data>
+  <data name="OpenLogFolder" xml:space="preserve">
+    <value>Open log folder</value>
+  </data>
+  <data name="OpenPluginFolder" xml:space="preserve">
+    <value>Open plugin directory</value>
+  </data>
+  <data name="OpenRepository" xml:space="preserve">
+    <value>Open repository</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>Open with other software</value>
+  </data>
+  <data name="OptionalOrganization" xml:space="preserve">
+    <value>Organization (optional)</value>
+  </data>
+  <data name="OrganizationPlaceholderText" xml:space="preserve">
+    <value>Fill in organization name</value>
+  </data>
+  <data name="Orientation" xml:space="preserve">
+    <value>Orientation</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="OtherImageOptionsDescription" xml:space="preserve">
+    <value>Other numerical options for generating images</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Other Options</value>
+  </data>
+  <data name="Output" xml:space="preserve">
+    <value>Output</value>
+  </data>
+  <data name="OutputImage" xml:space="preserve">
+    <value>Image Output</value>
+  </data>
+  <data name="OutputImageDescription" xml:space="preserve">
+    <value>Display the image according to the incoming link/path</value>
+  </data>
+  <data name="OutputText" xml:space="preserve">
+    <value>Text Output</value>
+  </data>
+  <data name="OutputTextDescription" xml:space="preserve">
+    <value>Display the final result in text form</value>
+  </data>
+  <data name="OutputVoice" xml:space="preserve">
+    <value>Audio Output</value>
+  </data>
+  <data name="OutputVoiceDescription" xml:space="preserve">
+    <value>Play audio according to the final generated file path</value>
+  </data>
+  <data name="PathCopied" xml:space="preserve">
+    <value>Path Copied</value>
+  </data>
+  <data name="PickFile" xml:space="preserve">
+    <value>Pick File</value>
+  </data>
+  <data name="PickFolder" xml:space="preserve">
+    <value>Pick Folder</value>
+  </data>
+  <data name="PlainText" xml:space="preserve">
+    <value>Plain Text</value>
+  </data>
+  <data name="PlayAndPause" xml:space="preserve">
+    <value>Play/Pause</value>
+  </data>
+  <data name="PlayWithPlayer" xml:space="preserve">
+    <value>Play with Player</value>
+  </data>
+  <data name="PluginFolder" xml:space="preserve">
+    <value>Plugin Folder</value>
+  </data>
+  <data name="Plugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="Portrait" xml:space="preserve">
+    <value>Portrait</value>
+  </data>
+  <data name="PresencePenalty" xml:space="preserve">
+    <value>Presence Penalty</value>
+  </data>
+  <data name="PresencePenaltyDescription" xml:space="preserve">
+    <value>The higher the value, the easier it is for subsequent text to discuss new topics</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Prompt" xml:space="preserve">
+    <value>Prompt</value>
+  </data>
+  <data name="PromptCopied" xml:space="preserve">
+    <value>Prompt Copied</value>
+  </data>
+  <data name="PromptDescriptionPlaceholder" xml:space="preserve">
+    <value>Describe the role of the prompt</value>
+  </data>
+  <data name="PromptLibrary" xml:space="preserve">
+    <value>Prompt Library</value>
+  </data>
+  <data name="PromptPinned" xml:space="preserve">
+    <value>Prompt pinned to favorites list</value>
+  </data>
+  <data name="Prompts" xml:space="preserve">
+    <value>Prompts</value>
+  </data>
+  <data name="PromptsAndSessions" xml:space="preserve">
+    <value>Prompts and Sessions</value>
+  </data>
+  <data name="PromptTitlePlaceholder" xml:space="preserve">
+    <value>Prompt Word Title</value>
+  </data>
+  <data name="QuitApp" xml:space="preserve">
+    <value>Quit App</value>
+  </data>
+  <data name="RecognizedText" xml:space="preserve">
+    <value>Recognized Text</value>
+  </data>
+  <data name="Reconnect" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="RefreshFailed" xml:space="preserve">
+    <value>Refresh Failed</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="RegionPlaceholderText" xml:space="preserve">
+    <value>Service region</value>
+  </data>
+  <data name="RemoveMessage" xml:space="preserve">
+    <value>Remove message</value>
+  </data>
+  <data name="Repeatability" xml:space="preserve">
+    <value>Repeatability</value>
+  </data>
+  <data name="RepeatabilityDescription" xml:space="preserve">
+    <value>Controls the repeatability of text or topics by the model</value>
+  </data>
+  <data name="RepositoryLink" xml:space="preserve">
+    <value>Github Repository</value>
+  </data>
+  <data name="RequestImageFailed" xml:space="preserve">
+    <value>Failed to try to request the image</value>
+  </data>
+  <data name="RequestVoiceMetadataFailed" xml:space="preserve">
+    <value>An error occurred when requesting voice metadata</value>
+  </data>
+  <data name="Reselect" xml:space="preserve">
+    <value>Reselect</value>
+  </data>
+  <data name="Resent" xml:space="preserve">
+    <value>Resent</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Sampler" xml:space="preserve">
+    <value>Sampling Algorithm</value>
+  </data>
+  <data name="SamplerDescription" xml:space="preserve">
+    <value>Select an appropriate sampler</value>
+  </data>
+  <data name="Sampling" xml:space="preserve">
+    <value>Sampling</value>
+  </data>
+  <data name="SamplingDescription" xml:space="preserve">
+    <value>Set sampling parameters to determine the randomness of the answer</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAsHtml" xml:space="preserve">
+    <value>Save as HTML</value>
+  </data>
+  <data name="SaveAudio" xml:space="preserve">
+    <value>Save Audio</value>
+  </data>
+  <data name="SavedSessions" xml:space="preserve">
+    <value>Saved Sessions</value>
+  </data>
+  <data name="SaveImage" xml:space="preserve">
+    <value>Save image</value>
+  </data>
+  <data name="SaveSession" xml:space="preserve">
+    <value>Save session</value>
+  </data>
+  <data name="SearchPattern" xml:space="preserve">
+    <value>File Filter</value>
+  </data>
+  <data name="SearchPatternPlaceholderText" xml:space="preserve">
+    <value>e.g. *.txt, *.md, only support plain text</value>
+  </data>
+  <data name="Seed" xml:space="preserve">
+    <value>Random Seed</value>
+  </data>
+  <data name="SemanticSkill" xml:space="preserve">
+    <value>Semantic Skill</value>
+  </data>
+  <data name="SemanticSkillEditor" xml:space="preserve">
+    <value>Semantic Skill Editor</value>
+  </data>
+  <data name="SendFeedback" xml:space="preserve">
+    <value>Send feedback</value>
+  </data>
+  <data name="Services" xml:space="preserve">
+    <value>Services</value>
+  </data>
+  <data name="SessionDescriptionPlaceholder" xml:space="preserve">
+    <value>What is the session for?</value>
+  </data>
+  <data name="SessionPromptPlaceholder" xml:space="preserve">
+    <value>Please enter the preset prompt content</value>
+  </data>
+  <data name="SessionTitlePlaceholder" xml:space="preserve">
+    <value>Give the session a name</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="ShowExtraModels" xml:space="preserve">
+    <value>Show Additional Models</value>
+  </data>
+  <data name="ShowResult" xml:space="preserve">
+    <value>Show Result</value>
+  </data>
+  <data name="SingleConversation" xml:space="preserve">
+    <value>Single Conversation</value>
+  </data>
+  <data name="SizeLargeToSmall" xml:space="preserve">
+    <value>Size (Large to Small)</value>
+  </data>
+  <data name="SizeSmallToLarge" xml:space="preserve">
+    <value>Size (Small to Large)</value>
+  </data>
+  <data name="SkillDescription" xml:space="preserve">
+    <value>Skill Description</value>
+  </data>
+  <data name="SkillDescriptionPlaceholderText" xml:space="preserve">
+    <value>Describe the purpose of this skill</value>
+  </data>
+  <data name="SkillName" xml:space="preserve">
+    <value>Skill Name</value>
+  </data>
+  <data name="SkillNamePlaceholderText" xml:space="preserve">
+    <value>Give the skill a name</value>
+  </data>
+  <data name="SortBy" xml:space="preserve">
+    <value>Sort by</value>
+  </data>
+  <data name="SourceLanguage" xml:space="preserve">
+    <value>Source Language</value>
+  </data>
+  <data name="SourceText" xml:space="preserve">
+    <value>Source Text</value>
+  </data>
+  <data name="SpeechConvertFailed" xml:space="preserve">
+    <value>Speech Conversion Failed</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Speech Recognition</value>
+  </data>
+  <data name="StableDiffusion" xml:space="preserve">
+    <value>Stable Diffusion</value>
+  </data>
+  <data name="StableDiffusionDescription" xml:space="preserve">
+    <value>Related configuration items for Stable Diffusion</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartRecording" xml:space="preserve">
+    <value>Start recording</value>
+  </data>
+  <data name="Steps" xml:space="preserve">
+    <value>Steps</value>
+  </data>
+  <data name="StopRecording" xml:space="preserve">
+    <value>Stop Recording</value>
+  </data>
+  <data name="StorageInvalid" xml:space="preserve">
+    <value>Storage search service unavailable</value>
+  </data>
+  <data name="StorageInvalidDescription" xml:space="preserve">
+    <value>Storage search service requires Everything to be installed on the local machine first</value>
+  </data>
+  <data name="StorageSearch" xml:space="preserve">
+    <value>Storage Search</value>
+  </data>
+  <data name="TargetLanguage" xml:space="preserve">
+    <value>Target Language</value>
+  </data>
+  <data name="Temperature" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TemperatureDescription" xml:space="preserve">
+    <value>Controls randomness, lowering the temperature will lead to less random completions.</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="TextCompletionModelEndpoint" xml:space="preserve">
+    <value>Text completion model endpoint</value>
+  </data>
+  <data name="TextCompletionModelName" xml:space="preserve">
+    <value>Text completion model name</value>
+  </data>
+  <data name="TextCompletionModelNamePlaceholderText" xml:space="preserve">
+    <value>Model name</value>
+  </data>
+  <data name="TextInput" xml:space="preserve">
+    <value>Text Input</value>
+  </data>
+  <data name="TextInputDescription" xml:space="preserve">
+    <value>Input text content when the workflow starts</value>
+  </data>
+  <data name="TextNotification" xml:space="preserve">
+    <value>Text notification</value>
+  </data>
+  <data name="TextNotificationDescription" xml:space="preserve">
+    <value>Send a plain text system notification</value>
+  </data>
+  <data name="TextOverwrite" xml:space="preserve">
+    <value>Text overwrite</value>
+  </data>
+  <data name="TextOverwriteDescription" xml:space="preserve">
+    <value>Overwrite the input of the previous step</value>
+  </data>
+  <data name="TextToImage" xml:space="preserve">
+    <value>Text to Image</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Text to Speech</value>
+  </data>
+  <data name="ThisMonth" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="ThisWeek" xml:space="preserve">
+    <value>This week</value>
+  </data>
+  <data name="ThisYear" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="TimePeriod" xml:space="preserve">
+    <value>Time period</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="Tool" xml:space="preserve">
+    <value>Tool</value>
+  </data>
+  <data name="TopP" xml:space="preserve">
+    <value>Top-P</value>
+  </data>
+  <data name="TopPDescription" xml:space="preserve">
+    <value>Control diversity through core sampling</value>
+  </data>
+  <data name="TotalFileCount" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>Translate</value>
+  </data>
+  <data name="TranslatedContent" xml:space="preserve">
+    <value>Translated content</value>
+  </data>
+  <data name="TranslatedContentPlaceholderText" xml:space="preserve">
+    <value>Translated text will be displayed here</value>
+  </data>
+  <data name="TranslateInvalid" xml:space="preserve">
+    <value>Translation service unavailable</value>
+  </data>
+  <data name="TranslateInvalidDescription" xml:space="preserve">
+    <value>Please complete the service configuration related to translation in the settings</value>
+  </data>
+  <data name="TranslationFailed" xml:space="preserve">
+    <value>Translation failed, please try again</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="UserInputPlaceholderText" xml:space="preserve">
+    <value>Please enter content</value>
+  </data>
+  <data name="Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VariableName" xml:space="preserve">
+    <value>Variable name</value>
+  </data>
+  <data name="VariableRedirect" xml:space="preserve">
+    <value>Variable redirect</value>
+  </data>
+  <data name="VerifyIdentity" xml:space="preserve">
+    <value>You need to verify your identity</value>
+  </data>
+  <data name="Video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="VideoPlaceholderText" xml:space="preserve">
+    <value>Search for videos with specified names</value>
+  </data>
+  <data name="Voice" xml:space="preserve">
+    <value>Voice</value>
+  </data>
+  <data name="VoiceInput" xml:space="preserve">
+    <value>Voice input</value>
+  </data>
+  <data name="VoiceInputDescription" xml:space="preserve">
+    <value>Convert to text input through voice recognition</value>
+  </data>
+  <data name="VoiceInvalid" xml:space="preserve">
+    <value>Voice service unavailable</value>
+  </data>
+  <data name="VoiceInvalidDescription" xml:space="preserve">
+    <value>Please complete the service configuration related to voice in the settings</value>
+  </data>
+  <data name="VoiceRecognizeFailed" xml:space="preserve">
+    <value>Voice recognition failed</value>
+  </data>
+  <data name="VoiceService" xml:space="preserve">
+    <value>Voice Service</value>
+  </data>
+  <data name="Web" xml:space="preserve">
+    <value>Web</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="Workflow" xml:space="preserve">
+    <value>Workflow</value>
+  </data>
+  <data name="WorkflowEditor" xml:space="preserve">
+    <value>Workflow editor</value>
+  </data>
+  <data name="WorkflowFileOpenFailed" xml:space="preserve">
+    <value>Workflow configuration file open failed</value>
+  </data>
+  <data name="WorkflowGoal" xml:space="preserve">
+    <value>Goal</value>
+  </data>
+  <data name="WorkflowGoalPlaceholderText" xml:space="preserve">
+    <value>A clear goal description helps the "Give me inspiration" button to automatically generate workflow steps</value>
+  </data>
+  <data name="WorkflowName" xml:space="preserve">
+    <value>Workflow name</value>
+  </data>
+  <data name="WorkflowNamePlaceholderText" xml:space="preserve">
+    <value>Name the workflow</value>
+  </data>
+  <data name="WorkflowOption" xml:space="preserve">
+    <value>Workflow configuration</value>
+  </data>
+  <data name="WorkflowOptionDescription" xml:space="preserve">
+    <value>Configuration items related to workflow</value>
+  </data>
+  <data name="Workspace" xml:space="preserve">
+    <value>Workspace</value>
+  </data>
+  <data name="Zip" xml:space="preserve">
+    <value>Zip</value>
+  </data>
+  <data name="ZipPlaceholderText" xml:space="preserve">
+    <value>Search for a zip with the specified name</value>
+  </data>
+</root>

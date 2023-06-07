@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:GenerateOptionsPanelBase
+    x:Class="FantasyCopilot.App.Controls.Images.GenerateOptionsPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:image="using:FantasyCopilot.Models.App.Image"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Controls.Images"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <x:Double x:Key="SettingsCardWrapThreshold">200</x:Double>
+        <x:Double x:Key="SettingsCardWrapNoIconThreshold">200</x:Double>
+    </UserControl.Resources>
+
+    <StackPanel Spacing="4">
+        <StackPanel.ChildrenTransitions>
+            <RepositionThemeTransition IsStaggeringEnabled="False" />
+        </StackPanel.ChildrenTransitions>
+        <labs:SettingsExpander Description="{ext:Locale Name=ImageSizeDescription}" Header="{ext:Locale Name=ImageSize}">
+            <labs:SettingsExpander.HeaderIcon>
+                <controls:FluentIcon Symbol="ResizeImage" />
+            </labs:SettingsExpander.HeaderIcon>
+            <labs:SettingsExpander.Items>
+                <labs:SettingsCard Header="{ext:Locale Name=Width}">
+                    <NumberBox
+                        x:Name="WidthBox"
+                        Width="200"
+                        Maximum="2048"
+                        Minimum="64"
+                        SpinButtonPlacementMode="Inline"
+                        Value="{x:Bind ViewModel.Width, Mode=TwoWay}" />
+                </labs:SettingsCard>
+                <labs:SettingsCard Header="{ext:Locale Name=Height}">
+                    <NumberBox
+                        x:Name="HeightBox"
+                        Width="200"
+                        Maximum="2048"
+                        Minimum="64"
+                        SpinButtonPlacementMode="Inline"
+                        Value="{x:Bind ViewModel.Height, Mode=TwoWay}" />
+                </labs:SettingsCard>
+            </labs:SettingsExpander.Items>
+        </labs:SettingsExpander>
+        <labs:SettingsCard Description="{ext:Locale Name=ImageModelDescription}" Header="{ext:Locale Name=ModelName}">
+            <labs:SettingsCard.HeaderIcon>
+                <controls:FluentIcon Symbol="Cube" />
+            </labs:SettingsCard.HeaderIcon>
+            <StackPanel Orientation="Horizontal" Spacing="2">
+                <ComboBox
+                    x:Name="ModelComboBox"
+                    MaxWidth="180"
+                    VerticalAlignment="Center"
+                    ItemsSource="{x:Bind _txt2imgViewModel.Models}"
+                    SelectionChanged="OnModelComboBoxSelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="image:Model">
+                            <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Button
+                    x:Name="ModelRefreshButton"
+                    Height="32"
+                    VerticalAlignment="Center"
+                    Click="OnModelRefreshButtonClickAsync"
+                    Style="{StaticResource IconButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=Refresh}">
+                    <controls:FluentIcon FontSize="14" Symbol="ArrowSync" />
+                </Button>
+            </StackPanel>
+
+        </labs:SettingsCard>
+        <labs:SettingsCard Description="{ext:Locale Name=SamplerDescription}" Header="{ext:Locale Name=Sampler}">
+            <labs:SettingsCard.HeaderIcon>
+                <controls:FluentIcon Symbol="Incognito" />
+            </labs:SettingsCard.HeaderIcon>
+            <ComboBox
+                x:Name="SamplerComboBox"
+                MaxWidth="180"
+                ItemsSource="{x:Bind _txt2imgViewModel.Samplers}"
+                SelectionChanged="OnSamplerComboBoxSelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="image:Sampler">
+                        <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </labs:SettingsCard>
+        <labs:SettingsExpander Description="{ext:Locale Name=OtherImageOptionsDescription}" Header="{ext:Locale Name=OtherOptions}">
+            <labs:SettingsExpander.HeaderIcon>
+                <controls:FluentIcon Symbol="InkStroke" />
+            </labs:SettingsExpander.HeaderIcon>
+            <labs:SettingsExpander.Items>
+                <labs:SettingsCard Header="{ext:Locale Name=ClipSkip}">
+                    <NumberBox
+                        x:Name="ClipSkipBox"
+                        Width="200"
+                        LargeChange="1"
+                        Maximum="12"
+                        Minimum="1"
+                        SmallChange="1"
+                        SpinButtonPlacementMode="Inline"
+                        Value="{x:Bind ViewModel.ClipSkip, Mode=TwoWay}" />
+                </labs:SettingsCard>
+                <labs:SettingsCard Header="{ext:Locale Name=Steps}">
+                    <NumberBox
+                        x:Name="StepsBox"
+                        Width="200"
+                        LargeChange="10"
+                        Maximum="150"
+                        Minimum="1"
+                        SmallChange="1"
+                        SpinButtonPlacementMode="Inline"
+                        Value="{x:Bind ViewModel.Steps, Mode=TwoWay}" />
+                </labs:SettingsCard>
+                <labs:SettingsCard Header="{ext:Locale Name=CFGScale}">
+                    <Slider
+                        Width="200"
+                        LargeChange="1"
+                        Maximum="30"
+                        Minimum="1"
+                        SmallChange="0.5"
+                        StepFrequency="0.5"
+                        Value="{x:Bind ViewModel.CfgScale, Mode=TwoWay}" />
+                </labs:SettingsCard>
+                <labs:SettingsCard Header="{ext:Locale Name=Seed}">
+                    <NumberBox
+                        x:Name="SeedBox"
+                        Width="200"
+                        LargeChange="10"
+                        Minimum="-1"
+                        SmallChange="1"
+                        SpinButtonPlacementMode="Hidden"
+                        Value="{x:Bind ViewModel.Seed, Mode=TwoWay}" />
+                </labs:SettingsCard>
+            </labs:SettingsExpander.Items>
+        </labs:SettingsExpander>
+    </StackPanel>
+</local:GenerateOptionsPanelBase>

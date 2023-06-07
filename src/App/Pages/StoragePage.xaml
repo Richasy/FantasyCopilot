@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:StoragePageBase
+    x:Class="FantasyCopilot.App.Pages.StoragePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:files="using:FantasyCopilot.Models.App.Files"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <DataTemplate x:Key="FileEntryTemplate" x:DataType="files:FileSearchEntry">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <controls:FluentIcon
+                    Margin="0,2,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Symbol="{x:Bind Icon}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextLineBounds="Tight"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="AudioEntryTemplate" x:DataType="files:AudioSearchEntry">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <controls:FluentIcon
+                    Margin="0,2,0,0"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Symbol="{x:Bind Icon}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Name}"
+                    TextLineBounds="Tight"
+                    TextTrimming="CharacterEllipsis" />
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="20,12,20,16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=StorageSearch}" />
+            <labs:Segmented
+                x:Name="ModulePicker"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                SelectionChanged="OnModulePickerSelectionChanged"
+                Visibility="{x:Bind CoreViewModel.IsStorageAvailable, Mode=OneWay}">
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=GenericSearch}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="Search" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=FileSearch}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="DocumentText" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=AudioSearch}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="MusicNote1" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=ImageSearch}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="Image" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+            </labs:Segmented>
+        </Grid>
+        <Grid Grid.Row="1" Visibility="{x:Bind CoreViewModel.IsStorageAvailable, Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBox
+                x:Name="GenericSearchBox"
+                Margin="20,0"
+                HorizontalAlignment="Stretch"
+                PlaceholderText="{ext:Locale Name=UserInputPlaceholderText}"
+                PreviewKeyDown="OnSearchBoxPreviewKeyDown"
+                Text="{x:Bind ViewModel.GenericKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{x:Bind ViewModel.IsGenericSearch, Mode=OneWay}" />
+            <Grid
+                x:Name="FileSearchContainer"
+                Padding="20,0"
+                ColumnSpacing="8"
+                Visibility="{x:Bind ViewModel.IsFileSearch, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+                    Width="120"
+                    VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource FileEntryTemplate}"
+                    ItemsSource="{x:Bind ViewModel.FileSearchEntries}"
+                    SelectedItem="{x:Bind ViewModel.CurrentFileSearchType, Mode=TwoWay}" />
+                <TextBox
+                    x:Name="FileSearchBox"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="{x:Bind ViewModel.CurrentFileSearchType.PlaceholderText, Mode=OneWay}"
+                    PreviewKeyDown="OnSearchBoxPreviewKeyDown"
+                    Text="{x:Bind ViewModel.FileKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Grid
+                x:Name="AudioSearchContainer"
+                Padding="20,0"
+                ColumnSpacing="8"
+                Visibility="{x:Bind ViewModel.IsAudioSearch, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ComboBox
+                    Width="120"
+                    VerticalAlignment="Stretch"
+                    ItemTemplate="{StaticResource AudioEntryTemplate}"
+                    ItemsSource="{x:Bind ViewModel.AudioSearchEntries}"
+                    SelectedItem="{x:Bind ViewModel.CurrentAudioSearchType, Mode=TwoWay}" />
+                <TextBox
+                    x:Name="AudioSearchBox"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    PlaceholderText="{x:Bind ViewModel.CurrentAudioSearchType.PlaceholderText, Mode=OneWay}"
+                    PreviewKeyDown="OnSearchBoxPreviewKeyDown"
+                    Text="{x:Bind ViewModel.AudioKeyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </Grid>
+            <Grid
+                x:Name="ImageSearchContainer"
+                Padding="20,0"
+                ColumnSpacing="8"
+                Visibility="{x:Bind ViewModel.IsImageSearch, Mode=OneWay}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <NumberBox
+                    HorizontalAlignment="Stretch"
+                    Header="{ext:Locale Name=Width}"
+                    SpinButtonPlacementMode="Hidden"
+                    Value="{x:Bind ViewModel.CurrentImageWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <NumberBox
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Header="{ext:Locale Name=Height}"
+                    SpinButtonPlacementMode="Hidden"
+                    Value="{x:Bind ViewModel.CurrentImageHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <ComboBox
+                    x:Name="ImageOrientationComboBox"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Header="{ext:Locale Name=Orientation}"
+                    SelectionChanged="OnImageOrientationSelectionChanged">
+                    <ComboBoxItem Content="{ext:Locale Name=All}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Portrait}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Landscape}" />
+                </ComboBox>
+                <ComboBox
+                    x:Name="ImageColorDepthComboBox"
+                    Grid.Column="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Header="{ext:Locale Name=ColorDepth}"
+                    SelectionChanged="OnImageColorDepthChanged">
+                    <ComboBoxItem Content="{ext:Locale Name=All}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Bit1}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Bit8}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Bit16}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Bit24}" />
+                    <ComboBoxItem Content="{ext:Locale Name=Bit32}" />
+                </ComboBox>
+                <Button
+                    Grid.Column="4"
+                    Width="32"
+                    Height="32"
+                    Padding="0"
+                    VerticalAlignment="Bottom"
+                    Command="{x:Bind ViewModel.SearchCommand}"
+                    CornerRadius="16"
+                    Style="{StaticResource AccentButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=ImageSearch}">
+                    <controls:FluentIcon
+                        FontSize="14"
+                        Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                        Symbol="Search" />
+                </Button>
+            </Grid>
+            <ProgressBar
+                Grid.Row="1"
+                Margin="20,8,20,0"
+                HorizontalAlignment="Stretch"
+                IsIndeterminate="True"
+                Visibility="{x:Bind ViewModel.IsSearching, Mode=OneWay}" />
+            <Grid Grid.Row="2" Visibility="{x:Bind ViewModel.IsInitialTipVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <ScrollViewer
+                    Margin="0,8,0,0"
+                    Padding="0"
+                    Style="{StaticResource PageScrollViewerStyle}"
+                    Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <ItemsRepeater Margin="20,8,20,12" ItemsSource="{x:Bind ViewModel.Items}">
+                        <ItemsRepeater.Layout>
+                            <StackLayout Spacing="4" />
+                        </ItemsRepeater.Layout>
+                        <ItemsRepeater.ItemTemplate>
+                            <DataTemplate x:DataType="files:FileItem">
+                                <controls:StorageSearchItem ViewModel="{x:Bind}" />
+                            </DataTemplate>
+                        </ItemsRepeater.ItemTemplate>
+                    </ItemsRepeater>
+                </ScrollViewer>
+                <controls:EmptyHolder
+                    Title="{ext:Locale Name=NoFiles}"
+                    Margin="0"
+                    Description="{ext:Locale Name=NoFilesDescription}"
+                    Emoji="&#x1F343;"
+                    Style="{StaticResource BasicEmptyHolderStyle}"
+                    Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
+            </Grid>
+            <Grid
+                Grid.Row="3"
+                Padding="20,8"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                Visibility="{x:Bind ViewModel.IsInitialTipVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                    <controls:FluentIcon
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Symbol="ArrowSort" />
+                    <TextBlock
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="{ext:Locale Name=SortBy}" />
+                    <ComboBox
+                        x:Name="SortTypeComboBox"
+                        MinWidth="120"
+                        Margin="8,0,0,0"
+                        VerticalAlignment="Center"
+                        IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                        SelectionChanged="OnSortTypeSelectionChanged">
+                        <ComboBoxItem Content="{ext:Locale Name=NameAtoZ}" />
+                        <ComboBoxItem Content="{ext:Locale Name=NameZtoA}" />
+                        <ComboBoxItem Content="{ext:Locale Name=ModifiedTime}" />
+                        <ComboBoxItem Content="{ext:Locale Name=Type}" />
+                        <ComboBoxItem Content="{ext:Locale Name=SizeLargeToSmall}" />
+                        <ComboBoxItem Content="{ext:Locale Name=SizeSmallToLarge}" />
+                    </ComboBox>
+                </StackPanel>
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                    <Run Text="{ext:Locale Name=TotalFileCount}" />
+                    <Run Text=":" />
+                    <Run Text="{x:Bind ViewModel.FileCount, Mode=OneWay}" />
+                </TextBlock>
+            </Grid>
+            <controls:EmptyHolder
+                Title="{ext:Locale Name=BeginStorageSearch}"
+                Grid.Row="2"
+                Margin="0"
+                Description="{ext:Locale Name=BeginStorageSearchDescription}"
+                Emoji="&#x1F50D;"
+                Style="{StaticResource BasicEmptyHolderStyle}"
+                Visibility="{x:Bind ViewModel.IsInitialTipVisible, Mode=OneWay}" />
+        </Grid>
+
+        <controls:EmptyHolder
+            Title="{ext:Locale Name=StorageInvalid}"
+            Grid.Row="1"
+            Grid.RowSpan="3"
+            Description="{ext:Locale Name=StorageInvalidDescription}"
+            Emoji="&#x1F648;"
+            Style="{StaticResource BasicEmptyHolderStyle}"
+            Visibility="{x:Bind CoreViewModel.IsStorageAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+    </Grid>
+</local:StoragePageBase>

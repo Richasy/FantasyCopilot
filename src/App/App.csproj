@@ -1,0 +1,478 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
+    <RootNamespace>FantasyCopilot.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x64;ARM64</Platforms>
+    <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
+    <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+    <EnableMsixTooling>true</EnableMsixTooling>
+    <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
+    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <PackageCertificateKeyFile>FantasyCopilot.App_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\FantasyCopilot_PluginConfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Assets\Azure_logo.png" />
+    <None Remove="Assets\blank.db" />
+    <None Remove="Assets\FluentIcon.ttf" />
+    <None Remove="Assets\logo.ico" />
+    <None Remove="Assets\plannerPrompt.txt" />
+    <None Remove="Controls\FavoritePromptsPanel.xaml" />
+    <None Remove="Controls\Images\CivitaiImageControl.xaml" />
+    <None Remove="Controls\Images\CivitaiImageGalleryPanel.xaml" />
+    <None Remove="Controls\Images\GenerateOptionsPanel.xaml" />
+    <None Remove="Controls\Images\TextToImagePanel.xaml" />
+    <None Remove="Controls\KnowledgeBaseSaveDialog.xaml" />
+    <None Remove="Controls\KnowledgeImportFolderDialog.xaml" />
+    <None Remove="Controls\KnowledgeListPanel.xaml" />
+    <None Remove="Controls\Knowledge\KnowledgeBaseItem.xaml" />
+    <None Remove="Controls\PromptLibraryPanel.xaml" />
+    <None Remove="Controls\SavedSessionPanel.xaml" />
+    <None Remove="Controls\SemanticSkillEditor.xaml" />
+    <None Remove="Controls\SemanticSkillPanel.xaml" />
+    <None Remove="Controls\Settings\AISettingSection.xaml" />
+    <None Remove="Controls\Settings\AzureTranslateSettingSection.xaml" />
+    <None Remove="Controls\Settings\AzureVoiceSettingSection.xaml" />
+    <None Remove="Controls\Settings\FeatureEnabledSettingSection.xaml" />
+    <None Remove="Controls\Settings\KnowledgeBaseSettingSection.xaml" />
+    <None Remove="Controls\Settings\LogSettingSection.xaml" />
+    <None Remove="Controls\Settings\StableDiffusionSettingSection.xaml" />
+    <None Remove="Controls\Settings\WorkflowSettingSection.xaml" />
+    <None Remove="Controls\SpeechRecognizePanel.xaml" />
+    <None Remove="Controls\Steps\ImageStepItem.xaml" />
+    <None Remove="Controls\Steps\InputClickStepItem.xaml" />
+    <None Remove="Controls\Steps\InputFileStepItem.xaml" />
+    <None Remove="Controls\Steps\InputTextStepItem.xaml" />
+    <None Remove="Controls\Steps\InputVoiceStepItem.xaml" />
+    <None Remove="Controls\Steps\KnowledgeStepItem.xaml" />
+    <None Remove="Controls\Steps\OutputImageStepItem.xaml" />
+    <None Remove="Controls\Steps\OutputTextStepItem.xaml" />
+    <None Remove="Controls\Steps\OutputVoiceStepItem.xaml" />
+    <None Remove="Controls\Steps\PluginStepItem.xaml" />
+    <None Remove="Controls\Steps\SemanticStepItem.xaml" />
+    <None Remove="Controls\Steps\StepItemCore.xaml" />
+    <None Remove="Controls\Steps\TextNotificationStepItem.xaml" />
+    <None Remove="Controls\Steps\TextOverwriteStepItem.xaml" />
+    <None Remove="Controls\Steps\TextResultButton.xaml" />
+    <None Remove="Controls\Steps\TextToSpeechStepItem.xaml" />
+    <None Remove="Controls\Steps\TranslateStepItem.xaml" />
+    <None Remove="Controls\Steps\VariableCreateStepItem.xaml" />
+    <None Remove="Controls\Steps\VariableRedirectStepItem.xaml" />
+    <None Remove="Controls\StorageSearchItem.xaml" />
+    <None Remove="Controls\TextToSpeechPanel.xaml" />
+    <None Remove="Controls\TipPopup.xaml" />
+    <None Remove="Controls\WorkflowEditor.xaml" />
+    <None Remove="Controls\WorkflowInputItem.xaml" />
+    <None Remove="Controls\WorkflowPanel.xaml" />
+    <None Remove="Controls\WorkflowRunner.xaml" />
+    <None Remove="Controls\WorkflowStepItem.xaml" />
+    <None Remove="Controls\Workspace\ImageSkillEditor.xaml" />
+    <None Remove="Controls\Workspace\ImageSkillPanel.xaml" />
+    <None Remove="Controls\Workspace\PluginItem.xaml" />
+    <None Remove="Controls\Workspace\PluginModulePanel.xaml" />
+    <None Remove="Controls\Workspace\WorkflowOutputItem.xaml" />
+    <None Remove="Pages\ImagePage.xaml" />
+    <None Remove="Pages\KnowledgePage.xaml" />
+    <None Remove="Pages\StoragePage.xaml" />
+    <None Remove="Pages\TranslatePage.xaml" />
+    <None Remove="Pages\VoicePage.xaml" />
+    <None Remove="Pages\WorkspacePage.xaml" />
+    <None Remove="Styles\Style.TrayResources.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\SplashScreen.scale-200.png" />
+    <Content Include="Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Assets\StoreLogo.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.SegmentedControl" Version="0.0.3" />
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.108" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.2-beta">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230502000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <!-- 
+    Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+    Tools extension to be activated for this project even if the Windows App SDK Nuget
+    package has not yet been restored.
+  -->
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libs\DI.App\DI.App.csproj" />
+    <ProjectReference Include="..\Libs\DI.Container\DI.Container.csproj" />
+    <ProjectReference Include="..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\Models\Models.Constants\Models.Constants.csproj" />
+    <ProjectReference Include="..\Services\Services.Interfaces\Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
+    <ProjectReference Include="..\ViewModels\ViewModels.Interfaces\ViewModels.Interfaces.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\InputFileStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\OutputVoiceStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\TextToSpeechStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\InputVoiceStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\TranslateStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\WorkflowRunner.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\SemanticStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\StepItemCore.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\StepItemCore.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\WorkflowInputItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\WorkflowStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\WorkflowEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\WorkflowPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\SemanticSkillEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\SemanticSkillPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\WorkspacePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\SavedSessionPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Style.TrayResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\StorageSearchItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\StoragePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\TranslatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\AzureTranslateSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\SpeechRecognizePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\TextToSpeechPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\VoicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\AzureVoiceSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\TipPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\PromptLibraryPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\FavoritePromptsPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\AISettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\InputTextStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Workspace\WorkflowOutputItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\OutputTextStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <!-- 
+    Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution 
+    Explorer "Package and Publish" context menu entry to be enabled for this project even if 
+    the Windows App SDK Nuget package has not yet been restored.
+  -->
+  <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
+    <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
+  </PropertyGroup>
+
+  <!-- Needed for implementing single instance mode. See https://blogs.windows.com/windowsdeveloper/2022/01/28/making-the-app-single-instanced-part-3 -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Controls\Steps\TextOverwriteStepItem.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Controls\Steps\TextOverwriteStepItem.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\FeatureEnabledSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Images\CivitaiImageGalleryPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\StableDiffusionSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\ImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\TextResultButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Images\CivitaiImageControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="Controls\Images\GenerateOptionsPanel.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="Controls\Images\GenerateOptionsPanel.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\WorkflowSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\PluginStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Workspace\PluginItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Workspace\PluginModulePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\KnowledgeImportFolderDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\KnowledgeBaseSaveDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\KnowledgePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\KnowledgeListPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Images\TextToImagePanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Knowledge\KnowledgeBaseItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\Prompts\" />
+    <Folder Include="Controls\Sessions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\LogSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Steps\VariableCreateStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\KnowledgeBaseSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\TextNotificationStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\VariableRedirectStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\InputClickStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\KnowledgeStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\OutputImageStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Steps\ImageStepItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Workspace\ImageSkillPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Workspace\ImageSkillEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

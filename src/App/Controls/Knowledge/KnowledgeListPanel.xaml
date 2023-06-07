@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:KnowledgeListPanelBase
+    x:Class="FantasyCopilot.App.Controls.Knowledge.KnowledgeListPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:knowledge="using:FantasyCopilot.Models.App.Knowledge"
+    xmlns:local="using:FantasyCopilot.App.Controls.Knowledge"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    IsEnabled="{x:Bind ViewModel.IsBaseCreating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Padding="20,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=KnowledgeBase}" />
+            <SplitButton
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Click="OnCreateFromFolderItemClickAsync">
+                <StackPanel
+                    Padding="0,2"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <controls:FluentIcon
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Symbol="Folder" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Text="{ext:Locale Name=CreateFromFolder}"
+                        TextLineBounds="Tight" />
+                </StackPanel>
+                <SplitButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            MinWidth="120"
+                            Click="OnCreateFromFileItemClickAsync"
+                            Text="{ext:Locale Name=CreateFromFile}">
+                            <MenuFlyoutItem.Icon>
+                                <controls:FluentIcon Symbol="Document" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                        <MenuFlyoutSeparator />
+                        <MenuFlyoutItem Click="OnImportKnowledgeBaseItemClickAsync" Text="{ext:Locale Name=ImportKnowledgeBase}">
+                            <MenuFlyoutItem.Icon>
+                                <controls:FluentIcon Symbol="Database" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
+                    </MenuFlyout>
+                </SplitButton.Flyout>
+            </SplitButton>
+        </Grid>
+
+        <ScrollViewer
+            Grid.Row="1"
+            IsEnabled="{x:Bind ViewModel.IsBaseConnecting, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+            Style="{StaticResource PageScrollViewerStyle}"
+            Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <ItemsRepeater Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.Bases, Mode=OneWay}">
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="knowledge:KnowledgeBase">
+                        <local:KnowledgeBaseItem ViewModel="{x:Bind}" />
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="4" />
+                </ItemsRepeater.Layout>
+            </ItemsRepeater>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <controls:EmptyHolder
+                Title="{ext:Locale Name=NoKnowledgeBase}"
+                Description="{ext:Locale Name=NoKnowledgeBaseDescription}"
+                Emoji="&#x1F4CE;"
+                Style="{StaticResource BasicEmptyHolderStyle}"
+                Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
+        </Grid>
+
+
+        <ProgressRing
+            Grid.Row="1"
+            IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+            Style="{StaticResource PageProgressRingStyle}" />
+
+        <StackPanel
+            Grid.Row="1"
+            Padding="20,12"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            CornerRadius="{StaticResource OverlayCornerRadius}"
+            Spacing="8"
+            Visibility="{x:Bind ViewModel.IsBaseConnecting, Mode=OneWay}">
+            <ProgressRing IsActive="{x:Bind ViewModel.IsBaseConnecting, Mode=OneWay}" Style="{StaticResource PageProgressRingStyle}" />
+            <TextBlock
+                HorizontalAlignment="Center"
+                Text="{ext:Locale Name=ConnectingDatabase}"
+                TextAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="20,0"
+            Padding="20,12"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            CornerRadius="{StaticResource OverlayCornerRadius}"
+            Spacing="8"
+            Visibility="{x:Bind ViewModel.IsBaseCreating, Mode=OneWay}">
+            <TextBlock HorizontalAlignment="Left" Text="{ext:Locale Name=CreatingKnowledgeBase}" />
+            <ProgressBar
+                HorizontalAlignment="Stretch"
+                IsIndeterminate="False"
+                Maximum="{x:Bind ViewModel.TotalFileCount, Mode=OneWay}"
+                Value="{x:Bind ViewModel.ImportedFileCount, Mode=OneWay}" />
+        </StackPanel>
+
+    </Grid>
+</local:KnowledgeListPanelBase>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:WorkflowStepControlBase
+    x:Class="FantasyCopilot.App.Controls.Steps.VariableRedirectStepItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:local="using:FantasyCopilot.App.Controls.Steps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <local:StepItemCore
+        x:Name="StepContainer"
+        StepName="{ext:Locale Name=VariableRedirect}"
+        ViewModel="{x:Bind ViewModel, Mode=OneWay}">
+        <local:StepItemCore.ConfigurationElement>
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="SourceBox"
+                    HorizontalAlignment="Stretch"
+                    LostFocus="OnSourceBoxLostFocus"
+                    PlaceholderText="{ext:Locale Name=VariableName}" />
+                <controls:FluentIcon
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Symbol="ArrowRight" />
+                <TextBox
+                    x:Name="TargetBox"
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    LostFocus="OnTargetBoxLostFocus"
+                    PlaceholderText="{ext:Locale Name=VariableName}" />
+            </Grid>
+        </local:StepItemCore.ConfigurationElement>
+    </local:StepItemCore>
+</local:WorkflowStepControlBase>

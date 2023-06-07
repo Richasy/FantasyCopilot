@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "FantasyCopilot.App (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "FantasyCopilot.App (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

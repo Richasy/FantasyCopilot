@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./assets/StoreLogo.png" width="64px"/>
+<img src="./src/App/Assets/StoreLogo.png" width="64px"/>
 </p>
 
 <div align="center">
@@ -9,8 +9,6 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Richasy/FantasyCopilot)](https://github.com/Richasy/FantasyCopilot/releases) ![GitHub Release Date](https://img.shields.io/github/release-date/Richasy/FantasyCopilot) ![GitHub All Releases](https://img.shields.io/github/downloads/Richasy/FantasyCopilot/total) ![GitHub stars](https://img.shields.io/github/stars/Richasy/FantasyCopilot?style=flat) ![GitHub forks](https://img.shields.io/github/forks/Richasy/FantasyCopilot)
 
 An exploration of mutual achievement between humans and AI.
-
-**The repository will be open-sourced after the documentation is written**
 
 </div>
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:WorkflowStepControlBase
+    x:Class="FantasyCopilot.App.Controls.Steps.PluginStepItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:FantasyCopilot.App.Controls.Steps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugins="using:FantasyCopilot.Models.App.Plugins"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Name="OptionItemTemplate" x:DataType="plugins:InputOptionItem">
+            <TextBlock Text="{x:Bind DisplayName}" />
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <local:StepItemCore x:Name="StepContainer" ViewModel="{x:Bind ViewModel, Mode=OneWay}">
+        <local:StepItemCore.ConfigurationElement>
+            <StackPanel>
+                <TextBlock
+                    x:Name="DescriptionBlock"
+                    Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                    MaxLines="2"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap">
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind DescriptionBlock.Text, Mode=OneWay}" IsEnabled="{x:Bind DescriptionBlock.IsTextTrimmed, Mode=OneWay}" />
+                    </ToolTipService.ToolTip>
+                </TextBlock>
+                <StackPanel
+                    x:Name="ControlContainer"
+                    Margin="0,4,0,0"
+                    Spacing="8"
+                    Visibility="Collapsed" />
+            </StackPanel>
+        </local:StepItemCore.ConfigurationElement>
+        <local:StepItemCore.FinishElement>
+            <local:TextResultButton ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
+        </local:StepItemCore.FinishElement>
+    </local:StepItemCore>
+</local:WorkflowStepControlBase>
