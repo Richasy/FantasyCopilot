@@ -1,0 +1,37 @@
+﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+
+using System.ComponentModel;
+using FantasyCopilot.Models.Constants;
+
+namespace FantasyCopilot.ViewModels.Interfaces;
+
+/// <summary>
+/// Interface definition for workspace page view model.
+/// </summary>
+public interface IWorkspacePageViewModel : INotifyPropertyChanged
+{
+    /// <summary>
+    /// Whether to display the workflow panel.
+    /// </summary>
+    bool IsWorkflowShown { get; }
+
+    /// <summary>
+    /// Whether to display the Semantic Skills panel.
+    /// </summary>
+    bool IsSemanticSkillShown { get; }
+
+    /// <summary>
+    /// Whether to display the Image Skills panel.
+    /// </summary>
+    bool IsImageSkillShown { get; }
+
+    /// <summary>
+    /// Whether to display the Plugin panel.
+    /// </summary>
+    bool IsPluginShown { get; }
+
+    /// <summary>
+    /// The selected type.
+    /// </summary>
+    WorkspaceDataType SelectedType { get; set; }
+}

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:PluginItemBase
+    x:Class="FantasyCopilot.App.Controls.Workspace.PluginItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugins="using:FantasyCopilot.Models.App.Plugins"
+    mc:Ignorable="d">
+
+    <Grid
+        Padding="12"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        ColumnSpacing="16"
+        CornerRadius="{ThemeResource ControlCornerRadius}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="48" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Image
+            x:Name="LogoImage"
+            Width="48"
+            Height="48"
+            VerticalAlignment="Center"
+            x:Load="{x:Bind ViewModel.Logo, Converter={StaticResource ObjectToBoolConverter}, Mode=OneWay}"
+            Stretch="Uniform" />
+
+        <FontIcon
+            x:Name="HolderIcon"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            x:Load="{x:Bind ViewModel.Logo, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+            FontFamily="Segoe UI Emoji"
+            FontSize="40"
+            Glyph="&#x1F54A;" />
+
+        <StackPanel Grid.Column="1" Spacing="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock
+                    VerticalAlignment="Center"
+                    MaxLines="1"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Name, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis" />
+                <Border
+                    Grid.Column="1"
+                    Padding="8,2"
+                    VerticalAlignment="Center"
+                    Background="{ThemeResource AccentFillColorTertiaryBrush}"
+                    CornerRadius="2"
+                    Tapped="OnCommandContainerTapped"
+                    ToolTipService.ToolTip="{ext:Locale Name=CommandCount}">
+                    <TextBlock
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}"
+                        Text="{x:Bind ViewModel.CommandCount, Mode=OneWay}" />
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout>
+                            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Commands, Mode=OneWay}">
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Spacing="8" />
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="plugins:PluginCommand">
+                                        <StackPanel HorizontalAlignment="Stretch" Spacing="2">
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                FontSize="12"
+                                                FontWeight="Bold"
+                                                Text="{x:Bind Name}" />
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                                                MaxLines="2"
+                                                Style="{StaticResource CaptionTextBlockStyle}"
+                                                Text="{x:Bind Description}"
+                                                TextTrimming="CharacterEllipsis"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                </Border>
+            </Grid>
+            <TextBlock
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                MaxLines="1"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind ViewModel.Author, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"
+                Visibility="{x:Bind ViewModel.Author, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+            <TextBlock
+                x:Name="DescriptionBlock"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                MaxLines="2"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind ViewModel.Description, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="Wrap">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind ViewModel.Description, Mode=OneWay}" IsEnabled="{x:Bind DescriptionBlock.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+        </StackPanel>
+
+        <Grid.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem
+                    Command="{x:Bind ViewModel.OpenRepositoryCommand}"
+                    IsEnabled="{x:Bind ViewModel.Repository, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"
+                    Text="{ext:Locale Name=OpenRepository}" />
+                <MenuFlyoutItem
+                    Command="{x:Bind ViewModel.OpenAuthorSiteCommand}"
+                    IsEnabled="{x:Bind ViewModel.AuthorSite, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"
+                    Text="{ext:Locale Name=OpenAuthorSite}" />
+                <MenuFlyoutItem Command="{x:Bind ViewModel.OpenPluginFolderCommand}" Text="{ext:Locale Name=OpenPluginFolder}" />
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem
+                    Click="OnDeleteItemClickAsync"
+                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                    Text="{ext:Locale Name=DeletePlugin}" />
+            </MenuFlyout>
+        </Grid.ContextFlyout>
+    </Grid>
+</local:PluginItemBase>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:WorkflowStepControlBase
+    x:Class="FantasyCopilot.App.Controls.Steps.TextOverwriteStepItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:local="using:FantasyCopilot.App.Controls.Steps"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <local:StepItemCore
+        x:Name="StepContainer"
+        StepName="{ext:Locale Name=TextOverwrite}"
+        ViewModel="{x:Bind ViewModel, Mode=OneWay}">
+        <local:StepItemCore.ConfigurationElement>
+            <StackPanel Spacing="8">
+                <TextBox
+                    x:Name="InputBox"
+                    MinHeight="60"
+                    MaxHeight="120"
+                    HorizontalAlignment="Stretch"
+                    AcceptsReturn="True"
+                    LostFocus="OnInputBoxLostFocus"
+                    PlaceholderText="{ext:Locale Name=TextOverwriteDescription}"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+        </local:StepItemCore.ConfigurationElement>
+        <local:StepItemCore.FinishElement>
+            <local:TextResultButton ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
+        </local:StepItemCore.FinishElement>
+    </local:StepItemCore>
+</local:WorkflowStepControlBase>

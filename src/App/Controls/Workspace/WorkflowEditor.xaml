@@ -1,0 +1,206 @@
+<local:WorkflowEditorBase
+    x:Class="FantasyCopilot.App.Controls.Workspace.WorkflowEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
+    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <ThemeShadow x:Name="SharedShadow" />
+    </UserControl.Resources>
+
+    <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="20,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=WorkflowEditor}" />
+            <HyperlinkButton
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.SaveCommand}"
+                Content="{ext:Locale Name=Save}" />
+        </Grid>
+        <ScrollViewer Grid.Row="1" Style="{StaticResource PageScrollViewerStyle}">
+            <StackPanel Margin="0,0,0,20">
+                <TextBox
+                    x:Name="NameBox"
+                    Margin="0,0,0,12"
+                    HorizontalAlignment="Stretch"
+                    Header="{ext:Locale Name=WorkflowName}"
+                    PlaceholderText="{ext:Locale Name=WorkflowNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.Name, Mode=TwoWay}" />
+                <TextBox
+                    x:Name="DescriptionBox"
+                    Height="80"
+                    Margin="0,0,0,12"
+                    HorizontalAlignment="Stretch"
+                    Header="{ext:Locale Name=WorkflowGoal}"
+                    PlaceholderText="{ext:Locale Name=WorkflowGoalPlaceholderText}"
+                    Text="{x:Bind ViewModel.Goal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap" />
+
+                <Grid Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="{ext:Locale Name=Input}" />
+                    <HyperlinkButton
+                        x:Name="ResetInputButton"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Click="OnResetInputButtonClick"
+                        Content="{ext:Locale Name=Reset}"
+                        FontSize="12"
+                        Visibility="{x:Bind ViewModel.Input, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                </Grid>
+
+                <Button
+                    x:Name="AddInputButton"
+                    MinWidth="160"
+                    HorizontalAlignment="Left"
+                    Visibility="{x:Bind ViewModel.Input, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <controls:FluentIcon
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Symbol="StreamInput" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{ext:Locale Name=AddInput}"
+                            TextLineBounds="Tight" />
+                    </StackPanel>
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="InputFlyout" Placement="Bottom" />
+                    </Button.Flyout>
+                </Button>
+
+                <local:WorkflowInputItem ViewModel="{x:Bind ViewModel.Input, Mode=OneWay}" Visibility="{x:Bind ViewModel.Input, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+
+                <TextBlock
+                    Margin="0,12,0,4"
+                    HorizontalAlignment="Left"
+                    Text="{ext:Locale Name=Steps}" />
+
+                <ItemsRepeater
+                    Margin="0,0,0,8"
+                    ItemsSource="{x:Bind ViewModel.Steps}"
+                    Visibility="{x:Bind ViewModel.IsStepEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="4" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="interfaces:IWorkflowStepViewModel">
+                            <local:WorkflowStepItem ViewModel="{x:Bind}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+
+                <Button
+                    x:Name="AddStepButton"
+                    MinWidth="160"
+                    HorizontalAlignment="Left"
+                    IsEnabled="{x:Bind ViewModel.IsStepCommandsLoading, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="StepFlyout" />
+                    </Button.Flyout>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <controls:FluentIcon
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Symbol="Add" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{ext:Locale Name=AddStep}"
+                            TextLineBounds="Tight" />
+                    </StackPanel>
+                </Button>
+
+                <Grid Margin="0,12,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Text="{ext:Locale Name=Output}" />
+                    <HyperlinkButton
+                        x:Name="ResetOutputButton"
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        Click="OnResetOutputButtonClick"
+                        Content="{ext:Locale Name=Reset}"
+                        FontSize="12"
+                        Visibility="{x:Bind ViewModel.Output, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+                </Grid>
+
+                <Button
+                    x:Name="AddOutputButton"
+                    MinWidth="160"
+                    HorizontalAlignment="Left"
+                    Visibility="{x:Bind ViewModel.Output, Mode=OneWay, Converter={StaticResource ObjectToVisibilityReverseConverter}}">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="OutputFlyout" Placement="Bottom" />
+                    </Button.Flyout>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <controls:FluentIcon
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Symbol="StreamOutput" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Text="{ext:Locale Name=AddOutput}"
+                            TextLineBounds="Tight" />
+                    </StackPanel>
+                </Button>
+
+                <local:WorkflowOutputItem ViewModel="{x:Bind ViewModel.Output, Mode=OneWay}" Visibility="{x:Bind ViewModel.Output, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <Grid x:Name="ShadowHost" Grid.Row="1" />
+        <Button
+            x:Name="InspireButton"
+            Grid.Row="1"
+            Width="40"
+            Height="40"
+            Margin="0,0,20,20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Command="{x:Bind ViewModel.InspireCommand}"
+            CornerRadius="{StaticResource ControlCornerRadius}"
+            IsEnabled="{x:Bind ViewModel.IsInspiring, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+            Shadow="{StaticResource SharedShadow}"
+            ToolTipService.ToolTip="{ext:Locale Name=InspireMe}"
+            Visibility="{x:Bind ViewModel.IsInspireButtonShown, Mode=OneWay}">
+            <Grid>
+                <controls:FluentIcon Symbol="Wand" Visibility="{x:Bind ViewModel.IsInspiring, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+                <ProgressRing
+                    Width="16"
+                    Height="16"
+                    MinWidth="16"
+                    MinHeight="16"
+                    IsActive="{x:Bind ViewModel.IsInspiring, Mode=OneWay}" />
+            </Grid>
+        </Button>
+    </Grid>
+</local:WorkflowEditorBase>

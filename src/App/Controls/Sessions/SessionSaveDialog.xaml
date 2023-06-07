@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="FantasyCopilot.App.Controls.Sessions.SessionSaveDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{ext:Locale Name=SaveSession}"
+    CloseButtonText="{ext:Locale Name=Cancel}"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClickAsync"
+    PrimaryButtonText="{ext:Locale Name=Save}"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <StackPanel MaxWidth="360" Spacing="12">
+        <TextBox
+            x:Name="TitleBox"
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=Title}"
+            PlaceholderText="{ext:Locale Name=SessionTitlePlaceholder}" />
+        <TextBox
+            x:Name="DescriptionBox"
+            Height="120"
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=Description}"
+            PlaceholderText="{ext:Locale Name=SessionDescriptionPlaceholder}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</ContentDialog>

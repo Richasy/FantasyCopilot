@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:ImagePageBase
+    x:Class="FantasyCopilot.App.Pages.ImagePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:images="using:FantasyCopilot.App.Controls.Images"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="20,12,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=ImageService}" />
+            <labs:Segmented
+                x:Name="ModulePicker"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                IsEnabled="{x:Bind CoreViewModel.IsImageAvailable, Mode=OneWay}"
+                SelectionChanged="OnModulePickerSelectionChanged">
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=TextToImage}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="ImageAltText" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=ImageGallery}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="ImageGlobe" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+            </labs:Segmented>
+        </Grid>
+
+        <Grid
+            x:Name="ContentContainer"
+            Grid.Row="1"
+            x:Load="{x:Bind CoreViewModel.IsImageAvailable, Mode=OneWay}">
+            <images:TextToImagePanel x:Name="Text2ImagePanel" x:Load="{x:Bind ViewModel.IsTextToImageSelected, Mode=OneWay}" />
+            <images:CivitaiImageGalleryPanel x:Name="ImageGalleryPanel" x:Load="{x:Bind ViewModel.IsGallerySelected, Mode=OneWay}" />
+        </Grid>
+
+        <controls:EmptyHolder
+            x:Name="InvalidContainer"
+            Title="{ext:Locale Name=ImageServiceInvalid}"
+            Grid.Row="1"
+            Margin="0,-20,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Description="{ext:Locale Name=ImageServiceInvalidDescription}"
+            Emoji="&#x1FA7A;"
+            Visibility="{x:Bind CoreViewModel.IsImageAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+    </Grid>
+</local:ImagePageBase>

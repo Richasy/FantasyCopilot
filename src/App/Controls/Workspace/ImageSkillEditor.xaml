@@ -1,0 +1,109 @@
+<local:ImageSkillEditorBase
+    x:Class="FantasyCopilot.App.Controls.Workspace.ImageSkillEditor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:images="using:FantasyCopilot.App.Controls.Images"
+    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=ImageSkillEditor}" />
+            <HyperlinkButton
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Command="{x:Bind ViewModel.SaveCommand, Mode=OneWay}"
+                Content="{ext:Locale Name=Save}"
+                IsEnabled="{x:Bind ViewModel.IsDisconnected, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+        </Grid>
+        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <ScrollViewer
+                Padding="12,0"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Auto"
+                Visibility="{x:Bind ViewModel.IsDisconnected, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <StackPanel Margin="0,0,0,12" Spacing="12">
+                    <TextBox
+                        x:Name="NameBox"
+                        HorizontalAlignment="Stretch"
+                        Header="{ext:Locale Name=SkillName}"
+                        PlaceholderText="{ext:Locale Name=SkillNamePlaceholderText}"
+                        Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox
+                        x:Name="DescriptionBox"
+                        Height="80"
+                        HorizontalAlignment="Stretch"
+                        Header="{ext:Locale Name=SkillDescription}"
+                        PlaceholderText="{ext:Locale Name=SkillDescriptionPlaceholderText}"
+                        Text="{x:Bind ViewModel.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="PromptBox"
+                        MinHeight="60"
+                        MaxHeight="180"
+                        HorizontalAlignment="Stretch"
+                        AcceptsReturn="True"
+                        Header="{ext:Locale Name=Prompt}"
+                        PlaceholderText="{ext:Locale Name=ImagePromptPlaceholderText}"
+                        Text="{x:Bind ViewModel.Prompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                    <TextBox
+                        x:Name="NegativePromptBox"
+                        MinHeight="60"
+                        MaxHeight="180"
+                        HorizontalAlignment="Stretch"
+                        AcceptsReturn="True"
+                        Header="{ext:Locale Name=NegativePrompt}"
+                        PlaceholderText="{ext:Locale Name=ImageNegativePromptPlaceholderText}"
+                        Text="{x:Bind ViewModel.NegativePrompt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap" />
+                    <images:GenerateOptionsPanel x:Name="OptionsPanel" ViewModel="{x:Bind ViewModel.Options, Mode=OneWay}" />
+                </StackPanel>
+            </ScrollViewer>
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="8"
+                Visibility="{x:Bind ViewModel.IsDisconnected, Mode=OneWay}">
+                <controls:FluentIcon
+                    HorizontalAlignment="Center"
+                    FontSize="32"
+                    Symbol="PlugDisconnected" />
+                <TextBlock
+                    MaxWidth="160"
+                    HorizontalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{ext:Locale Name=ImageServiceDisconnected}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton
+                    HorizontalAlignment="Center"
+                    Command="{x:Bind ViewModel.InitializeCommand}"
+                    Content="{ext:Locale Name=Reconnect}"
+                    FontSize="12" />
+            </StackPanel>
+        </Grid>
+        <ProgressRing
+            Grid.Row="1"
+            IsActive="{x:Bind ViewModel.IsInitializing, Mode=OneWay}"
+            Style="{StaticResource PageProgressRingStyle}" />
+    </Grid>
+</local:ImageSkillEditorBase>

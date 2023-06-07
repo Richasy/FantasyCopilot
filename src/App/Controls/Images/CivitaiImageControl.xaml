@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:CivitaiImageControlBase
+    x:Class="FantasyCopilot.App.Controls.Images.CivitaiImageControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Controls.Images"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style
+            x:Key="DetailHeaderTextStyle"
+            BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style
+            x:Key="DetailBodyTextStyle"
+            BasedOn="{StaticResource CaptionTextBlockStyle}"
+            TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="LineHeight" Value="20" />
+            <Setter Property="IsTextSelectionEnabled" Value="True" />
+        </Style>
+        <Style x:Key="TextGroupStyle" TargetType="StackPanel">
+            <Setter Property="Spacing" Value="4" />
+            <Setter Property="Padding" Value="0,4" />
+            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+        </Style>
+    </UserControl.Resources>
+
+    <Button
+        Padding="0"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        HorizontalContentAlignment="Stretch"
+        VerticalContentAlignment="Stretch"
+        BorderThickness="0"
+        Command="{x:Bind ViewModel.OpenInBrowserCommand, Mode=OneWay}">
+        <Button.ContextFlyout>
+            <MenuFlyout>
+                <MenuFlyoutItem
+                    x:Name="NavigateToItem"
+                    Command="{x:Bind ViewModel.NavigateToText2ImageCommand, Mode=OneWay}"
+                    IsEnabled="{x:Bind ViewModel.HasMetadata, Mode=OneWay}"
+                    Text="{ext:Locale Name=OpenInText2ImageModule}">
+                    <MenuFlyoutItem.Icon>
+                        <controls:FluentIcon Symbol="ImageEdit" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem
+                    x:Name="SaveImageItem"
+                    Command="{x:Bind ViewModel.SaveImageCommand, Mode=OneWay}"
+                    Text="{ext:Locale Name=SaveImage}">
+                    <MenuFlyoutItem.Icon>
+                        <controls:FluentIcon Symbol="Save" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+            </MenuFlyout>
+        </Button.ContextFlyout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid x:Name="ImageContainer" Visibility="Collapsed">
+                <Image
+                    x:Name="ImageControl"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ImageFailed="OnImageFailed"
+                    ImageOpened="OnImageOpened"
+                    Stretch="UniformToFill" />
+            </Grid>
+            <controls:FluentIcon
+                x:Name="ImageErrorIcon"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="20"
+                Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                Symbol="ImageOff"
+                Visibility="Collapsed" />
+            <labs:Shimmer
+                x:Name="ImageLoadingShimmer"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch" />
+
+            <Grid Grid.Row="1" Padding="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Spacing="4">
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <controls:FluentIcon
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Symbol="Person" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind ViewModel.UserName, Mode=OneWay}"
+                            TextLineBounds="Tight"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="4">
+                        <controls:FluentIcon
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Symbol="Clock" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind ViewModel.CreateTime, Mode=OneWay}"
+                            TextLineBounds="Tight" />
+                    </StackPanel>
+                </StackPanel>
+                <Button
+                    Grid.Column="1"
+                    Margin="12,0,0,0"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource IconButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=HasImageMetadata}"
+                    Visibility="{x:Bind ViewModel.HasMetadata, Mode=OneWay}">
+                    <controls:FluentIcon
+                        Grid.Column="1"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Symbol="Info" />
+                    <Button.Flyout>
+                        <Flyout>
+                            <StackPanel MaxWidth="240">
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.Prompt, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=Prompt}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.Prompt, Mode=OneWay}" />
+                                </StackPanel>
+
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.NegativePrompt, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=NegativePrompt}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.NegativePrompt, Mode=OneWay}" />
+                                </StackPanel>
+
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.Sampler, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=Sampler}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.Sampler, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.Model, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=ModelName}" />
+                                    <Grid ColumnSpacing="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource DetailBodyTextStyle}"
+                                            Text="{x:Bind ViewModel.Model, Mode=OneWay}" />
+                                        <HyperlinkButton
+                                            Grid.Column="1"
+                                            Padding="2"
+                                            Command="{x:Bind ViewModel.SearchModelCommand, Mode=OneWay}"
+                                            ToolTipService.ToolTip="{ext:Locale Name=ModelSearch}">
+                                            <controls:FluentIcon FontSize="12" Symbol="Search" />
+                                        </HyperlinkButton>
+                                    </Grid>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.CfgScale, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=CFGScale}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.CfgScale, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.Steps, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=Steps}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.Steps, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.Seed, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=Seed}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.Seed, Mode=OneWay}" />
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource TextGroupStyle}" Visibility="{x:Bind ViewModel.ClipSkip, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                                    <TextBlock Style="{StaticResource DetailHeaderTextStyle}" Text="{ext:Locale Name=ClipSkip}" />
+                                    <TextBlock Style="{StaticResource DetailBodyTextStyle}" Text="{x:Bind ViewModel.ClipSkip, Mode=OneWay}" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </Grid>
+        </Grid>
+    </Button>
+</local:CivitaiImageControlBase>

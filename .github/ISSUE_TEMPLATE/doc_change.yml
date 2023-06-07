@@ -1,0 +1,46 @@
+name: Document change
+description: Suggestions or questions about documentation
+title: "[Doc] My title"
+labels:
+  - "documentation"
+assignees: Richasy
+body:
+- type: markdown
+  attributes: 
+    value: |
+      ## Written at the beginning
+      🚨 Please make sure to fill in all the necessary information below. If any essential information is missing, the developer may close the issue without further investigation. 🚨
+
+- type: textarea
+  id: problem-description
+  validations: 
+    required: true
+  attributes: 
+    label: Description
+    description: Describe the problem with the current document
+    placeholder: |
+      Please describe the problems you have encountered and why they have caused you trouble.
+
+- type: textarea
+  id: expect-document
+  validations: 
+    required: true
+  attributes: 
+    label: Expected content
+    description: Tell us what you expect the document to be about for this question
+    placeholder: |
+      Please describe the expected content of the document as clearly as possible. This will help the developers make modifications that meet your expectations.
+
+- type: textarea
+  id: alternatives
+  attributes: 
+    label: Corresponding document
+    description: If the documentation already exists, add a link to the documentation
+    placeholder: |
+      ![Document title](https://document_link)
+
+- type: textarea
+  id: additional-info
+  attributes:
+    label: Extra information
+    description: Add some notes you think are necessary, or show some sketches that show your ideas

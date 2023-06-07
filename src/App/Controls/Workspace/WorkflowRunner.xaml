@@ -1,0 +1,83 @@
+<local:WorkflowRunnerBase
+    x:Class="FantasyCopilot.App.Controls.Workspace.WorkflowRunner"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
+    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="20,8,20,4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Spacing="4">
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{StaticResource SubtitleTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Name, Mode=OneWay}" />
+                <TextBlock
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    MaxLines="2"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Description, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+            </StackPanel>
+
+            <HyperlinkButton
+                Grid.Column="1"
+                Margin="12,0,0,0"
+                VerticalAlignment="Top"
+                Command="{x:Bind ViewModel.CancelCommand}"
+                Content="{ext:Locale Name=Cancel}"
+                Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay}" />
+        </Grid>
+        <ScrollViewer Grid.Row="1" Style="{StaticResource PageScrollViewerStyle}">
+            <StackPanel Margin="0,0,0,20">
+                <InfoBar
+                    IsClosable="True"
+                    IsIconVisible="False"
+                    IsOpen="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"
+                    Message="{x:Bind ViewModel.ErrorText, Mode=OneWay}"
+                    Severity="Error" />
+
+                <local:WorkflowInputItem
+                    Margin="0,0,0,12"
+                    IsEnabled="{x:Bind ViewModel.IsRunning, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                    ViewModel="{x:Bind ViewModel.Input, Mode=OneWay}" />
+
+                <TextBlock
+                    Margin="0,0,0,4"
+                    HorizontalAlignment="Left"
+                    Text="{ext:Locale Name=Steps}" />
+
+                <ItemsRepeater ItemsSource="{x:Bind ViewModel.Steps}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="4" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="interfaces:IWorkflowStepViewModel">
+                            <local:WorkflowStepItem ViewModel="{x:Bind}" />
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+
+                <local:WorkflowOutputItem
+                    Margin="0,12,0,0"
+                    IsEnabled="{x:Bind ViewModel.IsRunning, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
+                    ViewModel="{x:Bind ViewModel.Output, Mode=OneWay}"
+                    Visibility="{x:Bind ViewModel.Output, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</local:WorkflowRunnerBase>

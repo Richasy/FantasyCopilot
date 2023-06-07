@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:VoicePageBase
+    x:Class="FantasyCopilot.App.Pages.VoicePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Margin="20,12,20,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Text="{ext:Locale Name=VoiceService}" />
+            <labs:Segmented
+                x:Name="ModulePicker"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                IsEnabled="{x:Bind CoreViewModel.IsVoiceAvailable, Mode=OneWay}"
+                SelectionChanged="OnModulePickerSelectionChanged">
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=TextToSpeech}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="ReadAloud" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+                <labs:SegmentedItem ToolTipService.ToolTip="{ext:Locale Name=SpeechRecognition}">
+                    <labs:SegmentedItem.Icon>
+                        <controls:FluentIcon Symbol="CommentEdit" />
+                    </labs:SegmentedItem.Icon>
+                </labs:SegmentedItem>
+            </labs:Segmented>
+        </Grid>
+
+        <Grid Grid.Row="1" Visibility="{x:Bind CoreViewModel.IsVoiceAvailable, Mode=OneWay}">
+            <controls:TextToSpeechPanel x:Name="TTSPanel" x:Load="{x:Bind ViewModel.IsTextToSpeechSelected, Mode=OneWay}" />
+            <controls:SpeechRecognizePanel x:Name="RecognizePanel" x:Load="{x:Bind ViewModel.IsTextToSpeechSelected, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}" />
+        </Grid>
+
+        <controls:EmptyHolder
+            x:Name="InvalidContainer"
+            Title="{ext:Locale Name=VoiceInvalid}"
+            Grid.Row="1"
+            Description="{ext:Locale Name=VoiceInvalidDescription}"
+            Emoji="&#x1F923;"
+            Style="{StaticResource BasicEmptyHolderStyle}"
+            Visibility="{x:Bind CoreViewModel.IsVoiceAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+    </Grid>
+</local:VoicePageBase>
