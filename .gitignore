@@ -361,3 +361,6 @@ FodyWeavers.xsd
 
 # Tools
 tools/Prompt.txt
+
+# Plugin package
+*.fcpkg
