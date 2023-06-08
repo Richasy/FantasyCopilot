@@ -38,6 +38,11 @@ public interface IPluginItemViewModel : INotifyPropertyChanged
     string AuthorSite { get; }
 
     /// <summary>
+    /// Plugin version.
+    /// </summary>
+    string Version { get; }
+
+    /// <summary>
     /// Plugin logo.
     /// </summary>
     string Logo { get; }

@@ -103,6 +103,7 @@
 
         <Grid.ContextFlyout>
             <MenuFlyout>
+                <MenuFlyoutItem IsEnabled="False" Text="{x:Bind ViewModel.Version, Mode=OneWay}" />
                 <MenuFlyoutItem
                     Command="{x:Bind ViewModel.OpenRepositoryCommand}"
                     IsEnabled="{x:Bind ViewModel.Repository, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"

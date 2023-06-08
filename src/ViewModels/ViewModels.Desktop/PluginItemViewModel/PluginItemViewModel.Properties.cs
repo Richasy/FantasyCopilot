@@ -35,6 +35,9 @@ public sealed partial class PluginItemViewModel
     [ObservableProperty]
     private int _commandCount;
 
+    [ObservableProperty]
+    private string _version;
+
     /// <inheritdoc/>
     public ObservableCollection<IPluginCommandItemViewModel> Commands { get; set; }
 }
