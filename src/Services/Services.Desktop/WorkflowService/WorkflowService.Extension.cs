@@ -168,15 +168,36 @@ public sealed partial class WorkflowService
 
                     if (_source.Output.ContextItems?.Any() ?? false)
                     {
-                        foreach (var item in _source.Output.ContextItems)
+                        if (_source.Output.ContextItems.Any(p => p.Key == "*"))
                         {
-                            if ((context.Variables.ContainsKey(item.Key) && !item.Override)
-                                || !jdoc.TryGetProperty(item.Key, out var v))
-                            {
-                                continue;
-                            }
+                            var theItem = _source.Output.ContextItems.First(p => p.Key == "*");
 
-                            context.Variables.Set(item.VariableName, v.GetRawText());
+                            // Store all items.
+                            var enumObj = jdoc.EnumerateObject();
+                            while (enumObj.MoveNext())
+                            {
+                                var current = enumObj.Current;
+                                if ((context.Variables.ContainsKey(current.Name) && !theItem.Override)
+                                    || !jdoc.TryGetProperty(current.Name, out var v))
+                                {
+                                    continue;
+                                }
+
+                                context.Variables.Set(current.Name, v.GetRawText());
+                            }
+                        }
+                        else
+                        {
+                            foreach (var item in _source.Output.ContextItems)
+                            {
+                                if ((context.Variables.ContainsKey(item.Key) && !item.Override)
+                                    || !jdoc.TryGetProperty(item.Key, out var v))
+                                {
+                                    continue;
+                                }
+
+                                context.Variables.Set(item.VariableName, v.GetRawText());
+                            }
                         }
                     }
                 }

@@ -24,7 +24,7 @@ public sealed partial class PluginItemViewModel : ViewModelBase, IPluginItemView
     /// Initializes a new instance of the <see cref="PluginItemViewModel"/> class.
     /// </summary>
     public PluginItemViewModel()
-        => Commands = new ObservableCollection<PluginCommand>();
+        => Commands = new ObservableCollection<IPluginCommandItemViewModel>();
 
     /// <inheritdoc/>
     public void InjectData(PluginConfig config)
@@ -37,11 +37,14 @@ public sealed partial class PluginItemViewModel : ViewModelBase, IPluginItemView
         Logo = config.LogoUrl;
         Repository = config.Repository;
         CommandCount = config.Commands?.Count ?? 0;
+        Version = config.Version;
         if (CommandCount > 0)
         {
             foreach (var item in config.Commands)
             {
-                Commands.Add(item);
+                var vm = Locator.Current.GetService<IPluginCommandItemViewModel>();
+                vm.InjectData(item);
+                Commands.Add(vm);
             }
         }
     }

@@ -194,7 +194,7 @@ public class InputParameter
     public string Name { get; set; }
 
     /// <summary>
-    /// The parameter name.
+    /// The parameter description.
     /// </summary>
     [JsonPropertyName("description")]
     public string Description { get; set; }

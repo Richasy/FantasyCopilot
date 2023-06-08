@@ -2,7 +2,7 @@
 
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App.Plugins;
+using FantasyCopilot.ViewModels.Interfaces;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -35,6 +35,9 @@ public sealed partial class PluginItemViewModel
     [ObservableProperty]
     private int _commandCount;
 
+    [ObservableProperty]
+    private string _version;
+
     /// <inheritdoc/>
-    public ObservableCollection<PluginCommand> Commands { get; set; }
+    public ObservableCollection<IPluginCommandItemViewModel> Commands { get; set; }
 }

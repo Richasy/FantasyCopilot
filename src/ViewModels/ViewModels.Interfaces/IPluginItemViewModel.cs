@@ -38,6 +38,11 @@ public interface IPluginItemViewModel : INotifyPropertyChanged
     string AuthorSite { get; }
 
     /// <summary>
+    /// Plugin version.
+    /// </summary>
+    string Version { get; }
+
+    /// <summary>
     /// Plugin logo.
     /// </summary>
     string Logo { get; }
@@ -55,7 +60,7 @@ public interface IPluginItemViewModel : INotifyPropertyChanged
     /// <summary>
     /// Plugin commands.
     /// </summary>
-    ObservableCollection<PluginCommand> Commands { get; }
+    ObservableCollection<IPluginCommandItemViewModel> Commands { get; }
 
     /// <summary>
     /// Open the repository for the plugin.

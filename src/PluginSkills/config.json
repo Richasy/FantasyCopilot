@@ -1,112 +1,212 @@
 {
-    "schema_version": 1,
-    "package_name": "{{$packageName}}",
-    "package_desc": "{{$packageDescription}}",
-    "package_id": "com.richasy.fantasycopilot.core",
-    "version": "0.0.1",
-    "author": "Richasy",
-    "author_site": "https://github.com/Richasy",
-    "repository": "https://github.com/Richasy/FantasyCopilot",
-    "logo_url": "https://img1.imgtp.com/2023/06/03/zTmYqHs7.png",
-    "commands": [
+  "schema_version": 1,
+  "package_name": "{{$packageName}}",
+  "package_desc": "{{$packageDescription}}",
+  "package_id": "com.richasy.fantasycopilot.core",
+  "version": "0.0.1",
+  "author": "Richasy",
+  "author_site": "https://github.com/Richasy",
+  "repository": "https://github.com/Richasy/FantasyCopilot",
+  "logo_url": "https://img1.imgtp.com/2023/06/03/zTmYqHs7.png",
+  "commands": [
+    {
+      "command_name": "{{$fileRead}}",
+      "command_desc": "{{$fileReadDesc}}",
+      "command_id": "91A18E33-B19D-B071-0162-7467C574E831",
+      "category": "file",
+      "only_final_output": false,
+      "execute_name": "FileRead.exe",
+      "output": {
+        "type": "plain"
+      }
+    },
+    {
+      "command_name": "{{$getWebContent}}",
+      "command_desc": "{{$getWebContentDesc}}",
+      "command_id": "69A32121-587B-8951-84E5-8EFEF97FB496",
+      "category": "web",
+      "only_final_output": false,
+      "parameters": [
         {
-            "command_name": "{{$fileRead}}",
-            "command_desc": "{{$fileReadDesc}}",
-            "command_id": "91A18E33-B19D-B071-0162-7467C574E831",
-            "category": "file",
-            "only_final_output": false,
-            "execute_name": "FileRead.exe",
-            "output": {
-                "type": "plain"
-            }
+          "id": "CORE_GWC_TYPE",
+          "name": "Type",
+          "description": "Select whether the output method is readable text or full-html"
         },
         {
-            "command_name": "{{$getWebContent}}",
-            "command_desc": "{{$getWebContentDesc}}",
-            "command_id": "69A32121-587B-8951-84E5-8EFEF97FB496",
-            "category": "web",
-            "only_final_output": false,
-            "parameters": [
-                {
-                    "id": "CORE_GWC_TYPE",
-                    "name": "Type",
-                    "description": "Select whether the output method is readable text or full-html"
-                },
-                {
-                    "id": "CORE_GWC_ONLYTEXT",
-                    "name": "OnlyText"
-                }
-            ],
-            "config_set": [
-                {
-                    "type": "option",
-                    "variable_name": "CORE_GWC_TYPE",
-                    "default_value": "readable",
-                    "title": "{{$outputType}}",
-                    "options": [
-                        {
-                            "id": "readable",
-                            "display_name": "{{$readableContent}}"
-                        },
-                        {
-                            "id": "html",
-                            "display_name": "{{$htmlContent}}"
-                        }
-                    ]
-                },
-                {
-                    "type": "option",
-                    "variable_name": "CORE_GWC_ONLYTEXT",
-                    "default_value": "true",
-                    "title": "{{$onlyText}}",
-                    "options": [
-                        {
-                            "id": "true",
-                            "display_name": "{{$true}}"
-                        },
-                        {
-                            "id": "false",
-                            "display_name": "{{$false}}"
-                        }
-                    ]
-                }
-            ],
-            "execute_name": "GetWebContent.exe",
-            "output": {
-                "type": "plain"
+          "id": "CORE_GWC_ONLYTEXT",
+          "name": "OnlyText"
+        }
+      ],
+      "config_set": [
+        {
+          "type": "option",
+          "variable_name": "CORE_GWC_TYPE",
+          "default_value": "readable",
+          "title": "{{$outputType}}",
+          "options": [
+            {
+              "id": "readable",
+              "display_name": "{{$readableContent}}"
+            },
+            {
+              "id": "html",
+              "display_name": "{{$htmlContent}}"
             }
-        }
-    ],
-    "resources": {
-        "en": {
-            "packageName": "Core Library",
-            "packageDescription": "Provides a set of basic native actions for Fantasy Copilot.",
-            "fileRead": "Read file",
-            "fileReadDesc": "Read the contents of the text file and output it.",
-            "inputDesc": "The path to the text file",
-            "getWebContent": "Get web content",
-            "getWebContentDesc": "Get the content of the web page from a link.",
-            "outputType": "Output type",
-            "readableContent": "Article content",
-            "htmlContent": "Full HTML",
-            "onlyText": "Only plain text is output",
-            "true": "Yes",
-            "false": "No"
+          ]
         },
-        "zh": {
-            "packageName": "核心库",
-            "packageDescription": "为小幻助理提供一组基础的本机操作",
-            "fileRead": "读取文件",
-            "fileReadDesc": "读取文本文件，并输出文本内容.",
-            "inputDesc": "文本文件的路径",
-            "getWebContent": "获取网页内容",
-            "getWebContentDesc": "解析网址，获取网页内容，并按预设的选项输出.",
-            "outputType": "输出类型",
-            "readableContent": "文章内容",
-            "htmlContent": "全部 HTML",
-            "onlyText": "仅输出纯文本",
-            "true": "是",
-            "false": "否"
+        {
+          "type": "option",
+          "variable_name": "CORE_GWC_ONLYTEXT",
+          "default_value": "true",
+          "title": "{{$onlyText}}",
+          "options": [
+            {
+              "id": "true",
+              "display_name": "{{$true}}"
+            },
+            {
+              "id": "false",
+              "display_name": "{{$false}}"
+            }
+          ]
         }
+      ],
+      "execute_name": "GetWebContent.exe",
+      "output": {
+        "type": "plain"
+      }
+    },
+    {
+      "command_name": "{{$textParser}}",
+      "command_desc": "{{$textParserDesc}}",
+      "command_id": "CBFA92D7-7FB6-4FA6-8345-9D2B707674CA",
+      "category": "text",
+      "only_final_output": true,
+      "parameters": [
+        {
+          "id": "CORE_TP_TYPE",
+          "name": "Type",
+          "description": "The type of text entered"
+        }
+      ],
+      "config_set": [
+        {
+          "type": "option",
+          "variable_name": "CORE_TP_TYPE",
+          "default_value": "kv",
+          "title": "{{$textType}}",
+          "options": [
+            {
+              "id": "kv",
+              "display_name": "{{$keyAndValue}}"
+            },
+            {
+              "id": "json",
+              "display_name": "JSON"
+            },
+            {
+              "id": "yaml",
+              "display_name": "YAML"
+            }
+          ]
+        }
+      ],
+      "execute_name": "TextParser.exe",
+      "output": {
+        "type": "json",
+        "context_items": [
+          {
+            "key": "*",
+            "override": true
+          }
+        ]
+      }
+    },
+    {
+      "command_name": "{{$clipboard}}",
+      "command_desc": "{{$clipboardDesc}}",
+      "command_id": "B9167814-1E71-4604-8FC1-58DB6B259F09",
+      "category": "text",
+      "only_final_output": true,
+      "parameters": [
+        {
+          "id": "CORE_CB_TYPE",
+          "name": "Type",
+          "description": "Read or write to the clipboard"
+        }
+      ],
+      "config_set": [
+        {
+          "type": "option",
+          "variable_name": "CORE_CB_TYPE",
+          "default_value": "get",
+          "title": "{{$operationType}}",
+          "options": [
+            {
+              "id": "get",
+              "display_name": "{{$read}}"
+            },
+            {
+              "id": "set",
+              "display_name": "{{$write}}"
+            }
+          ]
+        }
+      ],
+      "execute_name": "Clipboard.exe",
+      "output": {
+        "type": "plain"
+      }
     }
+  ],
+  "resources": {
+    "en": {
+      "packageName": "Core Library",
+      "packageDescription": "Provides a set of basic native actions for Fantasy Copilot.",
+      "fileRead": "Read file",
+      "fileReadDesc": "Read the contents of the text file and output it.",
+      "inputDesc": "The path to the text file",
+      "getWebContent": "Get web content",
+      "getWebContentDesc": "Get the content of the web page from a link.",
+      "outputType": "Output type",
+      "readableContent": "Article content",
+      "htmlContent": "Full HTML",
+      "onlyText": "Only plain text is output",
+      "true": "Yes",
+      "false": "No",
+      "textParser": "Text parser",
+      "textParserDesc": "Parses the incoming text into JSON and stores the key-value pairs into the workflow context",
+      "textType": "Text type",
+      "keyAndValue": "Key:Value",
+      "clipboard": "Clipboard",
+      "clipboardDesc": "Read or write text to the clipboard",
+      "read": "Read",
+      "write": "Write",
+      "operationType": "Operation"
+    },
+    "zh": {
+      "packageName": "核心库",
+      "packageDescription": "为小幻助理提供一组基础的本机操作",
+      "fileRead": "读取文件",
+      "fileReadDesc": "读取文本文件，并输出文本内容.",
+      "inputDesc": "文本文件的路径",
+      "getWebContent": "获取网页内容",
+      "getWebContentDesc": "解析网址，获取网页内容，并按预设的选项输出.",
+      "outputType": "输出类型",
+      "readableContent": "文章内容",
+      "htmlContent": "全部 HTML",
+      "onlyText": "仅输出纯文本",
+      "true": "是",
+      "false": "否",
+      "textParser": "文本解析",
+      "textParserDesc": "把传入的文本解析为JSON，并将键值对存入工作流上下文",
+      "textType": "文本类型",
+      "keyAndValue": "键:值",
+      "clipboard": "剪切板",
+      "clipboardDesc": "读取剪切板文本或者向剪切板中写入文本",
+      "read": "读取",
+      "write": "写入",
+      "operationType": "操作方式"
+    }
+  }
 }
