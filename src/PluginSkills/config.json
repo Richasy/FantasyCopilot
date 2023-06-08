@@ -3,7 +3,7 @@
   "package_name": "{{$packageName}}",
   "package_desc": "{{$packageDescription}}",
   "package_id": "com.richasy.fantasycopilot.core",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "author": "Richasy",
   "author_site": "https://github.com/Richasy",
   "repository": "https://github.com/Richasy/FantasyCopilot",
@@ -121,6 +121,42 @@
           }
         ]
       }
+    },
+    {
+      "command_name": "{{$clipboard}}",
+      "command_desc": "{{$clipboardDesc}}",
+      "command_id": "B9167814-1E71-4604-8FC1-58DB6B259F09",
+      "category": "text",
+      "only_final_output": true,
+      "parameters": [
+        {
+          "id": "CORE_CB_TYPE",
+          "name": "Type",
+          "description": "Read or write to the clipboard"
+        }
+      ],
+      "config_set": [
+        {
+          "type": "option",
+          "variable_name": "CORE_CB_TYPE",
+          "default_value": "get",
+          "title": "{{$operationType}}",
+          "options": [
+            {
+              "id": "get",
+              "display_name": "{{$read}}"
+            },
+            {
+              "id": "set",
+              "display_name": "{{$write}}"
+            }
+          ]
+        }
+      ],
+      "execute_name": "Clipboard.exe",
+      "output": {
+        "type": "plain"
+      }
     }
   ],
   "resources": {
@@ -141,7 +177,12 @@
       "textParser": "Text parser",
       "textParserDesc": "Parses the incoming text into JSON and stores the key-value pairs into the workflow context",
       "textType": "Text type",
-      "keyAndValue": "Key:Value"
+      "keyAndValue": "Key:Value",
+      "clipboard": "Clipboard",
+      "clipboardDesc": "Read or write text to the clipboard",
+      "read": "Read",
+      "write": "Write",
+      "operationType": "Operation"
     },
     "zh": {
       "packageName": "核心库",
@@ -160,7 +201,12 @@
       "textParser": "文本解析",
       "textParserDesc": "把传入的文本解析为JSON，并将键值对存入工作流上下文",
       "textType": "文本类型",
-      "keyAndValue": "键:值"
+      "keyAndValue": "键:值",
+      "clipboard": "剪切板",
+      "clipboardDesc": "读取剪切板文本或者向剪切板中写入文本",
+      "read": "读取",
+      "write": "写入",
+      "operationType": "操作方式"
     }
   }
 }

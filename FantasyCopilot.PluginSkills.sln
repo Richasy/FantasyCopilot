@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileRead", "src\PluginSkill
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GetWebContent", "src\PluginSkills\GetWebContent\GetWebContent.csproj", "{89986F84-2E4F-46E4-BFA9-E9C9173D4E64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextParser", "src\PluginSkills\TextParser\TextParser.csproj", "{8EAFF92D-4D4E-470B-AF59-730737D0EBA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextParser", "src\PluginSkills\TextParser\TextParser.csproj", "{8EAFF92D-4D4E-470B-AF59-730737D0EBA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Clipboard", "src\PluginSkills\Clipboard\Clipboard.csproj", "{813F6872-1479-47FB-8904-70465973CDD3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{8EAFF92D-4D4E-470B-AF59-730737D0EBA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EAFF92D-4D4E-470B-AF59-730737D0EBA1}.Release|x64.ActiveCfg = Release|Any CPU
 		{8EAFF92D-4D4E-470B-AF59-730737D0EBA1}.Release|x64.Build.0 = Release|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Debug|x64.Build.0 = Debug|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Release|x64.ActiveCfg = Release|Any CPU
+		{813F6872-1479-47FB-8904-70465973CDD3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
