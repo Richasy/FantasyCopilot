@@ -46,7 +46,7 @@ if (Test-Path $publishPath) {
 # Packaging as a .fcpkg file.
 $zipPath = Join-Path $rootPath "package.zip"
 Compress-Archive -Path $packagePath\* -DestinationPath $zipPath -Force
-Rename-Item $zipPath -NewName "package.fcpkg"
+Rename-Item $zipPath -NewName "com.richasy.fantasycopilot.core.fcpkg"
 
 # Delete the package directory.
 Remove-Item $packagePath -Recurse -Force

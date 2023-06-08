@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:PluginCommandItemBase
+    x:Class="FantasyCopilot.App.Controls.Workspace.PluginCommandItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:plugins="using:FantasyCopilot.Models.App.Plugins"
+    mc:Ignorable="d">
+
+    <Grid
+        MaxWidth="320"
+        Padding="0,0,0,8"
+        HorizontalAlignment="Stretch"
+        BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+        BorderThickness="0,0,0,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="NameBlock"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                FontSize="14"
+                FontWeight="Bold"
+                Text="{x:Bind ViewModel.Name, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="NoWrap">
+                <ToolTipService.ToolTip>
+                    <ToolTip Content="{x:Bind ViewModel.Name, Mode=OneWay}" IsEnabled="{x:Bind DescriptionBlock.IsTextTrimmed, Mode=OneWay}" />
+                </ToolTipService.ToolTip>
+            </TextBlock>
+            <Border
+                Grid.Column="1"
+                Padding="4"
+                VerticalAlignment="Center"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="2">
+                <TextBlock
+                    FontSize="10"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Category, Mode=OneWay}" />
+            </Border>
+        </Grid>
+
+        <TextBlock
+            x:Name="DescriptionBlock"
+            Grid.Row="1"
+            Margin="0,2,0,0"
+            HorizontalAlignment="Left"
+            Foreground="{ThemeResource TextFillColorDisabledBrush}"
+            MaxLines="2"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="{x:Bind ViewModel.Description, Mode=OneWay}"
+            TextTrimming="CharacterEllipsis"
+            TextWrapping="Wrap"
+            Visibility="{x:Bind ViewModel.Description, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+            <ToolTipService.ToolTip>
+                <ToolTip Content="{x:Bind ViewModel.Description, Mode=OneWay}" IsEnabled="{x:Bind DescriptionBlock.IsTextTrimmed, Mode=OneWay}" />
+            </ToolTipService.ToolTip>
+        </TextBlock>
+        <labs:TokenView
+            Grid.Row="2"
+            Margin="0,4,0,0"
+            CanRemoveTokens="False"
+            CanReorderItems="False"
+            IsWrapped="True"
+            ItemsSource="{x:Bind ViewModel.Parameters, Mode=OneWay}"
+            SelectionMode="None"
+            Visibility="{x:Bind ViewModel.NoParameter, Converter={StaticResource BoolToVisibilityReverseConverter}, Mode=OneWay}">
+            <labs:TokenView.ItemContainerStyle>
+                <Style TargetType="labs:TokenItem">
+                    <Setter Property="FontSize" Value="10" />
+                    <Setter Property="CornerRadius" Value="4" />
+                    <Setter Property="Padding" Value="4,2" />
+                </Style>
+            </labs:TokenView.ItemContainerStyle>
+            <labs:TokenView.ItemTemplate>
+                <DataTemplate x:DataType="plugins:InputParameter">
+                    <TextBlock Text="{x:Bind Id}" ToolTipService.ToolTip="{x:Bind Description}" />
+                </DataTemplate>
+            </labs:TokenView.ItemTemplate>
+        </labs:TokenView>
+    </Grid>
+</local:PluginCommandItemBase>

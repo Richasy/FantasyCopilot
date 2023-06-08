@@ -54,6 +54,7 @@ public sealed class Factory
             .RegisterTransient<IWorkflowStepViewModel, WorkflowStepViewModel>()
             .RegisterTransient<ICivitaiImageViewModel, CivitaiImageViewModel>()
             .RegisterTransient<IImageGenerateOptionsViewModel, ImageGenerateOptionsViewModel>()
+            .RegisterTransient<IPluginCommandItemViewModel, PluginCommandItemViewModel>()
             .RegisterTransient<IPluginItemViewModel, PluginItemViewModel>()
 
             .RegisterSingleton<IChatSessionPageViewModel, ChatSessionPageViewModel>()

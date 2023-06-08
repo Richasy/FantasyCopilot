@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.CommandLine;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using YamlDotNet.Serialization;
 
@@ -29,7 +30,9 @@ rootCommand.SetHandler(
                var serializer = new SerializerBuilder()
                                    .JsonCompatible()
                                    .Build();
-               serializer.Serialize(Console.Out, yamlObject);
+               var writer = new StringWriter();
+               serializer.Serialize(writer, yamlObject);
+               result = writer.GetStringBuilder().ToString();
            }
            else
            {
@@ -37,10 +40,23 @@ rootCommand.SetHandler(
                var dict = new Dictionary<string, string>();
                foreach (var line in lines)
                {
+                   var firstColon = line.IndexOf(':');
+                   if (firstColon == -1 || firstColon == line.Length - 1 || firstColon == 0)
+                   {
+                       continue;
+                   }
+
+                   var key = line.Substring(0, firstColon).Trim();
+                   var value = line.Substring(firstColon + 1).Trim();
+                   dict.Add(key, value);
                }
+
+               result = JsonSerializer.Serialize(dict);
            }
 
            Console.WriteLine(result);
        },
        textOption,
        typeOption);
+
+return await rootCommand.InvokeAsync(args);

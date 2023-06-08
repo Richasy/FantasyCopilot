@@ -55,7 +55,7 @@ public interface IPluginItemViewModel : INotifyPropertyChanged
     /// <summary>
     /// Plugin commands.
     /// </summary>
-    ObservableCollection<PluginCommand> Commands { get; }
+    ObservableCollection<IPluginCommandItemViewModel> Commands { get; }
 
     /// <summary>
     /// Open the repository for the plugin.
