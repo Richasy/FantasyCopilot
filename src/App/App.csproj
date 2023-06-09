@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Assets\Azure_logo.png" />
+    <None Remove="Assets\BaiduTranslateSupportLanguages.json" />
     <None Remove="Assets\blank.db" />
     <None Remove="Assets\FluentIcon.ttf" />
     <None Remove="Assets\logo.ico" />
@@ -41,12 +42,12 @@
     <None Remove="Controls\SemanticSkillEditor.xaml" />
     <None Remove="Controls\SemanticSkillPanel.xaml" />
     <None Remove="Controls\Settings\AISettingSection.xaml" />
-    <None Remove="Controls\Settings\AzureTranslateSettingSection.xaml" />
     <None Remove="Controls\Settings\AzureVoiceSettingSection.xaml" />
     <None Remove="Controls\Settings\FeatureEnabledSettingSection.xaml" />
     <None Remove="Controls\Settings\KnowledgeBaseSettingSection.xaml" />
     <None Remove="Controls\Settings\LogSettingSection.xaml" />
     <None Remove="Controls\Settings\StableDiffusionSettingSection.xaml" />
+    <None Remove="Controls\Settings\TranslateSettingSection.xaml" />
     <None Remove="Controls\Settings\WorkflowSettingSection.xaml" />
     <None Remove="Controls\SpeechRecognizePanel.xaml" />
     <None Remove="Controls\Steps\ImageStepItem.xaml" />
@@ -239,7 +240,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\Settings\AzureTranslateSettingSection.xaml">
+    <Page Update="Controls\Settings\TranslateSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

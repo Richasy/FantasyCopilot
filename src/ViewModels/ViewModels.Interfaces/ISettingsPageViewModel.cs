@@ -32,6 +32,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     AISource AiSource { get; set; }
 
     /// <summary>
+    /// The source of translate.
+    /// </summary>
+    TranslateSource TranslateSource { get; set; }
+
+    /// <summary>
     /// Azure Open AI access key.
     /// </summary>
     string AzureOpenAIAccessKey { get; set; }
@@ -155,6 +160,26 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Region of the Azure Translate service.
     /// </summary>
     string AzureTranslateRegion { get; set; }
+
+    /// <summary>
+    /// App ID for the Baidu Translate service.
+    /// </summary>
+    string BaiduTranslateAppId { get; set; }
+
+    /// <summary>
+    /// App key for the Baidu Translate service.
+    /// </summary>
+    string BaiduTranslateAppKey { get; set; }
+
+    /// <summary>
+    /// Whether to display configuration items for Azure Translator.
+    /// </summary>
+    bool IsAzureTranslateShown { get; }
+
+    /// <summary>
+    /// Whether to display configuration items for Baidu Translate service.
+    /// </summary>
+    bool IsBaiduTranslateShown { get; }
 
     /// <summary>
     /// The deployment address of Stable diffusion.

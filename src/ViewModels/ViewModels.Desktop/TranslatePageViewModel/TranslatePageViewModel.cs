@@ -106,10 +106,24 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
     }
 
     partial void OnSelectedSourceLanguageChanged(LocaleInfo value)
-        => _settingsToolkit.WriteLocalSetting(SettingNames.TranslateSourceLanguage, value.Id);
+    {
+        if (value == null)
+        {
+            _settingsToolkit.DeleteLocalSetting(SettingNames.TranslateSourceLanguage);
+            return;
+        }
+
+        _settingsToolkit.WriteLocalSetting(SettingNames.TranslateSourceLanguage, value.Id);
+    }
 
     partial void OnSelectedTargetLanguageChanged(LocaleInfo value)
     {
+        if (value == null)
+        {
+            _settingsToolkit.DeleteLocalSetting(SettingNames.TranslateTargetLanguage);
+            return;
+        }
+
         _settingsToolkit.WriteLocalSetting(SettingNames.TranslateTargetLanguage, value.Id);
         if (!string.IsNullOrEmpty(SourceText))
         {

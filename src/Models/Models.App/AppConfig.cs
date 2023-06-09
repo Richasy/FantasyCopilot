@@ -16,11 +16,14 @@ public sealed class AppConfig
     [JsonPropertyName("huggingFace")]
     public HuggingFaceConfig HuggingFace { get; set; }
 
-    [JsonPropertyName("voice")]
-    public RegionConfig Voice { get; set; }
+    [JsonPropertyName("azureVoice")]
+    public RegionConfig AzureVoice { get; set; }
 
-    [JsonPropertyName("translate")]
-    public RegionConfig Translate { get; set; }
+    [JsonPropertyName("azureTranslate")]
+    public RegionConfig AzureTranslate { get; set; }
+
+    [JsonPropertyName("baiduTranslate")]
+    public BaiduTranslateConfig BaiduTranslate { get; set; }
 
     [JsonPropertyName("stableDiffusion")]
     public UrlConfig StableDiffusion { get; set; }
@@ -80,6 +83,12 @@ public sealed class AppConfig
     {
         [JsonPropertyName("url")]
         public string Url { get; set; }
+    }
+
+    public sealed class BaiduTranslateConfig : ConfigBase
+    {
+        [JsonPropertyName("appId")]
+        public string AppId { get; set; }
     }
 
     public class ConfigBase

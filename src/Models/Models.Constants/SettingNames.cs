@@ -64,4 +64,7 @@ public enum SettingNames
     HuggingFaceCompletionModelName,
     HuggingFaceEmbeddingEndpoint,
     HuggingFaceCompletionEndpoint,
+    BaiduTranslateAppId,
+    BaiduTranslateAppKey,
+    TranslateSource,
 }

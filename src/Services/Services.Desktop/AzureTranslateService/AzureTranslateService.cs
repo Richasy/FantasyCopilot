@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -20,22 +21,10 @@ public sealed partial class AzureTranslateService : ITranslateService
     /// <summary>
     /// Initializes a new instance of the <see cref="AzureVoiceService"/> class.
     /// </summary>
-    public AzureTranslateService(
-        ISettingsToolkit settingsToolkit,
-        IFileToolkit fileToolkit)
+    public AzureTranslateService()
     {
-        _settingsToolkit = settingsToolkit;
-        _fileToolkit = fileToolkit;
-    }
-
-    /// <inheritdoc/>
-    public bool HasValidConfig
-    {
-        get
-        {
-            CheckConfig();
-            return _hasValidConfig;
-        }
+        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        _fileToolkit = Locator.Current.GetService<IFileToolkit>();
     }
 
     /// <inheritdoc/>

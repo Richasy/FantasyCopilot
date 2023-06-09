@@ -49,7 +49,7 @@
                     Text="{ext:Locale Name=Services}" />
                 <settings:AISettingSection />
                 <settings:AzureVoiceSettingSection />
-                <settings:AzureTranslateSettingSection />
+                <settings:TranslateSettingSection />
                 <settings:StableDiffusionSettingSection />
 
                 <TextBlock

@@ -42,7 +42,7 @@ public sealed class Factory
             .RegisterSingleton<IWorkflowService, WorkflowService>()
             .RegisterSingleton<IVoiceService, AzureVoiceService>()
             .RegisterSingleton<IImageService, StableDiffusionImageService>()
-            .RegisterSingleton<ITranslateService, AzureTranslateService>()
+            .RegisterSingleton<ITranslateService, TranslateService>()
             .RegisterSingleton<IStorageService, EverythingStorageService>()
             .RegisterSingleton<ISessionService, SessionService>()
             .RegisterSingleton<IPromptExplorerService, PromptExplorerService>()
