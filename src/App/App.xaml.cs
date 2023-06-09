@@ -83,10 +83,17 @@ public partial class App : Application
 
     private static Windows.Graphics.RectInt32 GetRenderRect(DisplayArea displayArea, IntPtr windowHandle)
     {
+        var workArea = displayArea.WorkArea;
         var scaleFactor = PInvoke.GetDpiForWindow(new HWND(windowHandle)) / 96d;
         var width = Convert.ToInt32(500 * scaleFactor);
         var height = Convert.ToInt32(800 * scaleFactor);
-        var workArea = displayArea.WorkArea;
+
+        // Ensure the window is not larger than the work area.
+        if (height > workArea.Height - 20)
+        {
+            height = workArea.Height - 20;
+        }
+
         var left = (workArea.Width - width) / 2d;
         var top = (workArea.Height - height) / 2d;
         return new Windows.Graphics.RectInt32(Convert.ToInt32(left), Convert.ToInt32(top), width, height);
