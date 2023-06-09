@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:SettingSectionBase
-    x:Class="FantasyCopilot.App.Controls.Settings.AzureTranslateSettingSection"
+    x:Class="FantasyCopilot.App.Controls.Settings.TranslateSettingSection"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:FantasyCopilot.App.Controls"
@@ -16,24 +16,47 @@
         <Thickness x:Key="SettingsExpanderItemPadding">24,8,24,8</Thickness>
     </UserControl.Resources>
 
-    <labs:SettingsExpander Description="{ext:Locale Name=AzureTranslateDescription}" Header="{ext:Locale Name=AzureTranslate}">
+    <labs:SettingsExpander Description="{ext:Locale Name=TranslateOptionsDescription}" Header="{ext:Locale Name=TranslateOptions}">
         <labs:SettingsExpander.HeaderIcon>
             <controls:FluentIcon Symbol="Translate" />
         </labs:SettingsExpander.HeaderIcon>
+
+        <ComboBox
+            x:Name="TranslateSourceComboBox"
+            MinWidth="120"
+            SelectionChanged="OnTranslateSourceComboBoxSelectionChanged">
+            <ComboBoxItem Content="{ext:Locale Name=AzureTranslate}" />
+            <ComboBoxItem Content="{ext:Locale Name=BaiduTranslate}" />
+        </ComboBox>
+
         <labs:SettingsExpander.Items>
-            <labs:SettingsCard Header="{ext:Locale Name=AccessKey}">
+            <labs:SettingsCard Header="{ext:Locale Name=AccessKey}" Visibility="{x:Bind ViewModel.IsAzureTranslateShown, Mode=OneWay}">
                 <PasswordBox
                     x:Name="AzureTranslateKeyBox"
                     Width="200"
                     Password="{x:Bind ViewModel.AzureTranslateKey, Mode=TwoWay}"
                     PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
             </labs:SettingsCard>
-            <labs:SettingsCard Header="{ext:Locale Name=Region}">
+            <labs:SettingsCard Header="{ext:Locale Name=Region}" Visibility="{x:Bind ViewModel.IsAzureTranslateShown, Mode=OneWay}">
                 <TextBox
                     x:Name="AzureTranslateRegionBox"
                     Width="200"
                     PlaceholderText="{ext:Locale Name=RegionPlaceholderText}"
                     Text="{x:Bind ViewModel.AzureTranslateRegion, Mode=TwoWay}" />
+            </labs:SettingsCard>
+            <labs:SettingsCard Header="{ext:Locale Name=AppId}" Visibility="{x:Bind ViewModel.IsBaiduTranslateShown, Mode=OneWay}">
+                <PasswordBox
+                    x:Name="BaiduAppIdBox"
+                    Width="200"
+                    Password="{x:Bind ViewModel.BaiduTranslateAppId, Mode=TwoWay}"
+                    PlaceholderText="{ext:Locale Name=AppIdPlaceholderText}" />
+            </labs:SettingsCard>
+            <labs:SettingsCard Header="{ext:Locale Name=AppKey}" Visibility="{x:Bind ViewModel.IsBaiduTranslateShown, Mode=OneWay}">
+                <PasswordBox
+                    x:Name="BaiduAppKeyBox"
+                    Width="200"
+                    Password="{x:Bind ViewModel.BaiduTranslateAppKey, Mode=TwoWay}"
+                    PlaceholderText="{ext:Locale Name=AppKeyPlaceholderText}" />
             </labs:SettingsCard>
         </labs:SettingsExpander.Items>
     </labs:SettingsExpander>

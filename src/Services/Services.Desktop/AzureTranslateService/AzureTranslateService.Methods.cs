@@ -17,17 +17,19 @@ public sealed partial class AzureTranslateService
 {
     private readonly ISettingsToolkit _settingsToolkit;
     private readonly IFileToolkit _fileToolkit;
-    private bool _hasValidConfig;
     private TextTranslationClient _translationClient;
+
+    /// <inheritdoc/>
+    public bool HasValidConfig { get; set; }
 
     private void CheckConfig()
     {
         var translateKey = _settingsToolkit.RetrieveSecureString(SettingNames.AzureTranslateKey);
         var hasRegion = _settingsToolkit.IsSettingKeyExist(SettingNames.AzureTranslateRegion);
 
-        _hasValidConfig = !string.IsNullOrEmpty(translateKey) && hasRegion;
+        HasValidConfig = !string.IsNullOrEmpty(translateKey) && hasRegion;
 
-        if (_hasValidConfig && _translationClient == null)
+        if (HasValidConfig && _translationClient == null)
         {
             var region = _settingsToolkit.ReadLocalSetting(SettingNames.AzureTranslateRegion, string.Empty);
             _translationClient = new TextTranslationClient(new AzureKeyCredential(translateKey), region);

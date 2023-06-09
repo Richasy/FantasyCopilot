@@ -72,7 +72,7 @@
                 </StackPanel.ChildrenTransitions>
                 <settings:AISettingSection />
                 <settings:AzureVoiceSettingSection />
-                <settings:AzureTranslateSettingSection />
+                <settings:TranslateSettingSection />
                 <settings:StableDiffusionSettingSection />
                 <Grid Margin="2,16,2,0" ColumnSpacing="8">
                     <Grid.ColumnDefinitions>

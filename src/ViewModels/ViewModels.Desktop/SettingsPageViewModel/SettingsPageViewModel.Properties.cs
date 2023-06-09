@@ -30,6 +30,9 @@ public sealed partial class SettingsPageViewModel
     private AISource _aiSource;
 
     [ObservableProperty]
+    private TranslateSource _translateSource;
+
+    [ObservableProperty]
     private string _azureOpenAIAccessKey;
 
     [ObservableProperty]
@@ -103,6 +106,18 @@ public sealed partial class SettingsPageViewModel
 
     [ObservableProperty]
     private string _azureTranslateRegion;
+
+    [ObservableProperty]
+    private string _baiduTranslateAppId;
+
+    [ObservableProperty]
+    private string _baiduTranslateAppKey;
+
+    [ObservableProperty]
+    private bool _isBaiduTranslateShown;
+
+    [ObservableProperty]
+    private bool _isAzureTranslateShown;
 
     [ObservableProperty]
     private string _stableDiffusionUrl;

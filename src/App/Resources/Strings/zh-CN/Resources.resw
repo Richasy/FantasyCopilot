@@ -433,10 +433,7 @@
     <value>语音识别失败</value>
   </data>
   <data name="AzureTranslate" xml:space="preserve">
-    <value>Azure 翻译服务配置</value>
-  </data>
-  <data name="AzureTranslateDescription" xml:space="preserve">
-    <value>Azure 文本翻译的配置项</value>
+    <value>Azure 翻译</value>
   </data>
   <data name="TranslateInvalid" xml:space="preserve">
     <value>翻译服务不可用</value>
@@ -1439,5 +1436,26 @@
   </data>
   <data name="RepositoryLink" xml:space="preserve">
     <value>Github 仓库</value>
+  </data>
+  <data name="AppId" xml:space="preserve">
+    <value>应用 ID</value>
+  </data>
+  <data name="AppIdPlaceholderText" xml:space="preserve">
+    <value>请输入 App ID</value>
+  </data>
+  <data name="AppKey" xml:space="preserve">
+    <value>应用密钥</value>
+  </data>
+  <data name="AppKeyPlaceholderText" xml:space="preserve">
+    <value>请输入应用密钥</value>
+  </data>
+  <data name="BaiduTranslate" xml:space="preserve">
+    <value>百度翻译</value>
+  </data>
+  <data name="TranslateOptions" xml:space="preserve">
+    <value>翻译服务配置</value>
+  </data>
+  <data name="TranslateOptionsDescription" xml:space="preserve">
+    <value>文本翻译的配置项</value>
   </data>
 </root>

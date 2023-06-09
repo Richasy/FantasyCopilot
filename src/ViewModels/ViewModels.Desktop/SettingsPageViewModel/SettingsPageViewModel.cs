@@ -51,6 +51,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         var version = Package.Current.Id.Version;
         PackageVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
         AiSource = _settingsToolkit.ReadLocalSetting(SettingNames.AISource, AISource.Azure);
+        TranslateSource = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateSource, TranslateSource.Azure);
 
         AzureOpenAIAccessKey = _settingsToolkit.RetrieveSecureString(SettingNames.AzureOpenAIAccessKey);
         AzureOpenAIChatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIChatModelName, string.Empty);
@@ -80,6 +81,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         AzureTranslateKey = _settingsToolkit.RetrieveSecureString(SettingNames.AzureTranslateKey);
         AzureTranslateRegion = _settingsToolkit.ReadLocalSetting(SettingNames.AzureTranslateRegion, string.Empty);
 
+        BaiduTranslateAppId = _settingsToolkit.RetrieveSecureString(SettingNames.BaiduTranslateAppId);
+        BaiduTranslateAppKey = _settingsToolkit.RetrieveSecureString(SettingNames.BaiduTranslateAppKey);
+
         StableDiffusionUrl = _settingsToolkit.ReadLocalSetting(SettingNames.StableDiffusionUrl, string.Empty);
 
         OpenConsoleWhenPluginRunning = _settingsToolkit.ReadLocalSetting(SettingNames.ShowConsoleWhenPluginRunning, false);
@@ -93,6 +97,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         IsRestartRequest = false;
 
         CheckAISource();
+        CheckTranslateSource();
     }
 
     [RelayCommand]
@@ -106,226 +111,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         if (folder != null)
         {
             await Launcher.LaunchFolderAsync(folder);
-        }
-    }
-
-    [RelayCommand]
-    private async Task ImportConfigurationAsync()
-    {
-        try
-        {
-            var authResult = await VerifyUserAsync();
-            if (!authResult)
-            {
-                return;
-            }
-
-            var fileObj = await _fileToolkit.PickFileAsync(".json", _appViewModel.MainWindow);
-            if (fileObj is not StorageFile file)
-            {
-                return;
-            }
-
-            var json = await FileIO.ReadTextAsync(file).AsTask();
-            var appConfig = JsonSerializer.Deserialize<AppConfig>(json);
-            if (appConfig == null)
-            {
-                _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.InvalidConfigFile), InfoType.Error);
-                return;
-            }
-
-            if (appConfig.AzureOpenAI != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.AzureOpenAI.Key))
-                {
-                    AzureOpenAIAccessKey = appConfig.AzureOpenAI.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.AzureOpenAI.Endpoint))
-                {
-                    AzureOpenAIEndpoint = appConfig.AzureOpenAI.Endpoint;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.AzureOpenAI.ChatModelName))
-                {
-                    AzureOpenAIChatModelName = appConfig.AzureOpenAI.ChatModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.AzureOpenAI.EmbeddingModelName))
-                {
-                    AzureOpenAIEmbeddingModelName = appConfig.AzureOpenAI.EmbeddingModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.AzureOpenAI.CompletionModelName))
-                {
-                    AzureOpenAICompletionModelName = appConfig.AzureOpenAI.CompletionModelName;
-                }
-            }
-
-            if (appConfig.OpenAI != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.OpenAI.Key))
-                {
-                    OpenAIAccessKey = appConfig.OpenAI.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.OpenAI.Organization))
-                {
-                    OpenAIOrganization = appConfig.OpenAI.Organization;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.OpenAI.ChatModelName))
-                {
-                    OpenAIChatModelName = appConfig.OpenAI.ChatModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.OpenAI.EmbeddingModelName))
-                {
-                    OpenAIEmbeddingModelName = appConfig.OpenAI.EmbeddingModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.OpenAI.CompletionModelName))
-                {
-                    OpenAICompletionModelName = appConfig.OpenAI.CompletionModelName;
-                }
-            }
-
-            if (appConfig.HuggingFace != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.Key))
-                {
-                    HuggingFaceAccessKey = appConfig.HuggingFace.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.EmbeddingEndpoint))
-                {
-                    HuggingFaceEmbeddingEndpoint = appConfig.HuggingFace.EmbeddingEndpoint;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.EmbeddingModelName))
-                {
-                    HuggingFaceEmbeddingModelName = appConfig.HuggingFace.EmbeddingModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.CompletionModelName))
-                {
-                    HuggingFaceCompletionModelName = appConfig.HuggingFace.CompletionModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.CompletionEndpoint))
-                {
-                    HuggingFaceCompletionEndpoint = appConfig.HuggingFace.CompletionEndpoint;
-                }
-            }
-
-            if (appConfig.Voice != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.Voice.Key))
-                {
-                    AzureVoiceKey = appConfig.Voice.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.Voice.Region))
-                {
-                    AzureVoiceRegion = appConfig.Voice.Region;
-                }
-            }
-
-            if (appConfig.Translate != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.Translate.Key))
-                {
-                    AzureTranslateKey = appConfig.Translate.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.Translate.Region))
-                {
-                    AzureTranslateRegion = appConfig.Translate.Region;
-                }
-            }
-
-            if (appConfig.StableDiffusion != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.StableDiffusion.Url))
-                {
-                    StableDiffusionUrl = appConfig.StableDiffusion.Url;
-                }
-            }
-
-            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ConfigImported), InfoType.Success);
-        }
-        catch (Exception)
-        {
-            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportConfigFailed), InfoType.Error);
-        }
-    }
-
-    [RelayCommand]
-    private async Task ExportConfigurationAsync()
-    {
-        try
-        {
-            var authResult = await VerifyUserAsync();
-            if (!authResult)
-            {
-                return;
-            }
-
-            var fileObj = await _fileToolkit.SaveFileAsync("FantasyCopilot_Config.json", _appViewModel.MainWindow);
-            if (fileObj is not StorageFile file)
-            {
-                return;
-            }
-
-            var appConfig = new AppConfig
-            {
-                AzureOpenAI = new AppConfig.AzureOpenAIConfig
-                {
-                    EmbeddingModelName = AzureOpenAIEmbeddingModelName,
-                    CompletionModelName = AzureOpenAICompletionModelName,
-                    ChatModelName = AzureOpenAIChatModelName,
-                    Endpoint = AzureOpenAIEndpoint,
-                    Key = AzureOpenAIAccessKey,
-                },
-                OpenAI = new AppConfig.OpenAIConfig
-                {
-                    EmbeddingModelName = OpenAIEmbeddingModelName,
-                    CompletionModelName = OpenAICompletionModelName,
-                    ChatModelName = OpenAIChatModelName,
-                    Organization = OpenAIOrganization,
-                    Key = OpenAIAccessKey,
-                },
-                HuggingFace = new AppConfig.HuggingFaceConfig
-                {
-                    EmbeddingModelName = HuggingFaceEmbeddingModelName,
-                    CompletionModelName = HuggingFaceCompletionModelName,
-                    EmbeddingEndpoint = HuggingFaceEmbeddingEndpoint,
-                    CompletionEndpoint = HuggingFaceCompletionEndpoint,
-                    Key = HuggingFaceAccessKey,
-                },
-                Voice = new AppConfig.RegionConfig
-                {
-                    Key = AzureVoiceKey,
-                    Region = AzureVoiceRegion,
-                },
-                Translate = new AppConfig.RegionConfig
-                {
-                    Key = AzureTranslateKey,
-                    Region = AzureTranslateRegion,
-                },
-                StableDiffusion = new AppConfig.UrlConfig
-                {
-                    Url = StableDiffusionUrl,
-                },
-            };
-
-            var json = JsonSerializer.Serialize(appConfig);
-            await FileIO.WriteTextAsync(file, json);
-            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ConfigExported), InfoType.Success);
-        }
-        catch (Exception)
-        {
-            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportConfigFailed), InfoType.Error);
         }
     }
 
@@ -389,6 +174,12 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         IsHuggingFaceShown = AiSource == AISource.HuggingFace;
     }
 
+    private void CheckTranslateSource()
+    {
+        IsAzureTranslateShown = TranslateSource == TranslateSource.Azure;
+        IsBaiduTranslateShown = TranslateSource == TranslateSource.Baidu;
+    }
+
     private string GetPluginFolder()
     {
         var pluginFolder = _settingsToolkit.ReadLocalSetting(SettingNames.PluginFolderPath, string.Empty);
@@ -412,140 +203,4 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         return authResult == UserConsentVerificationResult.Verified;
     }
-
-    private void WriteSetting<T>(SettingNames name, T value)
-    {
-        if (value is string str && string.IsNullOrEmpty(str))
-        {
-            _settingsToolkit.DeleteLocalSetting(name);
-        }
-        else
-        {
-            _settingsToolkit.WriteLocalSetting(name, value);
-        }
-    }
-
-    private void WriteSecureSetting(SettingNames name, string text)
-        => _settingsToolkit.SaveSecureString(name, text);
-
-    partial void OnDefaultConversationTypeChanged(ConversationType value)
-        => WriteSetting(SettingNames.LastConversationType, value);
-
-    partial void OnAiSourceChanged(AISource value)
-    {
-        WriteSetting(SettingNames.AISource, value);
-        CheckAISource();
-    }
-
-    partial void OnAzureOpenAIAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureOpenAIAccessKey, value);
-
-    partial void OnAzureOpenAIChatModelNameChanged(string value)
-        => WriteSetting(SettingNames.AzureOpenAIChatModelName, value);
-
-    partial void OnAzureOpenAIEmbeddingModelNameChanged(string value)
-        => WriteSetting(SettingNames.AzureOpenAIEmbeddingModelName, value);
-
-    partial void OnAzureOpenAICompletionModelNameChanged(string value)
-        => WriteSetting(SettingNames.AzureOpenAICompletionModelName, value);
-
-    partial void OnAzureOpenAIEndpointChanged(string value)
-        => WriteSetting(SettingNames.AzureOpenAIEndpoint, value);
-
-    partial void OnOpenAIAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.OpenAIAccessKey, value);
-
-    partial void OnOpenAIChatModelNameChanged(string value)
-        => WriteSetting(SettingNames.OpenAIChatModelName, value);
-
-    partial void OnOpenAIEmbeddingModelNameChanged(string value)
-        => WriteSetting(SettingNames.OpenAIEmbeddingModelName, value);
-
-    partial void OnOpenAICompletionModelNameChanged(string value)
-        => WriteSetting(SettingNames.OpenAICompletionModelName, value);
-
-    partial void OnOpenAIOrganizationChanged(string value)
-        => WriteSetting(SettingNames.OpenAIOrganization, value);
-
-    partial void OnHuggingFaceAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.HuggingFaceAccessKey, value);
-
-    partial void OnHuggingFaceEmbeddingModelNameChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceEmbeddingModelName, value);
-
-    partial void OnHuggingFaceCompletionModelNameChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceCompletionModelName, value);
-
-    partial void OnHuggingFaceEmbeddingEndpointChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceEmbeddingEndpoint, value);
-
-    partial void OnHuggingFaceCompletionEndpointChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceCompletionEndpoint, value);
-
-    partial void OnAzureVoiceKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureVoiceKey, value);
-
-    partial void OnAzureVoiceRegionChanged(string value)
-        => WriteSetting(SettingNames.AzureVoiceRegion, value);
-
-    partial void OnAzureTranslateKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureTranslateKey, value);
-
-    partial void OnAzureTranslateRegionChanged(string value)
-        => WriteSetting(SettingNames.AzureTranslateRegion, value);
-
-    partial void OnStableDiffusionUrlChanged(string value)
-    {
-        if (!value.StartsWith("http") && !string.IsNullOrEmpty(value))
-        {
-            value = "http://" + value;
-        }
-
-        WriteSetting(SettingNames.StableDiffusionUrl, value.TrimEnd('/'));
-    }
-
-    partial void OnIsChatEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsChatEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnIsImageEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsImageEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnIsVoiceEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsVoiceEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnIsTranslateEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsTranslateEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnIsStorageEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsStorageEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnIsKnowledgeEnabledChanged(bool value)
-    {
-        WriteSetting(SettingNames.IsKnowledgeEnabled, value);
-        IsRestartRequest = true;
-    }
-
-    partial void OnMaxSplitContentLengthChanged(int value)
-        => WriteSetting(SettingNames.MaxSplitContentLength, value);
-
-    partial void OnMaxParagraphTokenLengthChanged(int value)
-        => WriteSetting(SettingNames.MaxParagraphTokenLength, value);
-
-    partial void OnContextResponseTokenLengthChanged(int value)
-        => WriteSetting(SettingNames.ContextResponseTokenLength, value);
 }

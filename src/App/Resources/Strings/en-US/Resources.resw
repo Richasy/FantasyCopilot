@@ -174,6 +174,18 @@
   <data name="AppDescription" xml:space="preserve">
     <value>An exploration of mutual achievement between humans and AI.</value>
   </data>
+  <data name="AppId" xml:space="preserve">
+    <value>App Id</value>
+  </data>
+  <data name="AppIdPlaceholderText" xml:space="preserve">
+    <value>Please enter the app id</value>
+  </data>
+  <data name="AppKey" xml:space="preserve">
+    <value>App key</value>
+  </data>
+  <data name="AppKeyPlaceholderText" xml:space="preserve">
+    <value>Please enter the app key</value>
+  </data>
   <data name="AppLog" xml:space="preserve">
     <value>Application logs</value>
   </data>
@@ -181,7 +193,7 @@
     <value>Application log-related configuration items</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Fantasy Copilot</value>
+    <value>Fantasy Assistant</value>
   </data>
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>
@@ -208,10 +220,7 @@
     <value>Awesome ChatGPT Chinese Prompts</value>
   </data>
   <data name="AzureTranslate" xml:space="preserve">
-    <value>Azure Translation Service configuration</value>
-  </data>
-  <data name="AzureTranslateDescription" xml:space="preserve">
-    <value>Configuration items for Azure Translator Text</value>
+    <value>Azure Translator</value>
   </data>
   <data name="AzureVoice" xml:space="preserve">
     <value>Azure Speech Service configuration</value>
@@ -221,6 +230,9 @@
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="BaiduTranslate" xml:space="preserve">
+    <value>Baidu Translate Service</value>
   </data>
   <data name="BaseName" xml:space="preserve">
     <value>Base name</value>
@@ -1349,6 +1361,12 @@
   </data>
   <data name="TranslateInvalidDescription" xml:space="preserve">
     <value>Please complete the service configuration related to translation in the settings</value>
+  </data>
+  <data name="TranslateOptions" xml:space="preserve">
+    <value>Translation service configuration</value>
+  </data>
+  <data name="TranslateOptionsDescription" xml:space="preserve">
+    <value>Configuration options for text translation</value>
   </data>
   <data name="TranslationFailed" xml:space="preserve">
     <value>Translation failed, please try again</value>
