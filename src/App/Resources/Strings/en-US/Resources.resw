@@ -574,7 +574,7 @@
     <value>Flow GPT Chinese hot list</value>
   </data>
   <data name="FrequencyPenalty" xml:space="preserve">
-    <value>Frequency penalty</value>
+    <value>Frequency Penalty</value>
   </data>
   <data name="FrequencyPenaltyDescription" xml:space="preserve">
     <value>The higher the value, the less likely the resulting text is to have duplicate characters</value>
@@ -1272,6 +1272,12 @@
   <data name="StorageSearch" xml:space="preserve">
     <value>Storage Search</value>
   </data>
+  <data name="StreamOutput" xml:space="preserve">
+    <value>Stream Output</value>
+  </data>
+  <data name="StreamOutputDescription" xml:space="preserve">
+    <value>Get the response of the LLM by paragraph</value>
+  </data>
   <data name="TargetLanguage" xml:space="preserve">
     <value>Target Language</value>
   </data>
@@ -1363,7 +1369,7 @@
     <value>Please complete the service configuration related to translation in the settings</value>
   </data>
   <data name="TranslateOptions" xml:space="preserve">
-    <value>Translation service configuration</value>
+    <value>Translation configuration</value>
   </data>
   <data name="TranslateOptionsDescription" xml:space="preserve">
     <value>Configuration options for text translation</value>

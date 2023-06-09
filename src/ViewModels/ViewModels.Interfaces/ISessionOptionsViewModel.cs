@@ -38,6 +38,11 @@ public interface ISessionOptionsViewModel : INotifyPropertyChanged
     double PresencePenalty { get; set; }
 
     /// <summary>
+    /// Use streaming output (typewriter mode).
+    /// </summary>
+    bool UseStreamOutput { get; set; }
+
+    /// <summary>
     /// Initialize the view model.
     /// </summary>
     /// <param name="options">Existing configuration.</param>

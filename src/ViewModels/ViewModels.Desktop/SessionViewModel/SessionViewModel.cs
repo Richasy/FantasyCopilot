@@ -30,12 +30,14 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
         ICacheToolkit cacheToolkit,
         IResourceToolkit resourceToolkit,
         ISettingsToolkit settingsToolkit,
-        ISessionService sessionService)
+        ISessionService sessionService,
+        IChatService chatService)
     {
         _cacheToolkit = cacheToolkit;
         _resourceToolkit = resourceToolkit;
         _settingsToolkit = settingsToolkit;
         _sessionService = sessionService;
+        _chatService = chatService;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         ConversationType = settingsToolkit.ReadLocalSetting(SettingNames.LastConversationType, ConversationType.Continuous);
         Messages = new ObservableCollection<Message>();
@@ -45,6 +47,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
                 p => IsResponding = p,
                 SendMessageCommand,
                 ResentMessageCommand);
+        _chatService.CharacterReceived += OnChatServiceCharacterReceived;
         Messages.CollectionChanged += OnMessageCollectionChanged;
     }
 
@@ -236,9 +239,13 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
                 }
             }
 
+            TempMessage = string.Empty;
             RequestScrollToBottom?.Invoke(this, EventArgs.Empty);
         });
     }
+
+    private void OnChatServiceCharacterReceived(object sender, string e)
+        => TempMessage = e;
 
     private void CheckChatEmpty()
         => IsChatEmpty = Messages.Count == 0;

@@ -34,6 +34,11 @@ public interface ISessionViewModel : INotifyPropertyChanged
     string UserInput { get; set; }
 
     /// <summary>
+    /// Messages that are generated temporarily.
+    /// </summary>
+    string TempMessage { get; set; }
+
+    /// <summary>
     /// Session options view model.
     /// </summary>
     ISessionOptionsViewModel Options { get; }

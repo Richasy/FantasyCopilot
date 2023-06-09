@@ -76,7 +76,10 @@
                         TextWrapping="Wrap" />
                 </StackPanel>
 
-                <sessions:SessionOptionsPanel x:Name="OptionsPanel" ViewModel="{x:Bind ViewModel.Options, Mode=OneWay}" />
+                <sessions:SessionOptionsPanel
+                    x:Name="OptionsPanel"
+                    StreamOutputVisibility="Collapsed"
+                    ViewModel="{x:Bind ViewModel.Options, Mode=OneWay}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

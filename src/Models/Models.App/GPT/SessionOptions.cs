@@ -35,6 +35,11 @@ public class SessionOptions
     public double PresencePenalty { get; set; }
 
     /// <summary>
+    /// Use streaming output (typewriter mode).
+    /// </summary>
+    public bool UseStreamOutput { get; set; }
+
+    /// <summary>
     /// Create a copy based on its own properties.
     /// </summary>
     /// <returns>New <see cref="SessionOptions"/> object.</returns>
@@ -46,5 +51,6 @@ public class SessionOptions
             TopP = TopP,
             FrequencyPenalty = FrequencyPenalty,
             PresencePenalty = PresencePenalty,
+            UseStreamOutput = UseStreamOutput,
         };
 }

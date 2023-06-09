@@ -21,6 +21,7 @@ public sealed partial class SessionViewModel
     private readonly ISettingsToolkit _settingsToolkit;
     private readonly IResourceToolkit _resourceToolkit;
     private readonly ISessionService _sessionService;
+    private readonly IChatService _chatService;
     private readonly DispatcherQueue _dispatcherQueue;
 
     private Session _sourceSession;
@@ -35,6 +36,9 @@ public sealed partial class SessionViewModel
 
     [ObservableProperty]
     private string _userInput;
+
+    [ObservableProperty]
+    private string _tempMessage;
 
     [ObservableProperty]
     private ISessionOptionsViewModel _options;

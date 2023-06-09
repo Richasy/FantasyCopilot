@@ -85,5 +85,14 @@
                 </labs:SettingsCard>
             </labs:SettingsExpander.Items>
         </labs:SettingsExpander>
+        <labs:SettingsCard
+            Description="{ext:Locale Name=StreamOutputDescription}"
+            Header="{ext:Locale Name=StreamOutput}"
+            Visibility="{x:Bind StreamOutputVisibility, Mode=OneWay}">
+            <labs:SettingsCard.HeaderIcon>
+                <controls:FluentIcon Symbol="Diagram" />
+            </labs:SettingsCard.HeaderIcon>
+            <ToggleSwitch IsOn="{x:Bind ViewModel.UseStreamOutput, Mode=TwoWay}" />
+        </labs:SettingsCard>
     </StackPanel>
 </local:SessionOptionsPanelBase>

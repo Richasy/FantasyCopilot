@@ -32,18 +32,23 @@ public sealed partial class ChatService : IChatService
     }
 
     /// <inheritdoc/>
+    public event EventHandler<string> CharacterReceived;
+
+    /// <inheritdoc/>
     public void CreateNewChat(string systemPrompt)
     {
         ThrowIfNotSupportChat();
         if (_chatSkill == null && _kernelService.HasChatModel)
         {
             _chatSkill = new ChatSkill();
+            _chatSkill.CharacterReceived += (s, e) => CharacterReceived?.Invoke(this, e);
             _chatFunctions = _kernel.ImportSkill(_chatSkill);
         }
 
         if (_completeSkill == null && !_kernelService.HasChatModel)
         {
             _completeSkill = new TextCompleteSkill();
+            _completeSkill.CharacterReceived += (s, e) => CharacterReceived?.Invoke(this, e);
             _completeFunctions = _kernel.ImportSkill(_completeSkill);
         }
 
@@ -62,8 +67,12 @@ public sealed partial class ChatService : IChatService
     {
         ThrowIfNotSupportChat();
         var pipelines = _kernelService.HasChatModel
-            ? new List<ISKFunction> { _chatFunctions[WorkflowConstants.Chat.InitializeName], _chatFunctions[WorkflowConstants.Chat.SendName] }
-            : new List<ISKFunction> { _completeFunctions[WorkflowConstants.TextCompletion.InitializeName], _completeFunctions[WorkflowConstants.TextCompletion.CompleteName] };
+            ? options.UseStreamOutput
+                ? new List<ISKFunction> { _chatFunctions[WorkflowConstants.Chat.InitializeName], _chatFunctions[WorkflowConstants.Chat.GenerateStreamName] }
+                : new List<ISKFunction> { _chatFunctions[WorkflowConstants.Chat.InitializeName], _chatFunctions[WorkflowConstants.Chat.SendName] }
+            : options.UseStreamOutput
+                ? new List<ISKFunction> { _completeFunctions[WorkflowConstants.TextCompletion.InitializeName], _completeFunctions[WorkflowConstants.TextCompletion.CompleteStreamName] }
+                : new List<ISKFunction> { _completeFunctions[WorkflowConstants.TextCompletion.InitializeName], _completeFunctions[WorkflowConstants.TextCompletion.CompleteName] };
 
         var contextVariables = new ContextVariables(message.Content);
         contextVariables.Set(AppConstants.SessionOptionsKey, JsonSerializer.Serialize(options));

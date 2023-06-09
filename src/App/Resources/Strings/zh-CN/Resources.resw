@@ -1458,4 +1458,10 @@
   <data name="TranslateOptionsDescription" xml:space="preserve">
     <value>文本翻译的配置项</value>
   </data>
+  <data name="StreamOutput" xml:space="preserve">
+    <value>流式输出</value>
+  </data>
+  <data name="StreamOutputDescription" xml:space="preserve">
+    <value>逐句逐段获取语言模型的响应</value>
+  </data>
 </root>

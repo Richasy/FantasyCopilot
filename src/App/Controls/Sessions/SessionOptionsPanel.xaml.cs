@@ -11,6 +11,12 @@ namespace FantasyCopilot.App.Controls.Sessions;
 public sealed partial class SessionOptionsPanel : SessionOptionsPanelBase
 {
     /// <summary>
+    /// Dependency property for <see cref="StreamOutputVisibility"/>.
+    /// </summary>
+    public static readonly DependencyProperty StreamOutputVisibilityProperty =
+        DependencyProperty.Register(nameof(StreamOutputVisibility), typeof(Visibility), typeof(SessionOptionsPanel), new PropertyMetadata(Visibility.Visible));
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="SessionOptionsPanel"/> class.
     /// </summary>
     public SessionOptionsPanel()
@@ -29,6 +35,15 @@ public sealed partial class SessionOptionsPanel : SessionOptionsPanelBase
             NumberRounder = rounder,
         };
         TokenNumberBox.NumberFormatter = formatter;
+    }
+
+    /// <summary>
+    /// Gets or sets the visibility of the stream output toggle.
+    /// </summary>
+    public Visibility StreamOutputVisibility
+    {
+        get => (Visibility)GetValue(StreamOutputVisibilityProperty);
+        set => SetValue(StreamOutputVisibilityProperty, value);
     }
 
     private void OnTokenNumberValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)

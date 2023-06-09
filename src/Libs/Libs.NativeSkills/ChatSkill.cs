@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
@@ -23,10 +24,12 @@ namespace FantasyCopilot.Libs.NativeSkills;
 public sealed class ChatSkill
 {
     private readonly ILogger<ChatSkill> _logger;
+    private readonly Timer _respondTimer;
     private IChatCompletion _chatCompletion;
     private ChatHistory _chatHistory;
     private ChatRequestSettings _chatRequestSettings;
     private string _systemPrompt;
+    private int _waitingMilliseconds = 0;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSkill"/> class.
@@ -37,7 +40,14 @@ public sealed class ChatSkill
         _logger = Locator.Current.GetLogger<ChatSkill>();
         Locator.Current.VariableChanged += OnVariableChanged;
         _chatCompletion = kernel.GetService<IChatCompletion>();
+        _respondTimer = new Timer(TimeSpan.FromMilliseconds(10));
+        _respondTimer.Elapsed += (_, _) => _waitingMilliseconds += 10;
     }
+
+    /// <summary>
+    /// Occurs when new content is received while waiting for an LLM response.
+    /// </summary>
+    public event EventHandler<string> CharacterReceived;
 
     /// <summary>
     /// Initialize current chat.
@@ -93,6 +103,64 @@ public sealed class ChatSkill
             reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
         }
 
+        return reply;
+    }
+
+    /// <summary>
+    /// Send message to LLM.
+    /// </summary>
+    /// <param name="context">Current context.</param>
+    /// <returns>Message response.</returns>
+    [SKFunction(WorkflowConstants.Chat.GenerateStreamDescription)]
+    [SKFunctionName(WorkflowConstants.Chat.GenerateStreamName)]
+    public async Task<string> GenerateStreamAsync(SKContext context)
+    {
+        var reply = string.Empty;
+        try
+        {
+            _chatHistory.AddMessage(ChatHistory.AuthorRoles.User, context.Result);
+            var response = _chatCompletion.GenerateMessageStreamAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
+
+            await foreach (var msg in response)
+            {
+                if (!_respondTimer.Enabled)
+                {
+                    _respondTimer.Start();
+                }
+
+                if (string.IsNullOrEmpty(msg))
+                {
+                    continue;
+                }
+
+                reply += msg;
+
+                if (_waitingMilliseconds > 50)
+                {
+                    _waitingMilliseconds = 0;
+                    CharacterReceived?.Invoke(this, reply);
+                }
+            }
+
+            reply = reply.Trim();
+
+            // If the response is empty, remove the last sent message.
+            if (string.IsNullOrEmpty(reply))
+            {
+                _chatHistory.Messages.RemoveAt(_chatHistory.Messages.Count - 1);
+            }
+            else
+            {
+                _chatHistory.AddMessage(ChatHistory.AuthorRoles.Assistant, reply);
+            }
+        }
+        catch (AIException e)
+        {
+            _logger.LogError(e, "Chat skill error.");
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+        }
+
+        _respondTimer.Stop();
         return reply;
     }
 

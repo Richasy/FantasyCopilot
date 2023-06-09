@@ -26,4 +26,7 @@ public sealed partial class SessionOptionsViewModel
 
     [ObservableProperty]
     private double _presencePenalty;
+
+    [ObservableProperty]
+    private bool _useStreamOutput;
 }
