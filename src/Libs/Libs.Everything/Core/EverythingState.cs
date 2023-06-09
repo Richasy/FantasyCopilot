@@ -71,6 +71,11 @@ namespace FantasyCopilot.Libs.Everything.Core
 
         private static void StartProcess(string options)
         {
+            if (string.IsNullOrEmpty(AppPath))
+            {
+                return;
+            }
+
             Process.Start(AppPath, options);
         }
     }
