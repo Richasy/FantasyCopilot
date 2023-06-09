@@ -64,6 +64,9 @@ namespace FantasyCopilot.Libs.Everything.Core
             this.Reset();
         }
 
+        public uint GetMajorVersion()
+            => EverythingWrapper.Everything_GetMajorVersion();
+
         IEnumerable<ISearchResult> IEverythingInternal.SendSearch(string searchPattern, RequestFlags flags)
         {
             using (EverythingWrapper.Lock())

@@ -18,6 +18,7 @@ public sealed partial class ImagePage : ImagePageBase
     /// <inheritdoc/>
     protected override void OnPageLoaded()
     {
+        CoreViewModel.CheckImageServiceCommand.Execute(default);
         ModulePicker.SelectedIndex = (int)ViewModel.SelectionType;
         ViewModel.PropertyChanged += OnViewModelPropertyChanged;
     }

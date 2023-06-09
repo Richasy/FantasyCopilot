@@ -119,6 +119,20 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         IsStorageAvailable = storageService.HasValidConfig;
     }
 
+    [RelayCommand]
+    private void CheckStorageService()
+    {
+        var storageService = Locator.Current.GetService<IStorageService>();
+        IsStorageAvailable = storageService.HasValidConfig;
+    }
+
+    [RelayCommand]
+    private void CheckImageService()
+    {
+        var imageService = Locator.Current.GetService<IImageService>();
+        IsImageAvailable = imageService.HasValidConfig;
+    }
+
     private void LoadNavItems()
     {
         TryClear(NavigateItems);

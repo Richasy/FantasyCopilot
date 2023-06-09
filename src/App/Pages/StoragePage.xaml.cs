@@ -17,6 +17,7 @@ public sealed partial class StoragePage : StoragePageBase
     /// <inheritdoc/>
     protected override void OnPageLoaded()
     {
+        CoreViewModel.CheckStorageServiceCommand.Execute(default);
         CoreViewModel.IsBackButtonShown = false;
         ModulePicker.SelectedIndex = Convert.ToInt32(ViewModel.SearchType);
         ImageOrientationComboBox.SelectedIndex = Convert.ToInt32(ViewModel.CurrentImageOrientation);

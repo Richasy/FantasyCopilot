@@ -99,6 +99,16 @@ public interface IAppViewModel : INotifyPropertyChanged
     IRelayCommand ReloadAllServicesCommand { get; }
 
     /// <summary>
+    /// Verify the availability of the storage search service.
+    /// </summary>
+    IRelayCommand CheckStorageServiceCommand { get; }
+
+    /// <summary>
+    /// Verify the availability of the image service.
+    /// </summary>
+    IRelayCommand CheckImageServiceCommand { get; }
+
+    /// <summary>
     /// Navigate to a page.
     /// </summary>
     /// <param name="page">Page id.</param>

@@ -58,19 +58,7 @@ namespace FantasyCopilot.Libs.Everything.Query
         }
 
         protected string QuoteIfNeeded(string text)
-        {
-            if (text == null)
-            {
-                return string.Empty;
-            }
-
-            if (text.Contains(" ") && text.First() != '\"' && text.Last() != '\"')
-            {
-                return $"\"{text}\"";
-            }
-
-            return text;
-        }
+            => text;
 
         internal void SetParent(IQueryGenerator onTheFlyparent)
         {
@@ -86,7 +74,8 @@ namespace FantasyCopilot.Libs.Everything.Query
         {
             if (this.results == null)
             {
-                this.results = this.everything.SendSearch(string.Join("", this.GetQueryParts()), this.parent.Flags | this.Flags);
+                var parts = this.GetQueryParts();
+                this.results = this.everything.SendSearch(string.Join("", parts), this.parent.Flags | this.Flags);
             }
         }
     }

@@ -70,11 +70,19 @@ public sealed partial class EverythingStorageService
             _logger.LogError(ex, $"Attempt to get Everything install location failed");
         }
 
-        _hasValidConfig = !string.IsNullOrEmpty(_appPath);
-
-        if (_hasValidConfig && _client == default)
+        if (_client == default)
         {
             _client = new Everything(_appPath);
+        }
+
+        try
+        {
+            var major = _client.GetMajorVersion();
+            _hasValidConfig = major > 0;
+        }
+        catch (Exception)
+        {
+            _hasValidConfig = false;
         }
     }
 
