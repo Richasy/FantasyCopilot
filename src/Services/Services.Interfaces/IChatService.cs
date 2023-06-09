@@ -10,6 +10,11 @@ namespace FantasyCopilot.Services.Interfaces;
 public interface IChatService
 {
     /// <summary>
+    /// Occurs when new content is received while waiting for an LLM response.
+    /// </summary>
+    event EventHandler<string> CharacterReceived;
+
+    /// <summary>
     /// Create a new chat.
     /// </summary>
     /// <param name="systemPrompt">System prompt.</param>

@@ -24,6 +24,7 @@
         <ComboBox
             x:Name="TranslateSourceComboBox"
             MinWidth="120"
+            MaxWidth="140"
             SelectionChanged="OnTranslateSourceComboBoxSelectionChanged">
             <ComboBoxItem Content="{ext:Locale Name=AzureTranslate}" />
             <ComboBoxItem Content="{ext:Locale Name=BaiduTranslate}" />

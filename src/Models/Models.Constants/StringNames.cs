@@ -465,4 +465,6 @@ public enum StringNames
     AppIdPlaceholderText,
     AppKey,
     AppKeyPlaceholderText,
+    StreamOutput,
+    StreamOutputDescription,
 }

@@ -145,15 +145,23 @@
                             Orientation="Horizontal"
                             Spacing="4"
                             Visibility="{x:Bind ViewModel.IsResponding, Mode=OneWay}">
-                            <labs:Shimmer
-                                Width="200"
-                                Height="40"
-                                CornerRadius="{StaticResource ControlCornerRadius}" />
+                            <Grid MinWidth="200" MinHeight="40">
+                                <labs:Shimmer
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    CornerRadius="{StaticResource ControlCornerRadius}" />
+                                <TextBlock
+                                    MaxWidth="280"
+                                    Margin="12,8"
+                                    IsTextSelectionEnabled="True"
+                                    Text="{x:Bind ViewModel.TempMessage, Mode=OneWay}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
                             <HyperlinkButton
                                 Width="40"
                                 Height="40"
                                 Padding="0"
-                                VerticalAlignment="Center"
+                                VerticalAlignment="Bottom"
                                 HorizontalContentAlignment="Center"
                                 VerticalContentAlignment="Center"
                                 Command="{x:Bind ViewModel.CancelMessageCommand, Mode=OneWay}"

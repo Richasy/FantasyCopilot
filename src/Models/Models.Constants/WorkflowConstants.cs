@@ -11,6 +11,8 @@ public static class WorkflowConstants
         public const string InitializeDescription = "Initialize the chat message pipeline.";
         public const string SendName = "Chat_Send";
         public const string SendDescription = "Send a message to the LLM.";
+        public const string GenerateStreamName = "Chat_GenerateStream";
+        public const string GenerateStreamDescription = "Send a message to the LLM and get stream response.";
     }
 
     public static class TextCompletion
@@ -19,6 +21,8 @@ public static class WorkflowConstants
         public const string InitializeDescription = "Initialize the text completion pipeline.";
         public const string CompleteName = "TextCompletion_Complete";
         public const string CompleteDescription = "Complete the given text.";
+        public const string CompleteStreamName = "TextCompletion_CompleteStream";
+        public const string CompleteStreamDescription = "Complete the given text and get stream response.";
     }
 
     public static class Text

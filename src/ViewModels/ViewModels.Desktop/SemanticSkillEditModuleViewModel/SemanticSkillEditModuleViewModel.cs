@@ -32,10 +32,7 @@ public sealed partial class SemanticSkillEditModuleViewModel : ViewModelBase, IS
     /// <inheritdoc/>
     public void InjectData(SemanticSkillConfig config)
     {
-        if (Options == null)
-        {
-            Options = Locator.Current.GetService<ISessionOptionsViewModel>();
-        }
+        Options ??= Locator.Current.GetService<ISessionOptionsViewModel>();
 
         if (config == null)
         {
@@ -53,6 +50,10 @@ public sealed partial class SemanticSkillEditModuleViewModel : ViewModelBase, IS
             Prompt = config.Prompt;
             Options?.Initialize(config);
         }
+
+        // In this task, only the completion of steps is of concern.
+        // Therefore, there is no significance in providing a stream output.
+        Options.UseStreamOutput = false;
     }
 
     [RelayCommand]

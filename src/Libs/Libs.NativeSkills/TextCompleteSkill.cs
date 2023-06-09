@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Timers;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
@@ -22,10 +24,13 @@ namespace FantasyCopilot.Libs.NativeSkills;
 /// </summary>
 public class TextCompleteSkill
 {
+    private readonly ILogger<ChatSkill> _logger;
     private readonly List<ChatHistory.Message> _completeHistory;
+    private readonly Timer _respondTimer;
     private ITextCompletion _textCompletion;
     private CompleteRequestSettings _completeRequestSettings;
     private string _systemPrompt;
+    private int _waitingMilliseconds = 0;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSkill"/> class.
@@ -33,10 +38,18 @@ public class TextCompleteSkill
     public TextCompleteSkill()
     {
         var kernel = Locator.Current.GetVariable<IKernel>();
+        _logger = Locator.Current.GetLogger<ChatSkill>();
         _completeHistory = new List<ChatHistory.Message>();
         Locator.Current.VariableChanged += OnVariableChanged;
         _textCompletion = kernel.GetService<ITextCompletion>();
+        _respondTimer = new Timer(TimeSpan.FromMilliseconds(10));
+        _respondTimer.Elapsed += (_, _) => _waitingMilliseconds += 10;
     }
+
+    /// <summary>
+    /// Occurs when new content is received while waiting for an LLM response.
+    /// </summary>
+    public event EventHandler<string> CharacterReceived;
 
     /// <summary>
     /// Initialize current session.
@@ -93,6 +106,65 @@ public class TextCompleteSkill
             reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
         }
 
+        return reply;
+    }
+
+    /// <summary>
+    /// Complete the given text.
+    /// </summary>
+    /// <param name="context">Current context.</param>
+    /// <returns>Message response.</returns>
+    [SKFunction(WorkflowConstants.TextCompletion.CompleteStreamDescription)]
+    [SKFunctionName(WorkflowConstants.TextCompletion.CompleteStreamName)]
+    public async Task<string> CompleteStreamAsync(SKContext context)
+    {
+        var reply = string.Empty;
+        try
+        {
+            _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.User, context.Result));
+            var previousText = GenerateContextString();
+            var response = _textCompletion.CompleteStreamAsync(previousText, _completeRequestSettings, context.CancellationToken);
+
+            await foreach (var msg in response)
+            {
+                if (!_respondTimer.Enabled)
+                {
+                    _respondTimer.Start();
+                }
+
+                if (string.IsNullOrEmpty(msg))
+                {
+                    continue;
+                }
+
+                reply += msg;
+
+                if (_waitingMilliseconds > 50)
+                {
+                    _waitingMilliseconds = 0;
+                    CharacterReceived?.Invoke(this, reply);
+                }
+            }
+
+            reply = reply.Replace(previousText, string.Empty).Trim();
+
+            // If the response is empty, remove the last sent message.
+            if (string.IsNullOrEmpty(reply))
+            {
+                _completeHistory.RemoveAt(_completeHistory.Count - 1);
+            }
+            else
+            {
+                _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.Assistant, reply));
+            }
+        }
+        catch (AIException e)
+        {
+            _logger.LogError(e, "Text completion failed.");
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+        }
+
+        _respondTimer.Stop();
         return reply;
     }
 
