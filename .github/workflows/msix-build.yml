@@ -48,9 +48,15 @@ jobs:
       name: Create release draft
       id: release-drafter
 
+    - name: Update manifest version
+      run: |
+        [xml]$manifest = get-content ".\$env:PACKAGE_PROJECT_NAME\Package.appxmanifest"
+        $manifest.Package.Identity.Version = "${{github.event.inputs.version}}"
+        $manifest.save(".\$env:PACKAGE_PROJECT_NAME\Package.appxmanifest")
+
     - name: Build solution
       run: |
-        msbuild $env:SOLUTION_NAME `
+        msbuild ../$env:SOLUTION_NAME `
           /p:Configuration=${{ matrix.configuration }} `
           /p:Platform=${{ matrix.platform }}
 
