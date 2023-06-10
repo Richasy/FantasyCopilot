@@ -40,9 +40,6 @@ public sealed partial class KernelService : IKernelService
             case AISource.OpenAI:
                 AddOpenAIService();
                 break;
-            case AISource.HuggingFace:
-                AddHuggingFaceService();
-                break;
             default:
                 break;
         }
@@ -91,62 +88,52 @@ public sealed partial class KernelService : IKernelService
         var chatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIChatModelName, string.Empty);
         var embeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);
         var completionModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAICompletionModelName, string.Empty);
+        var customEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAICustomEndpoint, string.Empty);
         var isBaseValid = !string.IsNullOrEmpty(key);
         var hasChatModel = !string.IsNullOrEmpty(chatModelName);
         var hasEmbeddingModel = !string.IsNullOrEmpty(embeddingModelName);
         var hasCompletionModel = !string.IsNullOrEmpty(completionModelName);
+        var hasCustomEndpoint = !string.IsNullOrEmpty(customEndpoint) && Uri.TryCreate(customEndpoint, UriKind.Absolute, out var _);
 
         var kernelBuilder = new KernelBuilder();
-        if (isBaseValid && hasChatModel)
-        {
-            kernelBuilder.WithOpenAIChatCompletionService(chatModelName, key, organization);
-        }
 
-        if (isBaseValid && hasEmbeddingModel)
+        if (hasCustomEndpoint)
         {
-            kernelBuilder.WithOpenAITextEmbeddingGenerationService(embeddingModelName, key, organization);
-        }
+            if (isBaseValid && hasChatModel)
+            {
+                kernelBuilder.WithProxyOpenAIChatCompletionService(chatModelName, key, customEndpoint, organization, setAsDefault: true);
+            }
 
-        if (isBaseValid && hasCompletionModel)
+            if (isBaseValid && hasEmbeddingModel)
+            {
+                kernelBuilder.WithProxyOpenAITextEmbeddingGenerationService(embeddingModelName, key, customEndpoint, organization);
+            }
+
+            if (isBaseValid && hasCompletionModel)
+            {
+                kernelBuilder.WithProxyOpenAITextCompletionService(completionModelName, key, customEndpoint, organization);
+            }
+        }
+        else
         {
-            kernelBuilder.WithOpenAITextCompletionService(completionModelName, key, organization);
+            if (isBaseValid && hasChatModel)
+            {
+                kernelBuilder.WithOpenAIChatCompletionService(chatModelName, key, organization, setAsDefault: true);
+            }
+
+            if (isBaseValid && hasEmbeddingModel)
+            {
+                kernelBuilder.WithOpenAITextEmbeddingGenerationService(embeddingModelName, key, organization);
+            }
+
+            if (isBaseValid && hasCompletionModel)
+            {
+                kernelBuilder.WithOpenAITextCompletionService(completionModelName, key, organization);
+            }
         }
 
         kernelBuilder.WithLogger(_logger);
         SetSupportState(isBaseValid, hasChatModel, hasEmbeddingModel, hasCompletionModel);
-        Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
-    }
-
-    private void AddHuggingFaceService()
-    {
-        var key = _settingsToolkit.RetrieveSecureString(SettingNames.HuggingFaceAccessKey);
-        var embeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceEmbeddingModelName, string.Empty);
-        var embeddingEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceEmbeddingEndpoint, string.Empty);
-        var completionModelName = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceCompletionModelName, string.Empty);
-        var completionEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceCompletionEndpoint, string.Empty);
-
-        var isBaseValid = !string.IsNullOrEmpty(key);
-        var hasEmbeddingModel = !string.IsNullOrEmpty(embeddingModelName)
-            && !string.IsNullOrEmpty(embeddingEndpoint)
-            && Uri.TryCreate(embeddingEndpoint, UriKind.RelativeOrAbsolute, out var _);
-        var hasCompletionModel = !string.IsNullOrEmpty(completionModelName)
-            && !string.IsNullOrEmpty(completionEndpoint)
-            && Uri.TryCreate(completionEndpoint, UriKind.RelativeOrAbsolute, out var _);
-
-        var kernelBuilder = new KernelBuilder();
-
-        if (isBaseValid && hasEmbeddingModel)
-        {
-            kernelBuilder.WithHuggingFaceTextEmbeddingGenerationService(embeddingModelName, key, embeddingEndpoint);
-        }
-
-        if (isBaseValid && hasCompletionModel)
-        {
-            kernelBuilder.WithHuggingFaceTextCompletionService(completionModelName, key, completionEndpoint);
-        }
-
-        kernelBuilder.WithLogger(_logger);
-        SetSupportState(isBaseValid, false, hasEmbeddingModel, hasCompletionModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
     }
 

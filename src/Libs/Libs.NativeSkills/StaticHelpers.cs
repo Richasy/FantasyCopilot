@@ -35,15 +35,15 @@ internal static class StaticHelpers
         return false;
     }
 
-    internal static bool TryRemoveEarlierMessage(List<ChatHistory.Message> messages, int maxTokens, int messageTokens)
+    internal static bool TryRemoveEarlierMessage(List<ChatMessageBase> messages, int maxTokens, int messageTokens)
     {
         // If there are too few rounds, then message generation cannot continue by deleting messages.
-        if (messages.Count <= 1 || !messages.Any(p => p.AuthorRole == ChatHistory.AuthorRoles.Assistant))
+        if (messages.Count <= 1 || !messages.Any(p => p.Role == AuthorRole.Assistant))
         {
             return false;
         }
 
-        var startIndex = messages.FirstOrDefault()?.AuthorRole == ChatHistory.AuthorRoles.System ? 1 : 0;
+        var startIndex = messages.FirstOrDefault()?.Role == AuthorRole.System ? 1 : 0;
         var difference = messageTokens - maxTokens;
         var endIndex = -1;
         var tempTokenRecord = 0;

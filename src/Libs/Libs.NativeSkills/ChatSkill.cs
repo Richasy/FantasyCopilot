@@ -87,30 +87,30 @@ public sealed class ChatSkill
         var reply = string.Empty;
         try
         {
-            _chatHistory.AddMessage(ChatHistory.AuthorRoles.User, context.Result);
+            _chatHistory.AddMessage(AuthorRole.System, context.Result);
             reply = await _chatCompletion.GenerateMessageAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
 
             // If the response is empty, remove the last sent message.
             if (string.IsNullOrEmpty(reply))
             {
-                _chatHistory.Messages.RemoveAt(_chatHistory.Messages.Count - 1);
+                _chatHistory.RemoveAt(_chatHistory.Count - 1);
             }
             else
             {
-                _chatHistory.AddMessage(ChatHistory.AuthorRoles.Assistant, reply);
+                _chatHistory.AddMessage(AuthorRole.Assistant, reply);
             }
         }
         catch (AIException e)
         {
             _logger.LogError(e, "Chat skill error.");
-            _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
                 && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
                 && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
-                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory.Messages, maxTokens, msgTokens);
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory, maxTokens, msgTokens);
                 if (canRetry)
                 {
                     retried = true;
@@ -139,7 +139,7 @@ public sealed class ChatSkill
         var reply = string.Empty;
         try
         {
-            _chatHistory.AddMessage(ChatHistory.AuthorRoles.User, context.Result);
+            _chatHistory.AddMessage(AuthorRole.User, context.Result);
             var response = _chatCompletion.GenerateMessageStreamAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
 
             await foreach (var msg in response)
@@ -168,29 +168,29 @@ public sealed class ChatSkill
             // If the response is empty, remove the last sent message.
             if (string.IsNullOrEmpty(reply))
             {
-                _chatHistory.Messages.RemoveAt(_chatHistory.Messages.Count - 1);
+                _chatHistory.RemoveAt(_chatHistory.Count - 1);
             }
             else
             {
-                _chatHistory.AddMessage(ChatHistory.AuthorRoles.Assistant, reply);
+                _chatHistory.AddMessage(AuthorRole.Assistant, reply);
             }
         }
         catch (AIException e)
         {
             _logger.LogError(e, "Chat skill error.");
-            _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
                 && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
                 && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
-                var msgs = _chatHistory.Messages;
-                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory.Messages, maxTokens, msgTokens);
+                var msgs = _chatHistory;
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory, maxTokens, msgTokens);
                 if (canRetry)
                 {
                     retried = true;
-                    _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+                    _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
                     reply = await GenerateStreamAsync(context);
                 }
             }
@@ -229,18 +229,18 @@ public sealed class ChatSkill
 
         if (!string.IsNullOrEmpty(_systemPrompt))
         {
-            _chatHistory.AddMessage(ChatHistory.AuthorRoles.System, _systemPrompt);
+            _chatHistory.AddMessage(AuthorRole.System, _systemPrompt);
         }
 
         foreach (var message in messages)
         {
             if (message.IsUser)
             {
-                _chatHistory.AddMessage(ChatHistory.AuthorRoles.User, message.Content);
+                _chatHistory.AddMessage(AuthorRole.User, message.Content);
             }
             else
             {
-                _chatHistory.AddMessage(ChatHistory.AuthorRoles.Assistant, message.Content);
+                _chatHistory.AddMessage(AuthorRole.Assistant, message.Content);
             }
         }
     }
@@ -260,10 +260,10 @@ public sealed class ChatSkill
             var chatHistory = chatCompletion.CreateNewChat(string.Empty);
             if (_chatHistory != null)
             {
-                var messages = _chatHistory.Messages;
+                var messages = _chatHistory;
                 foreach (var item in messages)
                 {
-                    chatHistory.AddMessage(item.AuthorRole, item.Content ?? string.Empty);
+                    chatHistory.AddMessage(item.Role, item.Content ?? string.Empty);
                 }
             }
 

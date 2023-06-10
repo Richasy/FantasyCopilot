@@ -27,7 +27,6 @@
             SelectionChanged="OnAISourceComboBoxSelectionChanged">
             <ComboBoxItem Content="Azure Open AI" />
             <ComboBoxItem Content="Open AI" />
-            <!--<ComboBoxItem Content="Hugging Face" />-->
         </ComboBox>
 
         <labs:SettingsExpander.Items>
@@ -93,6 +92,16 @@
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
+                Header="{ext:Locale Name=ProxyEndpoint}"
+                Description="{ext:Locale Name=ProxyWarning}"
+                Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
+                <TextBox
+                    Width="200"
+                    PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
+                    Text="{x:Bind ViewModel.OpenAICustomEndpoint, Mode=TwoWay}" />
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=OptionalOrganization}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
                 <TextBox
@@ -126,53 +135,6 @@
                     Width="200"
                     PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay}" />
-            </labs:SettingsCard>
-
-            <!--  Hugging Face (Not ready)  -->
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=AccessKey}"
-                Visibility="{x:Bind ViewModel.IsHuggingFaceShown, Mode=OneWay}">
-                <PasswordBox
-                    Width="200"
-                    Password="{x:Bind ViewModel.HuggingFaceAccessKey, Mode=TwoWay}"
-                    PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
-            </labs:SettingsCard>
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=EmbeddingModelName}"
-                Visibility="{x:Bind ViewModel.IsHuggingFaceShown, Mode=OneWay}">
-                <TextBox
-                    Width="200"
-                    PlaceholderText="{ext:Locale Name=EmbeddingModelNamePlaceholderText}"
-                    Text="{x:Bind ViewModel.HuggingFaceEmbeddingModelName, Mode=TwoWay}" />
-            </labs:SettingsCard>
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=EmbeddingModelEndpoint}"
-                Visibility="{x:Bind ViewModel.IsHuggingFaceShown, Mode=OneWay}">
-                <TextBox
-                    Width="200"
-                    PlaceholderText="{ext:Locale Name=Endpoint}"
-                    Text="{x:Bind ViewModel.HuggingFaceEmbeddingEndpoint, Mode=TwoWay}" />
-            </labs:SettingsCard>
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=TextCompletionModelName}"
-                Visibility="{x:Bind ViewModel.IsHuggingFaceShown, Mode=OneWay}">
-                <TextBox
-                    Width="200"
-                    PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
-                    Text="{x:Bind ViewModel.HuggingFaceCompletionModelName, Mode=TwoWay}" />
-            </labs:SettingsCard>
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=TextCompletionModelEndpoint}"
-                Visibility="{x:Bind ViewModel.IsHuggingFaceShown, Mode=OneWay}">
-                <TextBox
-                    Width="200"
-                    PlaceholderText="{ext:Locale Name=Endpoint}"
-                    Text="{x:Bind ViewModel.HuggingFaceCompletionEndpoint, Mode=TwoWay}" />
             </labs:SettingsCard>
         </labs:SettingsExpander.Items>
     </labs:SettingsExpander>

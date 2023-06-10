@@ -1470,4 +1470,10 @@
   <data name="AutoRemoveEarlierMessageDescription" xml:space="preserve">
     <value>达到令牌上限时，将移除较早的消息以继续对话</value>
   </data>
+  <data name="ProxyEndpoint" xml:space="preserve">
+    <value>代理终结点（选填）</value>
+  </data>
+  <data name="ProxyWarning" xml:space="preserve">
+    <value>请自行验证代理服务是否可信</value>
+  </data>
 </root>

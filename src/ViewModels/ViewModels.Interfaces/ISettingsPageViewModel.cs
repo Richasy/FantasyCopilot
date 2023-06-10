@@ -72,6 +72,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     string OpenAIOrganization { get; set; }
 
     /// <summary>
+    /// Open AI custom endpoint.
+    /// </summary>
+    string OpenAICustomEndpoint { get; set; }
+
+    /// <summary>
     /// Open AI chat model name.
     /// </summary>
     string OpenAIChatModelName { get; set; }
@@ -87,31 +92,6 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     string OpenAICompletionModelName { get; set; }
 
     /// <summary>
-    /// Hugging Face access key.
-    /// </summary>
-    string HuggingFaceAccessKey { get; set; }
-
-    /// <summary>
-    /// Hugging Face embedding model name.
-    /// </summary>
-    string HuggingFaceEmbeddingModelName { get; set; }
-
-    /// <summary>
-    /// Hugging Face embedding model service endpoint.
-    /// </summary>
-    string HuggingFaceEmbeddingEndpoint { get; set; }
-
-    /// <summary>
-    /// Hugging Face text completion model name.
-    /// </summary>
-    string HuggingFaceCompletionModelName { get; set; }
-
-    /// <summary>
-    /// Hugging Face text completion model service endpoint.
-    /// </summary>
-    string HuggingFaceCompletionEndpoint { get; set; }
-
-    /// <summary>
     /// Whether to display configuration items for Azure Open AI.
     /// </summary>
     bool IsAzureOpenAIShown { get; }
@@ -120,11 +100,6 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Whether to display configuration items for Open AI.
     /// </summary>
     bool IsOpenAIShown { get; }
-
-    /// <summary>
-    /// Whether to display configuration items for Hugging Face.
-    /// </summary>
-    bool IsHuggingFaceShown { get; }
 
     /// <summary>
     /// The maximum number of characters a single file can accept for text storage.

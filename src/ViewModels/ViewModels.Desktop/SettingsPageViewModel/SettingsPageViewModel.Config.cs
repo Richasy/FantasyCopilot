@@ -94,33 +94,10 @@ public sealed partial class SettingsPageViewModel
                 {
                     OpenAICompletionModelName = appConfig.OpenAI.CompletionModelName;
                 }
-            }
 
-            if (appConfig.HuggingFace != null)
-            {
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.Key))
+                if (!string.IsNullOrEmpty(appConfig.OpenAI.Endpoint))
                 {
-                    HuggingFaceAccessKey = appConfig.HuggingFace.Key;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.EmbeddingEndpoint))
-                {
-                    HuggingFaceEmbeddingEndpoint = appConfig.HuggingFace.EmbeddingEndpoint;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.EmbeddingModelName))
-                {
-                    HuggingFaceEmbeddingModelName = appConfig.HuggingFace.EmbeddingModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.CompletionModelName))
-                {
-                    HuggingFaceCompletionModelName = appConfig.HuggingFace.CompletionModelName;
-                }
-
-                if (!string.IsNullOrEmpty(appConfig.HuggingFace.CompletionEndpoint))
-                {
-                    HuggingFaceCompletionEndpoint = appConfig.HuggingFace.CompletionEndpoint;
+                    OpenAICustomEndpoint = appConfig.OpenAI.Endpoint;
                 }
             }
 
@@ -213,14 +190,7 @@ public sealed partial class SettingsPageViewModel
                     ChatModelName = OpenAIChatModelName,
                     Organization = OpenAIOrganization,
                     Key = OpenAIAccessKey,
-                },
-                HuggingFace = new AppConfig.HuggingFaceConfig
-                {
-                    EmbeddingModelName = HuggingFaceEmbeddingModelName,
-                    CompletionModelName = HuggingFaceCompletionModelName,
-                    EmbeddingEndpoint = HuggingFaceEmbeddingEndpoint,
-                    CompletionEndpoint = HuggingFaceCompletionEndpoint,
-                    Key = HuggingFaceAccessKey,
+                    Endpoint = OpenAICustomEndpoint,
                 },
                 AzureVoice = new AppConfig.RegionConfig
                 {

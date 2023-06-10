@@ -4,11 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
@@ -61,15 +59,10 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         OpenAIAccessKey = _settingsToolkit.RetrieveSecureString(SettingNames.OpenAIAccessKey);
         OpenAIOrganization = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIOrganization, string.Empty);
+        OpenAICustomEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAICustomEndpoint, string.Empty);
         OpenAIChatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIChatModelName, string.Empty);
         OpenAICompletionModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAICompletionModelName, string.Empty);
         OpenAIEmbeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);
-
-        HuggingFaceAccessKey = _settingsToolkit.RetrieveSecureString(SettingNames.HuggingFaceAccessKey);
-        HuggingFaceCompletionModelName = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceCompletionModelName, string.Empty);
-        HuggingFaceEmbeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceEmbeddingModelName, string.Empty);
-        HuggingFaceCompletionEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceCompletionEndpoint, string.Empty);
-        HuggingFaceEmbeddingEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.HuggingFaceEmbeddingEndpoint, string.Empty);
 
         MaxSplitContentLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxSplitContentLength, 1024);
         MaxParagraphTokenLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxParagraphTokenLength, 512);
@@ -171,7 +164,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
     {
         IsAzureOpenAIShown = AiSource == AISource.Azure;
         IsOpenAIShown = AiSource == AISource.OpenAI;
-        IsHuggingFaceShown = AiSource == AISource.HuggingFace;
     }
 
     private void CheckTranslateSource()

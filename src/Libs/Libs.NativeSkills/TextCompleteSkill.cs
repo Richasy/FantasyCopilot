@@ -25,8 +25,8 @@ namespace FantasyCopilot.Libs.NativeSkills;
 /// </summary>
 public class TextCompleteSkill
 {
-    private readonly ILogger<ChatSkill> _logger;
-    private readonly List<ChatHistory.Message> _completeHistory;
+    private readonly ILogger<TextCompleteSkill> _logger;
+    private readonly List<ChatMessageBase> _completeHistory;
     private readonly Timer _respondTimer;
     private ITextCompletion _textCompletion;
     private CompleteRequestSettings _completeRequestSettings;
@@ -35,13 +35,13 @@ public class TextCompleteSkill
     private bool _autoRemoveEarlierMessage = false;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ChatSkill"/> class.
+    /// Initializes a new instance of the <see cref="TextCompleteSkill"/> class.
     /// </summary>
     public TextCompleteSkill()
     {
         var kernel = Locator.Current.GetVariable<IKernel>();
-        _logger = Locator.Current.GetLogger<ChatSkill>();
-        _completeHistory = new List<ChatHistory.Message>();
+        _logger = Locator.Current.GetLogger<TextCompleteSkill>();
+        _completeHistory = new List<ChatMessageBase>();
         Locator.Current.VariableChanged += OnVariableChanged;
         _textCompletion = kernel.GetService<ITextCompletion>();
         _respondTimer = new Timer(TimeSpan.FromMilliseconds(10));
@@ -89,7 +89,7 @@ public class TextCompleteSkill
         var reply = string.Empty;
         try
         {
-            _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.User, context.Result));
+            _completeHistory.Add(new ChatMessage(AuthorRole.User, context.Result));
             var previousText = GenerateContextString();
             reply = await _textCompletion.CompleteAsync(previousText, _completeRequestSettings, context.CancellationToken);
             reply = reply.Replace(previousText, string.Empty).Trim();
@@ -101,13 +101,13 @@ public class TextCompleteSkill
             }
             else
             {
-                _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.Assistant, reply));
+                _completeHistory.Add(new ChatMessage(AuthorRole.Assistant, reply));
             }
         }
         catch (AIException e)
         {
             _logger.LogError(e, "Text Completion skill error.");
-            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
                 && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
@@ -118,7 +118,7 @@ public class TextCompleteSkill
                 if (canRetry)
                 {
                     retried = true;
-                    _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+                    _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
                     reply = await CompleteAsync(context);
                 }
             }
@@ -144,7 +144,7 @@ public class TextCompleteSkill
         var reply = string.Empty;
         try
         {
-            _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.User, context.Result));
+            _completeHistory.Add(new ChatMessage(AuthorRole.User, context.Result));
             var previousText = GenerateContextString();
             var response = _textCompletion.CompleteStreamAsync(previousText, _completeRequestSettings, context.CancellationToken);
 
@@ -178,13 +178,13 @@ public class TextCompleteSkill
             }
             else
             {
-                _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.Assistant, reply));
+                _completeHistory.Add(new ChatMessage(AuthorRole.Assistant, reply));
             }
         }
         catch (AIException e)
         {
             _logger.LogError(e, "Text Completion skill error.");
-            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
                 && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
@@ -217,7 +217,7 @@ public class TextCompleteSkill
     {
         _systemPrompt = prompt;
         _completeHistory.Clear();
-        _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.System, prompt));
+        _completeHistory.Add(new ChatMessage(AuthorRole.System, prompt));
     }
 
     /// <summary>
@@ -234,18 +234,18 @@ public class TextCompleteSkill
 
         if (!string.IsNullOrEmpty(_systemPrompt))
         {
-            _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.System, _systemPrompt));
+            _completeHistory.Add(new ChatMessage(AuthorRole.System, _systemPrompt));
         }
 
         foreach (var message in messages)
         {
             if (message.IsUser)
             {
-                _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.User, message.Content));
+                _completeHistory.Add(new ChatMessage(AuthorRole.User, message.Content));
             }
             else
             {
-                _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.Assistant, message.Content));
+                _completeHistory.Add(new ChatMessage(AuthorRole.Assistant, message.Content));
             }
         }
     }
@@ -277,13 +277,23 @@ public class TextCompleteSkill
         var textList = new List<string>();
         foreach (var item in _completeHistory)
         {
-            var role = item.AuthorRole switch
+            var role = string.Empty;
+            if (item.Role == AuthorRole.User)
             {
-                ChatHistory.AuthorRoles.User => AppConstants.UserTag,
-                ChatHistory.AuthorRoles.Assistant => AppConstants.AssistantTag,
-                ChatHistory.AuthorRoles.System => AppConstants.SystemTag,
-                _ => throw new NotSupportedException(),
-            };
+                role = AppConstants.UserTag;
+            }
+            else if (item.Role == AuthorRole.Assistant)
+            {
+                role = AppConstants.AssistantTag;
+            }
+            else if (item.Role == AuthorRole.System)
+            {
+                role = AppConstants.SystemTag;
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
 
             if (string.IsNullOrEmpty(item.Content))
             {
@@ -296,5 +306,13 @@ public class TextCompleteSkill
         var text = string.Join("\n\n", textList);
         text += $"\n\n{AppConstants.AssistantTag}: ";
         return text;
+    }
+
+    private sealed class ChatMessage : ChatMessageBase
+    {
+        public ChatMessage(AuthorRole authorRole, string content)
+            : base(authorRole, content)
+        {
+        }
     }
 }

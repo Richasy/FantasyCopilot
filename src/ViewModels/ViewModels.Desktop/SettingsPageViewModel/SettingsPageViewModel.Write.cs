@@ -61,6 +61,9 @@ public sealed partial class SettingsPageViewModel
     partial void OnOpenAIAccessKeyChanged(string value)
         => WriteSecureSetting(SettingNames.OpenAIAccessKey, value);
 
+    partial void OnOpenAICustomEndpointChanging(string value)
+        => WriteSetting(SettingNames.OpenAICustomEndpoint, value);
+
     partial void OnOpenAIChatModelNameChanged(string value)
         => WriteSetting(SettingNames.OpenAIChatModelName, value);
 
@@ -72,21 +75,6 @@ public sealed partial class SettingsPageViewModel
 
     partial void OnOpenAIOrganizationChanged(string value)
         => WriteSetting(SettingNames.OpenAIOrganization, value);
-
-    partial void OnHuggingFaceAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.HuggingFaceAccessKey, value);
-
-    partial void OnHuggingFaceEmbeddingModelNameChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceEmbeddingModelName, value);
-
-    partial void OnHuggingFaceCompletionModelNameChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceCompletionModelName, value);
-
-    partial void OnHuggingFaceEmbeddingEndpointChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceEmbeddingEndpoint, value);
-
-    partial void OnHuggingFaceCompletionEndpointChanged(string value)
-        => WriteSetting(SettingNames.HuggingFaceCompletionEndpoint, value);
 
     partial void OnAzureVoiceKeyChanged(string value)
         => WriteSecureSetting(SettingNames.AzureVoiceKey, value);
