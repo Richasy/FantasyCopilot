@@ -188,8 +188,19 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
     {
         if (_cancellationTokenSource != null && _cancellationTokenSource.Token.CanBeCanceled)
         {
-            _cancellationTokenSource?.Cancel();
+            try
+            {
+                _cancellationTokenSource?.Cancel();
+            }
+            catch (Exception)
+            {
+            }
+
             _cancellationTokenSource = default;
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                TempMessage = string.Empty;
+            });
         }
     }
 
@@ -223,6 +234,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
                 return;
             }
 
+            TempMessage = string.Empty;
             ErrorText = e.Message;
         });
     }
