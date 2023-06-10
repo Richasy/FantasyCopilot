@@ -58,6 +58,7 @@ jobs:
       run: |
         msbuild ../$env:SOLUTION_NAME `
           /p:Configuration=${{ matrix.configuration }} `
+          /p:RuntimeIdentifier=win10-${{ matrix.platform }} `
           /p:Platform=${{ matrix.platform }}
 
     - name: Get MSIX package output directory
@@ -80,6 +81,7 @@ jobs:
           /p:AppxPackageSigningEnabled=True `
           /p:PackageCertificateKeyFile=$env:CERT_FILE_NAME `
           /p:AppxPackageSigningTimestampDigestAlgorithm=SHA256 `
+          `
 
         # Remove framework packages not of current platform to reduce artifact size
         Get-ChildItem "$env:MSIX_PACKAGE_DIR\*\Dependencies\*" `
