@@ -42,7 +42,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
 
     - name: Restore dependencies
-      run: dotnet restore $env:SOLUTION_NAME
+      run: dotnet restore ../$env:SOLUTION_NAME
 
     - uses: release-drafter/release-drafter@v5
       name: Create release draft
