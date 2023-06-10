@@ -80,9 +80,6 @@ jobs:
           /p:AppxPackageSigningEnabled=True `
           /p:PackageCertificateKeyFile=$env:CERT_FILE_NAME `
           /p:AppxPackageSigningTimestampDigestAlgorithm=SHA256 `
-          `
-          /p:SelfContained=true `
-          /p:PublishReadyToRun=false
 
         # Remove framework packages not of current platform to reduce artifact size
         Get-ChildItem "$env:MSIX_PACKAGE_DIR\*\Dependencies\*" `
