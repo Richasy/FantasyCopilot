@@ -45,7 +45,7 @@ The application does not provide initial key configuration, which requires you t
 | ------------------------ | -------------------------------------------------------------------------------- |
 | Open AI or Azure Open AI | Chat, prompt management, session management, knowledge base, semantic skills |
 | Azure Speech Service     | Text-to-speech, speech recognition                                               |
-| Azure Translator         | Text translation                                                                 |
+| Azure Translator | Baidu Translator        | Text translation                                                                 |
 | Everything               | File search                                                                      |
 | Stable Diffusion         | Text to Image                                           |
 
@@ -64,7 +64,7 @@ All documents related to **Fantasy Copilot**, including architecture and usage i
 
 You can greatly expand the boundaries of an application by utilizing the plugin functionality provided by the application. In theory, you can use any programming language to write plugins or create configuration files for integration with existing programs.
 
-If you are interested in writing plugins, you can find more information in the [Wiki](https://github.com/Richasy/FantasyCopilot/wiki).
+If you are interested in writing plugins, you can find more information in the [Create Plugins](https://github.com/Richasy/FantasyCopilot/wiki/Create-Plugins).
 
 ## 🔒 Data Security
 

@@ -10,6 +10,7 @@ using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.UI.Dispatching;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -24,29 +25,34 @@ public sealed partial class WorkflowsModuleViewModel : ViewModelBase, IWorkflows
     public WorkflowsModuleViewModel(ICacheToolkit cacheToolkit)
     {
         _cacheToolkit = cacheToolkit;
+        _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         Workflows = new ObservableCollection<WorkflowMetadata>();
         Workflows.CollectionChanged += OnWorkflowsCollectionChanged;
         _cacheToolkit.WorkflowListChanged += OnWorkflowListChanged;
-        AttachIsRunningToAsyncCommand(p => IsLoading = p, InitializeCommand);
         CheckIsEmpty();
     }
 
     [RelayCommand]
-    private async Task InitializeAsync()
+    private void Initialize()
     {
         if (IsLoading || _isInitialized)
         {
             return;
         }
 
-        TryClear(Workflows);
-        var workflows = await _cacheToolkit.GetWorkflowListAsync();
-        foreach (var workflow in workflows)
+        IsLoading = true;
+        _dispatcherQueue.TryEnqueue(async () =>
         {
-            Workflows.Add(workflow);
-        }
+            TryClear(Workflows);
+            var workflows = await _cacheToolkit.GetWorkflowListAsync();
+            foreach (var workflow in workflows)
+            {
+                Workflows.Add(workflow);
+            }
 
-        _isInitialized = true;
+            _isInitialized = true;
+            IsLoading = false;
+        });
     }
 
     [RelayCommand]

@@ -87,7 +87,7 @@ public static class WorkflowConstants
 
     public const int ErrorKey = -404;
     public const string LinkKey = "LINK";
-    public const string StepResultKey = "STEPRESULT_{0}";
+    public const string StepResultKey = "STEP_RESULT_{0}";
     public const string Txt2ImgResultKey = "TEXT_TO_IMAGE_{0}";
     public const string KnowledgeSourceKey = "KNOWLEDGE_SOURCE_{0}";
     public const string OriginalKey = "ORIGINAL";

@@ -11,6 +11,8 @@ namespace FantasyCopilot.App.Controls.Workspace;
 /// </summary>
 public sealed partial class WorkflowPanel : WorkflowPanelBase
 {
+    private bool _isInitialized = false;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="WorkflowPanel"/> class.
     /// </summary>
@@ -22,7 +24,15 @@ public sealed partial class WorkflowPanel : WorkflowPanelBase
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
-        => ViewModel.InitializeCommand.Execute(default);
+    {
+        if (_isInitialized)
+        {
+            return;
+        }
+
+        ViewModel.InitializeCommand.Execute(default);
+        _isInitialized = true;
+    }
 
     private void OnAddButtonClickAsync(object sender, RoutedEventArgs e)
         => ViewModel.EditConfigCommand.Execute(default);
