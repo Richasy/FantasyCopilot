@@ -467,4 +467,6 @@ public enum StringNames
     AppKeyPlaceholderText,
     StreamOutput,
     StreamOutputDescription,
+    AutoRemoveEarlierMessage,
+    AutoRemoveEarlierMessageDescription,
 }

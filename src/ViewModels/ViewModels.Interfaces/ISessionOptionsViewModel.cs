@@ -43,6 +43,11 @@ public interface ISessionOptionsViewModel : INotifyPropertyChanged
     bool UseStreamOutput { get; set; }
 
     /// <summary>
+    /// Automatically remove earlier messages when the token limit is reached.
+    /// </summary>
+    bool AutoRemoveEarlierMessage { get; set; }
+
+    /// <summary>
     /// Initialize the view model.
     /// </summary>
     /// <param name="options">Existing configuration.</param>

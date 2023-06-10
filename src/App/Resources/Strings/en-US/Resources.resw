@@ -213,6 +213,12 @@
   <data name="AutoDetect" xml:space="preserve">
     <value>Automatically detect</value>
   </data>
+  <data name="AutoRemoveEarlierMessage" xml:space="preserve">
+    <value>Auto Remove Earlier Message</value>
+  </data>
+  <data name="AutoRemoveEarlierMessageDescription" xml:space="preserve">
+    <value>When the token limit is reached, earlier messages are removed to continue the conversation</value>
+  </data>
   <data name="AwesomePrompt" xml:space="preserve">
     <value>Awesome ChatGPT Prompts</value>
   </data>

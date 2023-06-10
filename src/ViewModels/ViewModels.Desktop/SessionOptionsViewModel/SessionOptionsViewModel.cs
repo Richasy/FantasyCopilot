@@ -29,6 +29,7 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
             FrequencyPenalty = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultFrequencyPenalty, 0d);
             PresencePenalty = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultPresencePenalty, 0d);
             UseStreamOutput = true;
+            AutoRemoveEarlierMessage = false;
         }
         else
         {
@@ -38,6 +39,7 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
             FrequencyPenalty = options.FrequencyPenalty;
             PresencePenalty = options.PresencePenalty;
             UseStreamOutput = options.UseStreamOutput;
+            AutoRemoveEarlierMessage = options.AutoRemoveEarlierMessage;
         }
     }
 
@@ -51,5 +53,6 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
             FrequencyPenalty = FrequencyPenalty,
             PresencePenalty = PresencePenalty,
             UseStreamOutput = UseStreamOutput,
+            AutoRemoveEarlierMessage = AutoRemoveEarlierMessage,
         };
 }
