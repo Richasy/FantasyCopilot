@@ -17,6 +17,8 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <PackageCertificateKeyFile>FantasyCopilot.App_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x64|arm64</AppxBundlePlatforms>
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\FantasyCopilot_PluginConfig.json" />
