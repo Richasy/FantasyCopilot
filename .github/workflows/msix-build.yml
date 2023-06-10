@@ -13,7 +13,6 @@ on:
 
 jobs:
   build:
-    needs: create-draft-release
     runs-on: windows-latest
 
     strategy:
