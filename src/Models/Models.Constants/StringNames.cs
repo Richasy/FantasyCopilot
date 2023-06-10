@@ -470,4 +470,5 @@ public enum StringNames
     AutoRemoveEarlierMessage,
     AutoRemoveEarlierMessageDescription,
     ProxyEndpoint,
+    ProxyWarning,
 }

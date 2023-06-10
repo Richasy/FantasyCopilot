@@ -1095,6 +1095,9 @@
   <data name="ProxyEndpoint" xml:space="preserve">
     <value>Proxy endpoint (optional)</value>
   </data>
+  <data name="ProxyWarning" xml:space="preserve">
+    <value>Please verify whether the proxy service is trustworthy</value>
+  </data>
   <data name="QuitApp" xml:space="preserve">
     <value>Quit App</value>
   </data>

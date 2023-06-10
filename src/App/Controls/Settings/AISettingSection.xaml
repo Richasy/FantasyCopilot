@@ -93,6 +93,7 @@
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=ProxyEndpoint}"
+                Description="{ext:Locale Name=ProxyWarning}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
                 <TextBox
                     Width="200"
