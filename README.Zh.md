@@ -45,7 +45,7 @@
 | ------------------------ | -------------------------------------------- |
 | Open AI 或 Azure Open AI | 对话、提示词管理、会话管理、知识库、语义技能 |
 | Azure Speech Service     | 文本转语音、语音识别                         |
-| Azure Translator         | 文本翻译                                     |
+| Azure Translator | 百度翻译       | 文本翻译                                     |
 | Everything               | 文件搜索                                     |
 | Stable Diffusion         | 文生图                                       |
 
@@ -64,7 +64,7 @@
 
 你可以利用应用提供的插件功能极大地扩展应用的边界，理论上你可以使用任何语言编写插件，或者为现有的程序编写配置文件进行集成。
 
-如果你对编写插件感兴趣，可以在 [Wiki](ttps://github.com/Richasy/FantasyCopilot/wiki) 中查看更多。
+如果你对编写插件感兴趣，可以在 [Create Plugins](https://github.com/Richasy/FantasyCopilot/wiki/Create-Plugins) 中查看更多。
 
 ## 🔒 数据安全
 

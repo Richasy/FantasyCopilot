@@ -11,6 +11,7 @@
     mc:Ignorable="d">
 
     <Grid
+        MinWidth="160"
         MaxWidth="320"
         Padding="0,0,0,8"
         HorizontalAlignment="Stretch"
@@ -21,7 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid ColumnSpacing="8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />

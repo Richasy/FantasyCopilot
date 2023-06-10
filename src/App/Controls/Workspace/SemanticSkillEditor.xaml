@@ -78,7 +78,7 @@
 
                 <sessions:SessionOptionsPanel
                     x:Name="OptionsPanel"
-                    IsSemanticOptions="Collapsed"
+                    IsSemanticOptions="True"
                     ViewModel="{x:Bind ViewModel.Options, Mode=OneWay}" />
             </StackPanel>
         </ScrollViewer>

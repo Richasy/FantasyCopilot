@@ -55,5 +55,5 @@ public interface IWorkflowsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize the list.
     /// </summary>
-    IAsyncRelayCommand InitializeCommand { get; }
+    IRelayCommand InitializeCommand { get; }
 }
