@@ -16,9 +16,4 @@ public enum AISource
     /// From Open AI.
     /// </summary>
     OpenAI,
-
-    /// <summary>
-    /// From Hugging Face.
-    /// </summary>
-    HuggingFace,
 }

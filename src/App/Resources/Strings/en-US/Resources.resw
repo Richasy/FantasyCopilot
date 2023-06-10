@@ -1092,6 +1092,9 @@
   <data name="PromptTitlePlaceholder" xml:space="preserve">
     <value>Prompt Word Title</value>
   </data>
+  <data name="ProxyEndpoint" xml:space="preserve">
+    <value>Proxy endpoint (optional)</value>
+  </data>
   <data name="QuitApp" xml:space="preserve">
     <value>Quit App</value>
   </data>

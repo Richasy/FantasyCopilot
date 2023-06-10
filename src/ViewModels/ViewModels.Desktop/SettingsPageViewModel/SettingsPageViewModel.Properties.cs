@@ -54,6 +54,9 @@ public sealed partial class SettingsPageViewModel
     private string _openAIOrganization;
 
     [ObservableProperty]
+    private string _openAICustomEndpoint;
+
+    [ObservableProperty]
     private string _openAIChatModelName;
 
     [ObservableProperty]
@@ -82,9 +85,6 @@ public sealed partial class SettingsPageViewModel
 
     [ObservableProperty]
     private bool _isOpenAIShown;
-
-    [ObservableProperty]
-    private bool _isHuggingFaceShown;
 
     [ObservableProperty]
     private int _maxSplitContentLength;

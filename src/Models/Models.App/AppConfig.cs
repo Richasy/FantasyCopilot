@@ -13,9 +13,6 @@ public sealed class AppConfig
     [JsonPropertyName("openAI")]
     public OpenAIConfig OpenAI { get; set; }
 
-    [JsonPropertyName("huggingFace")]
-    public HuggingFaceConfig HuggingFace { get; set; }
-
     [JsonPropertyName("azureVoice")]
     public RegionConfig AzureVoice { get; set; }
 
@@ -48,6 +45,9 @@ public sealed class AppConfig
         [JsonPropertyName("organization")]
         public string Organization { get; set; }
 
+        [JsonPropertyName("endpoint")]
+        public string Endpoint { get; set; }
+
         [JsonPropertyName("chatModelName")]
         public string ChatModelName { get; set; }
 
@@ -56,21 +56,6 @@ public sealed class AppConfig
 
         [JsonPropertyName("completionModelName")]
         public string CompletionModelName { get; set; }
-    }
-
-    public sealed class HuggingFaceConfig : ConfigBase
-    {
-        [JsonPropertyName("embeddingModelName")]
-        public string EmbeddingModelName { get; set; }
-
-        [JsonPropertyName("completionModelName")]
-        public string CompletionModelName { get; set; }
-
-        [JsonPropertyName("embeddingEndpoint")]
-        public string EmbeddingEndpoint { get; set; }
-
-        [JsonPropertyName("completionEndpoint")]
-        public string CompletionEndpoint { get; set; }
     }
 
     public sealed class RegionConfig : ConfigBase

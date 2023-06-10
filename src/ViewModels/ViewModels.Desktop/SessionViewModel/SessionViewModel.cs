@@ -235,7 +235,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
             }
 
             TempMessage = string.Empty;
-            ErrorText = e.Message;
+            ErrorText = string.IsNullOrEmpty(e.Message) ? "Unknown error" : e.Message;
         });
     }
 

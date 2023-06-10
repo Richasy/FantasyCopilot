@@ -469,4 +469,5 @@ public enum StringNames
     StreamOutputDescription,
     AutoRemoveEarlierMessage,
     AutoRemoveEarlierMessageDescription,
+    ProxyEndpoint,
 }
