@@ -179,12 +179,18 @@
                             Spacing="8"
                             Visibility="{x:Bind ViewModel.ErrorText, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                             <TextBlock
-                                MaxWidth="200"
+                                x:Name="ErrorBlock"
+                                MaxWidth="240"
                                 HorizontalAlignment="Center"
+                                MaxLines="3"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="{x:Bind ViewModel.ErrorText, Mode=OneWay}"
                                 TextAlignment="Center"
-                                TextWrapping="Wrap" />
+                                TextWrapping="Wrap">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip Content="{x:Bind ViewModel.ErrorText, Mode=OneWay}" IsEnabled="{x:Bind ErrorBlock.IsTextTrimmed, Mode=OneWay}" />
+                                </ToolTipService.ToolTip>
+                            </TextBlock>
                             <HyperlinkButton
                                 Padding="4"
                                 HorizontalAlignment="Center"

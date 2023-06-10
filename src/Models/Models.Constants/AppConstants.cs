@@ -39,4 +39,6 @@ public static class AppConstants
 
     public const string DefaultUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50";
     public const string KnowledgeBaseCollectionId = "KnowledgeBase";
+
+    public const string TokenLimitMessage = @"maximum context length.*?(\d+).*?(\d+)";
 }

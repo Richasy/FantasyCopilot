@@ -88,11 +88,20 @@
         <labs:SettingsCard
             Description="{ext:Locale Name=StreamOutputDescription}"
             Header="{ext:Locale Name=StreamOutput}"
-            Visibility="{x:Bind StreamOutputVisibility, Mode=OneWay}">
+            Visibility="{x:Bind IsSemanticOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
             <labs:SettingsCard.HeaderIcon>
                 <controls:FluentIcon Symbol="Diagram" />
             </labs:SettingsCard.HeaderIcon>
             <ToggleSwitch IsOn="{x:Bind ViewModel.UseStreamOutput, Mode=TwoWay}" />
+        </labs:SettingsCard>
+        <labs:SettingsCard
+            Description="{ext:Locale Name=AutoRemoveEarlierMessageDescription}"
+            Header="{ext:Locale Name=AutoRemoveEarlierMessage}"
+            Visibility="{x:Bind IsSemanticOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <labs:SettingsCard.HeaderIcon>
+                <controls:FluentIcon Symbol="TrayItemRemove" />
+            </labs:SettingsCard.HeaderIcon>
+            <ToggleSwitch IsOn="{x:Bind ViewModel.AutoRemoveEarlierMessage, Mode=TwoWay}" />
         </labs:SettingsCard>
     </StackPanel>
 </local:SessionOptionsPanelBase>

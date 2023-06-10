@@ -11,10 +11,10 @@ namespace FantasyCopilot.App.Controls.Sessions;
 public sealed partial class SessionOptionsPanel : SessionOptionsPanelBase
 {
     /// <summary>
-    /// Dependency property for <see cref="StreamOutputVisibility"/>.
+    /// Dependency property for <see cref="IsSemanticOptions"/>.
     /// </summary>
-    public static readonly DependencyProperty StreamOutputVisibilityProperty =
-        DependencyProperty.Register(nameof(StreamOutputVisibility), typeof(Visibility), typeof(SessionOptionsPanel), new PropertyMetadata(Visibility.Visible));
+    public static readonly DependencyProperty IsSemanticOptionsProperty =
+        DependencyProperty.Register(nameof(IsSemanticOptions), typeof(bool), typeof(SessionOptionsPanel), new PropertyMetadata(false));
 
     /// <summary>
     /// Initializes a new instance of the <see cref="SessionOptionsPanel"/> class.
@@ -40,10 +40,10 @@ public sealed partial class SessionOptionsPanel : SessionOptionsPanelBase
     /// <summary>
     /// Gets or sets the visibility of the stream output toggle.
     /// </summary>
-    public Visibility StreamOutputVisibility
+    public bool IsSemanticOptions
     {
-        get => (Visibility)GetValue(StreamOutputVisibilityProperty);
-        set => SetValue(StreamOutputVisibilityProperty, value);
+        get => (bool)GetValue(IsSemanticOptionsProperty);
+        set => SetValue(IsSemanticOptionsProperty, value);
     }
 
     private void OnTokenNumberValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Timers;
@@ -30,6 +31,7 @@ public sealed class ChatSkill
     private ChatRequestSettings _chatRequestSettings;
     private string _systemPrompt;
     private int _waitingMilliseconds = 0;
+    private bool _autoRemoveEarlierMessage = false;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSkill"/> class.
@@ -60,6 +62,7 @@ public sealed class ChatSkill
     {
         context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
         var options = JsonSerializer.Deserialize<SessionOptions>(optionsStr);
+        _autoRemoveEarlierMessage = options.AutoRemoveEarlierMessage;
         _chatRequestSettings = new ChatRequestSettings()
         {
             TopP = options.TopP,
@@ -81,7 +84,7 @@ public sealed class ChatSkill
     [SKFunctionName(WorkflowConstants.Chat.SendName)]
     public async Task<string> SendAsync(SKContext context)
     {
-        string reply;
+        var reply = string.Empty;
         try
         {
             _chatHistory.AddMessage(ChatHistory.AuthorRoles.User, context.Result);
@@ -100,7 +103,25 @@ public sealed class ChatSkill
         catch (AIException e)
         {
             _logger.LogError(e, "Chat skill error.");
-            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+            _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            var retried = false;
+            if (_autoRemoveEarlierMessage
+                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
+                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+            {
+                _logger.LogInformation("Older messages have been removed, retrying");
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory.Messages, maxTokens, msgTokens);
+                if (canRetry)
+                {
+                    retried = true;
+                    reply = await SendAsync(context);
+                }
+            }
+
+            if (!retried)
+            {
+                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+            }
         }
 
         return reply;
@@ -157,7 +178,27 @@ public sealed class ChatSkill
         catch (AIException e)
         {
             _logger.LogError(e, "Chat skill error.");
-            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+            _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            var retried = false;
+            if (_autoRemoveEarlierMessage
+                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
+                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+            {
+                _logger.LogInformation("Older messages have been removed, retrying");
+                var msgs = _chatHistory.Messages;
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory.Messages, maxTokens, msgTokens);
+                if (canRetry)
+                {
+                    retried = true;
+                    _chatHistory.Messages.Remove(_chatHistory.Messages.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+                    reply = await GenerateStreamAsync(context);
+                }
+            }
+
+            if (!retried)
+            {
+                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+            }
         }
 
         _respondTimer.Stop();

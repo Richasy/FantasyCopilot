@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Timers;
@@ -31,6 +32,7 @@ public class TextCompleteSkill
     private CompleteRequestSettings _completeRequestSettings;
     private string _systemPrompt;
     private int _waitingMilliseconds = 0;
+    private bool _autoRemoveEarlierMessage = false;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChatSkill"/> class.
@@ -71,6 +73,7 @@ public class TextCompleteSkill
             Temperature = options.Temperature,
         };
 
+        _autoRemoveEarlierMessage = options.AutoRemoveEarlierMessage;
         return Task.CompletedTask;
     }
 
@@ -83,7 +86,7 @@ public class TextCompleteSkill
     [SKFunctionName(WorkflowConstants.TextCompletion.CompleteName)]
     public async Task<string> CompleteAsync(SKContext context)
     {
-        string reply;
+        var reply = string.Empty;
         try
         {
             _completeHistory.Add(new ChatHistory.Message(ChatHistory.AuthorRoles.User, context.Result));
@@ -103,7 +106,27 @@ public class TextCompleteSkill
         }
         catch (AIException e)
         {
-            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+            _logger.LogError(e, "Text Completion skill error.");
+            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            var retried = false;
+            if (_autoRemoveEarlierMessage
+                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
+                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+            {
+                _logger.LogInformation("Older messages have been removed, retrying");
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_completeHistory, maxTokens, msgTokens);
+                if (canRetry)
+                {
+                    retried = true;
+                    _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+                    reply = await CompleteAsync(context);
+                }
+            }
+
+            if (!retried)
+            {
+                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+            }
         }
 
         return reply;
@@ -160,8 +183,26 @@ public class TextCompleteSkill
         }
         catch (AIException e)
         {
-            _logger.LogError(e, "Text completion failed.");
-            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+            _logger.LogError(e, "Text Completion skill error.");
+            _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.AuthorRole == ChatHistory.AuthorRoles.User));
+            var retried = false;
+            if (_autoRemoveEarlierMessage
+                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
+                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+            {
+                _logger.LogInformation("Older messages have been removed, retrying");
+                var canRetry = StaticHelpers.TryRemoveEarlierMessage(_completeHistory, maxTokens, msgTokens);
+                if (canRetry)
+                {
+                    retried = true;
+                    reply = await CompleteStreamAsync(context);
+                }
+            }
+
+            if (!retried)
+            {
+                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+            }
         }
 
         _respondTimer.Stop();

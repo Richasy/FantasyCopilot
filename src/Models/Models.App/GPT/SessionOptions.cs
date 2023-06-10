@@ -40,6 +40,11 @@ public class SessionOptions
     public bool UseStreamOutput { get; set; }
 
     /// <summary>
+    /// Automatically remove earlier messages when the token limit is reached.
+    /// </summary>
+    public bool AutoRemoveEarlierMessage { get; set; }
+
+    /// <summary>
     /// Create a copy based on its own properties.
     /// </summary>
     /// <returns>New <see cref="SessionOptions"/> object.</returns>
@@ -52,5 +57,6 @@ public class SessionOptions
             FrequencyPenalty = FrequencyPenalty,
             PresencePenalty = PresencePenalty,
             UseStreamOutput = UseStreamOutput,
+            AutoRemoveEarlierMessage = AutoRemoveEarlierMessage,
         };
 }
