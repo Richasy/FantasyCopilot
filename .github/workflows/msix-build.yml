@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         configuration: [Release]
-        platform: [x64, arm64]
+        platform: [x64]
 
     env:
       SOLUTION_NAME: FantasyCopilot.sln
@@ -43,10 +43,6 @@ jobs:
 
     - name: Restore dependencies
       run: dotnet restore ../$env:SOLUTION_NAME
-
-    - uses: release-drafter/release-drafter@v5
-      name: Create release draft
-      id: release-drafter
 
     - name: Update manifest version
       run: |
