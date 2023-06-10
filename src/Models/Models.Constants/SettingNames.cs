@@ -67,4 +67,6 @@ public enum SettingNames
     BaiduTranslateAppId,
     BaiduTranslateAppKey,
     TranslateSource,
+    WindowPositionLeft,
+    WindowPositionTop,
 }

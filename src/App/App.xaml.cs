@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Input;
+using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using WinRT.Interop;
@@ -81,7 +82,7 @@ public partial class App : Application
         LaunchWindow();
     }
 
-    private static Windows.Graphics.RectInt32 GetRenderRect(DisplayArea displayArea, IntPtr windowHandle)
+    private static RectInt32 GetRenderRect(DisplayArea displayArea, IntPtr windowHandle)
     {
         var workArea = displayArea.WorkArea;
         var scaleFactor = PInvoke.GetDpiForWindow(new HWND(windowHandle)) / 96d;
@@ -94,9 +95,24 @@ public partial class App : Application
             height = workArea.Height - 20;
         }
 
-        var left = (workArea.Width - width) / 2d;
-        var top = (workArea.Height - height) / 2d;
-        return new Windows.Graphics.RectInt32(Convert.ToInt32(left), Convert.ToInt32(top), width, height);
+        var lastPoint = GetSavedWindowPosition();
+        var isZeroPoint = lastPoint.X == 0 && lastPoint.Y == 0;
+        var isValidPosition = lastPoint.X >= workArea.X && lastPoint.Y >= workArea.Y;
+        var left = isZeroPoint || !isValidPosition
+            ? (workArea.Width - width) / 2d
+            : lastPoint.X - workArea.X;
+        var top = isZeroPoint || !isValidPosition
+            ? (workArea.Height - height) / 2d
+            : lastPoint.Y - workArea.Y;
+        return new RectInt32(Convert.ToInt32(left), Convert.ToInt32(top), width, height);
+    }
+
+    private static PointInt32 GetSavedWindowPosition()
+    {
+        var settingToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        var left = settingToolkit.ReadLocalSetting(SettingNames.WindowPositionLeft, 0);
+        var top = settingToolkit.ReadLocalSetting(SettingNames.WindowPositionTop, 0);
+        return new PointInt32(left, top);
     }
 
     private void InitializeTrayIcon()
@@ -127,6 +143,7 @@ public partial class App : Application
 
         _window.Closed += (sender, args) =>
         {
+            SaveCurrentWindowPosition();
             if (HandleCloseEvents)
             {
                 args.Handled = true;
@@ -141,12 +158,24 @@ public partial class App : Application
     {
         var hwnd = WindowNative.GetWindowHandle(_window);
         var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
-        var displayArea = DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest);
+        var lastPoint = GetSavedWindowPosition();
+        var displayArea = lastPoint.X == 0 && lastPoint.Y == 0
+            ? DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Nearest)
+            : DisplayArea.GetFromPoint(lastPoint, DisplayAreaFallback.Nearest);
         if (displayArea != null)
         {
             var rect = GetRenderRect(displayArea, hwnd);
             _window.AppWindow.MoveAndResize(rect);
         }
+    }
+
+    private void SaveCurrentWindowPosition()
+    {
+        var left = _window.AppWindow.Position.X;
+        var top = _window.AppWindow.Position.Y;
+        var settingToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        settingToolkit.WriteLocalSetting(SettingNames.WindowPositionLeft, left);
+        settingToolkit.WriteLocalSetting(SettingNames.WindowPositionTop, top);
     }
 
     private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
