@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
+using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -131,13 +132,14 @@ public sealed partial class MemoryService : IMemoryService
     }
 
     /// <inheritdoc/>
-    public async Task<MessageResponse> SearchMemoryAsync(string query, SessionOptions options, CancellationToken cancellationToken)
+    public async Task<MessageResponse> QuickSearchMemoryAsync(string query, SessionOptions options, CancellationToken cancellationToken)
     {
         ThrowIfNotSupportMemory();
         var text = string.Empty;
         var id = string.Empty;
         var collectionId = _tempMemoryCollections.FirstOrDefault();
-        await foreach (var item in _kernel.Memory.SearchAsync(collectionId ?? AppConstants.KnowledgeBaseCollectionId, query, cancellationToken: cancellationToken))
+        var minRelevanceScore = _settingsToolkit.ReadLocalSetting(SettingNames.ContextMinRelevanceScore, 0.7d);
+        await foreach (var item in _kernel.Memory.SearchAsync(collectionId ?? AppConstants.KnowledgeBaseCollectionId, query, minRelevanceScore: minRelevanceScore, cancellationToken: cancellationToken))
         {
             text = item.Metadata.Text;
             id = item.Metadata.AdditionalMetadata ?? item.Metadata.Id;
@@ -148,15 +150,45 @@ public sealed partial class MemoryService : IMemoryService
             return new MessageResponse(false, "No answer");
         }
 
+        var msg = await GetAnswerFromContextAsync(query, new[] { new KnowledgeContext { FileName = id, Content = text } }, options, cancellationToken);
+        return msg;
+    }
+
+    /// <inheritdoc/>
+    public async Task<IEnumerable<KnowledgeContext>> AdvancedSearchMemoryAsync(string query, CancellationToken cancellationToken)
+    {
+        ThrowIfNotSupportMemory();
+        var collectionId = _tempMemoryCollections.FirstOrDefault();
+        var contextList = new List<KnowledgeContext>();
+        var contextLimit = _settingsToolkit.ReadLocalSetting(SettingNames.ContextLimit, 3);
+        var minRelevanceScore = _settingsToolkit.ReadLocalSetting(SettingNames.ContextMinRelevanceScore, 0.7d);
+        await foreach (var item in _kernel.Memory.SearchAsync(collectionId ?? AppConstants.KnowledgeBaseCollectionId, query, contextLimit, minRelevanceScore, cancellationToken: cancellationToken))
+        {
+            var context = new KnowledgeContext
+            {
+                FileName = item.Metadata.AdditionalMetadata ?? item.Metadata.Id,
+                Content = item.Metadata.Text,
+                Score = item.Relevance,
+            };
+            contextList.Add(context);
+        }
+
+        return contextList;
+    }
+
+    /// <inheritdoc/>
+    public async Task<MessageResponse> GetAnswerFromContextAsync(string query, IEnumerable<KnowledgeContext> contextList, SessionOptions options, CancellationToken cancellationToken)
+    {
         options.MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.ContextResponseTokenLength, 512);
         var func = GetQAFunction(options);
         var variables = new ContextVariables(query);
+        var text = string.Join("\n====\n", contextList.Select(x => x.Content));
         variables.Set("Content", text);
         var context = await _kernel.RunAsync(variables, func);
         text = context.Result.Trim();
         var isError = context.ErrorOccurred || string.IsNullOrEmpty(text);
         var data = isError ? "Something error" : text;
-        return new MessageResponse(isError, data, id);
+        return new MessageResponse(isError, data, string.Join(" | ", contextList.Select(p => p.FileName)));
     }
 
     private static string BuildFileId(string filePath, string rootDirectory)

@@ -18,6 +18,11 @@ public class KnowledgeBase
     public string Name { get; set; }
 
     /// <summary>
+    /// Knowledge base description.
+    /// </summary>
+    public string Description { get; set; }
+
+    /// <summary>
     /// Database file path.
     /// </summary>
     public string DatabasePath { get; set; }

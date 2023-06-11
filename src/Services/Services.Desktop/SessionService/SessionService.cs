@@ -145,7 +145,7 @@ public sealed partial class SessionService : ISessionService
         var sessionOptions = _sessionOptions;
         var message = _messages.Last();
         var data = isContext
-            ? await _memoryService.SearchMemoryAsync(message.Content, sessionOptions, cancellationToken)
+            ? await _memoryService.QuickSearchMemoryAsync(message.Content, sessionOptions, cancellationToken)
             : await _chatService.GetMessageResponseAsync(message, sessionOptions, cancellationToken);
         return data.IsError
             ? throw new Exception(data.Content)

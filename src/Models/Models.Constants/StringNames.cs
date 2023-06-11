@@ -471,4 +471,5 @@ public enum StringNames
     AutoRemoveEarlierMessageDescription,
     ProxyEndpoint,
     ProxyWarning,
+    KnowledgeBaseDescriptionPlaceholderText,
 }

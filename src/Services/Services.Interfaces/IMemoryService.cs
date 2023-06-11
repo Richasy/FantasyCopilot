@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using FantasyCopilot.Models.App.Gpt;
+using FantasyCopilot.Models.App.Knowledge;
 
 namespace FantasyCopilot.Services.Interfaces;
 
@@ -28,7 +29,25 @@ public interface IMemoryService
     /// <param name="options">Session options.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Message.</returns>
-    Task<MessageResponse> SearchMemoryAsync(string query, SessionOptions options, CancellationToken cancellationToken);
+    Task<MessageResponse> QuickSearchMemoryAsync(string query, SessionOptions options, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Search the positioning context from the database.
+    /// </summary>
+    /// <param name="query">Query text.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Knowledge context list.</returns>
+    Task<IEnumerable<KnowledgeContext>> AdvancedSearchMemoryAsync(string query, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Pass in the relevant context, after comprehensive summary, provide answers according to the questions.
+    /// </summary>
+    /// <param name="query">Query text.</param>
+    /// <param name="contextList">Knowledge context list.</param>
+    /// <param name="options">Session options.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Message.</returns>
+    Task<MessageResponse> GetAnswerFromContextAsync(string query, IEnumerable<KnowledgeContext> contextList, SessionOptions options, CancellationToken cancellationToken);
 
     /// <summary>
     /// Import folder to memory.

@@ -252,7 +252,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         {
             Id = data.Id,
             Name = data.Name,
-            Description = data.DatabasePath,
+            Description = data.Description,
         };
         CurrentSession.Initialize(metadata: metadata);
         _appViewModel.IsBackButtonShown = true;

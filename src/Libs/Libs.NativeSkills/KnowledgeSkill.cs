@@ -61,7 +61,7 @@ public sealed class KnowledgeSkill
             Temperature = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTemperature, 0.4),
             TopP = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTopP, 0),
         };
-        var answer = await _memoryService.SearchMemoryAsync(context.Result, sessionOptions, context.CancellationToken);
+        var answer = await _memoryService.QuickSearchMemoryAsync(context.Result, sessionOptions, context.CancellationToken);
         if (answer.IsError)
         {
             context.Fail(answer.Content);

@@ -65,4 +65,6 @@ public enum SettingNames
     WindowPositionLeft,
     WindowPositionTop,
     OpenAICustomEndpoint,
+    ContextLimit,
+    ContextMinRelevanceScore,
 }

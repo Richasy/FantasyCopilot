@@ -74,6 +74,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
         _sourceBase = data;
         BaseNameBox.Text = data.Name;
         DatabasePathBox.Text = data.DatabasePath;
+        DescriptionBox.Text = data.Description ?? string.Empty;
     }
 
     /// <summary>
