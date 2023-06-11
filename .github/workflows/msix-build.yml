@@ -58,9 +58,10 @@ jobs:
     - name: 📦 Build and sign MSIX package
       run: |
         msbuild ../$env:SOLUTION_NAME `
+          -t publish `
           /p:Configuration=${{ matrix.configuration }} `
           /p:Platform=${{ matrix.platform }} `
-          /p:RuntimeIdentifier=win10-${{ matrix.platform }} `
+          /p:PublishReadyToRun=True `
           `
           /p:GenerateAppxPackageOnBuild=true `
           /p:AppxPackageDir="$env:MSIX_PACKAGE_DIR" `
