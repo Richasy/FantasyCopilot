@@ -58,7 +58,9 @@ jobs:
     - name: 📦 Build and sign MSIX package
       run: |
         msbuild ../$env:SOLUTION_NAME /p:Configuration=${{ matrix.configuration }} /p:Platform=${{ matrix.platform }} /p:PublishReadyToRun=True /p:GenerateAppxPackageOnBuild=true /p:AppxPackageDir=$env:MSIX_PACKAGE_DIR /p:BuildMode=SideloadOnly /p:AppxPackageSigningEnabled=True /p:PackageCertificateKeyFile=$env:CERT_FILE_NAME `
-        Get-ChildItem $env:MSIX_PACKAGE_DIR\*\Dependencies\* | Where-Object -Property Name -NE ${{ matrix.platform }} | ForEach-Object { Remove-Item -Recurse $_ }
+
+    - name: Remove unuse ref
+      run: Get-ChildItem $env:MSIX_PACKAGE_DIR\*\Dependencies\* | Where-Object -Property Name -NE ${{ matrix.platform }} | ForEach-Object { Remove-Item -Recurse $_ }
 
     - name: Get GitHub action artifact name
       run: |
