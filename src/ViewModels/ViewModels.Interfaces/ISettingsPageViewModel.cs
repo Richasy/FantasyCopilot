@@ -112,9 +112,14 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     int MaxParagraphTokenLength { get; set; }
 
     /// <summary>
-    /// The maximum number of tokens to respond when the context replies.
+    /// The maximum number of contexts returned by the knowledge base.
     /// </summary>
-    int ContextResponseTokenLength { get; set; }
+    int ContextLimit { get; set; }
+
+    /// <summary>
+    /// Acceptable minimum relevance score.
+    /// </summary>
+    double MinRelevanceScore { get; set; }
 
     /// <summary>
     /// Key for the Azure Text-to-Speech service.

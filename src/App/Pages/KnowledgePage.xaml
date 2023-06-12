@@ -8,7 +8,8 @@
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
     xmlns:knowledge="using:FantasyCopilot.App.Controls.Knowledge"
     xmlns:local="using:FantasyCopilot.App.Pages"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sessions="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sessions="using:FantasyCopilot.App.Controls.Sessions"
     mc:Ignorable="d">
 
     <Grid>
@@ -17,10 +18,7 @@
                 x:Name="KnowledgeListPanel"
                 x:Load="{x:Bind ViewModel.CurrentBase, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
                 ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
-            <sessions:SessionPanel
-                x:Name="SessionPanel"
-                x:Load="{x:Bind ViewModel.CurrentBase, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}"
-                ViewModel="{x:Bind ViewModel.CurrentSession, Mode=OneWay}" />
+            <knowledge:KnowledgeBaseSessionPanel x:Name="SessionPanel" x:Load="{x:Bind ViewModel.CurrentBase, Mode=OneWay, Converter={StaticResource ObjectToBoolConverter}}" />
         </Grid>
         <controls:EmptyHolder
             x:Name="KnowledgeInvalidContainer"

@@ -74,6 +74,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
         _sourceBase = data;
         BaseNameBox.Text = data.Name;
         DatabasePathBox.Text = data.DatabasePath;
+        DescriptionBox.Text = data.Description ?? string.Empty;
     }
 
     /// <summary>
@@ -131,6 +132,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
             {
                 FolderPath = _folderPath,
                 Name = BaseNameBox.Text,
+                Description = DescriptionBox.Text,
                 DatabasePath = DatabasePathBox.Text,
                 SearchPattern = SearchPatternBox.Text,
             };
@@ -143,6 +145,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
             {
                 FilePath = _filePath,
                 Name = BaseNameBox.Text,
+                Description = DescriptionBox.Text,
                 DatabasePath = DatabasePathBox.Text,
             };
 
@@ -154,6 +157,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
             {
                 DatabasePath = DatabasePathBox.Text,
                 Name = BaseNameBox.Text,
+                Description = DescriptionBox.Text,
                 Id = Guid.NewGuid().ToString("N"),
             };
 
@@ -162,6 +166,7 @@ public sealed partial class KnowledgeBaseSaveDialog : ContentDialog
         else if (_sourceBase != null)
         {
             _sourceBase.Name = BaseNameBox.Text;
+            _sourceBase.Description = DescriptionBox.Text;
             _sourceBase.DatabasePath = DatabasePathBox.Text;
 
             knowledgePageVM.UpdateBaseCommand.Execute(_sourceBase);

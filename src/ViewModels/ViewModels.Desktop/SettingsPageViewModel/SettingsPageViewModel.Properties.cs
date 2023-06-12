@@ -93,7 +93,10 @@ public sealed partial class SettingsPageViewModel
     private int _maxParagraphTokenLength;
 
     [ObservableProperty]
-    private int _contextResponseTokenLength;
+    private int _contextLimit;
+
+    [ObservableProperty]
+    private double _minRelevanceScore;
 
     [ObservableProperty]
     private string _azureVoiceKey;

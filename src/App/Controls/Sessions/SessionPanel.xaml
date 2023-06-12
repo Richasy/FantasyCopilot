@@ -38,8 +38,7 @@
         </StackPanel>
         <Grid
             Grid.Row="1"
-            Padding="20,0"
-            Visibility="{x:Bind ViewModel.IsContextConversation, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            Padding="20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FantasyCopilot.Services;
@@ -22,15 +21,9 @@ public sealed partial class SessionService : ISessionService
     /// Initializes a new instance of the <see cref="SessionService"/> class.
     /// </summary>
     public SessionService(
-        ISettingsToolkit settingsToolkit,
-        ICacheToolkit cacheToolkit,
-        IMemoryService memoryService,
         IChatService chatService,
         ILogger<SessionService> logger)
     {
-        _settingsToolkit = settingsToolkit;
-        _cacheToolkit = cacheToolkit;
-        _memoryService = memoryService;
         _chatService = chatService;
         _logger = logger;
         _messages = new List<Message>();
@@ -71,7 +64,7 @@ public sealed partial class SessionService : ISessionService
         => _chatService.CreateNewChat(systemPrompt);
 
     /// <inheritdoc/>
-    public async Task SendMessageAsync(string message = null, bool isContext = false, CancellationToken cancellationToken = default)
+    public async Task SendMessageAsync(string message = null, CancellationToken cancellationToken = default)
     {
         if (!string.IsNullOrEmpty(message))
         {
@@ -82,7 +75,7 @@ public sealed partial class SessionService : ISessionService
 
         try
         {
-            var msg = await GetResponseFromLLMAsync(isContext, cancellationToken);
+            var msg = await GetResponseFromLLMAsync(cancellationToken);
             _messages.Add(msg);
 
             var args = new MessageReceivedEventArgs(new[] { msg });
@@ -136,17 +129,14 @@ public sealed partial class SessionService : ISessionService
     /// <summary>
     /// Get response from LLM.
     /// </summary>
-    /// <param name="isContext">Is context search.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Messages.</returns>
     /// <exception cref="Exception">Error exception.</exception>
-    private async Task<Message> GetResponseFromLLMAsync(bool isContext, CancellationToken cancellationToken)
+    private async Task<Message> GetResponseFromLLMAsync(CancellationToken cancellationToken)
     {
         var sessionOptions = _sessionOptions;
         var message = _messages.Last();
-        var data = isContext
-            ? await _memoryService.SearchMemoryAsync(message.Content, sessionOptions, cancellationToken)
-            : await _chatService.GetMessageResponseAsync(message, sessionOptions, cancellationToken);
+        var data = await _chatService.GetMessageResponseAsync(message, sessionOptions, cancellationToken);
         return data.IsError
             ? throw new Exception(data.Content)
             : new Message

@@ -37,6 +37,8 @@
     <None Remove="Controls\KnowledgeImportFolderDialog.xaml" />
     <None Remove="Controls\KnowledgeListPanel.xaml" />
     <None Remove="Controls\Knowledge\KnowledgeBaseItem.xaml" />
+    <None Remove="Controls\Knowledge\KnowledgeBaseSessionPanel.xaml" />
+    <None Remove="Controls\Knowledge\KnowledgeContextItem.xaml" />
     <None Remove="Controls\PromptLibraryPanel.xaml" />
     <None Remove="Controls\SavedSessionPanel.xaml" />
     <None Remove="Controls\SemanticSkillEditor.xaml" />
@@ -435,6 +437,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Workspace\PluginCommandItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Knowledge\KnowledgeBaseSessionPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Knowledge\KnowledgeContextItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

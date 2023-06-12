@@ -29,6 +29,14 @@
             Header="{ext:Locale Name=BaseName}"
             PlaceholderText="{ext:Locale Name=BaseNamePlaceholderText}" />
         <TextBox
+            x:Name="DescriptionBox"
+            MaxHeight="60"
+            Margin="0,0,0,12"
+            HorizontalAlignment="Stretch"
+            Header="{ext:Locale Name=Description}"
+            PlaceholderText="{ext:Locale Name=KnowledgeBaseDescriptionPlaceholderText}"
+            TextWrapping="Wrap" />
+        <TextBox
             x:Name="SearchPatternBox"
             Margin="0,0,0,12"
             HorizontalAlignment="Stretch"

@@ -146,6 +146,9 @@ public sealed partial class SettingsPageViewModel
     partial void OnMaxParagraphTokenLengthChanged(int value)
         => WriteSetting(SettingNames.MaxParagraphTokenLength, value);
 
-    partial void OnContextResponseTokenLengthChanged(int value)
-        => WriteSetting(SettingNames.ContextResponseTokenLength, value);
+    partial void OnContextLimitChanged(int value)
+        => WriteSetting(SettingNames.ContextLimit, value);
+
+    partial void OnMinRelevanceScoreChanged(double value)
+        => WriteSetting(SettingNames.ContextMinRelevanceScore, value);
 }

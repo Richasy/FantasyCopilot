@@ -136,7 +136,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
 
         var msg = UserInput;
         UserInput = string.Empty;
-        await _sessionService.SendMessageAsync(msg, IsContextConversation, _cancellationTokenSource.Token);
+        await _sessionService.SendMessageAsync(msg, _cancellationTokenSource.Token);
         _cancellationTokenSource = default;
     }
 
@@ -146,7 +146,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
         ErrorText = string.Empty;
         CancelMessage();
         _cancellationTokenSource = new CancellationTokenSource();
-        await _sessionService.SendMessageAsync(default, IsContextConversation, _cancellationTokenSource.Token);
+        await _sessionService.SendMessageAsync(default, _cancellationTokenSource.Token);
         _cancellationTokenSource = default;
     }
 
@@ -269,19 +269,11 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
     {
         IsContinuousConversation = ConversationType == ConversationType.Continuous;
         IsSingleConversation = ConversationType == ConversationType.Single;
-        IsContextConversation = ConversationType == ConversationType.Context;
     }
 
     partial void OnConversationTypeChanged(ConversationType value)
     {
         CheckConversationType();
-        if (IsContextConversation)
-        {
-            UseNewMetadata(default);
-        }
-        else
-        {
-            _settingsToolkit.WriteLocalSetting(SettingNames.LastConversationType, value);
-        }
+        _settingsToolkit.WriteLocalSetting(SettingNames.LastConversationType, value);
     }
 }

@@ -103,12 +103,6 @@ public sealed partial class SessionPanel : SessionPanelBase
     private void ResetElementState()
     {
         InputBox.Focus(FocusState.Programmatic);
-
-        if (ViewModel != null && ViewModel.IsContextConversation)
-        {
-            return;
-        }
-
         ChatTypeSegmented.SelectedIndex = ViewModel == null ? -1 : (int)ViewModel.ConversationType;
     }
 

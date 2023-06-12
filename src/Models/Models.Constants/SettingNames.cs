@@ -50,7 +50,6 @@ public enum SettingNames
     IsKnowledgeEnabled,
     MaxSplitContentLength,
     MaxParagraphTokenLength,
-    ContextResponseTokenLength,
     ShowConsoleWhenPluginRunning,
     PluginFolderPath,
     AISource,
@@ -65,4 +64,7 @@ public enum SettingNames
     WindowPositionLeft,
     WindowPositionTop,
     OpenAICustomEndpoint,
+    ContextLimit,
+    ContextMinRelevanceScore,
+    LastKnowledgeSearchType,
 }

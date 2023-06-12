@@ -3,17 +3,17 @@
 namespace FantasyCopilot.Models.Constants;
 
 /// <summary>
-/// Default conversation type.
+/// Knowledge search type.
 /// </summary>
-public enum ConversationType
+public enum KnowledgeSearchType
 {
     /// <summary>
-    /// Continuous dialogue.
+    /// Quick Q&A.
     /// </summary>
-    Continuous,
+    Quick,
 
     /// <summary>
-    /// Single dialog.
+    /// Advanced search.
     /// </summary>
-    Single,
+    Advanced,
 }

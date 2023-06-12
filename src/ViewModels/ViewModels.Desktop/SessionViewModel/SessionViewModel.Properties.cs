@@ -53,9 +53,6 @@ public sealed partial class SessionViewModel
     private bool _isSingleConversation;
 
     [ObservableProperty]
-    private bool _isContextConversation;
-
-    [ObservableProperty]
     private Models.Constants.ConversationType _conversationType;
 
     [ObservableProperty]

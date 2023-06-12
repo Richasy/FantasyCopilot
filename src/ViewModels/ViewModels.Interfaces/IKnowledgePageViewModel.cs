@@ -23,11 +23,6 @@ public interface IKnowledgePageViewModel : INotifyPropertyChanged
     bool IsLoading { get; }
 
     /// <summary>
-    /// The session that is currently in progress.
-    /// </summary>
-    ISessionViewModel CurrentSession { get; }
-
-    /// <summary>
     /// Whether the knowledge base is being connected.
     /// </summary>
     bool IsBaseConnecting { get; }

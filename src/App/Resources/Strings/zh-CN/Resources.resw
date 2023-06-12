@@ -1476,4 +1476,37 @@
   <data name="ProxyWarning" xml:space="preserve">
     <value>请自行验证代理服务是否可信</value>
   </data>
+  <data name="ContextLimit" xml:space="preserve">
+    <value>上下文个数</value>
+  </data>
+  <data name="ContextLimitDescription" xml:space="preserve">
+    <value>最多返回多少个上下文</value>
+  </data>
+  <data name="MinRelevanceScore" xml:space="preserve">
+    <value>最小相关度</value>
+  </data>
+  <data name="MinRelevanceScoreDescription" xml:space="preserve">
+    <value>可以接受的最小关联程度</value>
+  </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>高级查询</value>
+  </data>
+  <data name="BeginKnowledgeSearch" xml:space="preserve">
+    <value>开始知识搜索</value>
+  </data>
+  <data name="BeginKnowledgeSearchDescription" xml:space="preserve">
+    <value>输入查询内容，即刻开始查找</value>
+  </data>
+  <data name="FullContent" xml:space="preserve">
+    <value>完整内容</value>
+  </data>
+  <data name="GenerateAnswer" xml:space="preserve">
+    <value>生成回答</value>
+  </data>
+  <data name="KnowledgeBaseDescriptionPlaceholderText" xml:space="preserve">
+    <value>简要描述该知识库</value>
+  </data>
+  <data name="QuickQA" xml:space="preserve">
+    <value>快速问答</value>
+  </data>
 </root>

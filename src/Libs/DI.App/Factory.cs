@@ -56,6 +56,7 @@ public sealed class Factory
             .RegisterTransient<IImageGenerateOptionsViewModel, ImageGenerateOptionsViewModel>()
             .RegisterTransient<IPluginCommandItemViewModel, PluginCommandItemViewModel>()
             .RegisterTransient<IPluginItemViewModel, PluginItemViewModel>()
+            .RegisterTransient<IKnowledgeContextViewModel, KnowledgeContextViewModel>()
 
             .RegisterSingleton<IChatSessionPageViewModel, ChatSessionPageViewModel>()
             .RegisterSingleton<ISavedSessionsModuleViewModel, SavedSessionsModuleViewModel>()
@@ -74,6 +75,7 @@ public sealed class Factory
             .RegisterSingleton<IImageGalleryModuleViewModel, ImageGalleryModuleViewModel>()
             .RegisterSingleton<ITextToImageModuleViewModel, TextToImageModuleViewModel>()
             .RegisterSingleton<IPromptsAndSessionsPageViewModel, PromptsAndSessionsPageViewModel>()
+            .RegisterSingleton<IKnowledgeBaseSessionViewModel, KnowledgeBaseSessionViewModel>()
             .RegisterSingleton<IKnowledgePageViewModel, KnowledgePageViewModel>()
             .RegisterSingleton<IVoicePageViewModel, VoicePageViewModel>()
             .RegisterSingleton<IImagePageViewModel, ImagePageViewModel>()
