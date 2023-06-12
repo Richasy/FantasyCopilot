@@ -117,6 +117,16 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     int ContextResponseTokenLength { get; set; }
 
     /// <summary>
+    /// The maximum number of contexts returned by the knowledge base.
+    /// </summary>
+    int ContextLimit { get; set; }
+
+    /// <summary>
+    /// Acceptable minimum relevance score.
+    /// </summary>
+    double MinRelevanceScore { get; set; }
+
+    /// <summary>
     /// Key for the Azure Text-to-Speech service.
     /// </summary>
     string AzureVoiceKey { get; set; }

@@ -67,4 +67,5 @@ public enum SettingNames
     OpenAICustomEndpoint,
     ContextLimit,
     ContextMinRelevanceScore,
+    LastKnowledgeSearchType,
 }

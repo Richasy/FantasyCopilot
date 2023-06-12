@@ -21,6 +21,7 @@ public sealed partial class KnowledgePageViewModel
     private readonly IResourceToolkit _resourceToolkit;
     private readonly IMemoryService _memoryService;
     private readonly IAppViewModel _appViewModel;
+    private readonly IKnowledgeBaseSessionViewModel _knowledgeBaseSessionViewModel;
     private readonly ILogger<KnowledgePageViewModel> _logger;
     private readonly DispatcherTimer _progressTimer;
     private readonly DispatcherQueue _dispatcherQueue;
@@ -47,9 +48,6 @@ public sealed partial class KnowledgePageViewModel
 
     [ObservableProperty]
     private KnowledgeBase _currentBase;
-
-    [ObservableProperty]
-    private ISessionViewModel _currentSession;
 
     /// <inheritdoc/>
     public ObservableCollection<KnowledgeBase> Bases { get; set; }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<local:KnowledgeContextItemBase
+    x:Class="FantasyCopilot.App.Controls.Knowledge.KnowledgeContextItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:converters="using:FantasyCopilot.App.Resources.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:local="using:FantasyCopilot.App.Controls.Knowledge"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:DoubleToPercentageConverter x:Key="NumberConverter" />
+    </UserControl.Resources>
+
+    <Grid
+        Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}"
+        RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid
+            Padding="12,4"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="0,0,0,1"
+            ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <CheckBox
+                x:Name="SelectionCheckBox"
+                MinWidth="0"
+                VerticalAlignment="Center"
+                IsChecked="{x:Bind ViewModel.IsSelected, Mode=TwoWay}" />
+            <TextBlock
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                Text="{x:Bind ViewModel.Context.FileName, Mode=OneWay}"
+                TextLineBounds="Tight"
+                TextTrimming="CharacterEllipsis" />
+            <Border
+                Grid.Column="2"
+                Padding="4,2"
+                VerticalAlignment="Center"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="2">
+                <TextBlock
+                    FontSize="10"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.Context.Score, Mode=OneWay, Converter={StaticResource NumberConverter}}" />
+            </Border>
+            <Button
+                Grid.Column="3"
+                Width="28"
+                Height="28"
+                VerticalAlignment="Center"
+                Style="{StaticResource IconButtonStyle}"
+                ToolTipService.ToolTip="{ext:Locale Name=FullContent}">
+                <controls:FluentIcon FontSize="12" Symbol="MoreHorizontal" />
+                <Button.Flyout>
+                    <Flyout>
+                        <TextBlock
+                            MaxWidth="360"
+                            IsTextSelectionEnabled="True"
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Text="{x:Bind ViewModel.Context.Content, Mode=OneWay}"
+                            TextWrapping="Wrap" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
+        <TextBlock
+            Grid.Row="1"
+            Margin="12,0,12,12"
+            IsTextSelectionEnabled="True"
+            MaxLines="4"
+            Text="{x:Bind ViewModel.Context.Content, Mode=OneWay}"
+            TextTrimming="CharacterEllipsis"
+            TextWrapping="Wrap" />
+    </Grid>
+</local:KnowledgeContextItemBase>

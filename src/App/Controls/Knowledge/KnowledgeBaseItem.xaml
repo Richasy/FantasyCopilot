@@ -16,7 +16,7 @@
         HorizontalContentAlignment="Left"
         BorderThickness="0"
         Click="OnItemClick"
-        DataContext="{x:Bind}">
+        DataContext="{x:Bind ViewModel, Mode=OneWay}">
         <StackPanel Spacing="4">
             <TextBlock
                 HorizontalAlignment="Left"
@@ -28,7 +28,7 @@
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 MaxLines="1"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind ViewModel.DatabasePath, Mode=OneWay}"
+                Text="{x:Bind ViewModel.Description, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis" />
         </StackPanel>
         <Button.ContextFlyout>

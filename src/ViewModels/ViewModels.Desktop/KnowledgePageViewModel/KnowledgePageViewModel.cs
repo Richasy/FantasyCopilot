@@ -33,12 +33,14 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         IResourceToolkit resourceToolkit,
         IMemoryService memoryService,
         IAppViewModel appViewModel,
+        IKnowledgeBaseSessionViewModel knowledgeBaseSessionViewModel,
         ILogger<KnowledgePageViewModel> logger)
     {
         _cacheToolkit = cacheToolkit;
         _resourceToolkit = resourceToolkit;
         _memoryService = memoryService;
         _appViewModel = appViewModel;
+        _knowledgeBaseSessionViewModel = knowledgeBaseSessionViewModel;
         _logger = logger;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         _progressTimer = new DispatcherTimer
@@ -216,7 +218,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, nameof(importFileCommand));
+            _logger.LogError(ex, nameof(ImportFileCommand));
             _appViewModel.ShowTip(ex.Message, InfoType.Error);
         }
     }
@@ -241,20 +243,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
 
         CurrentBase = data;
 
-        if (CurrentSession == default)
-        {
-            var sessionVM = Locator.Current.GetService<ISessionViewModel>();
-            sessionVM.ConversationType = ConversationType.Context;
-            CurrentSession = sessionVM;
-        }
-
-        var metadata = new SessionMetadata
-        {
-            Id = data.Id,
-            Name = data.Name,
-            Description = data.Description,
-        };
-        CurrentSession.Initialize(metadata: metadata);
+        _knowledgeBaseSessionViewModel.Initialize(data);
         _appViewModel.IsBackButtonShown = true;
     }
 
@@ -263,8 +252,6 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
     {
         _memoryService.DisconnectSQLiteKnowledgeBase();
         CurrentBase = default;
-        CurrentSession?.DisconnectFromSessionServiceCommand.Execute(default);
-        CurrentSession = default;
         _appViewModel.IsBackButtonShown = false;
     }
 

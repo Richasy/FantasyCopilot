@@ -179,7 +179,6 @@ public sealed partial class MemoryService : IMemoryService
     /// <inheritdoc/>
     public async Task<MessageResponse> GetAnswerFromContextAsync(string query, IEnumerable<KnowledgeContext> contextList, SessionOptions options, CancellationToken cancellationToken)
     {
-        options.MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.ContextResponseTokenLength, 512);
         var func = GetQAFunction(options);
         var variables = new ContextVariables(query);
         var text = string.Join("\n====\n", contextList.Select(x => x.Content));

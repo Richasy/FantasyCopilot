@@ -96,6 +96,12 @@ public sealed partial class SettingsPageViewModel
     private int _contextResponseTokenLength;
 
     [ObservableProperty]
+    private int _contextLimit;
+
+    [ObservableProperty]
+    private double _minRelevanceScore;
+
+    [ObservableProperty]
     private string _azureVoiceKey;
 
     [ObservableProperty]

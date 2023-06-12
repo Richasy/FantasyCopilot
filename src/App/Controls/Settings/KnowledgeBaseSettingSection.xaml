@@ -53,6 +53,32 @@
                     Minimum="10"
                     Value="{x:Bind ViewModel.ContextResponseTokenLength, Mode=TwoWay}" />
             </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalContentAlignment="Stretch"
+                Description="{ext:Locale Name=ContextLimitDescription}"
+                Header="{ext:Locale Name=ContextLimit}">
+                <Slider
+                    Width="140"
+                    LargeChange="1"
+                    Maximum="10"
+                    Minimum="1"
+                    SmallChange="1"
+                    StepFrequency="1"
+                    Value="{x:Bind ViewModel.ContextLimit, Mode=TwoWay}" />
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalContentAlignment="Stretch"
+                Description="{ext:Locale Name=MinRelevanceScoreDescription}"
+                Header="{ext:Locale Name=MinRelevanceScore}">
+                <Slider
+                    Width="140"
+                    LargeChange="0.2"
+                    Maximum="1"
+                    Minimum="0.1"
+                    SmallChange="0.1"
+                    StepFrequency="0.1"
+                    Value="{x:Bind ViewModel.MinRelevanceScore, Mode=TwoWay}" />
+            </labs:SettingsCard>
         </labs:SettingsExpander.Items>
     </labs:SettingsExpander>
 </local:SettingSectionBase>

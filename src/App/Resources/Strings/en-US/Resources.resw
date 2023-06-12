@@ -150,6 +150,9 @@
   <data name="AddWorkflow" xml:space="preserve">
     <value>Add a workflow</value>
   </data>
+  <data name="AdvancedSearch" xml:space="preserve">
+    <value>Advanced Search</value>
+  </data>
   <data name="AISetting" xml:space="preserve">
     <value>AI configuration</value>
   </data>
@@ -246,6 +249,12 @@
   <data name="BaseNamePlaceholderText" xml:space="preserve">
     <value>Knowledge base name</value>
   </data>
+  <data name="BeginKnowledgeSearch" xml:space="preserve">
+    <value>Start knowledge search</value>
+  </data>
+  <data name="BeginKnowledgeSearchDescription" xml:space="preserve">
+    <value>Enter the query content and start searching immediately</value>
+  </data>
   <data name="BeginStorageSearch" xml:space="preserve">
     <value>Search for local files</value>
   </data>
@@ -341,6 +350,12 @@
   </data>
   <data name="ContextConversation" xml:space="preserve">
     <value>Contextual conversations</value>
+  </data>
+  <data name="ContextLimit" xml:space="preserve">
+    <value>Context limit</value>
+  </data>
+  <data name="ContextLimitDescription" xml:space="preserve">
+    <value>How many contexts to return at most</value>
   </data>
   <data name="ContextResponseTokenLength" xml:space="preserve">
     <value>Maxinum knowledge response tokens</value>
@@ -585,11 +600,17 @@
   <data name="FrequencyPenaltyDescription" xml:space="preserve">
     <value>The higher the value, the less likely the resulting text is to have duplicate characters</value>
   </data>
+  <data name="FullContent" xml:space="preserve">
+    <value>Full content</value>
+  </data>
   <data name="GalleryEmpty" xml:space="preserve">
     <value>The gallery is empty</value>
   </data>
   <data name="GalleryEmptyDescription" xml:space="preserve">
     <value>Can't get the list of images at the moment, please try again later</value>
+  </data>
+  <data name="GenerateAnswer" xml:space="preserve">
+    <value>Generate answer</value>
   </data>
   <data name="GenerateImage" xml:space="preserve">
     <value>Generate a image</value>
@@ -732,6 +753,9 @@
   <data name="KnowledgeBase" xml:space="preserve">
     <value>Knowledge Base</value>
   </data>
+  <data name="KnowledgeBaseDescriptionPlaceholderText" xml:space="preserve">
+    <value>Briefly describe the knowledge base</value>
+  </data>
   <data name="KnowledgeBaseQA" xml:space="preserve">
     <value>Knowledge Base Q&amp;A</value>
   </data>
@@ -782,6 +806,12 @@
   </data>
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
+  </data>
+  <data name="MinRelevanceScore" xml:space="preserve">
+    <value>Min relevance score</value>
+  </data>
+  <data name="MinRelevanceScoreDescription" xml:space="preserve">
+    <value>Acceptable minimum correlation</value>
   </data>
   <data name="ModelName" xml:space="preserve">
     <value>Model Name</value>
@@ -1097,6 +1127,9 @@
   </data>
   <data name="ProxyWarning" xml:space="preserve">
     <value>Please verify whether the proxy service is trustworthy</value>
+  </data>
+  <data name="QuickQA" xml:space="preserve">
+    <value>Quick Q&amp;A</value>
   </data>
   <data name="QuitApp" xml:space="preserve">
     <value>Quit App</value>

@@ -23,16 +23,12 @@ public sealed partial class KnowledgePage : KnowledgePageBase
         if (CoreViewModel.IsKnowledgeAvailable)
         {
             ViewModel.InitializeCommand.Execute(default);
-            ViewModel.CurrentSession?.ConnectToSessionServiceCommand.Execute(default);
         }
     }
 
     /// <inheritdoc/>
     protected override void OnPageUnloaded()
-    {
-        CoreViewModel.BackRequest -= OnBackRequest;
-        ViewModel.CurrentSession?.DisconnectFromSessionServiceCommand.Execute(default);
-    }
+        => CoreViewModel.BackRequest -= OnBackRequest;
 
     private void OnBackRequest(object sender, EventArgs e)
         => ViewModel.ExitBaseCommand.Execute(default);
