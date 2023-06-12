@@ -45,7 +45,7 @@ The application does not provide initial key configuration, which requires you t
 | ------------------------ | -------------------------------------------------------------------------------- |
 | Open AI or Azure Open AI | Chat, prompt management, session management, knowledge base, semantic skills |
 | Azure Speech Service     | Text-to-speech, speech recognition                                               |
-| Azure Translator | Baidu Translator        | Text translation                                                                 |
+| Azure Translator / Baidu Translator        | Text translation                                                                 |
 | Everything               | File search                                                                      |
 | Stable Diffusion         | Text to Image                                           |
 
@@ -96,6 +96,7 @@ We welcome like-minded friends to participate in the **Fantasy Copilot** project
 - [NLog](https://nlog-project.org/)
 - [H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
+- [EverythingNet](https://github.com/ju2pom/EverythingNet)
 - And other open source contributors.
 
 ## 🧩 Screenshots

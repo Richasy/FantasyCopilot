@@ -196,7 +196,7 @@
     <value>Application log-related configuration items</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Fantasy Assistant</value>
+    <value>Fantasy Copilot</value>
   </data>
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>

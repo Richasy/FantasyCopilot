@@ -45,7 +45,7 @@
 | ------------------------ | -------------------------------------------- |
 | Open AI 或 Azure Open AI | 对话、提示词管理、会话管理、知识库、语义技能 |
 | Azure Speech Service     | 文本转语音、语音识别                         |
-| Azure Translator | 百度翻译       | 文本翻译                                     |
+| Azure Translator / 百度翻译       | 文本翻译                                     |
 | Everything               | 文件搜索                                     |
 | Stable Diffusion         | 文生图                                       |
 
@@ -97,6 +97,7 @@
 - [NLog](https://nlog-project.org/)
 - [H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
+- [EverythingNet](https://github.com/ju2pom/EverythingNet)
 - And other open source contributors.
 
 ## 🧩 截图
