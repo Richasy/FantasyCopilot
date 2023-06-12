@@ -59,11 +59,6 @@ public interface ISessionViewModel : INotifyPropertyChanged
     bool IsSingleConversation { get; }
 
     /// <summary>
-    /// Whether it is a context-based dialog mode.
-    /// </summary>
-    bool IsContextConversation { get; }
-
-    /// <summary>
     /// Conversation type.
     /// </summary>
     ConversationType ConversationType { get; set; }

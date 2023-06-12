@@ -112,11 +112,6 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     int MaxParagraphTokenLength { get; set; }
 
     /// <summary>
-    /// The maximum number of tokens to respond when the context replies.
-    /// </summary>
-    int ContextResponseTokenLength { get; set; }
-
-    /// <summary>
     /// The maximum number of contexts returned by the knowledge base.
     /// </summary>
     int ContextLimit { get; set; }

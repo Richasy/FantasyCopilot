@@ -66,7 +66,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         MaxSplitContentLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxSplitContentLength, 1024);
         MaxParagraphTokenLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxParagraphTokenLength, 512);
-        ContextResponseTokenLength = _settingsToolkit.ReadLocalSetting(SettingNames.ContextResponseTokenLength, 512);
         ContextLimit = _settingsToolkit.ReadLocalSetting(SettingNames.ContextLimit, 3);
         MinRelevanceScore = _settingsToolkit.ReadLocalSetting(SettingNames.ContextMinRelevanceScore, 0.7d);
 

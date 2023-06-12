@@ -16,9 +16,4 @@ public enum ConversationType
     /// Single dialog.
     /// </summary>
     Single,
-
-    /// <summary>
-    /// Context-based dialogs.
-    /// </summary>
-    Context,
 }

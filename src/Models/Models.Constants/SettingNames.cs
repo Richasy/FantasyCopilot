@@ -50,7 +50,6 @@ public enum SettingNames
     IsKnowledgeEnabled,
     MaxSplitContentLength,
     MaxParagraphTokenLength,
-    ContextResponseTokenLength,
     ShowConsoleWhenPluginRunning,
     PluginFolderPath,
     AISource,

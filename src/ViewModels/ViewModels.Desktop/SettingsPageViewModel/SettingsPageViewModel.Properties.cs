@@ -93,9 +93,6 @@ public sealed partial class SettingsPageViewModel
     private int _maxParagraphTokenLength;
 
     [ObservableProperty]
-    private int _contextResponseTokenLength;
-
-    [ObservableProperty]
     private int _contextLimit;
 
     [ObservableProperty]

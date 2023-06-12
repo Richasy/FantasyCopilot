@@ -251,6 +251,7 @@ public sealed partial class KnowledgeBaseSessionViewModel : ViewModelBase, IKnow
         IsAdvancedSearchResponding = true;
         CancelMessage();
         TryClear(Contexts);
+        AdvancedAnswerResult = default;
         _cancellationTokenSource = new CancellationTokenSource();
         _sourceAdvancedQuery = AdvancedUserInput;
 

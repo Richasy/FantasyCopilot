@@ -14,6 +14,9 @@ public sealed partial class KnowledgeContextItem : KnowledgeContextItemBase
     /// </summary>
     public KnowledgeContextItem()
         => InitializeComponent();
+
+    private void OnFileNameTapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
+        => ViewModel.IsSelected = !ViewModel.IsSelected;
 }
 
 /// <summary>

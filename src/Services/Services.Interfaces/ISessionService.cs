@@ -36,10 +36,9 @@ public interface ISessionService
     /// Send message to LLM.
     /// </summary>
     /// <param name="message">User message.</param>
-    /// <param name="isContext">Whether to look up the context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns><see cref="Task"/>.</returns>
-    Task SendMessageAsync(string message = default, bool isContext = false, CancellationToken cancellationToken = default);
+    Task SendMessageAsync(string message = default, CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Create new chat.

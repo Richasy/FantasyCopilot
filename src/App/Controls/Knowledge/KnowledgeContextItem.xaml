@@ -46,6 +46,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
+                Tapped="OnFileNameTapped"
                 Text="{x:Bind ViewModel.Context.FileName, Mode=OneWay}"
                 TextLineBounds="Tight"
                 TextTrimming="CharacterEllipsis" />

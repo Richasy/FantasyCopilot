@@ -57,7 +57,7 @@ public sealed class KnowledgeSkill
         {
             FrequencyPenalty = 1,
             PresencePenalty = 1,
-            MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.ContextResponseTokenLength, 500),
+            MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultMaxResponseTokens, 400),
             Temperature = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTemperature, 0.4),
             TopP = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTopP, 0),
         };

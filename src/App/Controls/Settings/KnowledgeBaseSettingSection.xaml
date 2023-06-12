@@ -46,15 +46,6 @@
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
-                Description="{ext:Locale Name=ContextResponseTokenLengthDescription}"
-                Header="{ext:Locale Name=ContextResponseTokenLength}">
-                <NumberBox
-                    Width="120"
-                    Minimum="10"
-                    Value="{x:Bind ViewModel.ContextResponseTokenLength, Mode=TwoWay}" />
-            </labs:SettingsCard>
-            <labs:SettingsCard
-                HorizontalContentAlignment="Stretch"
                 Description="{ext:Locale Name=ContextLimitDescription}"
                 Header="{ext:Locale Name=ContextLimit}">
                 <Slider
