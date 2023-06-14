@@ -111,7 +111,7 @@ public sealed partial class WorkflowService
             newProcess.StartInfo.UseShellExecute = false;
             newProcess.StartInfo.CreateNoWindow = !isShowWindow;
             var args = string.Join(' ', parameters.Select(p => $"-{p.Key} \"{p.Value}\""));
-            if (!parameters.Any(p => p.Key.Equals("input", StringComparison.OrdinalIgnoreCase)))
+            if (!parameters.Any(p => p.Key.Equals("input", StringComparison.OrdinalIgnoreCase)) && !string.IsNullOrEmpty(context.Result))
             {
                 args += $" -Input \"{context.Result}\"";
             }
