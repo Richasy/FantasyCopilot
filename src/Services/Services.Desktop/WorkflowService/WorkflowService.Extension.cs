@@ -92,9 +92,29 @@ public sealed partial class WorkflowService
             {
                 foreach (var parameter in _source.Parameters)
                 {
-                    if (context.Variables.TryGetValue(parameter.Id, out string v))
+                    if (string.IsNullOrEmpty(parameter.Name))
+                    {
+                        if (!string.IsNullOrEmpty(parameter.Id))
+                        {
+                            parameter.Name = parameter.Id;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+
+                    if (string.IsNullOrEmpty(parameter.Id) && !string.IsNullOrEmpty(parameter.Name) && !string.IsNullOrEmpty(parameter.DefaultValue))
+                    {
+                        parameters.TryAdd(parameter.Name, parameter.DefaultValue);
+                    }
+                    else if (context.Variables.TryGetValue(parameter.Id, out string v))
                     {
                         parameters.TryAdd(parameter.Name, v);
+                    }
+                    else if (!string.IsNullOrEmpty(parameter.DefaultValue))
+                    {
+                        parameters.TryAdd(parameter.Name, parameter.DefaultValue);
                     }
                     else if (parameter.Required)
                     {
@@ -103,49 +123,8 @@ public sealed partial class WorkflowService
                 }
             }
 
-            var finalOutput = string.Empty;
-            var newProcess = new Process();
-            newProcess.StartInfo.FileName = Path.Combine(pluginFolder, _source.ExecuteName);
-            newProcess.StartInfo.RedirectStandardOutput = true;
-            newProcess.StartInfo.RedirectStandardError = true;
-            newProcess.StartInfo.UseShellExecute = false;
-            newProcess.StartInfo.CreateNoWindow = !isShowWindow;
-            var args = string.Join(' ', parameters.Select(p => $"-{p.Key} \"{p.Value}\""));
-            if (!parameters.Any(p => p.Key.Equals("input", StringComparison.OrdinalIgnoreCase)) && !string.IsNullOrEmpty(context.Result))
-            {
-                args += $" -Input \"{context.Result}\"";
-            }
-
-            newProcess.StartInfo.Arguments = args.Trim();
-            newProcess.Start();
-            newProcess.BeginOutputReadLine();
-            newProcess.BeginErrorReadLine();
-            newProcess.OutputDataReceived += (_, e) =>
-            {
-                if (!string.IsNullOrEmpty(e.Data))
-                {
-                    if (_source.OnlyFinalOutput)
-                    {
-                        finalOutput = e.Data;
-                    }
-                    else
-                    {
-                        finalOutput += $"\n{e.Data}";
-                    }
-                }
-            };
-
-            newProcess.ErrorDataReceived += (_, e) =>
-            {
-                if (string.IsNullOrEmpty(e.Data))
-                {
-                    return;
-                }
-
-                context.Fail($"{_source.Name} failed: {e.Data}");
-            };
-
-            await newProcess.WaitForExitAsync(context.CancellationToken);
+            var exeFile = Path.Combine(pluginFolder, _source.ExecuteName);
+            var finalOutput = await RunProcessAsync(exeFile, isShowWindow, parameters, context);
             finalOutput = finalOutput.Trim();
             if (!string.IsNullOrEmpty(finalOutput))
             {
@@ -222,5 +201,61 @@ public sealed partial class WorkflowService
         public ISKFunction SetAIService(Func<ITextCompletion> serviceFactory) => this;
 
         public ISKFunction SetDefaultSkillCollection(IReadOnlySkillCollection skills) => this;
+
+        private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context, bool shouldRunAsAdmin = false)
+        {
+            var finalOutput = string.Empty;
+            var newProcess = new Process();
+            newProcess.StartInfo.FileName = fileName;
+            newProcess.StartInfo.RedirectStandardOutput = true;
+            newProcess.StartInfo.RedirectStandardError = true;
+            newProcess.StartInfo.UseShellExecute = false;
+            newProcess.StartInfo.CreateNoWindow = !isShowWindow;
+            var args = string.Join(' ', parameters.Select(p => $"-{p.Key} \"{p.Value}\""));
+            if (!parameters.Any(p => p.Key.Equals("input", StringComparison.OrdinalIgnoreCase)) && !string.IsNullOrEmpty(context.Result))
+            {
+                args += $" -Input \"{context.Result}\"";
+            }
+
+            newProcess.StartInfo.Arguments = args.Trim();
+            newProcess.Start();
+            newProcess.BeginOutputReadLine();
+            newProcess.BeginErrorReadLine();
+            newProcess.OutputDataReceived += (_, e) =>
+            {
+                if (!string.IsNullOrEmpty(e.Data))
+                {
+                    if (_source.OnlyFinalOutput)
+                    {
+                        finalOutput = e.Data;
+                    }
+                    else
+                    {
+                        finalOutput += $"\n{e.Data}";
+                    }
+                }
+            };
+
+            newProcess.ErrorDataReceived += async (_, e) =>
+            {
+                if (string.IsNullOrEmpty(e.Data))
+                {
+                    return;
+                }
+
+                if (e.Data.Contains("Access is denied", StringComparison.OrdinalIgnoreCase) && !shouldRunAsAdmin)
+                {
+                    finalOutput = await RunProcessAsync(fileName, isShowWindow, parameters, context, true);
+                }
+                else
+                {
+                    context.Fail($"{_source.Name} failed: {e.Data}");
+                }
+            };
+
+            await newProcess.WaitForExitAsync(context.CancellationToken);
+            return finalOutput;
+        }
+
     }
 }

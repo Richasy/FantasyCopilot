@@ -208,4 +208,10 @@ public class InputParameter
     /// </remarks>
     [JsonPropertyName("required")]
     public bool Required { get; set; }
+
+    /// <summary>
+    /// Default value of the parameter.
+    /// </summary>
+    [JsonPropertyName("default_value")]
+    public string DefaultValue { get; set; }
 }
