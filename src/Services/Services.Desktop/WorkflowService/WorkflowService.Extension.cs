@@ -256,6 +256,5 @@ public sealed partial class WorkflowService
             await newProcess.WaitForExitAsync(context.CancellationToken);
             return finalOutput;
         }
-
     }
 }
