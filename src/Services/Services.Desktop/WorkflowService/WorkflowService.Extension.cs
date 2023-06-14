@@ -205,6 +205,7 @@ public sealed partial class WorkflowService
         private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context, bool shouldRunAsAdmin = false)
         {
             var finalOutput = string.Empty;
+            var skipError = false;
             var newProcess = new Process();
             newProcess.StartInfo.FileName = fileName;
             newProcess.StartInfo.RedirectStandardOutput = true;
@@ -236,21 +237,14 @@ public sealed partial class WorkflowService
                 }
             };
 
-            newProcess.ErrorDataReceived += async (_, e) =>
+            newProcess.ErrorDataReceived += (_, e) =>
             {
-                if (string.IsNullOrEmpty(e.Data))
+                if (string.IsNullOrEmpty(e.Data) || skipError)
                 {
                     return;
                 }
 
-                if (e.Data.Contains("Access is denied", StringComparison.OrdinalIgnoreCase) && !shouldRunAsAdmin)
-                {
-                    finalOutput = await RunProcessAsync(fileName, isShowWindow, parameters, context, true);
-                }
-                else
-                {
-                    context.Fail($"{_source.Name} failed: {e.Data}");
-                }
+                context.Fail($"{_source.Name} failed: {e.Data}");
             };
 
             await newProcess.WaitForExitAsync(context.CancellationToken);

@@ -1509,4 +1509,10 @@
   <data name="QuickQA" xml:space="preserve">
     <value>快速问答</value>
   </data>
+  <data name="NeedAdmin" xml:space="preserve">
+    <value>需要管理员权限</value>
+  </data>
+  <data name="NeedAdminDescription" xml:space="preserve">
+    <value>你将要执行的操作需要管理员权限，请用管理员模式重启应用</value>
+  </data>
 </root>

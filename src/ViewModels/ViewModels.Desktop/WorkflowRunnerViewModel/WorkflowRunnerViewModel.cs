@@ -3,6 +3,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
@@ -43,6 +44,9 @@ public sealed partial class WorkflowRunnerViewModel : ViewModelBase, IWorkflowRu
         _workflowContext.ResultUpdated += OnContextResultUpdated;
     }
 
+    private static bool IsAdmin()
+        => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
+
     [RelayCommand]
     private async Task InjectMetadataAsync(WorkflowMetadata metadata)
     {
@@ -50,6 +54,7 @@ public sealed partial class WorkflowRunnerViewModel : ViewModelBase, IWorkflowRu
         TryClear(Steps);
         Name = _metadata.Name;
         Description = _metadata.Description;
+        NeedAdmin = false;
         ErrorText = string.Empty;
         Output = default;
         try
@@ -60,13 +65,21 @@ public sealed partial class WorkflowRunnerViewModel : ViewModelBase, IWorkflowRu
                 var plugins = await _cacheToolkit.GetPluginConfigsAsync();
                 var commands = plugins.SelectMany(p => p.Commands);
                 var stepRemoved = false;
+                var isAdmin = IsAdmin();
                 for (var i = detailData.Steps.Count - 1; i >= 0; i--)
                 {
-                    if (detailData.Steps[i].Skill == SkillType.PluginCommand
-                        && !commands.Any(p => p.Identity == detailData.Steps[i].PluginCommandId))
+                    if (detailData.Steps[i].Skill == SkillType.PluginCommand)
                     {
-                        detailData.Steps.RemoveAt(i);
-                        stepRemoved = true;
+                        var sourceCommand = commands.FirstOrDefault(p => p.Identity == detailData.Steps[i].PluginCommandId);
+                        if (sourceCommand == null)
+                        {
+                            detailData.Steps.RemoveAt(i);
+                            stepRemoved = true;
+                        }
+                        else if (sourceCommand.NeedAdmin && !isAdmin)
+                        {
+                            NeedAdmin = true;
+                        }
                     }
                 }
 

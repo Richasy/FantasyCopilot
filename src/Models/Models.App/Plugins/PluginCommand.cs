@@ -65,6 +65,12 @@ public class PluginCommand
     /// </summary>
     [JsonPropertyName("only_final_output")]
     public bool OnlyFinalOutput { get; set; }
+
+    /// <summary>
+    /// This command requires admin privileges to execute.
+    /// </summary>
+    [JsonPropertyName("need_admin")]
+    public bool NeedAdmin { get; set; }
 }
 
 /// <summary>

@@ -12,6 +12,7 @@
     <Grid RowSpacing="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Grid Margin="20,8,20,4">
@@ -42,7 +43,20 @@
                 Content="{ext:Locale Name=Cancel}"
                 Visibility="{x:Bind ViewModel.IsRunning, Mode=OneWay}" />
         </Grid>
-        <ScrollViewer Grid.Row="1" Style="{StaticResource PageScrollViewerStyle}">
+        <InfoBar
+            Title="{ext:Locale Name=NeedAdmin}"
+            Grid.Row="1"
+            Margin="12,0"
+            IsClosable="False"
+            IsIconVisible="False"
+            IsOpen="{x:Bind ViewModel.NeedAdmin, Mode=OneWay}"
+            Message="{ext:Locale Name=NeedAdminDescription}"
+            Severity="Warning">
+            <InfoBar.ActionButton>
+                <HyperlinkButton Click="OnRestartButtonClick" Content="{ext:Locale Name=Restart}" />
+            </InfoBar.ActionButton>
+        </InfoBar>
+        <ScrollViewer Grid.Row="2" Style="{StaticResource PageScrollViewerStyle}">
             <StackPanel Margin="0,0,0,20">
                 <InfoBar
                     IsClosable="True"
