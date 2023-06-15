@@ -142,7 +142,7 @@ public sealed partial class WorkflowService
                     }
                     else if (jdoc.TryGetProperty(_source.Output.OutputKey, out var outputEle))
                     {
-                        context.Variables.Update(outputEle.GetRawText());
+                        context.Variables.Update(outputEle.ToString());
                     }
 
                     if (_source.Output.ContextItems?.Any() ?? false)
@@ -162,7 +162,7 @@ public sealed partial class WorkflowService
                                     continue;
                                 }
 
-                                context.Variables.Set(current.Name, v.GetRawText());
+                                context.Variables.Set(current.Name, v.ToString());
                             }
                         }
                         else
@@ -175,7 +175,7 @@ public sealed partial class WorkflowService
                                     continue;
                                 }
 
-                                context.Variables.Set(item.VariableName, v.GetRawText());
+                                context.Variables.Set(item.VariableName, v.ToString());
                             }
                         }
                     }
