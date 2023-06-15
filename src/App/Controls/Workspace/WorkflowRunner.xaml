@@ -46,8 +46,8 @@
         <InfoBar
             Title="{ext:Locale Name=NeedAdmin}"
             Grid.Row="1"
-            Margin="12,0"
-            IsClosable="False"
+            Margin="20,0"
+            IsClosable="True"
             IsIconVisible="False"
             IsOpen="{x:Bind ViewModel.NeedAdmin, Mode=OneWay}"
             Message="{ext:Locale Name=NeedAdminDescription}"
