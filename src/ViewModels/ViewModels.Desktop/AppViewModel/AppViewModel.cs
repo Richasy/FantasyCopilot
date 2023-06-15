@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
@@ -11,6 +12,7 @@ using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -84,6 +86,20 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     /// <inheritdoc/>
     public void ShowTip(string message, InfoType type = InfoType.Information)
         => RequestShowTip?.Invoke(this, new AppTipNotificationEventArgs(message, type));
+
+    [RelayCommand]
+    private static void RestartAsAdmin()
+    {
+        Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().UnregisterKey();
+        Application.Current.Exit();
+        var process = new Process();
+        process.StartInfo.FileName = "cmd.exe";
+        process.StartInfo.Arguments = "/c start fancop://";
+        process.StartInfo.UseShellExecute = true;
+        process.StartInfo.Verb = "runas";
+        process.StartInfo.CreateNoWindow = true;
+        process.Start();
+    }
 
     [RelayCommand]
     private void Back()

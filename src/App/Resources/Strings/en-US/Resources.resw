@@ -882,6 +882,12 @@
   <data name="NeedAddStep" xml:space="preserve">
     <value>Need to add at least one step</value>
   </data>
+  <data name="NeedAdmin" xml:space="preserve">
+    <value>Requires admin privileges</value>
+  </data>
+  <data name="NeedAdminDescription" xml:space="preserve">
+    <value>The operation you are about to perform requires administrator privileges, please restart the application in administrator mode</value>
+  </data>
   <data name="NeedFillRequiredFields" xml:space="preserve">
     <value>Please fill in the content completely</value>
   </data>

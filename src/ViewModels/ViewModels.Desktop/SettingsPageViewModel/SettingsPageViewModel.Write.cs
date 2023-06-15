@@ -151,4 +151,7 @@ public sealed partial class SettingsPageViewModel
 
     partial void OnMinRelevanceScoreChanged(double value)
         => WriteSetting(SettingNames.ContextMinRelevanceScore, value);
+
+    partial void OnOpenConsoleWhenPluginRunningChanged(bool value)
+        => WriteSetting(SettingNames.ShowConsoleWhenPluginRunning, value);
 }

@@ -482,4 +482,6 @@ public enum StringNames
     BeginKnowledgeSearch,
     BeginKnowledgeSearchDescription,
     GenerateAnswer,
+    NeedAdmin,
+    NeedAdminDescription,
 }

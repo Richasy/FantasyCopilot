@@ -33,6 +33,11 @@ public interface IWorkflowRunnerViewModel : INotifyPropertyChanged
     bool IsRunning { get; set; }
 
     /// <summary>
+    /// The application needs to be restarted as Admin.
+    /// </summary>
+    bool NeedAdmin { get; set; }
+
+    /// <summary>
     /// Input step.
     /// </summary>
     IWorkflowStepViewModel Input { get; set; }

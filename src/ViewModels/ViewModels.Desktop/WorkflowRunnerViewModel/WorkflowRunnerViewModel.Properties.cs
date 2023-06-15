@@ -40,6 +40,9 @@ public sealed partial class WorkflowRunnerViewModel
     private bool _isRunning;
 
     [ObservableProperty]
+    private bool _needAdmin;
+
+    [ObservableProperty]
     private IWorkflowStepViewModel _input;
 
     [ObservableProperty]

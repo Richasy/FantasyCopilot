@@ -18,6 +18,12 @@ public sealed partial class WorkflowRunner : WorkflowRunnerBase
         InitializeComponent();
         ViewModel = Locator.Current.GetService<IWorkflowRunnerViewModel>();
     }
+
+    private void OnRestartButtonClick(object sender, RoutedEventArgs e)
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        appVM.RestartAsAdminCommand.Execute(default);
+    }
 }
 
 /// <summary>

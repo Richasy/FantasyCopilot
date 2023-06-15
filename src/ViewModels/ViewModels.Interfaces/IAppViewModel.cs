@@ -109,6 +109,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     IRelayCommand CheckImageServiceCommand { get; }
 
     /// <summary>
+    /// Restart the application as admin.
+    /// </summary>
+    IRelayCommand RestartAsAdminCommand { get; }
+
+    /// <summary>
     /// Navigate to a page.
     /// </summary>
     /// <param name="page">Page id.</param>

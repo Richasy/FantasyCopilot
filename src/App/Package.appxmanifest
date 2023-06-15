@@ -45,6 +45,11 @@
         </uap:DefaultTile >
         <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+            <uap:Protocol Name="fancop" DesiredView="useLess" />
+        </uap:Extension>
+      </Extensions>
     </Application>
   </Applications>
 
