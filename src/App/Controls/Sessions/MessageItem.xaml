@@ -38,6 +38,7 @@
                     x:Name="MessageBlock"
                     MaxWidth="280"
                     Margin="12,8"
+                    Background="Transparent"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                     IsTextSelectionEnabled="True"
                     TextWrapping="Wrap" />
