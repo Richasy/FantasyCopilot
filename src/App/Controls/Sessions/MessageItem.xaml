@@ -3,11 +3,11 @@
     x:Class="FantasyCopilot.App.Controls.Sessions.MessageItem"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:community="using:CommunityToolkit.WinUI.UI.Controls"
     xmlns:controls="using:FantasyCopilot.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
     xmlns:local="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:markdown="using:FantasyCopilot.Libs.Markdown"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="OnLoaded"
     mc:Ignorable="d">
@@ -34,7 +34,7 @@
                     RadiusY="4"
                     Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
                     StrokeThickness="1" />
-                <community:MarkdownTextBlock
+                <markdown:MarkdownTextBlock
                     x:Name="MessageBlock"
                     MaxWidth="280"
                     Margin="12,8"
