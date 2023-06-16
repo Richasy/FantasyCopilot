@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using FantasyCopilot.Libs.Markdown.Markdown.Render;
 using FantasyCopilot.Libs.Markdown.Renderers.Inlines;
 using Markdig.Helpers;
 using Markdig.Renderers;
@@ -10,6 +10,8 @@ using Markdig.Syntax;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Media;
+using Windows.UI.Text;
 
 namespace FantasyCopilot.Libs.Markdown.Renderers;
 
@@ -23,15 +25,24 @@ internal class WinUIRenderer : RendererBase
     /// </summary>
     public WinUIRenderer() => _buffer = new char[1024];
 
+    public RendererContext Context { get; set; }
+
     public override object Render(MarkdownObject markdownObject)
     {
         LoadRenderers();
-        Add(new StackPanel());
+        var rootPanel = new StackPanel
+        {
+            Background = Context.Background,
+            BorderBrush = Context.BorderBrush,
+            BorderThickness = Context.BorderThickness,
+            Padding = Context.Padding,
+        };
+
+        Add(rootPanel);
         Write(markdownObject);
         return _elements.First();
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteLeafInline(LeafBlock leafBlock)
     {
         if (leafBlock == null)
@@ -79,6 +90,11 @@ internal class WinUIRenderer : RendererBase
 
     public void RedirectToChild()
     {
+        if (_elements.Count == 1)
+        {
+            return;
+        }
+
         var lastEle = _elements.LastOrDefault();
         if (lastEle == null)
         {
@@ -100,7 +116,6 @@ internal class WinUIRenderer : RendererBase
     public void WriteInline(Inline inline)
         => AddInline(GetLastParagraph(), inline);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteText(ref StringSlice slice)
     {
         if (slice.Start > slice.End)
@@ -111,7 +126,6 @@ internal class WinUIRenderer : RendererBase
         WriteText(slice.Text, slice.Start, slice.Length);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void WriteText(string text)
         => WriteInline(new Run { Text = text });
 
@@ -141,10 +155,31 @@ internal class WinUIRenderer : RendererBase
         }
     }
 
+    public TextBlock CreateDefaultTextBlock()
+    {
+        var result = new TextBlock
+        {
+            CharacterSpacing = Context.CharacterSpacing,
+            FontFamily = Context.FontFamily,
+            FontSize = Context.FontSize,
+            FontStretch = Context.FontStretch,
+            FontStyle = Context.FontStyle,
+            FontWeight = Context.FontWeight,
+            Foreground = Context.Foreground,
+            IsTextSelectionEnabled = Context.IsTextSelectionEnabled,
+            TextWrapping = Context.TextWrapping,
+            FlowDirection = Context.FlowDirection,
+        };
+        return result;
+    }
+
     protected virtual void LoadRenderers()
     {
         ObjectRenderers.Add(new ParagraphRenderer());
         ObjectRenderers.Add(new QuoteBlockRenderer());
+        ObjectRenderers.Add(new HeadingRenderer());
+        ObjectRenderers.Add(new HorizontalRuleRenderer());
+        ObjectRenderers.Add(new ListRenderer());
 
         ObjectRenderers.Add(new LiteralInlineRenderer());
     }
@@ -169,9 +204,21 @@ internal class WinUIRenderer : RendererBase
                 }
             }
 
-            if (lastEle == null)
+            if (lastEle is not RichTextBlock)
             {
-                var rtb = new RichTextBlock();
+                var rtb = new RichTextBlock
+                {
+                    CharacterSpacing = Context.CharacterSpacing,
+                    FontFamily = Context.FontFamily,
+                    FontSize = Context.FontSize,
+                    FontStretch = Context.FontStretch,
+                    FontStyle = Context.FontStyle,
+                    FontWeight = Context.FontWeight,
+                    Foreground = Context.Foreground,
+                    IsTextSelectionEnabled = Context.IsTextSelectionEnabled,
+                    TextWrapping = Context.TextWrapping,
+                    FlowDirection = Context.FlowDirection,
+                };
                 _elements.Add(rtb);
                 lastEle = rtb;
             }

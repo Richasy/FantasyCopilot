@@ -2,9 +2,7 @@
 
 using System;
 using Markdig.Syntax;
-using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 
 namespace FantasyCopilot.Libs.Markdown.Renderers;
 
@@ -22,9 +20,14 @@ internal sealed class QuoteBlockRenderer : WinUIObjectRenderer<QuoteBlock>
             throw new ArgumentNullException(nameof(obj));
         }
 
+        var context = renderer.Context;
         var border = new Border
         {
-            Background = new SolidColorBrush(Colors.Black),
+            Margin = context.QuoteMargin,
+            Background = context.QuoteBackground,
+            BorderBrush = context.QuoteBorderBrush,
+            BorderThickness = context.QuoteBorderThickness,
+            Padding = context.QuotePadding,
         };
 
         renderer.Add(border);

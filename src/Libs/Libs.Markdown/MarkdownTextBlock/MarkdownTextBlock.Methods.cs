@@ -28,14 +28,6 @@ namespace FantasyCopilot.Libs.Markdown
     public partial class MarkdownTextBlock
     {
         /// <summary>
-        /// Sets the Markdown Renderer for Rendering the UI.
-        /// </summary>
-        /// <typeparam name="T">The Inherited Markdown Render.</typeparam>
-        public void SetRenderer<T>()
-            where T : MarkdownRenderer
-            => _rendererType = typeof(T);
-
-        /// <summary>
         /// Called when the render has a link we need to listen to.
         /// </summary>
         public void RegisterNewHyperLink(Hyperlink newHyperlink, string linkUrl)
@@ -214,103 +206,86 @@ namespace FantasyCopilot.Libs.Markdown
             {
                 try
                 {
-                    // Try to parse the markdown.
-#pragma warning disable CS0618 // Type or member is obsolete
-                    //                    var markdown = new MarkdownDocument();
-                    //                    foreach (var str in SchemeList.Split(',').ToList())
-                    //                    {
-                    //                        if (!string.IsNullOrEmpty(str))
-                    //                        {
-                    //                            MarkdownDocument.KnownSchemes.Add(str);
-                    //                        }
-                    //                    }
-                    //#pragma warning restore CS0618 // Type or member is obsolete
-
-                    //                    markdown.Parse(Text);
-
-                    //                    // Now try to display it
-                    //                    var renderer = Activator.CreateInstance(_rendererType, markdown, this, this, this) as MarkdownRenderer ?? throw new Exception("Markdown Renderer was not of the correct type.");
-
-                    //                    renderer.Background = Background;
-                    //                    renderer.BorderBrush = BorderBrush;
-                    //                    renderer.BorderThickness = BorderThickness;
-                    //                    renderer.CharacterSpacing = CharacterSpacing;
-                    //                    renderer.FontFamily = FontFamily;
-                    //                    renderer.FontSize = FontSize;
-                    //                    renderer.FontStretch = FontStretch;
-                    //                    renderer.FontStyle = FontStyle;
-                    //                    renderer.FontWeight = FontWeight;
-                    //                    renderer.Foreground = Foreground;
-                    //                    renderer.IsTextSelectionEnabled = IsTextSelectionEnabled;
-                    //                    renderer.Padding = Padding;
-                    //                    renderer.CodeBackground = CodeBackground;
-                    //                    renderer.CodeBorderBrush = CodeBorderBrush;
-                    //                    renderer.CodeBorderThickness = CodeBorderThickness;
-                    //                    renderer.InlineCodeBorderThickness = InlineCodeBorderThickness;
-                    //                    renderer.InlineCodeBackground = InlineCodeBackground;
-                    //                    renderer.InlineCodeBorderBrush = InlineCodeBorderBrush;
-                    //                    renderer.InlineCodePadding = InlineCodePadding;
-                    //                    renderer.InlineCodeFontFamily = InlineCodeFontFamily;
-                    //                    renderer.InlineCodeForeground = InlineCodeForeground;
-                    //                    renderer.CodeForeground = CodeForeground;
-                    //                    renderer.CodeFontFamily = CodeFontFamily;
-                    //                    renderer.CodePadding = CodePadding;
-                    //                    renderer.CodeMargin = CodeMargin;
-                    //                    renderer.EmojiFontFamily = EmojiFontFamily;
-                    //                    renderer.Header1FontSize = Header1FontSize;
-                    //                    renderer.Header1FontWeight = Header1FontWeight;
-                    //                    renderer.Header1Margin = Header1Margin;
-                    //                    renderer.Header1Foreground = Header1Foreground;
-                    //                    renderer.Header2FontSize = Header2FontSize;
-                    //                    renderer.Header2FontWeight = Header2FontWeight;
-                    //                    renderer.Header2Margin = Header2Margin;
-                    //                    renderer.Header2Foreground = Header2Foreground;
-                    //                    renderer.Header3FontSize = Header3FontSize;
-                    //                    renderer.Header3FontWeight = Header3FontWeight;
-                    //                    renderer.Header3Margin = Header3Margin;
-                    //                    renderer.Header3Foreground = Header3Foreground;
-                    //                    renderer.Header4FontSize = Header4FontSize;
-                    //                    renderer.Header4FontWeight = Header4FontWeight;
-                    //                    renderer.Header4Margin = Header4Margin;
-                    //                    renderer.Header4Foreground = Header4Foreground;
-                    //                    renderer.Header5FontSize = Header5FontSize;
-                    //                    renderer.Header5FontWeight = Header5FontWeight;
-                    //                    renderer.Header5Margin = Header5Margin;
-                    //                    renderer.Header5Foreground = Header5Foreground;
-                    //                    renderer.Header6FontSize = Header6FontSize;
-                    //                    renderer.Header6FontWeight = Header6FontWeight;
-                    //                    renderer.Header6Margin = Header6Margin;
-                    //                    renderer.Header6Foreground = Header6Foreground;
-                    //                    renderer.HorizontalRuleBrush = HorizontalRuleBrush;
-                    //                    renderer.HorizontalRuleMargin = HorizontalRuleMargin;
-                    //                    renderer.HorizontalRuleThickness = HorizontalRuleThickness;
-                    //                    renderer.ListMargin = ListMargin;
-                    //                    renderer.ListGutterWidth = ListGutterWidth;
-                    //                    renderer.ListBulletSpacing = ListBulletSpacing;
-                    //                    renderer.ParagraphMargin = ParagraphMargin;
-                    //                    renderer.ParagraphLineHeight = ParagraphLineHeight;
-                    //                    renderer.QuoteBackground = QuoteBackground;
-                    //                    renderer.QuoteBorderBrush = QuoteBorderBrush;
-                    //                    renderer.QuoteBorderThickness = QuoteBorderThickness;
-                    //                    renderer.QuoteForeground = QuoteForeground;
-                    //                    renderer.QuoteMargin = QuoteMargin;
-                    //                    renderer.QuotePadding = QuotePadding;
-                    //                    renderer.TableBorderBrush = TableBorderBrush;
-                    //                    renderer.TableBorderThickness = TableBorderThickness;
-                    //                    renderer.YamlBorderBrush = YamlBorderBrush;
-                    //                    renderer.YamlBorderThickness = YamlBorderThickness;
-                    //                    renderer.TableCellPadding = TableCellPadding;
-                    //                    renderer.TableMargin = TableMargin;
-                    //                    renderer.TextWrapping = TextWrapping;
-                    //                    renderer.LinkForeground = LinkForeground;
-                    //                    renderer.ImageStretch = ImageStretch;
-                    //                    renderer.ImageMaxHeight = ImageMaxHeight;
-                    //                    renderer.ImageMaxWidth = ImageMaxWidth;
-                    //                    renderer.WrapCodeBlock = WrapCodeBlock;
-                    //                    renderer.FlowDirection = FlowDirection;
+                    var context = new RendererContext();
+                    context.Background = Background;
+                    context.BorderBrush = BorderBrush;
+                    context.BorderThickness = BorderThickness;
+                    context.CharacterSpacing = CharacterSpacing;
+                    context.FontFamily = FontFamily;
+                    context.FontSize = FontSize;
+                    context.FontStretch = FontStretch;
+                    context.FontStyle = FontStyle;
+                    context.FontWeight = FontWeight;
+                    context.Foreground = Foreground;
+                    context.IsTextSelectionEnabled = IsTextSelectionEnabled;
+                    context.Padding = Padding;
+                    context.CodeBackground = CodeBackground;
+                    context.CodeBorderBrush = CodeBorderBrush;
+                    context.CodeBorderThickness = CodeBorderThickness;
+                    context.InlineCodeBorderThickness = InlineCodeBorderThickness;
+                    context.InlineCodeBackground = InlineCodeBackground;
+                    context.InlineCodeBorderBrush = InlineCodeBorderBrush;
+                    context.InlineCodePadding = InlineCodePadding;
+                    context.InlineCodeFontFamily = InlineCodeFontFamily;
+                    context.InlineCodeForeground = InlineCodeForeground;
+                    context.CodeForeground = CodeForeground;
+                    context.CodeFontFamily = CodeFontFamily;
+                    context.CodePadding = CodePadding;
+                    context.CodeMargin = CodeMargin;
+                    context.EmojiFontFamily = EmojiFontFamily;
+                    context.Header1FontSize = Header1FontSize;
+                    context.Header1FontWeight = Header1FontWeight;
+                    context.Header1Margin = Header1Margin;
+                    context.Header1Foreground = Header1Foreground;
+                    context.Header2FontSize = Header2FontSize;
+                    context.Header2FontWeight = Header2FontWeight;
+                    context.Header2Margin = Header2Margin;
+                    context.Header2Foreground = Header2Foreground;
+                    context.Header3FontSize = Header3FontSize;
+                    context.Header3FontWeight = Header3FontWeight;
+                    context.Header3Margin = Header3Margin;
+                    context.Header3Foreground = Header3Foreground;
+                    context.Header4FontSize = Header4FontSize;
+                    context.Header4FontWeight = Header4FontWeight;
+                    context.Header4Margin = Header4Margin;
+                    context.Header4Foreground = Header4Foreground;
+                    context.Header5FontSize = Header5FontSize;
+                    context.Header5FontWeight = Header5FontWeight;
+                    context.Header5Margin = Header5Margin;
+                    context.Header5Foreground = Header5Foreground;
+                    context.Header6FontSize = Header6FontSize;
+                    context.Header6FontWeight = Header6FontWeight;
+                    context.Header6Margin = Header6Margin;
+                    context.Header6Foreground = Header6Foreground;
+                    context.HorizontalRuleBrush = HorizontalRuleBrush;
+                    context.HorizontalRuleMargin = HorizontalRuleMargin;
+                    context.HorizontalRuleThickness = HorizontalRuleThickness;
+                    context.ListMargin = ListMargin;
+                    context.ListGutterWidth = ListGutterWidth;
+                    context.ListBulletSpacing = ListBulletSpacing;
+                    context.ParagraphMargin = ParagraphMargin;
+                    context.ParagraphLineHeight = ParagraphLineHeight;
+                    context.QuoteBackground = QuoteBackground;
+                    context.QuoteBorderBrush = QuoteBorderBrush;
+                    context.QuoteBorderThickness = QuoteBorderThickness;
+                    context.QuoteForeground = QuoteForeground;
+                    context.QuoteMargin = QuoteMargin;
+                    context.QuotePadding = QuotePadding;
+                    context.TableBorderBrush = TableBorderBrush;
+                    context.TableBorderThickness = TableBorderThickness;
+                    context.TableCellPadding = TableCellPadding;
+                    context.TableMargin = TableMargin;
+                    context.TextWrapping = TextWrapping;
+                    context.LinkForeground = LinkForeground;
+                    context.ImageStretch = ImageStretch;
+                    context.ImageMaxHeight = ImageMaxHeight;
+                    context.ImageMaxWidth = ImageMaxWidth;
+                    context.WrapCodeBlock = WrapCodeBlock;
+                    context.FlowDirection = FlowDirection;
 
                     var pipeline = new MarkdownPipelineBuilder().Build();
                     var renderer = new WinUIRenderer();
+                    renderer.Context = context;
                     pipeline.Setup(renderer);
                     var doc = Markdig.Markdown.Parse(Text, pipeline);
                     _rootElement.Child = renderer.Render(doc) as UIElement;

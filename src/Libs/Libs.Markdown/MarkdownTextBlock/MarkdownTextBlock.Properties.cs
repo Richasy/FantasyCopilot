@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System;
 using System.Collections.Generic;
 using ColorCode.Styling;
 using CommunityToolkit.WinUI.UI.Helpers;
-using FantasyCopilot.Libs.Markdown.Markdown.Render;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -353,8 +351,6 @@ namespace FantasyCopilot.Libs.Markdown
         private Border _rootElement;
 
         private bool _multiClickDetectionTriggered;
-
-        private Type _rendererType = typeof(MarkdownRenderer);
 
         private ThemeListener _themeListener;
 
