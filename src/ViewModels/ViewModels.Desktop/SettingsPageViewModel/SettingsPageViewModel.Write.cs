@@ -62,7 +62,15 @@ public sealed partial class SettingsPageViewModel
         => WriteSecureSetting(SettingNames.OpenAIAccessKey, value);
 
     partial void OnOpenAICustomEndpointChanging(string value)
-        => WriteSetting(SettingNames.OpenAICustomEndpoint, value);
+    {
+        if (!value.StartsWith("http") && !string.IsNullOrEmpty(value))
+        {
+            value = "https://" + value;
+        }
+
+        value = value.TrimEnd('/');
+        WriteSetting(SettingNames.OpenAICustomEndpoint, value);
+    }
 
     partial void OnOpenAIChatModelNameChanged(string value)
         => WriteSetting(SettingNames.OpenAIChatModelName, value);
