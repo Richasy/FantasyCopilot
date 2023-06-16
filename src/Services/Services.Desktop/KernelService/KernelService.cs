@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -96,40 +99,23 @@ public sealed partial class KernelService : IKernelService
         var hasCustomEndpoint = !string.IsNullOrEmpty(customEndpoint) && Uri.TryCreate(customEndpoint, UriKind.Absolute, out var _);
 
         var kernelBuilder = new KernelBuilder();
+        var customHttpClient = hasCustomEndpoint
+            ? new HttpClient(new ProxyOpenAIHandler(customEndpoint))
+            : default;
 
-        if (hasCustomEndpoint)
+        if (isBaseValid && hasChatModel)
         {
-            if (isBaseValid && hasChatModel)
-            {
-                kernelBuilder.WithProxyOpenAIChatCompletionService(chatModelName, key, customEndpoint, organization, setAsDefault: true);
-            }
-
-            if (isBaseValid && hasEmbeddingModel)
-            {
-                kernelBuilder.WithProxyOpenAITextEmbeddingGenerationService(embeddingModelName, key, customEndpoint, organization);
-            }
-
-            if (isBaseValid && hasCompletionModel)
-            {
-                kernelBuilder.WithProxyOpenAITextCompletionService(completionModelName, key, customEndpoint, organization);
-            }
+            kernelBuilder.WithOpenAIChatCompletionService(chatModelName, key, organization, setAsDefault: true, httpClient: customHttpClient);
         }
-        else
+
+        if (isBaseValid && hasEmbeddingModel)
         {
-            if (isBaseValid && hasChatModel)
-            {
-                kernelBuilder.WithOpenAIChatCompletionService(chatModelName, key, organization, setAsDefault: true);
-            }
+            kernelBuilder.WithOpenAITextEmbeddingGenerationService(embeddingModelName, key, organization, httpClient: customHttpClient);
+        }
 
-            if (isBaseValid && hasEmbeddingModel)
-            {
-                kernelBuilder.WithOpenAITextEmbeddingGenerationService(embeddingModelName, key, organization);
-            }
-
-            if (isBaseValid && hasCompletionModel)
-            {
-                kernelBuilder.WithOpenAITextCompletionService(completionModelName, key, organization);
-            }
+        if (isBaseValid && hasCompletionModel)
+        {
+            kernelBuilder.WithOpenAITextCompletionService(completionModelName, key, organization, httpClient: customHttpClient);
         }
 
         kernelBuilder.WithLogger(_logger);
@@ -142,5 +128,24 @@ public sealed partial class KernelService : IKernelService
         IsChatSupport = isBaseValid && (hasChatModel || hasCompletionModel);
         HasChatModel = hasChatModel;
         IsMemorySupport = IsChatSupport && hasEmbeddingModel;
+    }
+
+    private class ProxyOpenAIHandler : HttpClientHandler
+    {
+        private readonly string _proxyUrl;
+
+        public ProxyOpenAIHandler(string proxyUrl)
+            => _proxyUrl = proxyUrl.TrimEnd('/');
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            if (request.RequestUri != null && request.RequestUri.Host.Equals("api.openai.com", StringComparison.OrdinalIgnoreCase))
+            {
+                var path = request.RequestUri.PathAndQuery.TrimStart('/');
+                request.RequestUri = new Uri($"{_proxyUrl}/{path}");
+            }
+
+            return base.SendAsync(request, cancellationToken);
+        }
     }
 }
