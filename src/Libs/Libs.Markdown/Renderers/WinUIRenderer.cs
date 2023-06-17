@@ -65,42 +65,6 @@ internal class WinUIRenderer : RendererBase
         return _elements.First();
     }
 
-    public void WriteLeafInline(LeafBlock leafBlock)
-    {
-        if (leafBlock == null)
-        {
-            throw new System.ArgumentNullException(nameof(leafBlock));
-        }
-
-        if (leafBlock.Inline != null)
-        {
-            WriteChildren(leafBlock.Inline);
-        }
-    }
-
-    public void WriteLeafRawLines(LeafBlock leafBlock)
-    {
-        if (leafBlock == null)
-        {
-            throw new System.ArgumentNullException(nameof(leafBlock));
-        }
-
-        if (leafBlock.Lines.Lines != null)
-        {
-            var lines = leafBlock.Lines;
-            var slices = lines.Lines;
-            for (var i = 0; i < lines.Count; i++)
-            {
-                if (i != 0)
-                {
-                    Add(new LineBreak());
-                }
-
-                WriteText(ref slices[i].Slice);
-            }
-        }
-    }
-
     public void Add(Microsoft.UI.Xaml.Documents.Block o)
     {
         var rtb = GetLastRichTextBlock();
@@ -112,16 +76,9 @@ internal class WinUIRenderer : RendererBase
 
     public void Add(Inline inline)
     {
-        if (HasSpan())
+        if (_inlines.Count > 0)
         {
-            try
-            {
-                AddInline(GetLastSpan(), inline);
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            AddInline(GetLastSpan(), inline);
         }
         else if (inline is Span && _inlines.Count == 0)
         {
@@ -168,6 +125,42 @@ internal class WinUIRenderer : RendererBase
         {
             AddInline(GetLastParagraph(), _inlines.First());
             _inlines.Clear();
+        }
+    }
+
+    public void WriteLeafInline(LeafBlock leafBlock)
+    {
+        if (leafBlock == null)
+        {
+            throw new System.ArgumentNullException(nameof(leafBlock));
+        }
+
+        if (leafBlock.Inline != null)
+        {
+            WriteChildren(leafBlock.Inline);
+        }
+    }
+
+    public void WriteLeafRawLines(LeafBlock leafBlock)
+    {
+        if (leafBlock == null)
+        {
+            throw new System.ArgumentNullException(nameof(leafBlock));
+        }
+
+        if (leafBlock.Lines.Lines != null)
+        {
+            var lines = leafBlock.Lines;
+            var slices = lines.Lines;
+            for (var i = 0; i < lines.Count; i++)
+            {
+                if (i != 0)
+                {
+                    Add(new LineBreak());
+                }
+
+                WriteText(ref slices[i].Slice);
+            }
         }
     }
 
@@ -249,9 +242,6 @@ internal class WinUIRenderer : RendererBase
     public UIElement GetRootElement()
         => _elements.First();
 
-    public bool HasSpan()
-        => _inlines.Count > 0;
-
     protected virtual void LoadRenderers()
     {
         ObjectRenderers.Add(new ParagraphRenderer());
@@ -281,7 +271,14 @@ internal class WinUIRenderer : RendererBase
     }
 
     private static void AddInline(Span parent, Inline inline)
-        => parent.Inlines.Add(inline);
+    {
+        if (inline is LineBreak)
+        {
+            return;
+        }
+
+        parent.Inlines.Add(inline);
+    }
 
     private RichTextBlock GetLastRichTextBlock()
     {

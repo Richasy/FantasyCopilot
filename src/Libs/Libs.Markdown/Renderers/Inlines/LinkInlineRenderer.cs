@@ -37,6 +37,7 @@ internal sealed class LinkInlineRenderer : WinUIObjectRenderer<LinkInline>
                     CornerRadius = context.CornerRadius,
                     MinWidth = 20,
                     MinHeight = 20,
+                    Margin = new Microsoft.UI.Xaml.Thickness(0, 8, 0, 0),
                 };
 
                 var image = new Image

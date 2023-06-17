@@ -484,4 +484,5 @@ public enum StringNames
     GenerateAnswer,
     NeedAdmin,
     NeedAdminDescription,
+    CopyContent,
 }

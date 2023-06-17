@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace FantasyCopilot.App.Controls.Sessions;
 
@@ -78,4 +80,14 @@ public sealed partial class MessageItem : UserControl
 
     private void OnRemoveItemClick(object sender, RoutedEventArgs e)
         => Locator.Current.GetService<IChatSessionPageViewModel>().CurrentSession?.RemoveMessageCommand.Execute(Data);
+
+    private void OnCopyButtonClick(object sender, RoutedEventArgs e)
+    {
+        var dp = new DataPackage();
+        dp.SetText(Data.Content);
+        Clipboard.SetContent(dp);
+        Locator.Current.GetService<IAppViewModel>().ShowTip(
+            Locator.Current.GetService<IResourceToolkit>().GetLocalizedString(StringNames.Copied),
+            InfoType.Success);
+    }
 }

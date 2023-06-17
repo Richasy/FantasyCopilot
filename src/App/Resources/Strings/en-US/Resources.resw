@@ -369,6 +369,9 @@
   <data name="Copied" xml:space="preserve">
     <value>Replicated</value>
   </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>Copy content</value>
+  </data>
   <data name="CopyExtraModelTip" xml:space="preserve">
     <value>Click on the entry to copy the model name</value>
   </data>

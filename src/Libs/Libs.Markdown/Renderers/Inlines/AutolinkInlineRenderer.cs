@@ -22,6 +22,7 @@ internal sealed class AutolinkInlineRenderer : WinUIObjectRenderer<AutolinkInlin
 
             link.Inlines.Add(new Run { Text = obj.Url });
             renderer.Add(link);
+            renderer.ExtractSpanAsChild();
         }
         catch (Exception)
         {

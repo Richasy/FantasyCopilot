@@ -119,7 +119,10 @@ public partial class MarkdownTextBlock
                 context.FlowDirection = FlowDirection;
 
                 var pipeline = new MarkdownPipelineBuilder()
-                    .UseAdvancedExtensions()
+                    .UseAutoLinks()
+                    .UseEmojiAndSmiley()
+                    .UseEmphasisExtras()
+                    .UseGridTables()
                     .Build();
                 var renderer = new WinUIRenderer();
                 renderer.Context = context;
