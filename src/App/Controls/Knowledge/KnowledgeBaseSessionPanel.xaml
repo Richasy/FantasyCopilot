@@ -108,16 +108,18 @@
                             Style="{StaticResource BasicEmptyHolderStyle}"
                             Visibility="{x:Bind ViewModel.IsChatEmpty, Mode=OneWay}" />
                         <StackPanel>
-                            <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
-                                <ItemsRepeater.Layout>
-                                    <StackLayout Spacing="12" />
-                                </ItemsRepeater.Layout>
-                                <ItemsRepeater.ItemTemplate>
+                            <ItemsControl Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
                                     <DataTemplate x:DataType="core:Message">
-                                        <sessions:MessageItem Data="{x:Bind}" />
+                                        <sessions:MessageItem Margin="0,4" Data="{x:Bind}" />
                                     </DataTemplate>
-                                </ItemsRepeater.ItemTemplate>
-                            </ItemsRepeater>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
                             <StackPanel
                                 Margin="0,0,0,20"
                                 HorizontalAlignment="Left"
@@ -218,16 +220,21 @@
                                 Margin="0,12"
                                 Spacing="12"
                                 Visibility="{x:Bind ViewModel.IsNoContext, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
-                                <ItemsRepeater ItemsSource="{x:Bind ViewModel.Contexts, Mode=OneWay}">
-                                    <ItemsRepeater.ItemTemplate>
+                                <ItemsControl ItemsSource="{x:Bind ViewModel.Contexts, Mode=OneWay}">
+                                    <ItemsControl.ItemTemplate>
                                         <DataTemplate x:DataType="interfaces:IKnowledgeContextViewModel">
-                                            <local:KnowledgeContextItem HorizontalAlignment="Stretch" ViewModel="{x:Bind}" />
+                                            <local:KnowledgeContextItem
+                                                Margin="0,4"
+                                                HorizontalAlignment="Stretch"
+                                                ViewModel="{x:Bind}" />
                                         </DataTemplate>
-                                    </ItemsRepeater.ItemTemplate>
-                                    <ItemsRepeater.Layout>
-                                        <StackLayout Spacing="8" />
-                                    </ItemsRepeater.Layout>
-                                </ItemsRepeater>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <ItemsStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
                                 <Button
                                     MinWidth="180"
                                     HorizontalAlignment="Left"
