@@ -1515,4 +1515,7 @@
   <data name="NeedAdminDescription" xml:space="preserve">
     <value>你将要执行的操作需要管理员权限，请用管理员模式重启应用</value>
   </data>
+  <data name="CopyContent" xml:space="preserve">
+    <value>复制内容</value>
+  </data>
 </root>

@@ -36,9 +36,7 @@
                 TextTrimming="CharacterEllipsis"
                 Visibility="{x:Bind ViewModel.Description, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}" />
         </StackPanel>
-        <Grid
-            Grid.Row="1"
-            Padding="20,0">
+        <Grid Grid.Row="1" Padding="20,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto" />
@@ -118,7 +116,10 @@
             Grid.Row="2"
             Margin="0,8,0,0"
             Background="{ThemeResource LayerFillColorDefaultBrush}">
-            <ScrollViewer x:Name="MessageScrollView" Style="{StaticResource PageScrollViewerStyle}">
+            <ScrollViewer
+                x:Name="MessageScrollView"
+                Style="{StaticResource PageScrollViewerStyle}"
+                UseLayoutRounding="False">
                 <Grid Margin="0,12,0,0">
                     <controls:EmptyHolder
                         x:Name="NoMessageContainer"
@@ -128,16 +129,18 @@
                         Style="{StaticResource BasicEmptyHolderStyle}"
                         Visibility="{x:Bind ViewModel.IsChatEmpty, Mode=OneWay}" />
                     <StackPanel>
-                        <ItemsRepeater Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
-                            <ItemsRepeater.Layout>
-                                <StackLayout Spacing="12" />
-                            </ItemsRepeater.Layout>
-                            <ItemsRepeater.ItemTemplate>
+                        <ItemsControl Margin="0,0,0,20" ItemsSource="{x:Bind ViewModel.Messages, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
                                 <DataTemplate x:DataType="core:Message">
-                                    <local:MessageItem Data="{x:Bind}" />
+                                    <local:MessageItem Margin="0,4" Data="{x:Bind}" />
                                 </DataTemplate>
-                            </ItemsRepeater.ItemTemplate>
-                        </ItemsRepeater>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                         <StackPanel
                             Margin="0,0,0,20"
                             HorizontalAlignment="Left"

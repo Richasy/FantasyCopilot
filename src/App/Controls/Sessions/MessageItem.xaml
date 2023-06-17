@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
     xmlns:local="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:markdown="using:FantasyCopilot.Libs.Markdown"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="OnLoaded"
     mc:Ignorable="d">
@@ -33,17 +34,19 @@
                     RadiusY="4"
                     Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
                     StrokeThickness="1" />
-                <TextBlock
+                <markdown:MarkdownTextBlock
                     x:Name="MessageBlock"
-                    MaxWidth="280"
+                    MaxWidth="310"
                     Margin="12,8"
+                    Background="Transparent"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                     IsTextSelectionEnabled="True"
                     TextWrapping="Wrap" />
             </Grid>
-            <Grid>
+            <Grid ColumnSpacing="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock
@@ -52,9 +55,25 @@
                     FontSize="10"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Style="{StaticResource CaptionTextBlockStyle}" />
+                <Button
+                    x:Name="CopyButton"
+                    Grid.Column="1"
+                    Width="28"
+                    Height="28"
+                    Click="OnCopyButtonClick"
+                    Style="{StaticResource IconButtonStyle}"
+                    ToolTipService.ToolTip="{ext:Locale Name=CopyContent}"
+                    Visibility="{x:Bind Data.IsUser, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                    <controls:FluentIcon
+                        FontSize="13"
+                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                        Symbol="Copy" />
+                </Button>
                 <Grid
                     x:Name="InfoIconContainer"
-                    Grid.Column="1"
+                    Grid.Column="2"
+                    Width="28"
+                    Height="28"
                     Background="{ThemeResource ControlFillColorTransparentBrush}">
                     <controls:FluentIcon
                         FontSize="13"
