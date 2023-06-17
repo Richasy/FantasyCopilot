@@ -14,14 +14,14 @@ internal sealed partial class RendererContext
     public Thickness Padding { get; set; }
 
     /// <summary>
+    /// Gets or sets the content corner radius.
+    /// </summary>
+    public CornerRadius CornerRadius { get; set; }
+
+    /// <summary>
     /// Gets or sets the border thickness of a control.
     /// </summary>
     public Thickness BorderThickness { get; set; }
-
-    /// <summary>
-    /// Gets or sets the thickness of the border around code blocks.
-    /// </summary>
-    public Thickness CodeBorderThickness { get; set; }
 
     /// <summary>
     /// Gets or sets the thickness of the border around inline code.
@@ -37,6 +37,11 @@ internal sealed partial class RendererContext
     /// Gets or sets the space between the code border and the text.
     /// </summary>
     public Thickness CodePadding { get; set; }
+
+    /// <summary>
+    /// Gets or sets the thickness of the border around code blocks.
+    /// </summary>
+    public Thickness CodeBorderThickness { get; set; }
 
     /// <summary>
     /// Gets or sets the space between the code border and the text.

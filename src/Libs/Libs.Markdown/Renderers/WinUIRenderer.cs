@@ -2,7 +2,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using FantasyCopilot.Libs.Markdown.Markdown.Render;
+using System.Text;
+using FantasyCopilot.Libs.Markdown.Renderers.Blocks;
 using FantasyCopilot.Libs.Markdown.Renderers.Inlines;
 using Markdig.Helpers;
 using Markdig.Renderers;
@@ -10,14 +11,13 @@ using Markdig.Syntax;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
-using Microsoft.UI.Xaml.Media;
-using Windows.UI.Text;
 
 namespace FantasyCopilot.Libs.Markdown.Renderers;
 
 internal class WinUIRenderer : RendererBase
 {
     private readonly IList<UIElement> _elements = new List<UIElement>();
+    private readonly IList<Inline> _inlines = new List<Inline>();
     private char[] _buffer;
 
     /// <summary>
@@ -26,6 +26,28 @@ internal class WinUIRenderer : RendererBase
     public WinUIRenderer() => _buffer = new char[1024];
 
     public RendererContext Context { get; set; }
+
+    public static string GetRawText(LeafBlock leafBlock)
+    {
+        if (leafBlock == null)
+        {
+            throw new System.ArgumentNullException(nameof(leafBlock));
+        }
+
+        var sb = new StringBuilder();
+        if (leafBlock.Lines.Lines != null)
+        {
+            var lines = leafBlock.Lines;
+            var slices = lines.Lines;
+            for (var i = 0; i < slices.Length; i++)
+            {
+                var slice = slices[i].Slice;
+                sb.AppendLine(slice.ToString());
+            }
+        }
+
+        return sb.ToString().Trim();
+    }
 
     public override object Render(MarkdownObject markdownObject)
     {
@@ -71,7 +93,7 @@ internal class WinUIRenderer : RendererBase
             {
                 if (i != 0)
                 {
-                    WriteInline(new LineBreak());
+                    Add(new LineBreak());
                 }
 
                 WriteText(ref slices[i].Slice);
@@ -88,7 +110,30 @@ internal class WinUIRenderer : RendererBase
     public void Add(UIElement ele)
         => _elements.Add(ele);
 
-    public void RedirectToChild()
+    public void Add(Inline inline)
+    {
+        if (HasSpan())
+        {
+            try
+            {
+                AddInline(GetLastSpan(), inline);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+        else if (inline is Span && _inlines.Count == 0)
+        {
+            _inlines.Add(inline);
+        }
+        else
+        {
+            AddInline(GetLastParagraph(), inline);
+        }
+    }
+
+    public void ExtractLastElementAsChild()
     {
         if (_elements.Count == 1)
         {
@@ -111,10 +156,20 @@ internal class WinUIRenderer : RendererBase
         {
             border.Child = lastEle;
         }
+        else if (prevEle is ScrollViewer viewer)
+        {
+            viewer.Content = lastEle;
+        }
     }
 
-    public void WriteInline(Inline inline)
-        => AddInline(GetLastParagraph(), inline);
+    public void ExtractSpanAsChild()
+    {
+        if (_inlines.Count > 0)
+        {
+            AddInline(GetLastParagraph(), _inlines.First());
+            _inlines.Clear();
+        }
+    }
 
     public void WriteText(ref StringSlice slice)
     {
@@ -127,7 +182,7 @@ internal class WinUIRenderer : RendererBase
     }
 
     public void WriteText(string text)
-        => WriteInline(new Run { Text = text });
+        => Add(new Run { Text = text });
 
     public void WriteText(string text, int offset, int length)
     {
@@ -173,6 +228,30 @@ internal class WinUIRenderer : RendererBase
         return result;
     }
 
+    public RichTextBlock CreateDefaultRichTextBlock()
+    {
+        var rtb = new RichTextBlock
+        {
+            CharacterSpacing = Context.CharacterSpacing,
+            FontFamily = Context.FontFamily,
+            FontSize = Context.FontSize,
+            FontStretch = Context.FontStretch,
+            FontStyle = Context.FontStyle,
+            FontWeight = Context.FontWeight,
+            Foreground = Context.Foreground,
+            IsTextSelectionEnabled = Context.IsTextSelectionEnabled,
+            TextWrapping = Context.TextWrapping,
+            FlowDirection = Context.FlowDirection,
+        };
+        return rtb;
+    }
+
+    public UIElement GetRootElement()
+        => _elements.First();
+
+    public bool HasSpan()
+        => _inlines.Count > 0;
+
     protected virtual void LoadRenderers()
     {
         ObjectRenderers.Add(new ParagraphRenderer());
@@ -180,8 +259,19 @@ internal class WinUIRenderer : RendererBase
         ObjectRenderers.Add(new HeadingRenderer());
         ObjectRenderers.Add(new HorizontalRuleRenderer());
         ObjectRenderers.Add(new ListRenderer());
+        ObjectRenderers.Add(new CodeBlockRenderer());
+        ObjectRenderers.Add(new HtmlBlockRenderer());
+        ObjectRenderers.Add(new TableBlockRenderer());
 
         ObjectRenderers.Add(new LiteralInlineRenderer());
+        ObjectRenderers.Add(new AutolinkInlineRenderer());
+        ObjectRenderers.Add(new LinkInlineRenderer());
+        ObjectRenderers.Add(new CodeInlineRenderer());
+        ObjectRenderers.Add(new EmphasisInlineRenderer());
+        ObjectRenderers.Add(new LineBreakInlineRenderer());
+        ObjectRenderers.Add(new DelimiterInlineRenderer());
+        ObjectRenderers.Add(new HtmlEntityInlineRenderer());
+        ObjectRenderers.Add(new EmojiInlineRenderer());
     }
 
     private static void AddInline(Microsoft.UI.Xaml.Documents.Block parent, Inline inline)
@@ -189,6 +279,9 @@ internal class WinUIRenderer : RendererBase
         var para = parent as Paragraph;
         para.Inlines.Add(inline);
     }
+
+    private static void AddInline(Span parent, Inline inline)
+        => parent.Inlines.Add(inline);
 
     private RichTextBlock GetLastRichTextBlock()
     {
@@ -206,19 +299,7 @@ internal class WinUIRenderer : RendererBase
 
             if (lastEle is not RichTextBlock)
             {
-                var rtb = new RichTextBlock
-                {
-                    CharacterSpacing = Context.CharacterSpacing,
-                    FontFamily = Context.FontFamily,
-                    FontSize = Context.FontSize,
-                    FontStretch = Context.FontStretch,
-                    FontStyle = Context.FontStyle,
-                    FontWeight = Context.FontWeight,
-                    Foreground = Context.Foreground,
-                    IsTextSelectionEnabled = Context.IsTextSelectionEnabled,
-                    TextWrapping = Context.TextWrapping,
-                    FlowDirection = Context.FlowDirection,
-                };
+                var rtb = CreateDefaultRichTextBlock();
                 _elements.Add(rtb);
                 lastEle = rtb;
             }
@@ -237,5 +318,17 @@ internal class WinUIRenderer : RendererBase
         }
 
         return rtb.Blocks.Last() as Paragraph;
+    }
+
+    private Span GetLastSpan()
+    {
+        if (_inlines.FirstOrDefault() is Span span)
+        {
+            return span;
+        }
+
+        var newSpan = new Span();
+        _inlines.Add(newSpan);
+        return newSpan;
     }
 }

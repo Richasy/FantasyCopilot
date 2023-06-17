@@ -36,7 +36,7 @@
                     StrokeThickness="1" />
                 <markdown:MarkdownTextBlock
                     x:Name="MessageBlock"
-                    MaxWidth="280"
+                    MaxWidth="310"
                     Margin="12,8"
                     Background="Transparent"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"

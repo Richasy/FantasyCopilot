@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.Reflection;
+using ColorCode.Styling;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -10,6 +11,21 @@ namespace FantasyCopilot.Libs.Markdown.Renderers;
 
 internal sealed partial class RendererContext
 {
+    /// <summary>
+    /// Gets or sets a value indicating whether to use Syntax Highlighting on Code.
+    /// </summary>
+    public bool UseSyntaxHighlighting { get; set; }
+
+    /// <summary>
+    /// Gets or sets current app theme.
+    /// </summary>
+    public ElementTheme CurrentTheme { get; set; }
+
+    /// <summary>
+    /// Gets or sets the Default Code Styling for Code Blocks.
+    /// </summary>
+    public StyleDictionary CodeStyling { get; set; }
+
     /// <summary>
     /// Gets the Default Emoji Font.
     /// </summary>
