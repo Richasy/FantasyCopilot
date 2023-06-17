@@ -1518,4 +1518,28 @@
   <data name="CopyContent" xml:space="preserve">
     <value>复制内容</value>
   </data>
+  <data name="Exit" xml:space="preserve">
+    <value>退出</value>
+  </data>
+  <data name="ExitAppDescription" xml:space="preserve">
+    <value>你也可以选择隐藏应用，并在需要时快速切回来。你可以随时在系统托盘中退出应用</value>
+  </data>
+  <data name="ExitAppTitle" xml:space="preserve">
+    <value>退出应用？</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>隐藏</value>
+  </data>
+  <data name="NeverAskMeAgain" xml:space="preserve">
+    <value>不再询问我</value>
+  </data>
+  <data name="Feature" xml:space="preserve">
+    <value>功能</value>
+  </data>
+  <data name="HideWhenClose" xml:space="preserve">
+    <value>关闭时隐藏</value>
+  </data>
+  <data name="HideWhenCloseDescription" xml:space="preserve">
+    <value>关闭窗口时隐藏应用而非退出</value>
+  </data>
 </root>

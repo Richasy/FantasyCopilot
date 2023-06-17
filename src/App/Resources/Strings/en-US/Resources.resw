@@ -552,6 +552,15 @@
   <data name="ExecuteFilePlaceholderText" xml:space="preserve">
     <value>Searches for an executable file of the specified name</value>
   </data>
+  <data name="Exit" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="ExitAppDescription" xml:space="preserve">
+    <value>You can also choose to keep the app running in the background for quick switching back. You can exit the app at any time from the system tray.</value>
+  </data>
+  <data name="ExitAppTitle" xml:space="preserve">
+    <value>Exit the app?</value>
+  </data>
   <data name="ExportConfig" xml:space="preserve">
     <value>Export configuration</value>
   </data>
@@ -563,6 +572,9 @@
   </data>
   <data name="FavoritePrompts" xml:space="preserve">
     <value>Star Prompts</value>
+  </data>
+  <data name="Feature" xml:space="preserve">
+    <value>Feature</value>
   </data>
   <data name="FeatureEnabled" xml:space="preserve">
     <value>Enable features</value>
@@ -638,6 +650,15 @@
   </data>
   <data name="Height" xml:space="preserve">
     <value>Height</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Hide</value>
+  </data>
+  <data name="HideWhenClose" xml:space="preserve">
+    <value>Hide on close</value>
+  </data>
+  <data name="HideWhenCloseDescription" xml:space="preserve">
+    <value>Hide application when closing window instead of quitting</value>
   </data>
   <data name="HowToWriteSemanticSkill" xml:space="preserve">
     <value>How to write semantic skills?</value>
@@ -908,6 +929,9 @@
   </data>
   <data name="NegativePrompt" xml:space="preserve">
     <value>Negative prompt words</value>
+  </data>
+  <data name="NeverAskMeAgain" xml:space="preserve">
+    <value>Do not ask me again</value>
   </data>
   <data name="Newest" xml:space="preserve">
     <value>Newest</value>

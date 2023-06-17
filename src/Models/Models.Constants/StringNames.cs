@@ -485,4 +485,12 @@ public enum StringNames
     NeedAdmin,
     NeedAdminDescription,
     CopyContent,
+    ExitAppTitle,
+    Exit,
+    Hide,
+    ExitAppDescription,
+    NeverAskMeAgain,
+    Feature,
+    HideWhenClose,
+    HideWhenCloseDescription,
 }

@@ -207,6 +207,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     bool OpenConsoleWhenPluginRunning { get; set; }
 
     /// <summary>
+    /// Hide application instead of closed after closing the window.
+    /// </summary>
+    bool HideWhenCloseWindow { get; set; }
+
+    /// <summary>
     /// Default conversation type.
     /// </summary>
     ConversationType DefaultConversationType { get; set; }

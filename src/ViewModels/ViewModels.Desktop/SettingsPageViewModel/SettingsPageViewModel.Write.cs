@@ -162,4 +162,7 @@ public sealed partial class SettingsPageViewModel
 
     partial void OnOpenConsoleWhenPluginRunningChanged(bool value)
         => WriteSetting(SettingNames.ShowConsoleWhenPluginRunning, value);
+
+    partial void OnHideWhenCloseWindowChanged(bool value)
+        => WriteSetting(SettingNames.HideWhenCloseWindow, value);
 }
