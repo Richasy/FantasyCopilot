@@ -67,4 +67,6 @@ public enum SettingNames
     ContextLimit,
     ContextMinRelevanceScore,
     LastKnowledgeSearchType,
+    HideWhenCloseWindow,
+    ShouldAskBeforeWindowClosed,
 }

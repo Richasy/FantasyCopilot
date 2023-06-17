@@ -81,6 +81,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         StableDiffusionUrl = _settingsToolkit.ReadLocalSetting(SettingNames.StableDiffusionUrl, string.Empty);
 
         OpenConsoleWhenPluginRunning = _settingsToolkit.ReadLocalSetting(SettingNames.ShowConsoleWhenPluginRunning, false);
+        HideWhenCloseWindow = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, false);
 
         IsChatEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsChatEnabled, true);
         IsImageEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsImageEnabled, true);

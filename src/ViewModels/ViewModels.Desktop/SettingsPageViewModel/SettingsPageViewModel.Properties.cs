@@ -150,5 +150,8 @@ public sealed partial class SettingsPageViewModel
     private bool _openConsoleWhenPluginRunning;
 
     [ObservableProperty]
+    private bool _hideWhenCloseWindow;
+
+    [ObservableProperty]
     private ConversationType _defaultConversationType;
 }

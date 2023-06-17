@@ -55,11 +55,17 @@
                 <TextBlock
                     Margin="0,16,0,8"
                     Style="{StaticResource BodyStrongTextBlockStyle}"
-                    Text="{ext:Locale Name=Generic}" />
-                <settings:LogSettingSection />
+                    Text="{ext:Locale Name=Feature}" />
                 <settings:KnowledgeBaseSettingSection />
                 <settings:WorkflowSettingSection />
                 <settings:FeatureEnabledSettingSection />
+
+                <TextBlock
+                    Margin="0,16,0,8"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{ext:Locale Name=Generic}" />
+                <settings:LogSettingSection />
+                <settings:CloseBehaviorSettingSection />
 
                 <TextBlock
                     Margin="0,16,0,8"

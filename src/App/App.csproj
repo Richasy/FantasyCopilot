@@ -28,6 +28,7 @@
     <None Remove="Assets\FluentIcon.ttf" />
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\plannerPrompt.txt" />
+    <None Remove="Controls\CloseWindowTipDialog.xaml" />
     <None Remove="Controls\FavoritePromptsPanel.xaml" />
     <None Remove="Controls\Images\CivitaiImageControl.xaml" />
     <None Remove="Controls\Images\CivitaiImageGalleryPanel.xaml" />
@@ -45,6 +46,7 @@
     <None Remove="Controls\SemanticSkillPanel.xaml" />
     <None Remove="Controls\Settings\AISettingSection.xaml" />
     <None Remove="Controls\Settings\AzureVoiceSettingSection.xaml" />
+    <None Remove="Controls\Settings\CloseBehaviorSettingSection.xaml" />
     <None Remove="Controls\Settings\FeatureEnabledSettingSection.xaml" />
     <None Remove="Controls\Settings\KnowledgeBaseSettingSection.xaml" />
     <None Remove="Controls\Settings\LogSettingSection.xaml" />
@@ -444,6 +446,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Knowledge\KnowledgeContextItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\CloseWindowTipDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\CloseBehaviorSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using FantasyCopilot.App.Controls;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Toolkits.Interfaces;
 using H.NotifyIcon;
@@ -24,6 +25,7 @@ public partial class App : Application
     /// </summary>
     public const string Guid = "376AEAAB-331B-42AC-A069-146F7230765E";
 
+    private readonly ISettingsToolkit _settingsToolkit;
     private Window _window;
     private DispatcherQueue _dispatcherQueue;
 
@@ -36,6 +38,8 @@ public partial class App : Application
         InitializeComponent();
         Factory = new DI.App.Factory();
         DI.App.Factory.RegisterAppRequiredServices();
+        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
         UnhandledException += OnUnhandledException;
     }
 
@@ -46,7 +50,7 @@ public partial class App : Application
 
     private TaskbarIcon TrayIcon { get; set; }
 
-    private bool HandleCloseEvents { get; set; } = true;
+    private bool HandleCloseEvents { get; set; }
 
     /// <summary>
     /// Try activating the window and bringing it to the foreground.
@@ -141,17 +145,48 @@ public partial class App : Application
         presenter.IsMaximizable = false;
         MoveAndResize();
 
-        _window.Closed += (sender, args) =>
-        {
-            SaveCurrentWindowPosition();
-            if (HandleCloseEvents)
-            {
-                args.Handled = true;
-                _window.Hide();
-            }
-        };
+        _window.Closed += OnMainWindowClosedAsync;
 
         _window.Activate();
+    }
+
+    private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
+    {
+        SaveCurrentWindowPosition();
+        if (HandleCloseEvents)
+        {
+            args.Handled = true;
+
+            var shouldAsk = _settingsToolkit.ReadLocalSetting(SettingNames.ShouldAskBeforeWindowClosed, true);
+            if (shouldAsk)
+            {
+                _window.Activate();
+                var dialog = new CloseWindowTipDialog
+                {
+                    XamlRoot = _window.Content.XamlRoot,
+                };
+                var result = await dialog.ShowAsync();
+                if (result == ContentDialogResult.None)
+                {
+                    return;
+                }
+
+                var shouldHide = result == ContentDialogResult.Secondary;
+                if (dialog.IsNeverAskChecked)
+                {
+                    _settingsToolkit.WriteLocalSetting(SettingNames.ShouldAskBeforeWindowClosed, false);
+                    _settingsToolkit.WriteLocalSetting(SettingNames.HideWhenCloseWindow, shouldHide);
+                }
+
+                if (!shouldHide)
+                {
+                    ExitApp();
+                    return;
+                }
+            }
+
+            _window.Hide();
+        }
     }
 
     private void MoveAndResize()
@@ -178,6 +213,14 @@ public partial class App : Application
         settingToolkit.WriteLocalSetting(SettingNames.WindowPositionTop, top);
     }
 
+    private void ExitApp()
+    {
+        HandleCloseEvents = false;
+        TrayIcon?.Dispose();
+        _window?.Close();
+        Exit();
+    }
+
     private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
         var logger = Locator.Current.GetLogger<App>();
@@ -186,12 +229,7 @@ public partial class App : Application
     }
 
     private void OnQuitCommandExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-    {
-        HandleCloseEvents = false;
-        TrayIcon?.Dispose();
-        _window?.Close();
-        Exit();
-    }
+        => ExitApp();
 
     private void OnShowHideWindowCommandExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         => ActivateWindow();
