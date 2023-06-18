@@ -6,7 +6,7 @@
     xmlns:controls="using:FantasyCopilot.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:knowledge="using:FantasyCopilot.Models.App.Knowledge"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
     xmlns:local="using:FantasyCopilot.App.Controls.Knowledge"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     IsEnabled="{x:Bind ViewModel.IsBaseCreating, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}"
@@ -72,7 +72,7 @@
             Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
             <ItemsRepeater Margin="0,8,0,20" ItemsSource="{x:Bind ViewModel.Bases, Mode=OneWay}">
                 <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="knowledge:KnowledgeBase">
+                    <DataTemplate x:DataType="interfaces:IKnowledgeBaseItemViewModel">
                         <local:KnowledgeBaseItem ViewModel="{x:Bind}" />
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -49,7 +48,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         };
 
         _progressTimer.Tick += OnProgressTimerTick;
-        Bases = new ObservableCollection<KnowledgeBase>();
+        Bases = new ObservableCollection<IKnowledgeBaseItemViewModel>();
         Bases.CollectionChanged += OnBasesCollectionChanged;
         _cacheToolkit.KnowledgeBaseListChanged += OnKnowledgeBaseListChangedAsync;
         CheckIsEmpty();
@@ -72,7 +71,9 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         var bases = await _cacheToolkit.GetKnowledgeBasesAsync();
         foreach (var item in bases)
         {
-            Bases.Add(item);
+            var vm = Locator.Current.GetService<IKnowledgeBaseItemViewModel>();
+            vm.InjectData(item);
+            Bases.Add(vm);
         }
 
         _isInitialized = true;
@@ -81,7 +82,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
     [RelayCommand]
     private async Task ImportBaseAsync(KnowledgeBase data)
     {
-        var hasSameBase = Bases.Any(p => p.DatabasePath.Equals(data.DatabasePath));
+        var hasSameBase = Bases.Any(p => p.GetData().DatabasePath.Equals(data.DatabasePath));
         if (hasSameBase)
         {
             _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.AlreadyHaveSameKnowledgeBase), InfoType.Error);

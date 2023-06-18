@@ -56,6 +56,7 @@ public sealed class Factory
             .RegisterTransient<IImageGenerateOptionsViewModel, ImageGenerateOptionsViewModel>()
             .RegisterTransient<IPluginCommandItemViewModel, PluginCommandItemViewModel>()
             .RegisterTransient<IPluginItemViewModel, PluginItemViewModel>()
+            .RegisterTransient<IKnowledgeBaseItemViewModel, KnowledgeBaseItemViewModel>()
             .RegisterTransient<IKnowledgeContextViewModel, KnowledgeContextViewModel>()
 
             .RegisterSingleton<IChatSessionPageViewModel, ChatSessionPageViewModel>()
