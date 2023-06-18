@@ -50,5 +50,5 @@ public sealed partial class KnowledgePageViewModel
     private KnowledgeBase _currentBase;
 
     /// <inheritdoc/>
-    public ObservableCollection<KnowledgeBase> Bases { get; set; }
+    public ObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; set; }
 }

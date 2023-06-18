@@ -50,7 +50,7 @@ public interface IKnowledgePageViewModel : INotifyPropertyChanged
     /// <summary>
     /// A list of knowledge bases.
     /// </summary>
-    ObservableCollection<KnowledgeBase> Bases { get; }
+    ObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; }
 
     /// <summary>
     /// Initialize.

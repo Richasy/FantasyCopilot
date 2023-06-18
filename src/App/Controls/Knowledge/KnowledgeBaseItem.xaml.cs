@@ -23,8 +23,8 @@ public sealed partial class KnowledgeBaseItem : KnowledgeBaseItemBase
 
     private async void OnModifyButtonClickAsync(object sender, RoutedEventArgs e)
     {
-        var context = (sender as FrameworkElement)?.DataContext as KnowledgeBase;
-        var dialog = new KnowledgeBaseSaveDialog(context)
+        var context = (sender as FrameworkElement)?.DataContext as IKnowledgeBaseItemViewModel;
+        var dialog = new KnowledgeBaseSaveDialog(context.GetData())
         {
             XamlRoot = XamlRoot,
         };
@@ -45,7 +45,7 @@ public sealed partial class KnowledgeBaseItem : KnowledgeBaseItemBase
     }
 
     private void OnItemClick(object sender, RoutedEventArgs e)
-        => _knowledgePageViewModel.EnterBaseCommand.Execute(ViewModel);
+        => _knowledgePageViewModel.EnterBaseCommand.Execute(ViewModel.GetData());
 
     private async void OnImportFolderItemClickAsync(object sender, RoutedEventArgs e)
     {
@@ -55,7 +55,7 @@ public sealed partial class KnowledgeBaseItem : KnowledgeBaseItemBase
             return;
         }
 
-        var dialog = new KnowledgeImportFolderDialog(ViewModel, folder)
+        var dialog = new KnowledgeImportFolderDialog(ViewModel.GetData(), folder)
         {
             XamlRoot = XamlRoot,
         };
@@ -74,7 +74,7 @@ public sealed partial class KnowledgeBaseItem : KnowledgeBaseItemBase
         var creation = new BaseCreation
         {
             FilePath = file.Path,
-            DatabasePath = ViewModel.DatabasePath,
+            DatabasePath = ViewModel.GetData().DatabasePath,
         };
 
         _knowledgePageViewModel.ImportFileCommand.Execute(creation);
@@ -84,6 +84,6 @@ public sealed partial class KnowledgeBaseItem : KnowledgeBaseItemBase
 /// <summary>
 /// Base for <see cref="KnowledgeBaseItem"/>.
 /// </summary>
-public class KnowledgeBaseItemBase : ReactiveUserControl<KnowledgeBase>
+public class KnowledgeBaseItemBase : ReactiveUserControl<IKnowledgeBaseItemViewModel>
 {
 }
