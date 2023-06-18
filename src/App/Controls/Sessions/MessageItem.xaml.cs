@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Toolkits;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 using Windows.ApplicationModel.DataTransfer;
@@ -23,9 +24,24 @@ public sealed partial class MessageItem : UserControl
             new PropertyMetadata(default, new PropertyChangedCallback(OnDataChanged)));
 
     /// <summary>
+    /// Dependency property for <see cref="UseMarkdown"/>.
+    /// </summary>
+    public static readonly DependencyProperty UseMarkdownProperty =
+        DependencyProperty.Register(
+            nameof(UseMarkdown),
+            typeof(bool),
+            typeof(MessageItem),
+            new PropertyMetadata(true));
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="MessageItem"/> class.
     /// </summary>
-    public MessageItem() => InitializeComponent();
+    public MessageItem()
+    {
+        InitializeComponent();
+        var settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        UseMarkdown = settingsToolkit.ReadLocalSetting(SettingNames.MessageUseMarkdown, true);
+    }
 
     /// <summary>
     /// Message data.
@@ -34,6 +50,15 @@ public sealed partial class MessageItem : UserControl
     {
         get => (Message)GetValue(DataProperty);
         set => SetValue(DataProperty, value);
+    }
+
+    /// <summary>
+    /// Use markdown renderer.
+    /// </summary>
+    public bool UseMarkdown
+    {
+        get => (bool)GetValue(UseMarkdownProperty);
+        set => SetValue(UseMarkdownProperty, value);
     }
 
     private static void OnDataChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -49,7 +74,7 @@ public sealed partial class MessageItem : UserControl
             VisualStateManager.GoToState(instance, nameof(instance.DefaultState), false);
         }
 
-        instance.MessageBlock.Text = newData.Content;
+        instance.SetText(newData.Content);
         instance.DateBlock.Text = newData.Time.ToString("MM/dd HH:mm:ss");
         if (!string.IsNullOrEmpty(newData.AdditionalMessage))
         {
@@ -75,6 +100,18 @@ public sealed partial class MessageItem : UserControl
             {
                 VisualStateManager.GoToState(this, nameof(DefaultState), false);
             }
+        }
+    }
+
+    private void SetText(string text)
+    {
+        if (UseMarkdown)
+        {
+            MarkdownMessageBlock.Text = text;
+        }
+        else
+        {
+            PlainMessageBlock.Text = text;
         }
     }
 

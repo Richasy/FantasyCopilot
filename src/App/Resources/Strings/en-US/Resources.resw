@@ -828,6 +828,12 @@
   <data name="MaxSplitContentLengthDescription" xml:space="preserve">
     <value>The number of characters imported into the knowledge base will be split when it reaches this threshold, which depends on the number of tokens supported by the embedded model you are using</value>
   </data>
+  <data name="MessageUseMarkdown" xml:space="preserve">
+    <value>Render messages using Markdown</value>
+  </data>
+  <data name="MessageUseMarkdownDescription" xml:space="preserve">
+    <value>Conversation messages will render Markdown, but there are still some experience issues</value>
+  </data>
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
   </data>

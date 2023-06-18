@@ -69,4 +69,5 @@ public enum SettingNames
     LastKnowledgeSearchType,
     HideWhenCloseWindow,
     ShouldAskBeforeWindowClosed,
+    MessageUseMarkdown,
 }

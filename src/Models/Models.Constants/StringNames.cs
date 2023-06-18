@@ -494,4 +494,6 @@ public enum StringNames
     HideWhenClose,
     HideWhenCloseDescription,
     Tip,
+    MessageUseMarkdown,
+    MessageUseMarkdownDescription,
 }
