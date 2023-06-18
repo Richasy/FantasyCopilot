@@ -29,6 +29,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     event EventHandler<AppTipNotificationEventArgs> RequestShowTip;
 
     /// <summary>
+    /// Fired when request show message.
+    /// </summary>
+    event EventHandler<string> RequestShowMessage;
+
+    /// <summary>
     /// Main window object.
     /// </summary>
     object MainWindow { get; set; }
@@ -131,4 +136,10 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <param name="message">Message content.</param>
     /// <param name="type">Message type.</param>
     void ShowTip(string message, InfoType type = InfoType.Information);
+
+    /// <summary>
+    /// Display a dialog box to remind the user of something.
+    /// </summary>
+    /// <param name="message">Message.</param>
+    void ShowMessage(string message);
 }

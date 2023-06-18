@@ -75,6 +75,7 @@
     <None Remove="Controls\Steps\VariableRedirectStepItem.xaml" />
     <None Remove="Controls\StorageSearchItem.xaml" />
     <None Remove="Controls\TextToSpeechPanel.xaml" />
+    <None Remove="Controls\TipDialog.xaml" />
     <None Remove="Controls\TipPopup.xaml" />
     <None Remove="Controls\WorkflowEditor.xaml" />
     <None Remove="Controls\WorkflowInputItem.xaml" />
@@ -452,6 +453,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\CloseBehaviorSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\TipDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

@@ -30,6 +30,7 @@ public sealed partial class MainWindow : Window
         _appViewModel.PropertyChanged += OnAppViewModelPropertyChanged;
         _appViewModel.NavigateRequest += OnAppViewModelNavigateRequest;
         _appViewModel.RequestShowTip += OnAppViewModelRequestShowTip;
+        _appViewModel.RequestShowMessage += OnAppViewModelRequestShowMessageAsync;
         Instance = this;
     }
 
@@ -120,6 +121,15 @@ public sealed partial class MainWindow : Window
 
     private void OnAppViewModelRequestShowTip(object sender, AppTipNotificationEventArgs e)
         => new TipPopup(e.Message).ShowAsync(e.Type);
+
+    private async void OnAppViewModelRequestShowMessageAsync(object sender, string e)
+    {
+        var dialog = new TipDialog(e)
+        {
+            XamlRoot = Content.XamlRoot,
+        };
+        await dialog.ShowAsync();
+    }
 
     private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
         => _appViewModel.Navigate(PageType.Settings);
