@@ -153,5 +153,8 @@ public sealed partial class SettingsPageViewModel
     private bool _hideWhenCloseWindow;
 
     [ObservableProperty]
+    private bool _messageUseMarkdown;
+
+    [ObservableProperty]
     private ConversationType _defaultConversationType;
 }

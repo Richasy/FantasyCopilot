@@ -125,6 +125,7 @@ public partial class MarkdownTextBlock
                     .UseEmojiAndSmiley()
                     .UseEmphasisExtras()
                     .UseGridTables()
+                    .UsePipeTables()
                     .Build();
                 var renderer = new WinUIRenderer();
                 renderer.Context = context;

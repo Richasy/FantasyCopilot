@@ -212,6 +212,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     bool HideWhenCloseWindow { get; set; }
 
     /// <summary>
+    /// Render markdown message.
+    /// </summary>
+    bool MessageUseMarkdown { get; set; }
+
+    /// <summary>
     /// Default conversation type.
     /// </summary>
     ConversationType DefaultConversationType { get; set; }

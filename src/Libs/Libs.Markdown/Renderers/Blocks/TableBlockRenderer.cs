@@ -13,9 +13,10 @@ internal sealed class TableBlockRenderer : WinUIObjectRenderer<Table>
     protected override void Write(WinUIRenderer renderer, Table obj)
     {
         var context = renderer.Context;
-        var table = new MarkdownTable(obj.ColumnDefinitions.Count, obj.Count, context.TableBorderThickness, context.TableBorderBrush)
+        var table = new MarkdownTable(obj.ColumnDefinitions.Count - 1, obj.Count, context.TableBorderThickness, context.TableBorderBrush)
         {
             HorizontalAlignment = HorizontalAlignment.Left,
+            VerticalAlignment = VerticalAlignment.Top,
             Margin = context.TableMargin,
         };
 

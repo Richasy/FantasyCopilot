@@ -1545,4 +1545,10 @@
   <data name="Tip" xml:space="preserve">
     <value>提示</value>
   </data>
+  <data name="MessageUseMarkdown" xml:space="preserve">
+    <value>使用 Markdown 渲染消息</value>
+  </data>
+  <data name="MessageUseMarkdownDescription" xml:space="preserve">
+    <value>对话消息将对 Markdown 进行渲染，但目前仍有一些体验上的问题</value>
+  </data>
 </root>

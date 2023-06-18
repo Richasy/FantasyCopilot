@@ -50,6 +50,7 @@
     <None Remove="Controls\Settings\FeatureEnabledSettingSection.xaml" />
     <None Remove="Controls\Settings\KnowledgeBaseSettingSection.xaml" />
     <None Remove="Controls\Settings\LogSettingSection.xaml" />
+    <None Remove="Controls\Settings\MarkdownSettingSection.xaml" />
     <None Remove="Controls\Settings\StableDiffusionSettingSection.xaml" />
     <None Remove="Controls\Settings\TranslateSettingSection.xaml" />
     <None Remove="Controls\Settings\WorkflowSettingSection.xaml" />
@@ -456,6 +457,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\TipDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\MarkdownSettingSection.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

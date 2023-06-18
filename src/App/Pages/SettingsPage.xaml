@@ -65,6 +65,7 @@
                     Style="{StaticResource BodyStrongTextBlockStyle}"
                     Text="{ext:Locale Name=Generic}" />
                 <settings:LogSettingSection />
+                <settings:MarkdownSettingSection />
                 <settings:CloseBehaviorSettingSection />
 
                 <TextBlock

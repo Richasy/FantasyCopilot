@@ -35,13 +35,22 @@
                     Stroke="{ThemeResource ControlStrokeColorDefaultBrush}"
                     StrokeThickness="1" />
                 <markdown:MarkdownTextBlock
-                    x:Name="MessageBlock"
+                    x:Name="MarkdownMessageBlock"
                     MaxWidth="310"
                     Margin="12,8"
                     Background="Transparent"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                     IsTextSelectionEnabled="True"
-                    TextWrapping="Wrap" />
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind UseMarkdown, Mode=OneWay}" />
+                <TextBlock
+                    x:Name="PlainMessageBlock"
+                    MaxWidth="310"
+                    Margin="12,8"
+                    Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                    IsTextSelectionEnabled="True"
+                    TextWrapping="Wrap"
+                    Visibility="{x:Bind UseMarkdown, Converter={StaticResource BoolToVisibilityReverseConverter}, Mode=OneWay}" />
             </Grid>
             <Grid ColumnSpacing="4">
                 <Grid.ColumnDefinitions>
@@ -91,7 +100,8 @@
                         <VisualState.Setters>
                             <Setter Target="MessageBackground.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                             <Setter Target="MessageBackground.Stroke" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
-                            <Setter Target="MessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="MarkdownMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="PlainMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
                             <Setter Target="Container.HorizontalAlignment" Value="Right" />
                             <Setter Target="DateBlock.HorizontalAlignment" Value="Right" />
                         </VisualState.Setters>

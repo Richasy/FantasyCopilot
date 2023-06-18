@@ -82,6 +82,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         OpenConsoleWhenPluginRunning = _settingsToolkit.ReadLocalSetting(SettingNames.ShowConsoleWhenPluginRunning, false);
         HideWhenCloseWindow = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, false);
+        MessageUseMarkdown = _settingsToolkit.ReadLocalSetting(SettingNames.MessageUseMarkdown, true);
 
         IsChatEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsChatEnabled, true);
         IsImageEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsImageEnabled, true);

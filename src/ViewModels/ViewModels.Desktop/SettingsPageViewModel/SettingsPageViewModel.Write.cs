@@ -165,4 +165,7 @@ public sealed partial class SettingsPageViewModel
 
     partial void OnHideWhenCloseWindowChanged(bool value)
         => WriteSetting(SettingNames.HideWhenCloseWindow, value);
+
+    partial void OnMessageUseMarkdownChanged(bool value)
+        => WriteSetting(SettingNames.MessageUseMarkdown, value);
 }
