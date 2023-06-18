@@ -1542,4 +1542,7 @@
   <data name="HideWhenCloseDescription" xml:space="preserve">
     <value>关闭窗口时隐藏应用而非退出</value>
   </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提示</value>
+  </data>
 </root>

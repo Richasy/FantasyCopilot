@@ -135,8 +135,14 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
 
             if (!string.IsNullOrEmpty(tip))
             {
-                var infoType = isWarning ? InfoType.Warning : InfoType.Success;
-                _appViewModel.ShowTip(tip, infoType);
+                if (isWarning)
+                {
+                    _appViewModel.ShowMessage(tip);
+                }
+                else
+                {
+                    _appViewModel.ShowTip(tip, InfoType.Success);
+                }
             }
 
             var baseData = new KnowledgeBase

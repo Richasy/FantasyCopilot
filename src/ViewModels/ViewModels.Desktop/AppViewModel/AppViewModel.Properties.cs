@@ -56,6 +56,9 @@ public sealed partial class AppViewModel
     public event EventHandler<AppTipNotificationEventArgs> RequestShowTip;
 
     /// <inheritdoc/>
+    public event EventHandler<string> RequestShowMessage;
+
+    /// <inheritdoc/>
     public ObservableCollection<NavigateItem> NavigateItems { get; }
 
     /// <inheritdoc/>

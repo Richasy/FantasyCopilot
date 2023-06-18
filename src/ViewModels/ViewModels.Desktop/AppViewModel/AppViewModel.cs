@@ -87,6 +87,10 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     public void ShowTip(string message, InfoType type = InfoType.Information)
         => RequestShowTip?.Invoke(this, new AppTipNotificationEventArgs(message, type));
 
+    /// <inheritdoc/>
+    public void ShowMessage(string message)
+        => RequestShowMessage?.Invoke(this, message);
+
     [RelayCommand]
     private static void RestartAsAdmin()
     {

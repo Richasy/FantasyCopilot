@@ -103,9 +103,10 @@ public sealed partial class MemoryService : IMemoryService
         _tempMemoryFileTotalCount = 1;
         _tempMemoryFileFailedCount = 0;
         _tempMemoryFileImportedCount = 0;
-        _logger.LogDebug($"Importing file: {filePath}");
+        _logger.LogInformation($"Importing file: {filePath}");
         await SaveContextInformationAsync(filePath);
-        _logger.LogDebug($"Import file finished");
+        _logger.LogInformation($"Import file finished");
+        DisconnectSQLiteKnowledgeBase();
         return _tempMemoryFileFailedCount == 0;
     }
 
@@ -116,18 +117,19 @@ public sealed partial class MemoryService : IMemoryService
         _tempMemoryFileTotalCount = 0;
         _tempMemoryFileFailedCount = 0;
         _tempMemoryFileImportedCount = 0;
-        _logger.LogDebug($"Importing folder: {folderPath}");
+        _logger.LogInformation($"Importing folder: {folderPath}");
         var files = await GetFilesAsync(folderPath, searchPattern);
         _tempMemoryFileTotalCount = files.Count;
         var tasks = new List<Task>();
         foreach (var file in files)
         {
-            _logger.LogDebug($"Importing {file.FullName}");
+            _logger.LogInformation($"Importing {file.FullName}");
             tasks.Add(SaveContextInformationAsync(file.FullName, folderPath));
         }
 
         await Task.WhenAll(tasks);
-        _logger.LogDebug($"Import folder finished");
+        _logger.LogInformation($"Import folder finished");
+        DisconnectSQLiteKnowledgeBase();
         return (_tempMemoryFileTotalCount, _tempMemoryFileFailedCount);
     }
 
@@ -223,7 +225,7 @@ public sealed partial class MemoryService : IMemoryService
             var maxContentLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxSplitContentLength, 1024);
             var maxTokenLength = _settingsToolkit.ReadLocalSetting(SettingNames.MaxParagraphTokenLength, 512);
             var content = await File.ReadAllTextAsync(filePath);
-            var isMarkdown = Path.GetExtension(filePath).Equals(".md", System.StringComparison.OrdinalIgnoreCase);
+            var isMarkdown = Path.GetExtension(filePath).Equals(".md", StringComparison.OrdinalIgnoreCase);
             if (string.IsNullOrEmpty(content))
             {
                 _tempMemoryFileFailedCount++;
@@ -267,7 +269,7 @@ public sealed partial class MemoryService : IMemoryService
         }
         catch (System.Exception ex)
         {
-            _logger.LogError(ex, "Error saving context");
+            _logger.LogError(ex, $"Error saving context, path: {filePath}");
             _tempMemoryFileFailedCount++;
         }
 

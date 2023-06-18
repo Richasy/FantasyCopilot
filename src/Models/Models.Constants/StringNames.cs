@@ -493,4 +493,5 @@ public enum StringNames
     Feature,
     HideWhenClose,
     HideWhenCloseDescription,
+    Tip,
 }
