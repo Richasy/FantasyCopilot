@@ -405,6 +405,12 @@
   <data name="DatabasePathPlaceholderText" xml:space="preserve">
     <value>Select the database location</value>
   </data>
+  <data name="DataExported" xml:space="preserve">
+    <value>Data has been exported</value>
+  </data>
+  <data name="DataImported" xml:space="preserve">
+    <value>Data has been imported</value>
+  </data>
   <data name="DataSourceComeFrom" xml:space="preserve">
     <value>Data from</value>
   </data>
@@ -567,6 +573,12 @@
   <data name="ExportConfigFailed" xml:space="preserve">
     <value>Failed to export configuration file</value>
   </data>
+  <data name="ExportData" xml:space="preserve">
+    <value>Export data</value>
+  </data>
+  <data name="ExportDataFailed" xml:space="preserve">
+    <value>Data export failed</value>
+  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Favorite</value>
   </data>
@@ -722,6 +734,12 @@
   </data>
   <data name="ImportConfigFailed" xml:space="preserve">
     <value>Failed to import configuration file</value>
+  </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>Import data</value>
+  </data>
+  <data name="ImportDataFailed" xml:space="preserve">
+    <value>Data import failed</value>
   </data>
   <data name="ImportFile" xml:space="preserve">
     <value>Import file</value>

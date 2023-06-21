@@ -10,6 +10,7 @@ using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.UI.Dispatching;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -23,33 +24,40 @@ public sealed partial class SavedSessionsModuleViewModel : ViewModelBase, ISaved
     /// </summary>
     public SavedSessionsModuleViewModel(
         ICacheToolkit cacheToolkit,
+        IResourceToolkit resourceToolkit,
         IAppViewModel appViewModel)
     {
         _cacheToolkit = cacheToolkit;
+        _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
+        _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         Sessions = new ObservableCollection<SessionMetadata>();
         Sessions.CollectionChanged += OnSessionsCollectionChanged;
         _cacheToolkit.SessionListChanged += OnSessionListChanged;
-        AttachIsRunningToAsyncCommand(p => p = IsLoading = p, InitializeCommand);
         CheckIsEmpty();
     }
 
     [RelayCommand]
-    private async Task InitializeAsync()
+    private void Initialize()
     {
-        if (IsLoading || _isInitialized)
+        _dispatcherQueue.TryEnqueue(async () =>
         {
-            return;
-        }
+            if (IsLoading || _isInitialized)
+            {
+                return;
+            }
 
-        TryClear(Sessions);
-        var sessions = await _cacheToolkit.GetSessionListAsync();
-        foreach (var session in sessions)
-        {
-            Sessions.Add(session);
-        }
+            IsLoading = true;
+            TryClear(Sessions);
+            var sessions = await _cacheToolkit.GetSessionListAsync();
+            foreach (var session in sessions)
+            {
+                Sessions.Add(session);
+            }
 
-        _isInitialized = true;
+            _isInitialized = true;
+            IsLoading = false;
+        });
     }
 
     [RelayCommand]
@@ -59,6 +67,42 @@ public sealed partial class SavedSessionsModuleViewModel : ViewModelBase, ISaved
         var vm = Locator.Current.GetService<ISessionViewModel>();
         vm.Initialize(session, metadata);
         _appViewModel.Navigate(PageType.ChatSession, vm);
+    }
+
+    [RelayCommand]
+    private async Task ImportAsync()
+    {
+        var result = await _cacheToolkit.ImportSessionsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataImported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportDataFailed), InfoType.Error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportAsync()
+    {
+        var result = await _cacheToolkit.ExportSessionsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataExported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportDataFailed), InfoType.Error);
+        }
     }
 
     private void CheckIsEmpty()

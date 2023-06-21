@@ -38,6 +38,16 @@ namespace FantasyCopilot.App.Controls
                 new PropertyMetadata(default));
 
         /// <summary>
+        /// Dependency property of <see cref="ActionElement"/>.
+        /// </summary>
+        public static readonly DependencyProperty ActionElementProperty =
+            DependencyProperty.Register(
+                nameof(ActionElement),
+                typeof(object),
+                typeof(EmptyHolder),
+                new PropertyMetadata(default));
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EmptyHolder"/> class.
         /// </summary>
         public EmptyHolder() => InitializeComponent();
@@ -67,6 +77,15 @@ namespace FantasyCopilot.App.Controls
         {
             get => (string)GetValue(EmojiProperty);
             set => SetValue(EmojiProperty, value);
+        }
+
+        /// <summary>
+        /// The element that performs the action.
+        /// </summary>
+        public object ActionElement
+        {
+            get => (object)GetValue(ActionElementProperty);
+            set => SetValue(ActionElementProperty, value);
         }
     }
 }

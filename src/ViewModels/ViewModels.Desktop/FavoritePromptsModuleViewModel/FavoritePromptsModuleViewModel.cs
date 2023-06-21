@@ -23,9 +23,11 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
     /// </summary>
     public FavoritePromptsModuleViewModel(
         ICacheToolkit cacheToolkit,
+        IResourceToolkit resourceToolkit,
         IAppViewModel appViewModel)
     {
         _cacheToolkit = cacheToolkit;
+        _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
         Prompts = new ObservableCollection<SessionMetadata>();
         Prompts.CollectionChanged += OnPromptsCollectionChanged;
@@ -70,6 +72,47 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
         }
 
         _isInitialized = true;
+    }
+
+    [RelayCommand]
+    private async Task ImportAsync()
+    {
+        var result = await _cacheToolkit.ImportPromptsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataImported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportDataFailed), InfoType.Error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportAsync()
+    {
+        if (Prompts.Count == 0)
+        {
+            return;
+        }
+
+        var result = await _cacheToolkit.ExportPromptsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataExported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportDataFailed), InfoType.Error);
+        }
     }
 
     private void CheckIsEmpty()

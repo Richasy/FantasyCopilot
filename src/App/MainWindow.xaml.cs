@@ -27,6 +27,7 @@ public sealed partial class MainWindow : Window
         _appViewModel = Locator.Current.GetService<IAppViewModel>();
         SystemBackdrop = new MicaBackdrop();
         _appViewModel.MainWindow = this;
+        Locator.Current.RegisterVariable(typeof(Window), this);
         _appViewModel.PropertyChanged += OnAppViewModelPropertyChanged;
         _appViewModel.NavigateRequest += OnAppViewModelNavigateRequest;
         _appViewModel.RequestShowTip += OnAppViewModelRequestShowTip;

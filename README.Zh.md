@@ -98,7 +98,8 @@
 - [H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
 - [EverythingNet](https://github.com/ju2pom/EverythingNet)
-- And other open source contributors.
+- [Markdig](https://github.com/xoofx/markdig)
+- 以及其他开源贡献者.
 
 ## 🧩 截图
 

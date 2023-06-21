@@ -496,4 +496,10 @@ public enum StringNames
     Tip,
     MessageUseMarkdown,
     MessageUseMarkdownDescription,
+    ImportDataFailed,
+    DataImported,
+    ExportDataFailed,
+    ImportData,
+    ExportData,
+    DataExported,
 }

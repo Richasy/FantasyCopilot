@@ -99,6 +99,18 @@ public interface ICacheToolkit
     Task AddOrUpdateSessionMetadataAsync(SessionMetadata metadata);
 
     /// <summary>
+    /// Import session package from outside.
+    /// </summary>
+    /// <returns>Import result.</returns>
+    Task<bool?> ImportSessionsAsync();
+
+    /// <summary>
+    /// Export existing sessions to a file.
+    /// </summary>
+    /// <returns>Export result.</returns>
+    Task<bool?> ExportSessionsAsync();
+
+    /// <summary>
     /// Save session data.
     /// </summary>
     /// <param name="session">Session data.</param>
@@ -124,6 +136,18 @@ public interface ICacheToolkit
     /// <param name="prompt">Custom prompt template.</param>
     /// <returns><see cref="Task"/>.</returns>
     Task AddOrUpdatePromptAsync(SessionMetadata prompt);
+
+    /// <summary>
+    /// Import prompt configuration from outside.
+    /// </summary>
+    /// <returns>Import result.</returns>
+    Task<bool?> ImportPromptsAsync();
+
+    /// <summary>
+    /// Export existing prompts to a file.
+    /// </summary>
+    /// <returns>Export result.</returns>
+    Task<bool?> ExportPromptsAsync();
 
     /// <summary>
     /// Remove prompt.

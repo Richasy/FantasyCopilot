@@ -14,6 +14,7 @@ namespace FantasyCopilot.ViewModels;
 public sealed partial class FavoritePromptsModuleViewModel
 {
     private readonly ICacheToolkit _cacheToolkit;
+    private readonly IResourceToolkit _resourceToolkit;
     private readonly IAppViewModel _appViewModel;
 
     [ObservableProperty]
