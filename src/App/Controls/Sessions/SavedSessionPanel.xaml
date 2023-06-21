@@ -30,51 +30,74 @@
                         Description="{ext:Locale Name=NoSessionDescription}"
                         Emoji="&#x1FAE3;"
                         Style="{StaticResource BasicEmptyHolderStyle}"
-                        Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
-                    <ItemsRepeater
+                        Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}">
+                        <controls:EmptyHolder.ActionElement>
+                            <HyperlinkButton Command="{x:Bind ViewModel.ImportCommand}" Content="{ext:Locale Name=ImportData}" />
+                        </controls:EmptyHolder.ActionElement>
+                    </controls:EmptyHolder>
+                    <StackPanel
                         Margin="0,0,0,20"
-                        ItemsSource="{x:Bind ViewModel.Sessions}"
+                        Spacing="12"
                         Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
-                        <ItemsRepeater.Layout>
-                            <StackLayout Spacing="8" />
-                        </ItemsRepeater.Layout>
-                        <ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="core:SessionMetadata">
-                                <Button
-                                    Click="OnItemClick"
-                                    DataContext="{x:Bind}"
-                                    Style="{StaticResource ItemButtonStyle}">
-                                    <StackPanel Spacing="4">
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            Style="{StaticResource BodyStrongTextBlockStyle}"
-                                            Text="{x:Bind Name}"
-                                            TextTrimming="CharacterEllipsis" />
-                                        <TextBlock
-                                            HorizontalAlignment="Left"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind Description}"
-                                            TextTrimming="CharacterEllipsis" />
-                                    </StackPanel>
-                                    <Button.ContextFlyout>
-                                        <MenuFlyout>
-                                            <MenuFlyoutItem Click="OnModifyButtonClickAsync" Text="{ext:Locale Name=Modify}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <controls:FluentIcon Symbol="Pen" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                            <MenuFlyoutItem Click="OnDeleteButtonClickAsync" Text="{ext:Locale Name=Delete}">
-                                                <MenuFlyoutItem.Icon>
-                                                    <controls:FluentIcon Foreground="{ThemeResource SystemFillColorCriticalBrush}" Symbol="Delete" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </Button.ContextFlyout>
-                                </Button>
-                            </DataTemplate>
-                        </ItemsRepeater.ItemTemplate>
-                    </ItemsRepeater>
+                        <ItemsRepeater ItemsSource="{x:Bind ViewModel.Sessions}">
+                            <ItemsRepeater.Layout>
+                                <StackLayout Spacing="8" />
+                            </ItemsRepeater.Layout>
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="core:SessionMetadata">
+                                    <Button
+                                        Click="OnItemClick"
+                                        DataContext="{x:Bind}"
+                                        Style="{StaticResource ItemButtonStyle}">
+                                        <StackPanel Spacing="4">
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                Style="{StaticResource BodyStrongTextBlockStyle}"
+                                                Text="{x:Bind Name}"
+                                                TextTrimming="CharacterEllipsis" />
+                                            <TextBlock
+                                                HorizontalAlignment="Left"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                Style="{StaticResource CaptionTextBlockStyle}"
+                                                Text="{x:Bind Description}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </StackPanel>
+                                        <Button.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Click="OnModifyButtonClickAsync" Text="{ext:Locale Name=Modify}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <controls:FluentIcon Symbol="Pen" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem Click="OnDeleteButtonClickAsync" Text="{ext:Locale Name=Delete}">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <controls:FluentIcon Foreground="{ThemeResource SystemFillColorCriticalBrush}" Symbol="Delete" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.ContextFlyout>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="8">
+                            <HyperlinkButton
+                                Padding="8,4"
+                                Command="{x:Bind ViewModel.ImportCommand}"
+                                Content="{ext:Locale Name=ImportData}" />
+                            <StackPanel
+                                Width="1"
+                                Height="16"
+                                Background="{ThemeResource ControlStrokeColorDefaultBrush}" />
+                            <HyperlinkButton
+                                Padding="8,4"
+                                Command="{x:Bind ViewModel.ExportCommand}"
+                                Content="{ext:Locale Name=ExportData}" />
+                        </StackPanel>
+                    </StackPanel>
                 </Grid>
             </ScrollViewer>
             <ProgressRing IsActive="{x:Bind ViewModel.IsLoading, Mode=OneWay}" />

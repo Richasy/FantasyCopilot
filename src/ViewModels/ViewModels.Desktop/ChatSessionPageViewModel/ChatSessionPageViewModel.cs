@@ -39,7 +39,7 @@ public sealed partial class ChatSessionPageViewModel : ViewModelBase, IChatSessi
         {
             CurrentSession = default;
         }
-        else if (CurrentSession.Id == id)
+        else if (CurrentSession?.Id == id)
         {
             var newVM = Locator.Current.GetService<ISessionViewModel>();
             newVM.Initialize();

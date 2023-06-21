@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
@@ -13,8 +10,6 @@ using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
-using Microsoft.Extensions.Logging;
-using Windows.Storage;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -28,16 +23,12 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
     /// </summary>
     public FavoritePromptsModuleViewModel(
         ICacheToolkit cacheToolkit,
-        IFileToolkit fileToolkit,
         IResourceToolkit resourceToolkit,
-        IAppViewModel appViewModel,
-        ILogger<FavoritePromptsModuleViewModel> logger)
+        IAppViewModel appViewModel)
     {
         _cacheToolkit = cacheToolkit;
-        _fileToolkit = fileToolkit;
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
-        _logger = logger;
         Prompts = new ObservableCollection<SessionMetadata>();
         Prompts.CollectionChanged += OnPromptsCollectionChanged;
         _cacheToolkit.PromptListChanged += OnPromptListChanged;
@@ -86,27 +77,18 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
     [RelayCommand]
     private async Task ImportAsync()
     {
-        var fileObj = await _fileToolkit.PickFileAsync(".json", _appViewModel.MainWindow);
-        if (fileObj is not StorageFile file)
+        var result = await _cacheToolkit.ImportPromptsAsync();
+        if (result == null)
         {
             return;
         }
-
-        try
+        else if (result.Value)
         {
-            var content = await FileIO.ReadTextAsync(file);
-            var list = JsonSerializer.Deserialize<List<SessionMetadata>>(content);
-            if (list.Count == 0)
-            {
-                return;
-            }
-
-            await _cacheToolkit.AddPromptsAsync(list);
-            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ConfigImported), InfoType.Success);
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataImported), InfoType.Success);
         }
-        catch (Exception ex)
+        else
         {
-            _logger.LogError("Failed to import prompt list", ex);
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportDataFailed), InfoType.Error);
         }
     }
 
@@ -118,15 +100,19 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
             return;
         }
 
-        var fileObj = await _fileToolkit.SaveFileAsync("Favorite_Prompts.json", _appViewModel.MainWindow);
-        if(fileObj is not StorageFile file)
+        var result = await _cacheToolkit.ExportPromptsAsync();
+        if (result == null)
         {
             return;
         }
-
-        var json = JsonSerializer.Serialize(Prompts.ToList());
-        await FileIO.WriteTextAsync(file, json);
-        _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ConfigExported), InfoType.Success);
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataExported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportDataFailed), InfoType.Error);
+        }
     }
 
     private void CheckIsEmpty()

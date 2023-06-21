@@ -1551,4 +1551,22 @@
   <data name="MessageUseMarkdownDescription" xml:space="preserve">
     <value>对话消息将对 Markdown 进行渲染，但目前仍有一些体验上的问题</value>
   </data>
+  <data name="DataExported" xml:space="preserve">
+    <value>数据已导出</value>
+  </data>
+  <data name="DataImported" xml:space="preserve">
+    <value>数据已导入</value>
+  </data>
+  <data name="ExportData" xml:space="preserve">
+    <value>导出数据</value>
+  </data>
+  <data name="ExportDataFailed" xml:space="preserve">
+    <value>数据导出失败</value>
+  </data>
+  <data name="ImportData" xml:space="preserve">
+    <value>导入数据</value>
+  </data>
+  <data name="ImportDataFailed" xml:space="preserve">
+    <value>数据导入失败</value>
+  </data>
 </root>

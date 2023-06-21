@@ -5,8 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
+using Windows.Storage;
 
 namespace FantasyCopilot.Toolkits;
 
@@ -48,14 +52,53 @@ public sealed partial class CacheToolkit
     }
 
     /// <inheritdoc/>
-    public async Task AddPromptsAsync(IEnumerable<SessionMetadata> prompts)
+    public async Task<bool?> ImportPromptsAsync()
     {
-        foreach (var prompt in prompts)
+        var mainWindow = Locator.Current.GetVariable<Window>();
+        var fileObj = await _fileToolkit.PickFileAsync(".json", mainWindow);
+        if (fileObj is not StorageFile file)
         {
-            AddOrUpdatePromptInternal(prompt);
+            return null;
         }
 
-        await SavePromptsInternalAsync();
+        try
+        {
+            var content = await FileIO.ReadTextAsync(file);
+            var prompts = JsonSerializer.Deserialize<List<SessionMetadata>>(content);
+            if (prompts.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (var prompt in prompts)
+            {
+                AddOrUpdatePromptInternal(prompt);
+            }
+
+            await SavePromptsInternalAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Failed to import prompt list", ex);
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool?> ExportPromptsAsync()
+    {
+        var mainWindow = Locator.Current.GetVariable<Window>();
+        var fileObj = await _fileToolkit.SaveFileAsync("Favorite_Prompts.json", mainWindow);
+        if (fileObj is not StorageFile file)
+        {
+            return null;
+        }
+
+        var json = JsonSerializer.Serialize(_prompts);
+        await FileIO.WriteTextAsync(file, json);
+        return true;
     }
 
     /// <inheritdoc/>

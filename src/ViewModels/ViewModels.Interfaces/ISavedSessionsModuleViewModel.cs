@@ -35,5 +35,15 @@ public interface ISavedSessionsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize the list.
     /// </summary>
-    IAsyncRelayCommand InitializeCommand { get; }
+    IRelayCommand InitializeCommand { get; }
+
+    /// <summary>
+    /// Import config.
+    /// </summary>
+    IAsyncRelayCommand ImportCommand { get; }
+
+    /// <summary>
+    /// Export config.
+    /// </summary>
+    IAsyncRelayCommand ExportCommand { get; }
 }
