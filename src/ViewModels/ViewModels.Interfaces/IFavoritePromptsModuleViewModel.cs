@@ -36,4 +36,14 @@ public interface IFavoritePromptsModuleViewModel : INotifyPropertyChanged
     /// Initialize the list.
     /// </summary>
     IAsyncRelayCommand InitializeCommand { get; }
+
+    /// <summary>
+    /// Import config.
+    /// </summary>
+    IAsyncRelayCommand ImportCommand { get; }
+
+    /// <summary>
+    /// Export config.
+    /// </summary>
+    IAsyncRelayCommand ExportCommand { get; }
 }

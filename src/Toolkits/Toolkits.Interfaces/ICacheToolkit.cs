@@ -126,6 +126,13 @@ public interface ICacheToolkit
     Task AddOrUpdatePromptAsync(SessionMetadata prompt);
 
     /// <summary>
+    /// Add prompts in batches.
+    /// </summary>
+    /// <param name="prompts">Prompt list.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    Task AddPromptsAsync(IEnumerable<SessionMetadata> prompts);
+
+    /// <summary>
     /// Remove prompt.
     /// </summary>
     /// <param name="id">Prompt id.</param>

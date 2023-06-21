@@ -43,20 +43,19 @@ public sealed partial class CacheToolkit
     public async Task AddOrUpdatePromptAsync(SessionMetadata prompt)
     {
         await InitializeCustomPromptsIfNotReadyAsync();
-        if (_prompts.Contains(prompt))
+        AddOrUpdatePromptInternal(prompt);
+        await SavePromptsInternalAsync();
+    }
+
+    /// <inheritdoc/>
+    public async Task AddPromptsAsync(IEnumerable<SessionMetadata> prompts)
+    {
+        foreach (var prompt in prompts)
         {
-            var index = _prompts.IndexOf(prompt);
-            _prompts.Remove(prompt);
-            _prompts.Insert(index, prompt);
-        }
-        else
-        {
-            _prompts.Add(prompt);
+            AddOrUpdatePromptInternal(prompt);
         }
 
-        var json = JsonSerializer.Serialize(_prompts);
-        await _fileToolkit.WriteContentAsync(json, AppConstants.FavoritePromptsFileName);
-        PromptListChanged?.Invoke(this, EventArgs.Empty);
+        await SavePromptsInternalAsync();
     }
 
     /// <inheritdoc/>
@@ -69,6 +68,27 @@ public sealed partial class CacheToolkit
         }
 
         _prompts.Remove(sourceRecord);
+        var json = JsonSerializer.Serialize(_prompts);
+        await _fileToolkit.WriteContentAsync(json, AppConstants.FavoritePromptsFileName);
+        PromptListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void AddOrUpdatePromptInternal(SessionMetadata prompt)
+    {
+        if (_prompts.Contains(prompt))
+        {
+            var index = _prompts.IndexOf(prompt);
+            _prompts.Remove(prompt);
+            _prompts.Insert(index, prompt);
+        }
+        else
+        {
+            _prompts.Add(prompt);
+        }
+    }
+
+    private async Task SavePromptsInternalAsync()
+    {
         var json = JsonSerializer.Serialize(_prompts);
         await _fileToolkit.WriteContentAsync(json, AppConstants.FavoritePromptsFileName);
         PromptListChanged?.Invoke(this, EventArgs.Empty);

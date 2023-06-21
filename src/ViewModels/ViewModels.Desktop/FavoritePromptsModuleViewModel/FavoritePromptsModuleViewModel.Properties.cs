@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -14,6 +15,9 @@ namespace FantasyCopilot.ViewModels;
 public sealed partial class FavoritePromptsModuleViewModel
 {
     private readonly ICacheToolkit _cacheToolkit;
+    private readonly IFileToolkit _fileToolkit;
+    private readonly IResourceToolkit _resourceToolkit;
+    private readonly ILogger<FavoritePromptsModuleViewModel> _logger;
     private readonly IAppViewModel _appViewModel;
 
     [ObservableProperty]
