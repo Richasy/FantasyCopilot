@@ -97,6 +97,7 @@ We welcome like-minded friends to participate in the **Fantasy Copilot** project
 - [H.NotifyIcon](https://github.com/HavenDV/H.NotifyIcon)
 - [CsvHelper](https://github.com/JoshClose/CsvHelper)
 - [EverythingNet](https://github.com/ju2pom/EverythingNet)
+- [Markdig](https://github.com/xoofx/markdig)
 - And other open source contributors.
 
 ## 🧩 Screenshots

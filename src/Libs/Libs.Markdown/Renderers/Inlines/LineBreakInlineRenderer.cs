@@ -15,7 +15,7 @@ internal sealed class LineBreakInlineRenderer : WinUIObjectRenderer<LineBreakInl
         }
         else
         {
-            renderer.WriteText(" ");
+            // Do nothing.
         }
     }
 }
