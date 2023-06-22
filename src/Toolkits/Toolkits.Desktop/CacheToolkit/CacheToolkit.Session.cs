@@ -90,13 +90,18 @@ public sealed partial class CacheToolkit : ICacheToolkit
 
                 File.Delete(metaPath);
                 var files = Directory.GetFiles(tempFolder.Path);
+                var localSessionFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, AppConstants.LocalSessionFolderName);
+                if (!Directory.Exists(localSessionFolder))
+                {
+                    Directory.CreateDirectory(localSessionFolder);
+                }
+
                 foreach (var item in files)
                 {
                     File.Move(
                         item,
                         Path.Combine(
-                            ApplicationData.Current.LocalFolder.Path,
-                            AppConstants.LocalSessionFolderName,
+                            localSessionFolder,
                             Path.GetFileName(item)),
                         true);
                 }
@@ -141,7 +146,13 @@ public sealed partial class CacheToolkit : ICacheToolkit
                 var zipPath = zipFile.Path;
                 await zipFile.DeleteAsync();
                 File.Copy(Path.Combine(ApplicationData.Current.LocalFolder.Path, AppConstants.SavedSessionFileName), Path.Combine(tempFolder.Path, "metadata.json"), true);
-                var files = Directory.GetFiles(Path.Combine(ApplicationData.Current.LocalFolder.Path, AppConstants.LocalSessionFolderName));
+                var localSessionFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, AppConstants.LocalSessionFolderName);
+                if (!Directory.Exists(localSessionFolder))
+                {
+                    Directory.CreateDirectory(localSessionFolder);
+                }
+
+                var files = Directory.GetFiles(localSessionFolder);
                 foreach (var item in files)
                 {
                     File.Copy(item, Path.Combine(tempFolder.Path, Path.GetFileName(item)));

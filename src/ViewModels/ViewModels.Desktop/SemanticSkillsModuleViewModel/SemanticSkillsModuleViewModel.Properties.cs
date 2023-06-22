@@ -14,6 +14,8 @@ namespace FantasyCopilot.ViewModels;
 public sealed partial class SemanticSkillsModuleViewModel
 {
     private readonly ICacheToolkit _cacheToolkit;
+    private readonly IResourceToolkit _resourceToolkit;
+    private readonly IAppViewModel _appVM;
     private readonly ISemanticSkillEditModuleViewModel _editModuleVM;
 
     [ObservableProperty]

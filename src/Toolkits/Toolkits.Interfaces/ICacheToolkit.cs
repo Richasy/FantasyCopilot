@@ -177,6 +177,18 @@ public interface ICacheToolkit
     Task AddOrUpdateSemanticSkillAsync(SemanticSkillConfig config);
 
     /// <summary>
+    /// Import semantic skills from outside.
+    /// </summary>
+    /// <returns>Import result.</returns>
+    Task<bool?> ImportSemanticSkillsAsync();
+
+    /// <summary>
+    /// Export existing semantic skills to a file.
+    /// </summary>
+    /// <returns>Export result.</returns>
+    Task<bool?> ExportSemanticSkillsAsync();
+
+    /// <summary>
     /// Remove semantic skill.
     /// </summary>
     /// <param name="id">Skill id.</param>
@@ -202,6 +214,18 @@ public interface ICacheToolkit
     /// <param name="config">Image skill config.</param>
     /// <returns><see cref="Task"/>.</returns>
     Task AddOrUpdateImageSkillAsync(ImageSkillConfig config);
+
+    /// <summary>
+    /// Import image skills from outside.
+    /// </summary>
+    /// <returns>Import result.</returns>
+    Task<bool?> ImportImageSkillsAsync();
+
+    /// <summary>
+    /// Export existing image skills to a file.
+    /// </summary>
+    /// <returns>Export result.</returns>
+    Task<bool?> ExportImageSkillsAsync();
 
     /// <summary>
     /// Remove image skill.

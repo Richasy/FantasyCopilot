@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Workspace;
+using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 
@@ -23,9 +24,13 @@ public sealed partial class SemanticSkillsModuleViewModel : ViewModelBase, ISema
     /// </summary>
     public SemanticSkillsModuleViewModel(
         ICacheToolkit cacheToolkit,
+        IResourceToolkit resourceToolkit,
+        IAppViewModel appViewModel,
         ISemanticSkillEditModuleViewModel editModuleVM)
     {
         _cacheToolkit = cacheToolkit;
+        _resourceToolkit = resourceToolkit;
+        _appVM = appViewModel;
         _editModuleVM = editModuleVM;
         Skills = new ObservableCollection<SemanticSkillConfig>();
         Skills.CollectionChanged += OnSkillsCollectionChanged;
@@ -75,6 +80,47 @@ public sealed partial class SemanticSkillsModuleViewModel : ViewModelBase, ISema
 
         Skills.Remove(source);
         await _cacheToolkit.DeleteSemanticSkillAsync(id);
+    }
+
+    [RelayCommand]
+    private async Task ImportAsync()
+    {
+        var result = await _cacheToolkit.ImportSemanticSkillsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appVM.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataImported), InfoType.Success);
+        }
+        else
+        {
+            _appVM.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportDataFailed), InfoType.Error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportAsync()
+    {
+        if (Skills.Count == 0)
+        {
+            return;
+        }
+
+        var result = await _cacheToolkit.ExportSemanticSkillsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appVM.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataExported), InfoType.Success);
+        }
+        else
+        {
+            _appVM.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportDataFailed), InfoType.Error);
+        }
     }
 
     private void CheckIsEmpty()

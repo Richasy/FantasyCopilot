@@ -5,8 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.Constants;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
+using Windows.Storage;
 
 namespace FantasyCopilot.Toolkits;
 
@@ -52,20 +56,58 @@ public sealed partial class CacheToolkit
     public async Task AddOrUpdateImageSkillAsync(ImageSkillConfig config)
     {
         await InitializeImageSkillsIfNotReadyAsync();
-        if (_imageSkills.Contains(config))
+        AddOrUpdateImageSkillInternal(config);
+        await SaveImageSkillsInternalAsync();
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool?> ImportImageSkillsAsync()
+    {
+        var mainWindow = Locator.Current.GetVariable<Window>();
+        var fileObj = await _fileToolkit.PickFileAsync(".json", mainWindow);
+        if (fileObj is not StorageFile file)
         {
-            var index = _imageSkills.IndexOf(config);
-            _imageSkills.Remove(config);
-            _imageSkills.Insert(index, config);
+            return null;
         }
-        else
+
+        try
         {
-            _imageSkills.Add(config);
+            var content = await FileIO.ReadTextAsync(file);
+            var configs = JsonSerializer.Deserialize<List<ImageSkillConfig>>(content);
+            if (configs.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (var config in configs)
+            {
+                AddOrUpdateImageSkillInternal(config);
+            }
+
+            await SaveImageSkillsInternalAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("Failed to import image skill list", ex);
+        }
+
+        return false;
+    }
+
+    /// <inheritdoc/>
+    public async Task<bool?> ExportImageSkillsAsync()
+    {
+        var mainWindow = Locator.Current.GetVariable<Window>();
+        var fileObj = await _fileToolkit.SaveFileAsync("Image_Skills.json", mainWindow);
+        if (fileObj is not StorageFile file)
+        {
+            return null;
         }
 
         var json = JsonSerializer.Serialize(_imageSkills);
-        await _fileToolkit.WriteContentAsync(json, AppConstants.ImageSkillsFileName);
-        ImageSkillListChanged?.Invoke(this, EventArgs.Empty);
+        await FileIO.WriteTextAsync(file, json);
+        return true;
     }
 
     /// <inheritdoc/>
@@ -78,6 +120,27 @@ public sealed partial class CacheToolkit
         }
 
         _imageSkills.Remove(sourceRecord);
+        var json = JsonSerializer.Serialize(_imageSkills);
+        await _fileToolkit.WriteContentAsync(json, AppConstants.ImageSkillsFileName);
+        ImageSkillListChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void AddOrUpdateImageSkillInternal(ImageSkillConfig config)
+    {
+        if (_imageSkills.Contains(config))
+        {
+            var index = _imageSkills.IndexOf(config);
+            _imageSkills.Remove(config);
+            _imageSkills.Insert(index, config);
+        }
+        else
+        {
+            _imageSkills.Add(config);
+        }
+    }
+
+    private async Task SaveImageSkillsInternalAsync()
+    {
         var json = JsonSerializer.Serialize(_imageSkills);
         await _fileToolkit.WriteContentAsync(json, AppConstants.ImageSkillsFileName);
         ImageSkillListChanged?.Invoke(this, EventArgs.Empty);
