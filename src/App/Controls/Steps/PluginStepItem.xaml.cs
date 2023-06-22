@@ -37,7 +37,7 @@ public sealed partial class PluginStepItem : WorkflowStepControlBase
 
     private async Task InitializeAsync(bool refresh = false)
     {
-        if (_isInitialized)
+        if (_isInitialized && !refresh)
         {
             return;
         }
@@ -63,7 +63,9 @@ public sealed partial class PluginStepItem : WorkflowStepControlBase
         {
             ControlContainer.Children.Clear();
             var hasConfig = command.ConfigSet?.Any() ?? false;
+            var hasParameters = command.Parameters != null && command.Parameters.Where(p => !string.IsNullOrEmpty(p.Id)).Any();
             ControlContainer.Visibility = hasConfig ? Visibility.Visible : Visibility.Collapsed;
+            ParameterContainer.Visibility = hasParameters ? Visibility.Visible : Visibility.Collapsed;
             if (hasConfig)
             {
                 foreach (var config in command.ConfigSet)
@@ -130,6 +132,11 @@ public sealed partial class PluginStepItem : WorkflowStepControlBase
                 }
 
                 ViewModel.Step.Detail = JsonSerializer.Serialize(_inputDictionary);
+            }
+
+            if (hasParameters)
+            {
+                ParameterView.ItemsSource = command.Parameters.Where(p => !string.IsNullOrEmpty(p.Id)).ToList();
             }
         }
 
