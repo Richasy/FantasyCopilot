@@ -2,6 +2,7 @@
 
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Workspace;
+using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 
 namespace FantasyCopilot.App.Controls.Workspace;
@@ -61,6 +62,23 @@ public sealed partial class WorkflowPanel : WorkflowPanelBase
     {
         var data = (sender as FrameworkElement)?.DataContext as WorkflowMetadata;
         ViewModel.EditConfigCommand.Execute(data);
+    }
+
+    private async void OnExportButtonClickAsync(object sender, RoutedEventArgs e)
+    {
+        var settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        var shouldSkipTip = settingsToolkit.ReadLocalSetting(SettingNames.ShouldSkipWorkflowExportTip, false);
+        if (!shouldSkipTip)
+        {
+            var resourceToolkit = Locator.Current.GetService<IResourceToolkit>();
+            var dialog = new TipDialog(resourceToolkit.GetLocalizedString(StringNames.WorkflowExportTip))
+            {
+                XamlRoot = XamlRoot,
+            };
+
+            await dialog.ShowAsync();
+            settingsToolkit.WriteLocalSetting(SettingNames.ShouldSkipWorkflowExportTip, true);
+        }
     }
 }
 

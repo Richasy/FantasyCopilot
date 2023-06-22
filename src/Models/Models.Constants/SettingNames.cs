@@ -70,4 +70,5 @@ public enum SettingNames
     HideWhenCloseWindow,
     ShouldAskBeforeWindowClosed,
     MessageUseMarkdown,
+    ShouldSkipWorkflowExportTip,
 }

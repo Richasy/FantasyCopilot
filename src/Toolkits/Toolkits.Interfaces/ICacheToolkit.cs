@@ -282,6 +282,18 @@ public interface ICacheToolkit
     Task AddOrUpdateKnowledgeBaseAsync(KnowledgeBase data);
 
     /// <summary>
+    /// Import workflow package from outside.
+    /// </summary>
+    /// <returns>Import result.</returns>
+    Task<bool?> ImportWorkflowsAsync();
+
+    /// <summary>
+    /// Export existing workflows to a file.
+    /// </summary>
+    /// <returns>Export result.</returns>
+    Task<bool?> ExportWorkflowsAsync();
+
+    /// <summary>
     /// Remove knowledge base.
     /// </summary>
     /// <param name="id">Base id.</param>

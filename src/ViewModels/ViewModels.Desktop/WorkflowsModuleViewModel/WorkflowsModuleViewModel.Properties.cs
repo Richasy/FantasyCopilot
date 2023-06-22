@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Dispatching;
 
 namespace FantasyCopilot.ViewModels;
@@ -14,6 +15,8 @@ namespace FantasyCopilot.ViewModels;
 public sealed partial class WorkflowsModuleViewModel
 {
     private readonly ICacheToolkit _cacheToolkit;
+    private readonly IResourceToolkit _resourceToolkit;
+    private readonly IAppViewModel _appViewModel;
     private readonly DispatcherQueue _dispatcherQueue;
 
     [ObservableProperty]

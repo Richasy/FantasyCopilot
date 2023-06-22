@@ -1539,6 +1539,9 @@
   <data name="WorkflowEditor" xml:space="preserve">
     <value>Workflow editor</value>
   </data>
+  <data name="WorkflowExportTip" xml:space="preserve">
+    <value>The export function only exports the workflow configuration, and the associated semantic skills need to be exported separately</value>
+  </data>
   <data name="WorkflowFileOpenFailed" xml:space="preserve">
     <value>Workflow configuration file open failed</value>
   </data>
