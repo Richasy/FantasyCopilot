@@ -28,11 +28,11 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock
-                        x:Name="ImageEmptyBlock"
+                        x:Name="BaseEmptyBlock"
                         VerticalAlignment="Center"
                         FontSize="12"
                         Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                        Text="{ext:Locale Name=NoImageSkill}"
+                        Text="{ext:Locale Name=NoKnowledgeBase}"
                         Visibility="{x:Bind _knowledgePageViewModel.IsEmpty, Mode=OneWay}" />
                 </Grid>
                 <TextBox

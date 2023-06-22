@@ -33,6 +33,11 @@ public sealed partial class PluginCommandItemViewModel : ViewModelBase, IPluginC
         {
             foreach (var item in command.Parameters)
             {
+                if (string.IsNullOrEmpty(item.Id))
+                {
+                    continue;
+                }
+
                 Parameters.Add(item);
             }
         }
