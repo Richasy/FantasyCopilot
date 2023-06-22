@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Workspace;
+using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Dispatching;
@@ -22,9 +23,14 @@ public sealed partial class WorkflowsModuleViewModel : ViewModelBase, IWorkflows
     /// <summary>
     /// Initializes a new instance of the <see cref="WorkflowsModuleViewModel"/> class.
     /// </summary>
-    public WorkflowsModuleViewModel(ICacheToolkit cacheToolkit)
+    public WorkflowsModuleViewModel(
+        ICacheToolkit cacheToolkit,
+        IResourceToolkit resourceToolkit,
+        IAppViewModel appViewModel)
     {
         _cacheToolkit = cacheToolkit;
+        _resourceToolkit = resourceToolkit;
+        _appViewModel = appViewModel;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         Workflows = new ObservableCollection<WorkflowMetadata>();
         Workflows.CollectionChanged += OnWorkflowsCollectionChanged;
@@ -35,14 +41,14 @@ public sealed partial class WorkflowsModuleViewModel : ViewModelBase, IWorkflows
     [RelayCommand]
     private void Initialize()
     {
-        if (IsLoading || _isInitialized)
-        {
-            return;
-        }
-
-        IsLoading = true;
         _dispatcherQueue.TryEnqueue(async () =>
         {
+            if (IsLoading || _isInitialized)
+            {
+                return;
+            }
+
+            IsLoading = true;
             TryClear(Workflows);
             var workflows = await _cacheToolkit.GetWorkflowListAsync();
             foreach (var workflow in workflows)
@@ -85,6 +91,42 @@ public sealed partial class WorkflowsModuleViewModel : ViewModelBase, IWorkflows
 
         Workflows.Remove(source);
         await _cacheToolkit.DeleteWorkflowAsync(id);
+    }
+
+    [RelayCommand]
+    private async Task ImportAsync()
+    {
+        var result = await _cacheToolkit.ImportWorkflowsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataImported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ImportDataFailed), InfoType.Error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task ExportAsync()
+    {
+        var result = await _cacheToolkit.ExportWorkflowsAsync();
+        if (result == null)
+        {
+            return;
+        }
+        else if (result.Value)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.DataExported), InfoType.Success);
+        }
+        else
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.ExportDataFailed), InfoType.Error);
+        }
     }
 
     private void CheckIsEmpty()

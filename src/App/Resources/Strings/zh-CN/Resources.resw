@@ -1569,4 +1569,7 @@
   <data name="ImportDataFailed" xml:space="preserve">
     <value>数据导入失败</value>
   </data>
+  <data name="WorkflowExportTip" xml:space="preserve">
+    <value>导出功能只会导出工作流配置，关联的语义技能等需要单独导出</value>
+  </data>
 </root>

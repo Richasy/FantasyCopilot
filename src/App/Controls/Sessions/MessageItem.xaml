@@ -36,7 +36,7 @@
                     StrokeThickness="1" />
                 <markdown:MarkdownTextBlock
                     x:Name="MarkdownMessageBlock"
-                    MaxWidth="310"
+                    MaxWidth="{StaticResource MessageContentMaxWidth}"
                     Margin="12,8"
                     Background="Transparent"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
@@ -45,7 +45,7 @@
                     Visibility="{x:Bind UseMarkdown, Mode=OneWay}" />
                 <TextBlock
                     x:Name="PlainMessageBlock"
-                    MaxWidth="310"
+                    MaxWidth="{StaticResource MessageContentMaxWidth}"
                     Margin="12,8"
                     Foreground="{ThemeResource TextFillColorPrimaryBrush}"
                     IsTextSelectionEnabled="True"

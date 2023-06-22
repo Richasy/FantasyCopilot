@@ -153,7 +153,7 @@
                                     VerticalAlignment="Stretch"
                                     CornerRadius="{StaticResource ControlCornerRadius}" />
                                 <TextBlock
-                                    MaxWidth="280"
+                                    MaxWidth="{StaticResource MessageContentMaxWidth}"
                                     Margin="12,8"
                                     IsTextSelectionEnabled="True"
                                     Text="{x:Bind ViewModel.TempMessage, Mode=OneWay}"

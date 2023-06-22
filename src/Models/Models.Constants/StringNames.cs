@@ -502,4 +502,5 @@ public enum StringNames
     ImportData,
     ExportData,
     DataExported,
+    WorkflowExportTip,
 }
