@@ -16,6 +16,8 @@
                 <!--  Other merged dictionaries here  -->
             </ResourceDictionary.MergedDictionaries>
 
+            <x:Double x:Key="MessageContentMaxWidth">310</x:Double>
+
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityReverseConverter" IsReverse="True" />
             <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter" />
