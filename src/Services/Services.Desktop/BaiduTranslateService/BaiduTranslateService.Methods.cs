@@ -14,6 +14,7 @@ namespace FantasyCopilot.Services;
 public sealed partial class BaiduTranslateService
 {
     private const string TranslateApi = "http://api.fanyi.baidu.com/api/trans/vip/translate";
+    private const int MaxTextLength = 1100;
     private readonly ISettingsToolkit _settingsToolkit;
     private readonly HttpClient _httpClient;
     private string _salt;
