@@ -11,10 +11,10 @@
   <ItemGroup>
     <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.29.0" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="0.16.230615.1-preview" />
-    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI" Version="0.16.230615.1-preview" />
-    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Memory.Sqlite" Version="0.16.230615.1-preview" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.30.0" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.17.230629.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI" Version="0.17.230629.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Memory.Sqlite" Version="0.17.230629.1-preview" />
     <PackageReference Include="Microsoft.SemanticKernel.Skills.Memory.Sqlite" Version="0.10.72.1-preview" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Libs\DI.Container\DI.Container.csproj" />
+    <ProjectReference Include="..\..\Libs\Libs.CustomConnector\Libs.CustomConnector.csproj" />
     <ProjectReference Include="..\..\Libs\Libs.Everything\Libs.Everything.csproj" />
     <ProjectReference Include="..\..\Libs\Libs.NativeSkills\Libs.NativeSkills.csproj" />
     <ProjectReference Include="..\..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />

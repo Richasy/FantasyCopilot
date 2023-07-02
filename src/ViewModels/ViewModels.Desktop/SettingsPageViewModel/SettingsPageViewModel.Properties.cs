@@ -87,6 +87,9 @@ public sealed partial class SettingsPageViewModel
     private bool _isOpenAIShown;
 
     [ObservableProperty]
+    private bool _isCustomAIShown;
+
+    [ObservableProperty]
     private int _maxSplitContentLength;
 
     [ObservableProperty]

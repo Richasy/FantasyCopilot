@@ -167,6 +167,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
     {
         IsAzureOpenAIShown = AiSource == AISource.Azure;
         IsOpenAIShown = AiSource == AISource.OpenAI;
+        IsCustomAIShown = AiSource == AISource.Custom;
     }
 
     private void CheckTranslateSource()

@@ -102,6 +102,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     bool IsOpenAIShown { get; }
 
     /// <summary>
+    /// Whether to display configuration items for Custom AI.
+    /// </summary>
+    bool IsCustomAIShown { get; }
+
+    /// <summary>
     /// The maximum number of characters a single file can accept for text storage.
     /// </summary>
     int MaxSplitContentLength { get; set; }

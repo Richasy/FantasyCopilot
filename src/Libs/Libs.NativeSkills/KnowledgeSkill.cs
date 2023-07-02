@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -42,8 +43,8 @@ public sealed class KnowledgeSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Knowledge text.</returns>
-    [SKFunctionName(WorkflowConstants.Knowledge.GetKnowledgeName)]
-    [SKFunction(WorkflowConstants.Knowledge.GetKnowledgeDescription)]
+    [SKName(WorkflowConstants.Knowledge.GetKnowledgeName)]
+    [Description(WorkflowConstants.Knowledge.GetKnowledgeDescription)]
     public async Task<string> GetKnowledgeAsync(SKContext context)
     {
         var @base = await TryConnectKnowledgeBaseAsync(context);
@@ -80,8 +81,8 @@ public sealed class KnowledgeSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Previous result.</returns>
-    [SKFunctionName(WorkflowConstants.Knowledge.ImportFileName)]
-    [SKFunction(WorkflowConstants.Knowledge.ImportFileDescription)]
+    [SKName(WorkflowConstants.Knowledge.ImportFileName)]
+    [Description(WorkflowConstants.Knowledge.ImportFileDescription)]
     public async Task<string> ImportFileAsync(SKContext context)
     {
         var path = context.Result;
@@ -116,8 +117,8 @@ public sealed class KnowledgeSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Previous result.</returns>
-    [SKFunctionName(WorkflowConstants.Knowledge.ImportFolderName)]
-    [SKFunction(WorkflowConstants.Knowledge.ImportFolderDescription)]
+    [SKName(WorkflowConstants.Knowledge.ImportFolderName)]
+    [Description(WorkflowConstants.Knowledge.ImportFolderDescription)]
     public async Task<string> ImportFolderAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<KnowledgeBaseStep>();

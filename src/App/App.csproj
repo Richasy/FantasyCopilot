@@ -114,7 +114,7 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.TokenView" Version="0.0.6" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.108" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.2-beta">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

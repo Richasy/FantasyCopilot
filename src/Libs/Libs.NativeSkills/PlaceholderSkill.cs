@@ -3,6 +3,7 @@
 
 using Microsoft.SemanticKernel.SkillDefinition;
 using FantasyCopilot.Models.Constants;
+using System.ComponentModel;
 
 namespace FantasyCopilot.Libs.NativeSkills;
 
@@ -11,38 +12,38 @@ namespace FantasyCopilot.Libs.NativeSkills;
 /// </summary>
 public sealed class PlaceholderSkill
 {
-    [SKFunctionName(WorkflowConstants.Input.TextName)]
-    [SKFunction(WorkflowConstants.Input.TextDescription)]
+    [SKName(WorkflowConstants.Input.TextName)]
+    [Description(WorkflowConstants.Input.TextDescription)]
     public static void InputText()
     {
     }
 
-    [SKFunctionName(WorkflowConstants.Input.VoiceName)]
-    [SKFunction(WorkflowConstants.Input.VoiceDescription)]
+    [SKName(WorkflowConstants.Input.VoiceName)]
+    [Description(WorkflowConstants.Input.VoiceDescription)]
     public static void InputVoice()
     {
     }
 
-    [SKFunctionName(WorkflowConstants.Input.FileName)]
-    [SKFunction(WorkflowConstants.Input.FileDescription)]
+    [SKName(WorkflowConstants.Input.FileName)]
+    [Description(WorkflowConstants.Input.FileDescription)]
     public static void InputFile()
     {
     }
 
-    [SKFunctionName(WorkflowConstants.Output.TextName)]
-    [SKFunction(WorkflowConstants.Output.TextDescription)]
+    [SKName(WorkflowConstants.Output.TextName)]
+    [Description(WorkflowConstants.Output.TextDescription)]
     public static void OutputText()
     {
     }
 
-    [SKFunctionName(WorkflowConstants.Output.VoiceName)]
-    [SKFunction(WorkflowConstants.Output.VoiceDescription)]
+    [SKName(WorkflowConstants.Output.VoiceName)]
+    [Description(WorkflowConstants.Output.VoiceDescription)]
     public static void OutputVoice()
     {
     }
 
-    [SKFunctionName(WorkflowConstants.Output.ImageName)]
-    [SKFunction(WorkflowConstants.Output.ImageDescription)]
+    [SKName(WorkflowConstants.Output.ImageName)]
+    [Description(WorkflowConstants.Output.ImageDescription)]
     public static void OutputImage()
     {
     }

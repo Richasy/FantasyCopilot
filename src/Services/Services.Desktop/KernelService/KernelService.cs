@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -42,6 +43,9 @@ public sealed partial class KernelService : IKernelService
                 break;
             case AISource.OpenAI:
                 AddOpenAIService();
+                break;
+            case AISource.Custom:
+                AddCustomAIService();
                 break;
             default:
                 break;
@@ -121,6 +125,37 @@ public sealed partial class KernelService : IKernelService
         kernelBuilder.WithLogger(_logger);
         SetSupportState(isBaseValid, hasChatModel, hasEmbeddingModel, hasCompletionModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
+    }
+
+    private void AddCustomAIService()
+    {
+        var kernelBuilder = new KernelBuilder();
+        var config = new ConnectorConfig
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = "ChatGLM",
+            BaseUrl = "http://127.0.0.1:4399",
+            ExecuteName = "api.exe",
+            Features = new System.Collections.Generic.List<ConnectorFeature>
+            {
+                new ConnectorFeature
+                {
+                    Type = ConnectorConstants.ChatType,
+                    Endpoints = new System.Collections.Generic.List<ConnectorEndpoint>
+                    {
+                        new ConnectorEndpoint
+                        {
+                            Type = ConnectorConstants.ChatRestType,
+                            Path = "/chat",
+                        },
+                    },
+                },
+            },
+        };
+        kernelBuilder.WithCustomChatCompletionService(config);
+        SetSupportState(true, true, false, false);
+        Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
+        _logger.LogInformation("Custom AI source is not supported yet.");
     }
 
     private void SetSupportState(bool isBaseValid, bool hasChatModel, bool hasEmbeddingModel, bool hasCompletionModel)

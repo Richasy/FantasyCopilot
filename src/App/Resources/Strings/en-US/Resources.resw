@@ -396,6 +396,9 @@
   <data name="CreatingKnowledgeBase" xml:space="preserve">
     <value>Data is being imported into the knowledge base</value>
   </data>
+  <data name="Custom" xml:space="preserve">
+    <value>Customization</value>
+  </data>
   <data name="CustomPrompt" xml:space="preserve">
     <value>Custom prompt</value>
   </data>

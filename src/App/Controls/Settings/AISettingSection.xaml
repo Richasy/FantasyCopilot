@@ -27,6 +27,7 @@
             SelectionChanged="OnAISourceComboBoxSelectionChanged">
             <ComboBoxItem Content="Azure Open AI" />
             <ComboBoxItem Content="Open AI" />
+            <ComboBoxItem Content="{ext:Locale Name=Custom}" />
         </ComboBox>
 
         <labs:SettingsExpander.Items>
@@ -92,8 +93,8 @@
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=ProxyEndpoint}"
                 Description="{ext:Locale Name=ProxyWarning}"
+                Header="{ext:Locale Name=ProxyEndpoint}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
                 <TextBox
                     Width="200"

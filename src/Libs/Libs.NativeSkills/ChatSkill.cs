@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -56,8 +57,9 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunction(WorkflowConstants.Chat.InitializeDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.InitializeName)]
+    [SKFunction]
+    [Description(WorkflowConstants.Chat.InitializeDescription)]
+    [SKName(WorkflowConstants.Chat.InitializeName),]
     public Task InitializeAsync(SKContext context)
     {
         context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
@@ -80,14 +82,15 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.Chat.SendDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.SendName)]
+    [SKFunction]
+    [SKName(WorkflowConstants.Chat.SendName)]
+    [Description(WorkflowConstants.Chat.SendDescription)]
     public async Task<string> SendAsync(SKContext context)
     {
         var reply = string.Empty;
         try
         {
-            _chatHistory.AddMessage(AuthorRole.System, context.Result);
+            _chatHistory.AddMessage(AuthorRole.User, context.Result);
             reply = await _chatCompletion.GenerateMessageAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
 
             // If the response is empty, remove the last sent message.
@@ -132,8 +135,8 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.Chat.GenerateStreamDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.GenerateStreamName)]
+    [Description(WorkflowConstants.Chat.GenerateStreamDescription)]
+    [SKName(WorkflowConstants.Chat.GenerateStreamName)]
     public async Task<string> GenerateStreamAsync(SKContext context)
     {
         var reply = string.Empty;

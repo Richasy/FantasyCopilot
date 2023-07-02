@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
@@ -35,9 +36,8 @@ public sealed class VoiceSkill
     /// </summary>
     /// <param name="context">Context.</param>
     /// <returns>Audio file path.</returns>
-    [SKFunctionName(WorkflowConstants.Voice.ReadTextName)]
-    [SKFunction(WorkflowConstants.Voice.ReadTextDescription)]
-    [SKFunctionContextParameter(Description = "The text content to be read.", Name = "INPUT")]
+    [SKName(WorkflowConstants.Voice.ReadTextName)]
+    [Description(WorkflowConstants.Voice.ReadTextDescription)]
     public async Task<string> ReadAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TextToSpeechStep>();

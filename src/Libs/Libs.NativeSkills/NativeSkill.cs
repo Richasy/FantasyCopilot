@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.ComponentModel;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Notifications;
 using FantasyCopilot.DI.Container;
@@ -30,8 +31,8 @@ public sealed class NativeSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunctionName(WorkflowConstants.Native.TextNotificationName)]
-    [SKFunction(WorkflowConstants.Native.TextNotificationDescription)]
+    [SKName(WorkflowConstants.Native.TextNotificationName)]
+    [Description(WorkflowConstants.Native.TextNotificationDescription)]
     public async Task<SKContext> SendNotificationAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TextNotificationStep>();
