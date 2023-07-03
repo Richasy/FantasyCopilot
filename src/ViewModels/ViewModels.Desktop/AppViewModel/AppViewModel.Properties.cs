@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FantasyCopilot.ViewModels;
@@ -17,7 +19,9 @@ public sealed partial class AppViewModel
 {
     private readonly IResourceToolkit _resourceToolkit;
     private readonly ISettingsToolkit _settingsToolkit;
+    private readonly ICacheToolkit _cacheToolkit;
     private readonly ILogger<AppViewModel> _logger;
+    private readonly Dictionary<ConnectorType, IConnectorConfigViewModel> _connectorGroup;
 
     [ObservableProperty]
     private bool _isBackButtonShown;
@@ -60,6 +64,9 @@ public sealed partial class AppViewModel
 
     /// <inheritdoc/>
     public ObservableCollection<NavigateItem> NavigateItems { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
 
     /// <inheritdoc/>
     public PageType CurrentPage { get; set; }

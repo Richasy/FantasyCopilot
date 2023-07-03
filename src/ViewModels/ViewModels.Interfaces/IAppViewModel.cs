@@ -2,6 +2,7 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
@@ -94,6 +95,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     ObservableCollection<NavigateItem> NavigateItems { get; }
 
     /// <summary>
+    /// Collection of all connectors.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+
+    /// <summary>
     /// Navigate back command.
     /// </summary>
     IRelayCommand BackCommand { get; }
@@ -119,6 +125,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     IRelayCommand RestartAsAdminCommand { get; }
 
     /// <summary>
+    /// Refresh connectors.
+    /// </summary>
+    IAsyncRelayCommand RefreshConnectorsCommand { get; }
+
+    /// <summary>
     /// Navigate to a page.
     /// </summary>
     /// <param name="page">Page id.</param>
@@ -128,7 +139,8 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize the view model.
     /// </summary>
-    void Initialize();
+    /// <returns><see cref="Task"/>.</returns>
+    Task InitializeAsync();
 
     /// <summary>
     /// Show tip.

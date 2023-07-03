@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,10 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         _fileToolkit = fileToolkit;
         _appViewModel = appViewModel;
         BuildYear = 2023;
+
+        ChatConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        TextCompletionConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        EmbeddingConnectors = new ObservableCollection<IConnectorConfigViewModel>();
         Initialize();
     }
 

@@ -13,4 +13,12 @@ public static class ConnectorConstants
     public const string ChatRestType = "chat-rest";
     public const string ChatStreamType = "chat-stream";
     public const string ChatStreamCancelType = "chat-stream-cancel";
+
+    public const string TextCompletionType = "text-completion";
+    public const string TextCompletionRestType = "text-completion-rest";
+    public const string TextCompletionStreamType = "text-completion-stream";
+    public const string TextCompletionStreamCancelType = "text-completion-stream-cancel";
+
+    public const string EmbeddingType = "embedding";
+    public const string EmbeddingRestType = "embedding-rest";
 }

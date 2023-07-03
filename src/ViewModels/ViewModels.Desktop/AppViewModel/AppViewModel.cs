@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -27,16 +29,21 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     public AppViewModel(
         IResourceToolkit resourceToolkit,
         ISettingsToolkit settingsToolkit,
+        ICacheToolkit cacheToolkit,
         ILogger<AppViewModel> logger)
     {
         _logger = logger;
         _resourceToolkit = resourceToolkit;
         _settingsToolkit = settingsToolkit;
+        _cacheToolkit = cacheToolkit;
         NavigateItems = new ObservableCollection<NavigateItem>();
+
+        Connectors = new ObservableCollection<IConnectorConfigViewModel>();
+        _connectorGroup = new Dictionary<ConnectorType, IConnectorConfigViewModel>();
     }
 
     /// <inheritdoc/>
-    public void Initialize()
+    public async Task InitializeAsync()
     {
         var isSkipWelcome = _settingsToolkit.IsSettingKeyExist(SettingNames.IsSkipWelcomeScreen);
         if (!isSkipWelcome)
@@ -45,7 +52,6 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         }
         else
         {
-            ReloadAllServicesCommand.Execute(default);
             LoadNavItems();
             var lastOpenPage = _settingsToolkit.ReadLocalSetting(SettingNames.LastOpenPageType, PageType.ChatSession);
             if (!NavigateItems.Any(p => p.Type == lastOpenPage))
@@ -53,6 +59,8 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
                 lastOpenPage = NavigateItems.First().Type;
             }
 
+            await LoadAllConnectorsAsync();
+            ReloadAllServicesCommand.Execute(default);
             Navigate(lastOpenPage);
         }
 
@@ -153,6 +161,13 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         IsImageAvailable = imageService.HasValidConfig;
     }
 
+    [RelayCommand]
+    private async Task RefreshConnectorsAsync()
+    {
+        await _cacheToolkit.InitializeConnectorsAsync(true);
+        LoadConnectorsAfterInitialized();
+    }
+
     private void LoadNavItems()
     {
         TryClear(NavigateItems);
@@ -195,6 +210,27 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         }
 
         NavigateItems.Add(new NavigateItem(_resourceToolkit.GetLocalizedString(StringNames.Workspace), PageType.Workspace, FluentSymbol.Beaker));
+    }
+
+    private async Task LoadAllConnectorsAsync()
+    {
+        await _cacheToolkit.InitializeConnectorsAsync();
+        LoadConnectorsAfterInitialized();
+    }
+
+    private void LoadConnectorsAfterInitialized()
+    {
+        var connectors = _cacheToolkit.GetConnectors();
+        TryClear(Connectors);
+        if (connectors.Any())
+        {
+            foreach (var connector in connectors)
+            {
+                var vm = Locator.Current.GetService<IConnectorConfigViewModel>();
+                vm.InjectData(connector);
+                Connectors.Add(vm);
+            }
+        }
     }
 
     partial void OnCurrentNavigateItemChanged(NavigateItem value)

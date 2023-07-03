@@ -64,9 +64,9 @@ public sealed partial class MainWindow : Window
     {
         SetTitleBarDragRect();
 
-        DispatcherQueue.TryEnqueue(() =>
+        DispatcherQueue.TryEnqueue(async () =>
         {
-            _appViewModel.Initialize();
+            await _appViewModel.InitializeAsync();
         });
     }
 

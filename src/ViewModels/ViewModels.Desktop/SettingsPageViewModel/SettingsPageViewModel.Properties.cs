@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -160,4 +161,22 @@ public sealed partial class SettingsPageViewModel
 
     [ObservableProperty]
     private ConversationType _defaultConversationType;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedChatConnector;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedTextCompletionConnector;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedEmbeddingConnector;
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 }

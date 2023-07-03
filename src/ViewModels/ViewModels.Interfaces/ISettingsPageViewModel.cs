@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.Constants;
@@ -225,6 +226,36 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Default conversation type.
     /// </summary>
     ConversationType DefaultConversationType { get; set; }
+
+    /// <summary>
+    /// The selected chat connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedChatConnector { get; set; }
+
+    /// <summary>
+    /// The selected text completion connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedTextCompletionConnector { get; set; }
+
+    /// <summary>
+    /// The selected embedding connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedEmbeddingConnector { get; set; }
+
+    /// <summary>
+    /// A collection of connectors to use for chat.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+
+    /// <summary>
+    /// A collection of connectors to use for text completion.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+
+    /// <summary>
+    /// A collection of connectors to use for embedding.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 
     /// <summary>
     /// Import app configuration.
