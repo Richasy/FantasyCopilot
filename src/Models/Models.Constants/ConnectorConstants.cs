@@ -5,6 +5,10 @@ namespace FantasyCopilot.Models.Constants;
 
 public static class ConnectorConstants
 {
+    public const string DefaultConnectorFolderName = "Connectors";
+    public const string ConnectorConfigFileName = "connector.json";
+    public const string ConnectorCacheFileName = "ConnectorCache.json";
+
     public const string ChatType = "chat";
     public const string ChatRestType = "chat-rest";
     public const string ChatStreamType = "chat-stream";

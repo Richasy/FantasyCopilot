@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.App.Plugins;
@@ -327,4 +328,46 @@ public interface ICacheToolkit
     /// <param name="pluginId">Plugin id.</param>
     /// <returns><see cref="Task"/>.</returns>
     Task RemovePluginAsync(string pluginId);
+
+    /// <summary>
+    /// Initialize the connector configuration list.
+    /// </summary>
+    /// <param name="force">Whether to force reinitialization.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    Task InitializeConnectorsAsync(bool force = false);
+
+    /// <summary>
+    /// Get a list of connectors. (It must be initialized first).
+    /// </summary>
+    /// <returns>Connector config list.</returns>
+    IEnumerable<ConnectorConfig> GetConnectors();
+
+    /// <summary>
+    /// Get the connector from the ID.
+    /// </summary>
+    /// <param name="connectorId">Connector id.</param>
+    /// <returns><see cref="ConnectorConfig"/>.</returns>
+    ConnectorConfig GetConnectorFromId(string connectorId);
+
+    /// <summary>
+    /// Read configuration information from the connector package.
+    /// </summary>
+    /// <param name="connectorZipPath">The connector package path.</param>
+    /// <returns><see cref="ConnectorConfig"/>.</returns>
+    Task<ConnectorConfig> GetConnectorConfigFromZipAsync(string connectorZipPath);
+
+    /// <summary>
+    /// Import the connector.
+    /// </summary>
+    /// <param name="config">Connector config.</param>
+    /// <param name="connectorZipPath">The connector package path.</param>
+    /// <returns>The resulting connector configuration.</returns>
+    Task ImportConnectorConfigAsync(ConnectorConfig config, string connectorZipPath);
+
+    /// <summary>
+    /// Removes the specified connector.
+    /// </summary>
+    /// <param name="connectorId">Connector id.</param>
+    /// <returns><see cref="Task"/>.</returns>
+    Task RemoveConnectorAsync(string connectorId);
 }

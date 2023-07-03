@@ -71,4 +71,5 @@ public enum SettingNames
     ShouldAskBeforeWindowClosed,
     MessageUseMarkdown,
     ShouldSkipWorkflowExportTip,
+    ConnectorFolderPath,
 }
