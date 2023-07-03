@@ -148,6 +148,16 @@ public sealed partial class KernelService : IKernelService
                             Type = ConnectorConstants.ChatRestType,
                             Path = "/chat",
                         },
+                        new ConnectorEndpoint
+                        {
+                            Type = ConnectorConstants.ChatStreamType,
+                            Path = "/chat-stream",
+                        },
+                        new ConnectorEndpoint
+                        {
+                            Type = ConnectorConstants.ChatStreamCancelType,
+                            Path = "/chat-cancel",
+                        },
                     },
                 },
             },

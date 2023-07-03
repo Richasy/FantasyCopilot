@@ -45,6 +45,7 @@ public sealed class KnowledgeSkill
     /// <returns>Knowledge text.</returns>
     [SKName(WorkflowConstants.Knowledge.GetKnowledgeName)]
     [Description(WorkflowConstants.Knowledge.GetKnowledgeDescription)]
+    [SKFunction]
     public async Task<string> GetKnowledgeAsync(SKContext context)
     {
         var @base = await TryConnectKnowledgeBaseAsync(context);
@@ -83,6 +84,7 @@ public sealed class KnowledgeSkill
     /// <returns>Previous result.</returns>
     [SKName(WorkflowConstants.Knowledge.ImportFileName)]
     [Description(WorkflowConstants.Knowledge.ImportFileDescription)]
+    [SKFunction]
     public async Task<string> ImportFileAsync(SKContext context)
     {
         var path = context.Result;
@@ -119,6 +121,7 @@ public sealed class KnowledgeSkill
     /// <returns>Previous result.</returns>
     [SKName(WorkflowConstants.Knowledge.ImportFolderName)]
     [Description(WorkflowConstants.Knowledge.ImportFolderDescription)]
+    [SKFunction]
     public async Task<string> ImportFolderAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<KnowledgeBaseStep>();

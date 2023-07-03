@@ -36,6 +36,7 @@ public partial class MarkdownTextBlock
         {
             try
             {
+                RegisterThemeChangedHandler();
                 var theme = _themeListener.CurrentTheme == ApplicationTheme.Dark ? ElementTheme.Dark : ElementTheme.Light;
                 var context = new RendererContext
                 {

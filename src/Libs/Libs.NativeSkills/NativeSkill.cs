@@ -33,6 +33,7 @@ public sealed class NativeSkill
     /// <returns><see cref="Task"/>.</returns>
     [SKName(WorkflowConstants.Native.TextNotificationName)]
     [Description(WorkflowConstants.Native.TextNotificationDescription)]
+    [SKFunction]
     public async Task<SKContext> SendNotificationAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TextNotificationStep>();

@@ -43,6 +43,7 @@ public sealed class ImageSkill
     /// <returns>Image path.</returns>
     [SKName(WorkflowConstants.Image.DrawName)]
     [Description(WorkflowConstants.Image.DrawDescription)]
+    [SKFunction]
     public async Task<string> DrawAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<ImageStep>();

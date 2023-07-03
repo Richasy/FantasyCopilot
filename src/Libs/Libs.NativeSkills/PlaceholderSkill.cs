@@ -14,36 +14,42 @@ public sealed class PlaceholderSkill
 {
     [SKName(WorkflowConstants.Input.TextName)]
     [Description(WorkflowConstants.Input.TextDescription)]
+    [SKFunction]
     public static void InputText()
     {
     }
 
     [SKName(WorkflowConstants.Input.VoiceName)]
     [Description(WorkflowConstants.Input.VoiceDescription)]
+    [SKFunction]
     public static void InputVoice()
     {
     }
 
     [SKName(WorkflowConstants.Input.FileName)]
     [Description(WorkflowConstants.Input.FileDescription)]
+    [SKFunction]
     public static void InputFile()
     {
     }
 
     [SKName(WorkflowConstants.Output.TextName)]
     [Description(WorkflowConstants.Output.TextDescription)]
+    [SKFunction]
     public static void OutputText()
     {
     }
 
     [SKName(WorkflowConstants.Output.VoiceName)]
     [Description(WorkflowConstants.Output.VoiceDescription)]
+    [SKFunction]
     public static void OutputVoice()
     {
     }
 
     [SKName(WorkflowConstants.Output.ImageName)]
     [Description(WorkflowConstants.Output.ImageDescription)]
+    [SKFunction]
     public static void OutputImage()
     {
     }

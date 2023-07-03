@@ -38,6 +38,7 @@ public sealed class VoiceSkill
     /// <returns>Audio file path.</returns>
     [SKName(WorkflowConstants.Voice.ReadTextName)]
     [Description(WorkflowConstants.Voice.ReadTextDescription)]
+    [SKFunction]
     public async Task<string> ReadAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TextToSpeechStep>();

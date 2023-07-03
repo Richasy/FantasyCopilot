@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
@@ -126,6 +127,12 @@ public sealed class ChatSkill
                 reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
             }
         }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Chat skill error.");
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+        }
 
         return reply;
     }
@@ -137,6 +144,7 @@ public sealed class ChatSkill
     /// <returns>Message response.</returns>
     [Description(WorkflowConstants.Chat.GenerateStreamDescription)]
     [SKName(WorkflowConstants.Chat.GenerateStreamName)]
+    [SKFunction]
     public async Task<string> GenerateStreamAsync(SKContext context)
     {
         var reply = string.Empty;
@@ -157,7 +165,14 @@ public sealed class ChatSkill
                     continue;
                 }
 
-                reply += msg;
+                if (_chatCompletion is not AzureChatCompletion && _chatCompletion is not OpenAIChatCompletion)
+                {
+                    reply = msg;
+                }
+                else
+                {
+                    reply += msg;
+                }
 
                 if (_waitingMilliseconds > 50)
                 {
@@ -202,6 +217,12 @@ public sealed class ChatSkill
             {
                 reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
             }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Chat skill error.");
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
         }
 
         _respondTimer.Stop();

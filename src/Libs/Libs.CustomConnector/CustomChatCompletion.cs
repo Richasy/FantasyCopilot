@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FantasyCopilot.Models.App.Connectors;
@@ -43,7 +44,8 @@ public sealed class CustomChatCompletion : IChatCompletion
     /// <inheritdoc/>
     public async Task<IReadOnlyList<IChatResult>> GetChatCompletionsAsync(ChatHistory chat, ChatRequestSettings? requestSettings = null, CancellationToken cancellationToken = default)
     {
-        VerifyNotNull(requestSettings);
+        VerifyNotNull(chat);
+        requestSettings ??= new();
         var config = _connectorConfig.Features
             .First(p => p.Type == ConnectorConstants.ChatType)
             .Endpoints
@@ -58,14 +60,58 @@ public sealed class CustomChatCompletion : IChatCompletion
         response.EnsureSuccessStatusCode();
         var resultContent = await response.Content.ReadAsStringAsync(cancellationToken);
         var result = JsonSerializer.Deserialize<MessageResult>(resultContent);
+        if (!result.IsError && string.IsNullOrEmpty(result.Content))
+        {
+            result.IsError = true;
+            result.Content = "Empty response";
+        }
+
         return result.IsError
             ? throw new AIException(AIException.ErrorCodes.ServiceError, result.Content ?? "Something error")
             : new List<IChatResult> { new CustomChatCompletionResult(result) }.AsReadOnly();
     }
 
     /// <inheritdoc/>
-    public IAsyncEnumerable<IChatStreamingResult> GetStreamingChatCompletionsAsync(ChatHistory chat, ChatRequestSettings? requestSettings = null, CancellationToken cancellationToken = default)
-        => throw new NotImplementedException();
+    public async IAsyncEnumerable<IChatStreamingResult> GetStreamingChatCompletionsAsync(ChatHistory chat, ChatRequestSettings? requestSettings = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        VerifyNotNull(chat);
+        requestSettings ??= new();
+        var config = _connectorConfig.Features
+            .First(p => p.Type == ConnectorConstants.ChatType)
+            .Endpoints
+            .First(p => p.Type == ConnectorConstants.ChatStreamType);
+        var url = new Uri(_connectorConfig.BaseUrl + config.Path);
+        var requestData = GetRequest(chat, requestSettings);
+        var json = JsonSerializer.Serialize(requestData);
+        Stream responseStream;
+        try
+        {
+            var response = await _httpClient.PostAsync(url, JsonContent.Create(requestData), cancellationToken);
+            responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        }
+        catch (OperationCanceledException)
+        {
+            // Try call stream cancel endpoint
+            var cancelConfig = _connectorConfig.Features
+            .First(p => p.Type == ConnectorConstants.ChatType)
+            .Endpoints
+            .FirstOrDefault(p => p.Type == ConnectorConstants.ChatStreamCancelType);
+            if (cancelConfig != null)
+            {
+                var cancelUrl = new Uri(_connectorConfig.BaseUrl + cancelConfig.Path);
+                var cancelRequest = new HttpRequestMessage(HttpMethod.Post, cancelUrl);
+                _ = _httpClient.SendAsync(cancelRequest, CancellationToken.None);
+            }
+
+            throw;
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+
+        yield return new CustomChatStreamingResult(responseStream);
+    }
 
     private static void VerifyNotNull(object obj)
     {
@@ -113,6 +159,46 @@ public sealed class CustomChatCompletion : IChatCompletion
 
         public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
             => Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, _messageResult.Content));
+    }
+
+    internal class CustomChatStreamingResult : IChatStreamingResult
+    {
+        private readonly Stream _stream;
+        private readonly StreamReader _reader;
+        private string _line;
+
+        public CustomChatStreamingResult(Stream stream)
+        {
+            _stream = stream;
+            _line = string.Empty;
+            _reader = new StreamReader(stream);
+        }
+
+        public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
+        {
+            var msg = JsonSerializer.Deserialize<MessageResult>(_line);
+            return Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, msg.Content));
+        }
+
+        public async IAsyncEnumerable<ChatMessageBase> GetStreamingChatMessageAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            using (_stream)
+            using (_reader)
+            {
+                while ((_line = await _reader.ReadLineAsync(cancellationToken)) != null && _line != "[DONE]")
+                {
+                    if (_line.StartsWith("error:"))
+                    {
+                        break;
+                        throw new AIException(AIException.ErrorCodes.ServiceError, _line[6..].Trim());
+                    }
+                    else if (_line.StartsWith("{"))
+                    {
+                        yield return await GetChatMessageAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                }
+            }
+        }
     }
 
     internal class Message

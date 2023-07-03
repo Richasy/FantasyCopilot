@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 using Windows.ApplicationModel.DataTransfer;

@@ -61,6 +61,7 @@ public class TextCompleteSkill
     /// <returns><see cref="Task"/>.</returns>
     [Description(WorkflowConstants.TextCompletion.InitializeDescription)]
     [SKName(WorkflowConstants.TextCompletion.InitializeName)]
+    [SKFunction]
     public Task InitializeAsync(SKContext context)
     {
         context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
@@ -85,6 +86,7 @@ public class TextCompleteSkill
     /// <returns>Message response.</returns>
     [Description(WorkflowConstants.TextCompletion.CompleteDescription)]
     [SKName(WorkflowConstants.TextCompletion.CompleteName)]
+    [SKFunction]
     public async Task<string> CompleteAsync(SKContext context)
     {
         var reply = string.Empty;
@@ -140,6 +142,7 @@ public class TextCompleteSkill
     /// <returns>Message response.</returns>
     [Description(WorkflowConstants.TextCompletion.CompleteStreamDescription)]
     [SKName(WorkflowConstants.TextCompletion.CompleteStreamName)]
+    [SKFunction]
     public async Task<string> CompleteStreamAsync(SKContext context)
     {
         var reply = string.Empty;
