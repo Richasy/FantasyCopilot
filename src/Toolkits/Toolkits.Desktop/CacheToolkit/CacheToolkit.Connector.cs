@@ -60,7 +60,7 @@ public sealed partial class CacheToolkit
 
     /// <inheritdoc/>
     public ConnectorConfig GetConnectorFromId(string connectorId)
-        => _connectors.FirstOrDefault(p => p.Id == connectorId);
+        => string.IsNullOrEmpty(connectorId) ? default : _connectors.FirstOrDefault(p => p.Id == connectorId);
 
     /// <inheritdoc/>
     public async Task<ConnectorConfig> GetConnectorConfigFromZipAsync(string connectorZipPath)

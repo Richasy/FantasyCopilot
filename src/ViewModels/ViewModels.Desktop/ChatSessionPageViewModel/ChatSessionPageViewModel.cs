@@ -45,6 +45,18 @@ public sealed partial class ChatSessionPageViewModel : ViewModelBase, IChatSessi
             newVM.Initialize();
             CurrentSession = newVM;
         }
+
+        CheckConnectorStreamOption();
+    }
+
+    private void CheckConnectorStreamOption()
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        if (appVM.ConnectorGroup.ContainsKey(ConnectorType.Chat))
+        {
+            var connector = appVM.ConnectorGroup[ConnectorType.Chat];
+            CurrentSession.Options.IsStreamOutputEnabled = connector.SupportChatStream;
+        }
     }
 
     partial void OnIsInSettingsChanged(bool value)

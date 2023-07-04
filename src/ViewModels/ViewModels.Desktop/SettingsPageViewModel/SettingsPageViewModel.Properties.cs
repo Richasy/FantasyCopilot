@@ -5,6 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -17,6 +18,7 @@ public sealed partial class SettingsPageViewModel
     private readonly IResourceToolkit _resourceToolkit;
     private readonly IFileToolkit _fileToolkit;
     private readonly IAppViewModel _appViewModel;
+    private readonly ILogger<SettingsPageViewModel> _logger;
 
     [ObservableProperty]
     private string _packageVersion;
@@ -158,6 +160,12 @@ public sealed partial class SettingsPageViewModel
 
     [ObservableProperty]
     private bool _messageUseMarkdown;
+
+    [ObservableProperty]
+    private bool _isConnectorRefreshing;
+
+    [ObservableProperty]
+    private string _connectorFolderPath;
 
     [ObservableProperty]
     private ConversationType _defaultConversationType;

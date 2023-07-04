@@ -306,6 +306,9 @@
   <data name="ChatOptions" xml:space="preserve">
     <value>Chat options</value>
   </data>
+  <data name="CheckReadMe" xml:space="preserve">
+    <value>Read the instructions</value>
+  </data>
   <data name="ClearHistory" xml:space="preserve">
     <value>Clear the chat history</value>
   </data>
@@ -347,6 +350,21 @@
   </data>
   <data name="ConnectingImageService" xml:space="preserve">
     <value>Connecting to the image service</value>
+  </data>
+  <data name="ConnectorHeader" xml:space="preserve">
+    <value>Import the external connector as an AI provider</value>
+  </data>
+  <data name="ConnectorManager" xml:space="preserve">
+    <value>Connector management</value>
+  </data>
+  <data name="ConnectorManagerDescription" xml:space="preserve">
+    <value>For local or online connector management, click the Details button</value>
+  </data>
+  <data name="ConnectorManagerTip" xml:space="preserve">
+    <value>1. If your connector contains local model files, we recommend that you migrate to the new connector directory.
+2. If you need to delete the connector, open the connector directory to manually delete the corresponding folder, and then click the refresh button.
+3. If you already have a connector catalog, refresh it after changing the connector catalog.
+4. For more information about connectors, check out the GitHub project wiki.</value>
   </data>
   <data name="ContextConversation" xml:space="preserve">
     <value>Contextual conversations</value>
@@ -477,6 +495,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
   <data name="Directory" xml:space="preserve">
     <value>Directory</value>
   </data>
@@ -596,6 +617,9 @@
   </data>
   <data name="FeatureEnabledDescription" xml:space="preserve">
     <value>You can choose to enable or disable some feature modules</value>
+  </data>
+  <data name="FeatureMustHaveEndpoints" xml:space="preserve">
+    <value>The feature must contains at least one endpoint</value>
   </data>
   <data name="File" xml:space="preserve">
     <value>File</value>
@@ -737,6 +761,9 @@
   </data>
   <data name="ImportConfigFailed" xml:space="preserve">
     <value>Failed to import configuration file</value>
+  </data>
+  <data name="ImportConnector" xml:space="preserve">
+    <value>Import connector</value>
   </data>
   <data name="ImportData" xml:space="preserve">
     <value>Import data</value>
@@ -915,11 +942,20 @@
   <data name="MustHaveCommand" xml:space="preserve">
     <value>Plugin command cannot be empty</value>
   </data>
+  <data name="MustHaveExecuteFile" xml:space="preserve">
+    <value>An executable file must be provided</value>
+  </data>
+  <data name="MustHaveFeature" xml:space="preserve">
+    <value>The connector must contain features</value>
+  </data>
   <data name="MustHaveId" xml:space="preserve">
     <value>Must have an identifier (Id)</value>
   </data>
   <data name="MustHaveNameOrDescription" xml:space="preserve">
     <value>Must specify a name (Name) or description (Description)</value>
+  </data>
+  <data name="MustHaveType" xml:space="preserve">
+    <value>The type must be provided</value>
   </data>
   <data name="NameAtoZ" xml:space="preserve">
     <value>Name (A to Z)</value>
@@ -1043,6 +1079,9 @@
   </data>
   <data name="OpenAuthorSite" xml:space="preserve">
     <value>Open author website</value>
+  </data>
+  <data name="OpenConfig" xml:space="preserve">
+    <value>Open the configuration</value>
   </data>
   <data name="OpenConsoleWhenPluginRunning" xml:space="preserve">
     <value>Show console when plugin command runs</value>

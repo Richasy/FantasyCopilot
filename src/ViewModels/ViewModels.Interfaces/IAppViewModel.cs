@@ -2,7 +2,6 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
@@ -100,6 +99,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
 
     /// <summary>
+    /// Custom connector group.
+    /// </summary>
+    Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }
+
+    /// <summary>
     /// Navigate back command.
     /// </summary>
     IRelayCommand BackCommand { get; }
@@ -127,7 +131,7 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// Refresh connectors.
     /// </summary>
-    IAsyncRelayCommand RefreshConnectorsCommand { get; }
+    IAsyncRelayCommand<bool> RefreshConnectorsCommand { get; }
 
     /// <summary>
     /// Navigate to a page.

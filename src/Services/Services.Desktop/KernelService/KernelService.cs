@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -130,40 +129,17 @@ public sealed partial class KernelService : IKernelService
     private void AddCustomAIService()
     {
         var kernelBuilder = new KernelBuilder();
-        var config = new ConnectorConfig
+        var cacheToolkit = Locator.Current.GetService<ICacheToolkit>();
+        var chatConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomChatConnectorId, string.Empty);
+        var chatConnector = cacheToolkit.GetConnectorFromId(chatConnectorId);
+        var hasChatModel = chatConnector != null;
+
+        if (hasChatModel)
         {
-            Id = Guid.NewGuid().ToString(),
-            Name = "ChatGLM",
-            BaseUrl = "http://127.0.0.1:4399",
-            ExecuteName = "api.exe",
-            Features = new System.Collections.Generic.List<ConnectorFeature>
-            {
-                new ConnectorFeature
-                {
-                    Type = ConnectorConstants.ChatType,
-                    Endpoints = new System.Collections.Generic.List<ConnectorEndpoint>
-                    {
-                        new ConnectorEndpoint
-                        {
-                            Type = ConnectorConstants.ChatRestType,
-                            Path = "/chat",
-                        },
-                        new ConnectorEndpoint
-                        {
-                            Type = ConnectorConstants.ChatStreamType,
-                            Path = "/chat-stream",
-                        },
-                        new ConnectorEndpoint
-                        {
-                            Type = ConnectorConstants.ChatStreamCancelType,
-                            Path = "/chat-cancel",
-                        },
-                    },
-                },
-            },
-        };
-        kernelBuilder.WithCustomChatCompletionService(config);
-        SetSupportState(true, true, false, false);
+            kernelBuilder.WithCustomChatCompletionService(chatConnector);
+        }
+
+        SetSupportState(true, hasChatModel, false, false);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
         _logger.LogInformation("Custom AI source is not supported yet.");
     }

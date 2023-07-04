@@ -21,6 +21,7 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
     /// <inheritdoc/>
     public void Initialize(SessionOptions options = default)
     {
+        IsStreamOutputEnabled = true;
         if (options == null)
         {
             Temperature = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTemperature, 0.4);
@@ -52,7 +53,7 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
             TopP = TopP,
             FrequencyPenalty = FrequencyPenalty,
             PresencePenalty = PresencePenalty,
-            UseStreamOutput = UseStreamOutput,
+            UseStreamOutput = IsStreamOutputEnabled && UseStreamOutput,
             AutoRemoveEarlierMessage = AutoRemoveEarlierMessage,
         };
 }

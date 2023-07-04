@@ -72,4 +72,7 @@ public enum SettingNames
     MessageUseMarkdown,
     ShouldSkipWorkflowExportTip,
     ConnectorFolderPath,
+    CustomChatConnectorId,
+    CustomTextCompletionConnectorId,
+    CustomEmbeddingConnectorId,
 }

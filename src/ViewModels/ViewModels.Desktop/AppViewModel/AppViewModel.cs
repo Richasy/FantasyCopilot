@@ -39,7 +39,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         NavigateItems = new ObservableCollection<NavigateItem>();
 
         Connectors = new ObservableCollection<IConnectorConfigViewModel>();
-        _connectorGroup = new Dictionary<ConnectorType, IConnectorConfigViewModel>();
+        ConnectorGroup = new Dictionary<ConnectorType, IConnectorConfigViewModel>();
     }
 
     /// <inheritdoc/>
@@ -145,6 +145,8 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         IsImageAvailable = imageService.HasValidConfig;
         IsTranslateAvailable = translateService.HasValidConfig;
         IsStorageAvailable = storageService.HasValidConfig;
+
+        CheckConnectorGroup();
     }
 
     [RelayCommand]
@@ -162,9 +164,9 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     }
 
     [RelayCommand]
-    private async Task RefreshConnectorsAsync()
+    private async Task RefreshConnectorsAsync(bool force = false)
     {
-        await _cacheToolkit.InitializeConnectorsAsync(true);
+        await _cacheToolkit.InitializeConnectorsAsync(force);
         LoadConnectorsAfterInitialized();
     }
 
@@ -229,6 +231,62 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
                 var vm = Locator.Current.GetService<IConnectorConfigViewModel>();
                 vm.InjectData(connector);
                 Connectors.Add(vm);
+            }
+        }
+    }
+
+    private void CheckConnectorGroup()
+    {
+        var isCustomConnectorEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.AISource, AISource.Azure) == AISource.Custom;
+        if (!isCustomConnectorEnabled)
+        {
+            if (ConnectorGroup.Any())
+            {
+                foreach (var connector in ConnectorGroup)
+                {
+                    connector.Value.ExitCommand.Execute(default);
+                }
+
+                ConnectorGroup.Clear();
+            }
+
+            return;
+        }
+
+        CheckAndAddConnector(SettingNames.CustomChatConnectorId, ConnectorType.Chat);
+        CheckAndAddConnector(SettingNames.CustomTextCompletionConnectorId, ConnectorType.TextCompletion);
+        CheckAndAddConnector(SettingNames.CustomEmbeddingConnectorId, ConnectorType.Embedding);
+
+        foreach (var item in ConnectorGroup)
+        {
+            if (item.Value.IsLaunched)
+            {
+                continue;
+            }
+
+            item.Value.LaunchCommand.Execute(default);
+        }
+
+        void CheckAndAddConnector(SettingNames connectorIdSetting, ConnectorType connectorType)
+        {
+            var connectorId = _settingsToolkit.ReadLocalSetting(connectorIdSetting, string.Empty);
+            var connector = Connectors.FirstOrDefault(p => p.Id == connectorId);
+            if (ConnectorGroup.ContainsKey(connectorType))
+            {
+                var source = ConnectorGroup[connectorType];
+                if (source.Id != connectorId)
+                {
+                    source.ExitCommand.Execute(default);
+                    ConnectorGroup.Remove(connectorType);
+                    if (connector != null)
+                    {
+                        ConnectorGroup.Add(connectorType, connector);
+                    }
+                }
+            }
+            else if (connector != null)
+            {
+                ConnectorGroup.Add(connectorType, connector);
             }
         }
     }

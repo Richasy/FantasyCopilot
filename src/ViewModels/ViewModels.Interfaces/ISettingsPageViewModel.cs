@@ -223,6 +223,16 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     bool MessageUseMarkdown { get; set; }
 
     /// <summary>
+    /// Whether the list of connectors is refreshing.
+    /// </summary>
+    bool IsConnectorRefreshing { get; set; }
+
+    /// <summary>
+    /// Connector directory path.
+    /// </summary>
+    string ConnectorFolderPath { get; set; }
+
+    /// <summary>
     /// Default conversation type.
     /// </summary>
     ConversationType DefaultConversationType { get; set; }
@@ -281,6 +291,26 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Open log folder.
     /// </summary>
     IAsyncRelayCommand OpenLogFolderCommand { get; }
+
+    /// <summary>
+    /// Import ai connector.
+    /// </summary>
+    IAsyncRelayCommand ImportConnectorCommand { get; }
+
+    /// <summary>
+    /// Command to open the plug-in folder.
+    /// </summary>
+    IAsyncRelayCommand OpenConnectorFolderCommand { get; }
+
+    /// <summary>
+    /// Change the plugin folder.
+    /// </summary>
+    IAsyncRelayCommand ChangeConnectorFolderCommand { get; }
+
+    /// <summary>
+    /// Refresh connectors.
+    /// </summary>
+    IRelayCommand RefreshConnectorCommand { get; }
 
     /// <summary>
     /// Restart the app.

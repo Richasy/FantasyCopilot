@@ -65,8 +65,26 @@ public class ResourceGenerator : IIncrementalGenerator
         {
             var name = dataNode.Attributes["name"].Value;
             var value = dataNode.SelectSingleNode("value").InnerText;
+
             sb.AppendLine("    /// <summary>");
-            sb.AppendLine($"    /// {value}");
+            if (value.Contains("\n"))
+            {
+                var sp = value.Split('\n');
+                foreach (var spt in sp)
+                {
+                    if (string.IsNullOrEmpty(spt.Trim()))
+                    {
+                        continue;
+                    }
+
+                    sb.AppendLine($"    /// {spt}");
+                }
+            }
+            else
+            {
+                sb.AppendLine($"    /// {value}");
+            }
+
             sb.AppendLine("    /// </summary>");
             sb.AppendLine($"    {name},");
             sb.AppendLine();

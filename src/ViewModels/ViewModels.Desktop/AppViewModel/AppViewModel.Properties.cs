@@ -21,8 +21,7 @@ public sealed partial class AppViewModel
     private readonly ISettingsToolkit _settingsToolkit;
     private readonly ICacheToolkit _cacheToolkit;
     private readonly ILogger<AppViewModel> _logger;
-    private readonly Dictionary<ConnectorType, IConnectorConfigViewModel> _connectorGroup;
-
+    
     [ObservableProperty]
     private bool _isBackButtonShown;
 
@@ -67,6 +66,9 @@ public sealed partial class AppViewModel
 
     /// <inheritdoc/>
     public ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+
+    /// <inheritdoc/>
+    public Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }
 
     /// <inheritdoc/>
     public PageType CurrentPage { get; set; }

@@ -5,6 +5,7 @@
     xmlns:controls="using:FantasyCopilot.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:FantasyCopilot.App.Controls.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -136,6 +137,107 @@
                     Width="200"
                     PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay}" />
+            </labs:SettingsCard>
+
+            <!--  Custom AI  -->
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=ConnectorHeader}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <Button Command="{x:Bind ViewModel.ImportConnectorCommand}" Content="{ext:Locale Name=ImportConnector}" />
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Description="{ext:Locale Name=ConnectorManagerDescription}"
+                Header="{ext:Locale Name=ConnectorManager}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Style="{StaticResource IconButtonStyle}" ToolTipService.ToolTip="{ext:Locale Name=Detail}">
+                        <controls:FluentIcon
+                            FontSize="14"
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Symbol="Info" />
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel MaxWidth="280" Spacing="12">
+                                    <TextBlock
+                                        FontSize="12"
+                                        FontStyle="Italic"
+                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                        Text="{x:Bind ViewModel.ConnectorFolderPath, Mode=OneWay}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                        Text="{ext:Locale Name=ConnectorManagerTip}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button
+                        Command="{x:Bind ViewModel.OpenConnectorFolderCommand}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=OpenFolder}">
+                        <controls:FluentIcon FontSize="14" Symbol="FolderOpen" />
+                    </Button>
+                    <Button
+                        Command="{x:Bind ViewModel.ChangeConnectorFolderCommand}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=ChangeFolder}">
+                        <controls:FluentIcon FontSize="14" Symbol="BoxArrowLeft" />
+                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Command="{x:Bind ViewModel.RefreshConnectorCommand}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=Refresh}">
+                            <controls:FluentIcon FontSize="14" Symbol="ArrowSync" />
+                        </Button>
+                        <ProgressRing
+                            Width="20"
+                            Height="20"
+                            MinWidth="20"
+                            MinHeight="20"
+                            Margin="2,0,0,0"
+                            VerticalAlignment="Center"
+                            IsActive="{x:Bind ViewModel.IsConnectorRefreshing, Mode=OneWay}" />
+                    </StackPanel>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=ChatModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Margin="0,0,4,0"
+                        Command="{x:Bind ViewModel.SelectedChatConnector.OpenReadMeCommand, Mode=OneWay}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                        Visibility="{x:Bind ViewModel.SelectedChatConnector.HasReadMe, Mode=OneWay}">
+                        <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                    </Button>
+                    <Button
+                        Margin="0,0,4,0"
+                        Command="{x:Bind ViewModel.SelectedChatConnector.OpenConfigCommand, Mode=OneWay}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                        Visibility="{x:Bind ViewModel.SelectedChatConnector.HasConfig, Mode=OneWay}">
+                        <controls:FluentIcon FontSize="14" Symbol="Options" />
+                    </Button>
+                    <ComboBox
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.ChatConnectors}"
+                        SelectedItem="{x:Bind ViewModel.SelectedChatConnector, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
             </labs:SettingsCard>
         </labs:SettingsExpander.Items>
     </labs:SettingsExpander>
