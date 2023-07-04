@@ -210,22 +210,24 @@
                 Header="{ext:Locale Name=ChatModelName}"
                 Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <Button
-                        Margin="0,0,4,0"
-                        Command="{x:Bind ViewModel.SelectedChatConnector.OpenReadMeCommand, Mode=OneWay}"
-                        Style="{StaticResource IconButtonStyle}"
-                        ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
-                        Visibility="{x:Bind ViewModel.SelectedChatConnector.HasReadMe, Mode=OneWay}">
-                        <controls:FluentIcon FontSize="14" Symbol="Receipt" />
-                    </Button>
-                    <Button
-                        Margin="0,0,4,0"
-                        Command="{x:Bind ViewModel.SelectedChatConnector.OpenConfigCommand, Mode=OneWay}"
-                        Style="{StaticResource IconButtonStyle}"
-                        ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
-                        Visibility="{x:Bind ViewModel.SelectedChatConnector.HasConfig, Mode=OneWay}">
-                        <controls:FluentIcon FontSize="14" Symbol="Options" />
-                    </Button>
+                    <StackPanel Visibility="{x:Bind ViewModel.SelectedChatConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedChatConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedChatConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedChatConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedChatConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
                     <ComboBox
                         MaxWidth="160"
                         VerticalAlignment="Center"

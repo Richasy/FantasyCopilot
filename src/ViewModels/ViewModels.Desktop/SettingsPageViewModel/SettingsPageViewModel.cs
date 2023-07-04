@@ -309,6 +309,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         if (string.IsNullOrEmpty(pluginFolder))
         {
             pluginFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, WorkflowConstants.DefaultPluginFolderName);
+            Directory.CreateDirectory(pluginFolder);
         }
 
         return pluginFolder;
@@ -320,6 +321,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         if (string.IsNullOrEmpty(connectorFolder))
         {
             connectorFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, ConnectorConstants.DefaultConnectorFolderName);
+            Directory.CreateDirectory(connectorFolder);
         }
 
         return connectorFolder;
@@ -340,9 +342,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
     private void VerifyConnectors()
     {
-        var chatConnectors = _appViewModel.Connectors.Where(p => p.GetData().Features.Any(p => p.Type == ConnectorConstants.ChatType));
-        var textConnectors = _appViewModel.Connectors.Where(p => p.GetData().Features.Any(p => p.Type == ConnectorConstants.TextCompletionType));
-        var embeddingConnectors = _appViewModel.Connectors.Where(p => p.GetData().Features.Any(p => p.Type == ConnectorConstants.EmbeddingType));
+        var chatConnectors = _appViewModel.Connectors.Where(p => p.SupportChat);
+        var textConnectors = _appViewModel.Connectors.Where(p => p.SupportTextCompletion);
+        var embeddingConnectors = _appViewModel.Connectors.Where(p => p.SupportEmbedding);
 
         var currentChatId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomChatConnectorId, string.Empty);
         var currentTextId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomTextCompletionConnectorId, string.Empty);

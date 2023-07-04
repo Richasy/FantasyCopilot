@@ -21,7 +21,7 @@ public sealed partial class AppViewModel
     private readonly ISettingsToolkit _settingsToolkit;
     private readonly ICacheToolkit _cacheToolkit;
     private readonly ILogger<AppViewModel> _logger;
-    
+
     [ObservableProperty]
     private bool _isBackButtonShown;
 

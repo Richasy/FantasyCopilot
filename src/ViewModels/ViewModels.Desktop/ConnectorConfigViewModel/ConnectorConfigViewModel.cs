@@ -32,7 +32,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         SupportChat = config.Features.Any(f => f.Type == ConnectorConstants.ChatType);
         SupportChatStream = SupportChat && config.Features.First(p => p.Type == ConnectorConstants.ChatType).Endpoints.Any(p => p.Type == ConnectorConstants.ChatStreamType);
         SupportTextCompletion = config.Features.Any(f => f.Type == ConnectorConstants.TextCompletionType);
-        SupportTextCompletionStream = SupportChat && config.Features.First(p => p.Type == ConnectorConstants.TextCompletionType).Endpoints.Any(p => p.Type == ConnectorConstants.TextCompletionStreamType);
+        SupportTextCompletionStream = SupportTextCompletion && config.Features.First(p => p.Type == ConnectorConstants.TextCompletionType).Endpoints.Any(p => p.Type == ConnectorConstants.TextCompletionStreamType);
         SupportEmbedding = config.Features.Any(f => f.Type == ConnectorConstants.EmbeddingType);
     }
 
@@ -70,7 +70,9 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         var exePath = Path.Combine(folder, _config.ExecuteName);
         var process = new Process();
         process.StartInfo.FileName = exePath;
+        process.StartInfo.WorkingDirectory = folder;
         process.StartInfo.UseShellExecute = true;
+
         process.Exited += OnConnectorExited;
         IsLaunched = true;
         process.Start();

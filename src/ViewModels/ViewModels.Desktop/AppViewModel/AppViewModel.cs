@@ -60,7 +60,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
             }
 
             await LoadAllConnectorsAsync();
-            ReloadAllServicesCommand.Execute(default);
+            ReloadAllServices();
             Navigate(lastOpenPage);
         }
 
