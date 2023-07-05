@@ -103,6 +103,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }
 
     /// <summary>
+    /// Whether to display the connector viewer button.
+    /// </summary>
+    bool IsConnectorViewerShown { get; }
+
+    /// <summary>
     /// Navigate back command.
     /// </summary>
     IRelayCommand BackCommand { get; }

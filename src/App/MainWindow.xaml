@@ -53,16 +53,27 @@
                     </DataTemplate>
                 </NavigationView.MenuItemTemplate>
                 <NavigationView.PaneFooter>
-                    <Button
-                        Width="36"
-                        Height="36"
-                        Padding="0"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        Click="OnSettingsButtonClick"
-                        ToolTipService.ToolTip="{ext:Locale Name=Settings}">
-                        <controls:FluentIcon FontSize="18" Symbol="Settings" />
-                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            x:Name="ConnectorMangementButton"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=ConnectorViewer}"
+                            Visibility="{x:Bind _appViewModel.IsConnectorViewerShown, Mode=OneWay}">
+                            <controls:FluentIcon
+                                FontSize="17"
+                                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                Symbol="Connector" />
+                            <Button.Flyout>
+                                <Flyout Placement="Top" />
+                            </Button.Flyout>
+                        </Button>
+                        <Button
+                            Click="OnSettingsButtonClick"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=Settings}">
+                            <controls:FluentIcon FontSize="17" Symbol="Settings" />
+                        </Button>
+                    </StackPanel>
                 </NavigationView.PaneFooter>
             </NavigationView>
         </Grid>

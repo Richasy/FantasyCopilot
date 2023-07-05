@@ -49,6 +49,9 @@ public sealed partial class AppViewModel
     [ObservableProperty]
     private bool _isKnowledgeAvailable;
 
+    [ObservableProperty]
+    private bool _isConnectorViewerShown;
+
     /// <inheritdoc/>
     public event EventHandler BackRequest;
 

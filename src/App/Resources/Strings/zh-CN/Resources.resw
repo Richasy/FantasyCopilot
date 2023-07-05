@@ -1617,4 +1617,7 @@
   <data name="GetOnlineModelListFailed" xml:space="preserve">
     <value>获取在线模型列表失败</value>
   </data>
+  <data name="ConnectorViewer" xml:space="preserve">
+    <value>连接器看板</value>
+  </data>
 </root>
