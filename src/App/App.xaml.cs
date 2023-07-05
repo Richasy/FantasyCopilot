@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppLifecycle;
 using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -79,10 +80,25 @@ public partial class App : Application
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
+        // We expect our app is single instanced.
+        var instance = AppInstance.FindOrRegisterForKey(Guid);
+        var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+        // If the current instance is not the previously registered instance
+        if (!instance.IsCurrent)
+        {
+            // Redirect to the existing instance
+            await instance.RedirectActivationToAsync(activatedArgs);
+
+            // Kill the current instance
+            Current.Exit();
+            return;
+        }
+
+        instance.Activated += OnInstanceActivated;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        InitializeTrayIcon();
         LaunchWindow();
     }
 
@@ -121,6 +137,11 @@ public partial class App : Application
 
     private void InitializeTrayIcon()
     {
+        if (TrayIcon != null)
+        {
+            return;
+        }
+
         var showHideWindowCommand = (XamlUICommand)Resources["ShowHideWindowCommand"];
         showHideWindowCommand.ExecuteRequested += OnShowHideWindowCommandExecuteRequested;
 
@@ -148,6 +169,16 @@ public partial class App : Application
         _window.Closed += OnMainWindowClosedAsync;
 
         _window.Activate();
+    }
+
+    private void OnInstanceActivated(object sender, AppActivationArguments e)
+    {
+        if (e.Kind == ExtendedActivationKind.Protocol)
+        {
+            return;
+        }
+
+        InitializeTrayIcon();
     }
 
     private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
