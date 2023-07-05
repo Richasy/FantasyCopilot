@@ -49,6 +49,9 @@ public sealed partial class CivitaiService : ICivitaiService
         var query = $"limit=50&nsfw=None&sort={GetSortTypeText(sortType)}&period={periodType}&page={page}";
         var requestUri = new Uri($"{ImageUrl}?{query}");
         var responseText = await _httpClient.GetStringAsync(requestUri, cancellationToken);
+        var pattern = "\"Clip skip\":\"(\\d+)\"";
+        var replacement = "\"Clip skip\":$1";
+        responseText = System.Text.RegularExpressions.Regex.Replace(responseText, pattern, replacement);
         var result = JsonSerializer.Deserialize<CivitaiImageSearchResult>(responseText);
         return result;
     }

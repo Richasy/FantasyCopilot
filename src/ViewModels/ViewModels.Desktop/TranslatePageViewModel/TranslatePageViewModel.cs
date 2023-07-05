@@ -61,6 +61,8 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
         var localLocale = languages.FirstOrDefault(p => p.Id == CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
         var localSourceLanguage = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateSourceLanguage, string.Empty);
         var localTargetLanguage = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateTargetLanguage, localLocale?.Id ?? string.Empty);
+
+        await Task.Delay(100);
         SelectedSourceLanguage = SourceLanguages.FirstOrDefault(p => p.Id == localSourceLanguage) ?? autoDetect;
         SelectedTargetLanguage = TargetLanguages.FirstOrDefault(p => p.Id == localTargetLanguage) ?? TargetLanguages.FirstOrDefault(p => p.Id == "en");
     }

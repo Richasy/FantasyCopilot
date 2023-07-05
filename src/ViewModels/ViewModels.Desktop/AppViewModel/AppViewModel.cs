@@ -256,16 +256,14 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         CheckAndAddConnector(SettingNames.CustomTextCompletionConnectorId, ConnectorType.TextCompletion);
         CheckAndAddConnector(SettingNames.CustomEmbeddingConnectorId, ConnectorType.Embedding);
 
-        foreach (var item in ConnectorGroup)
-        {
-            if (item.Value.IsLaunched)
-            {
-                continue;
-            }
-
-            item.Value.LaunchCommand.Execute(default);
-        }
-
+        // foreach (var item in ConnectorGroup)
+        // {
+        //    if (item.Value.IsLaunched)
+        //    {
+        //        continue;
+        //    }
+        //    item.Value.LaunchCommand.Execute(default);
+        // }
         void CheckAndAddConnector(SettingNames connectorIdSetting, ConnectorType connectorType)
         {
             var connectorId = _settingsToolkit.ReadLocalSetting(connectorIdSetting, string.Empty);

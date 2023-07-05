@@ -121,13 +121,14 @@
             IsIndeterminate="True"
             Visibility="{x:Bind ViewModel.IsIncrementalLoading, Mode=OneWay}" />
 
-        <controls:EmptyHolder
-            x:Name="ImageEmptyContainer"
-            Title="{ext:Locale Name=GalleryEmpty}"
-            Grid.Row="2"
-            Description="{ext:Locale Name=GalleryEmptyDescription}"
-            Emoji="&#x1F5BC;"
-            Style="{StaticResource BasicEmptyHolderStyle}"
-            Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
+        <Border Grid.Row="2" Visibility="{x:Bind ViewModel.IsInitializing, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+            <controls:EmptyHolder
+                x:Name="ImageEmptyContainer"
+                Title="{ext:Locale Name=GalleryEmpty}"
+                Description="{ext:Locale Name=GalleryEmptyDescription}"
+                Emoji="&#x1F5BC;"
+                Style="{StaticResource BasicEmptyHolderStyle}"
+                Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}" />
+        </Border>
     </Grid>
 </local:CivitaiImageGalleryPanelBase>

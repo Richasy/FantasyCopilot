@@ -135,7 +135,7 @@ public class CivitaiImageMetadata
     public double CfgScale { get; set; }
 
     [JsonPropertyName("Clip skip")]
-    public string ClipSkip { get; set; }
+    public double ClipSkip { get; set; }
 
     [JsonPropertyName("negativePrompt")]
     public string NegativePrompt { get; set; }

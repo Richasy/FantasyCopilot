@@ -19,11 +19,7 @@ namespace FantasyCopilot.App.Controls
         {
             InitializeComponent();
             _appViewModel = Locator.Current.GetService<IAppViewModel>();
-            Loaded += OnLoaded;
         }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-            => System.Diagnostics.Debug.WriteLine($"App title bar loaded: {DateTime.Now.Ticks}");
 
         private void OnBackButtonClick(object sender, RoutedEventArgs e)
             => _appViewModel.BackCommand.Execute(default);

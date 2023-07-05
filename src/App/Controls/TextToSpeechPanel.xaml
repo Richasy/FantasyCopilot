@@ -23,6 +23,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <ComboBox
+                x:Name="LanguageComboBox"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Header="{ext:Locale Name=Language}"
@@ -38,6 +39,7 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <ComboBox
+                x:Name="VoiceComboBox"
                 Grid.Column="1"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
