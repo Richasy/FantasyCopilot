@@ -26,7 +26,7 @@ public partial class App : Application
     /// </summary>
     public const string Guid = "376AEAAB-331B-42AC-A069-146F7230765E";
 
-    private readonly ISettingsToolkit _settingsToolkit;
+    private ISettingsToolkit _settingsToolkit;
     private Window _window;
     private DispatcherQueue _dispatcherQueue;
 
@@ -37,10 +37,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        Factory = new DI.App.Factory();
-        DI.App.Factory.RegisterAppRequiredServices();
-        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
-        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
+        System.Diagnostics.Debug.WriteLine($"App created: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         UnhandledException += OnUnhandledException;
     }
 
@@ -83,6 +80,7 @@ public partial class App : Application
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         // We expect our app is single instanced.
+        System.Diagnostics.Debug.WriteLine($"App launched: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         var instance = AppInstance.FindOrRegisterForKey(Guid);
         var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
 
@@ -99,6 +97,8 @@ public partial class App : Application
 
         instance.Activated += OnInstanceActivated;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        DI.App.Factory.RegisterAppRequiredServices();
+        System.Diagnostics.Debug.WriteLine($"DI registered: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         LaunchWindow();
     }
 
@@ -155,20 +155,24 @@ public partial class App : Application
     private void LaunchWindow()
     {
         _window = new MainWindow();
+        System.Diagnostics.Debug.WriteLine($"window created: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         var appWindow = _window.AppWindow;
         appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         appWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-        appWindow.SetIcon("Assets/logo.ico");
         appWindow.Title = Locator.Current.GetService<IResourceToolkit>().GetLocalizedString(StringNames.AppName);
+        appWindow.SetIcon("Assets/logo.ico");
         var presenter = appWindow.Presenter as OverlappedPresenter;
         presenter.IsResizable = false;
         presenter.IsMaximizable = false;
         MoveAndResize();
-
         _window.Closed += OnMainWindowClosedAsync;
 
+        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
+        System.Diagnostics.Debug.WriteLine($"Setting read: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         _window.Activate();
+        System.Diagnostics.Debug.WriteLine($"window activated: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
     }
 
     private void OnInstanceActivated(object sender, AppActivationArguments e)
