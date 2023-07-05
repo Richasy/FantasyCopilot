@@ -29,6 +29,8 @@
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\plannerPrompt.txt" />
     <None Remove="Controls\CloseWindowTipDialog.xaml" />
+    <None Remove="Controls\ConnectorViewer.xaml" />
+    <None Remove="Controls\Connector\ConnectorItem.xaml" />
     <None Remove="Controls\FavoritePromptsPanel.xaml" />
     <None Remove="Controls\Images\CivitaiImageControl.xaml" />
     <None Remove="Controls\Images\CivitaiImageGalleryPanel.xaml" />
@@ -441,6 +443,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\MarkdownSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\ConnectorViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Connector\ConnectorItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

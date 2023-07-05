@@ -134,4 +134,7 @@ public sealed partial class MainWindow : Window
 
     private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
         => _appViewModel.Navigate(PageType.Settings);
+
+    private void OnConnectorViewerFlyoutOpened(object sender, object e)
+        => ConnectorViewer.Initialize();
 }

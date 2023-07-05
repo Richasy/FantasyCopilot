@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="FantasyCopilot.App.Controls.Connector.ConnectorViewer"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
+    xmlns:local="using:FantasyCopilot.App.Controls.Connector"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid RowSpacing="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock
+            HorizontalAlignment="Left"
+            Style="{StaticResource SubtitleTextBlockStyle}"
+            Text="{ext:Locale Name=ConnectorViewer}" />
+        <ScrollViewer Style="{StaticResource DefaultScrollViewerStyle}" VerticalScrollBarVisibility="Auto">
+            <ItemsRepeater x:Name="ConnectorRepeater">
+                <ItemsRepeater.Layout>
+                    <StackLayout Spacing="8" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel" />
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

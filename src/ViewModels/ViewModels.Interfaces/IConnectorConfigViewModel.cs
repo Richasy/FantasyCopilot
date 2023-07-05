@@ -3,6 +3,7 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App.Connectors;
+using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
 
@@ -60,6 +61,11 @@ public interface IConnectorConfigViewModel : INotifyPropertyChanged
     /// Whether the connector is already launched.
     /// </summary>
     bool IsLaunched { get; }
+
+    /// <summary>
+    /// Current state.
+    /// </summary>
+    ConnectorState State { get; }
 
     /// <summary>
     /// Open the description file.

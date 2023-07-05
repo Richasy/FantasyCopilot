@@ -4,6 +4,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading.Tasks;
+using System.Timers;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Connectors;
@@ -27,6 +31,9 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
     public void InjectData(ConnectorConfig config)
     {
         _config = config;
+        _timer = new Timer(1000);
+        _timer.Enabled = false;
+        _timer.Elapsed += OnConnectorTimerElapsed;
         Id = config.Id;
         DisplayName = config.Name;
         SupportChat = config.Features.Any(f => f.Type == ConnectorConstants.ChatType);
@@ -34,6 +41,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         SupportTextCompletion = config.Features.Any(f => f.Type == ConnectorConstants.TextCompletionType);
         SupportTextCompletionStream = SupportTextCompletion && config.Features.First(p => p.Type == ConnectorConstants.TextCompletionType).Endpoints.Any(p => p.Type == ConnectorConstants.TextCompletionStreamType);
         SupportEmbedding = config.Features.Any(f => f.Type == ConnectorConstants.EmbeddingType);
+        State = ConnectorState.NotStarted;
     }
 
     [RelayCommand]
@@ -75,6 +83,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
         process.Exited += OnConnectorExited;
         IsLaunched = true;
+        CheckConnectorStateCommand.Execute(default);
         process.Start();
     }
 
@@ -87,10 +96,77 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         }
     }
 
+    [RelayCommand]
+    private async Task CheckConnectorStateAsync()
+    {
+        if (!IsLaunched)
+        {
+            State = ConnectorState.NotStarted;
+        }
+        else if (IsLaunched)
+        {
+            if (_isTryConnecting)
+            {
+                return;
+            }
+
+            _isTryConnecting = true;
+            using var tcpClient = new TcpClient();
+            if (Uri.TryCreate(_config.BaseUrl, UriKind.Absolute, out var uri))
+            {
+                if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+                {
+                    try
+                    {
+                        await tcpClient.ConnectAsync(uri.Host, 80);
+                        State = ConnectorState.Connected;
+                    }
+                    catch (Exception)
+                    {
+                        // Service not available yet.
+                        State = ConnectorState.Launching;
+                    }
+                }
+                else if (uri.Scheme == Uri.UriSchemeNetTcp)
+                {
+                    // Service not available yet.
+                    try
+                    {
+                        await tcpClient.ConnectAsync(IPAddress.Parse(uri.Host), uri.Port);
+                        State = ConnectorState.Connected;
+                    }
+                    catch (Exception)
+                    {
+                        State = ConnectorState.Launching;
+                    }
+                }
+            }
+            else
+            {
+                Exit();
+            }
+
+            _isTryConnecting = false;
+        }
+
+        if (State == ConnectorState.Launching)
+        {
+            if (!_timer.Enabled)
+            {
+                _timer.Enabled = true;
+            }
+        }
+        else if (State == ConnectorState.Connected)
+        {
+            _timer.Enabled = false;
+        }
+    }
+
     private void OnConnectorExited(object sender, EventArgs e)
     {
         _process = null;
         IsLaunched = false;
+        CheckConnectorStateCommand.Execute(default);
     }
 
     private void OpenFileInternal(string fileName)
@@ -114,5 +190,16 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         }
 
         return Path.Combine(connectorFolder, Id);
+    }
+
+    private void OnConnectorTimerElapsed(object sender, ElapsedEventArgs e)
+        => CheckConnectorStateCommand.Execute(default);
+
+    partial void OnIsLaunchedChanged(bool value)
+    {
+        if (!value)
+        {
+            _timer.Enabled = false;
+        }
     }
 }

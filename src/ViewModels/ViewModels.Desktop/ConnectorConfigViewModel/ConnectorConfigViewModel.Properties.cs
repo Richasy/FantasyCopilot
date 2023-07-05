@@ -2,8 +2,10 @@
 
 using System;
 using System.Diagnostics;
+using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App.Connectors;
+using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -12,8 +14,10 @@ namespace FantasyCopilot.ViewModels;
 /// </summary>
 public sealed partial class ConnectorConfigViewModel
 {
+    private readonly Timer _timer;
     private ConnectorConfig _config;
     private Process _process;
+    private bool _isTryConnecting;
 
     [ObservableProperty]
     private string _id;
@@ -44,6 +48,9 @@ public sealed partial class ConnectorConfigViewModel
 
     [ObservableProperty]
     private bool _isLaunched;
+
+    [ObservableProperty]
+    private ConnectorState _state;
 
     /// <inheritdoc/>
     public override bool Equals(object obj) => obj is ConnectorConfigViewModel model && Id == model.Id;
