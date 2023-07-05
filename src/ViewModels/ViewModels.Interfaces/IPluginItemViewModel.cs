@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -60,7 +60,7 @@ public interface IPluginItemViewModel : INotifyPropertyChanged
     /// <summary>
     /// Plugin commands.
     /// </summary>
-    ObservableCollection<IPluginCommandItemViewModel> Commands { get; }
+    SynchronizedObservableCollection<IPluginCommandItemViewModel> Commands { get; }
 
     /// <summary>
     /// Open the repository for the plugin.

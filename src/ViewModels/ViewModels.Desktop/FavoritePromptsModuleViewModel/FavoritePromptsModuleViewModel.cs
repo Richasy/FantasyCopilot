@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -29,7 +29,7 @@ public sealed partial class FavoritePromptsModuleViewModel : ViewModelBase, IFav
         _cacheToolkit = cacheToolkit;
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
-        Prompts = new ObservableCollection<SessionMetadata>();
+        Prompts = new SynchronizedObservableCollection<SessionMetadata>();
         Prompts.CollectionChanged += OnPromptsCollectionChanged;
         _cacheToolkit.PromptListChanged += OnPromptListChanged;
         AttachIsRunningToAsyncCommand(p => IsLoading = p, InitializeCommand);

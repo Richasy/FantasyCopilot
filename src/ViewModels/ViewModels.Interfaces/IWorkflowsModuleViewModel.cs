@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -35,7 +35,7 @@ public interface IWorkflowsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Workflow list.
     /// </summary>
-    ObservableCollection<WorkflowMetadata> Workflows { get; }
+    SynchronizedObservableCollection<WorkflowMetadata> Workflows { get; }
 
     /// <summary>
     /// Run config command.

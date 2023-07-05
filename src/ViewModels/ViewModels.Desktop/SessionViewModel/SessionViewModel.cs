@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
@@ -40,7 +39,7 @@ public sealed partial class SessionViewModel : ViewModelBase, ISessionViewModel
         _chatService = chatService;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         ConversationType = settingsToolkit.ReadLocalSetting(SettingNames.LastConversationType, ConversationType.Continuous);
-        Messages = new ObservableCollection<Message>();
+        Messages = new SynchronizedObservableCollection<Message>();
         Name = _resourceToolkit.GetLocalizedString(StringNames.NewSession);
         UserInput = string.Empty;
         AttachIsRunningToAsyncCommand(

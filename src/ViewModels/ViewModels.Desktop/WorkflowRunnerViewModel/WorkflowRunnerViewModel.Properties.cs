@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
@@ -49,5 +48,5 @@ public sealed partial class WorkflowRunnerViewModel
     private IWorkflowStepViewModel _output;
 
     /// <inheritdoc/>
-    public ObservableCollection<IWorkflowStepViewModel> Steps { get; }
+    public SynchronizedObservableCollection<IWorkflowStepViewModel> Steps { get; }
 }

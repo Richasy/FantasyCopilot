@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -50,7 +50,7 @@ public interface IWorkflowRunnerViewModel : INotifyPropertyChanged
     /// <summary>
     /// Workflow steps.
     /// </summary>
-    ObservableCollection<IWorkflowStepViewModel> Steps { get; }
+    SynchronizedObservableCollection<IWorkflowStepViewModel> Steps { get; }
 
     /// <summary>
     /// Inject workflow metadata and initialize.

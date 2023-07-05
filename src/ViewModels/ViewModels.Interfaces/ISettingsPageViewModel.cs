@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -225,12 +225,22 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// <summary>
     /// Whether the list of connectors is refreshing.
     /// </summary>
-    bool IsConnectorRefreshing { get; set; }
+    bool IsConnectorRefreshing { get; }
+
+    /// <summary>
+    /// Whether the connector is being imported.
+    /// </summary>
+    bool IsConnectorImporting { get; }
 
     /// <summary>
     /// Connector directory path.
     /// </summary>
-    string ConnectorFolderPath { get; set; }
+    string ConnectorFolderPath { get; }
+
+    /// <summary>
+    /// Connector import progress.
+    /// </summary>
+    int ConnectorImportProgress { get; }
 
     /// <summary>
     /// Default conversation type.
@@ -253,19 +263,49 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     IConnectorConfigViewModel SelectedEmbeddingConnector { get; set; }
 
     /// <summary>
+    /// List of Azure Open AI chat models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAIChatModels { get; }
+
+    /// <summary>
+    /// List of Azure Open AI text completion models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAITextCompletionModels { get; }
+
+    /// <summary>
+    /// List of Azure Open AI embedding models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAIEmbeddingModels { get; }
+
+    /// <summary>
+    /// List of Open AI chat models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAIChatModels { get; }
+
+    /// <summary>
+    /// List of Open AI text completion models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAITextCompletionModels { get; }
+
+    /// <summary>
+    /// List of Open AI embedding models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAIEmbeddingModels { get; }
+
+    /// <summary>
     /// A collection of connectors to use for chat.
     /// </summary>
-    ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+    SynchronizedObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
 
     /// <summary>
     /// A collection of connectors to use for text completion.
     /// </summary>
-    ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+    SynchronizedObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
 
     /// <summary>
     /// A collection of connectors to use for embedding.
     /// </summary>
-    ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
+    SynchronizedObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 
     /// <summary>
     /// Import app configuration.
@@ -316,6 +356,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Restart the app.
     /// </summary>
     IRelayCommand RestartCommand { get; }
+
+    /// <summary>
+    /// Load AI models.
+    /// </summary>
+    IAsyncRelayCommand<bool> LoadModelsCommand { get; }
 
     /// <summary>
     /// Initialize settings.

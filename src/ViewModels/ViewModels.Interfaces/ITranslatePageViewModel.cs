@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -15,12 +14,12 @@ public interface ITranslatePageViewModel : INotifyPropertyChanged
     /// <summary>
     /// Optional list of currently input languages.
     /// </summary>
-    ObservableCollection<LocaleInfo> SourceLanguages { get; }
+    SynchronizedObservableCollection<LocaleInfo> SourceLanguages { get; }
 
     /// <summary>
     /// Optional list of languages for current output.
     /// </summary>
-    ObservableCollection<LocaleInfo> TargetLanguages { get; }
+    SynchronizedObservableCollection<LocaleInfo> TargetLanguages { get; }
 
     /// <summary>
     /// Selected source language.

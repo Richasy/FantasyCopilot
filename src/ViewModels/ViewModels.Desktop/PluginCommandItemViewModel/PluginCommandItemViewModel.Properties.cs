@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 using FantasyCopilot.Toolkits.Interfaces;
 
@@ -27,5 +27,5 @@ public sealed partial class PluginCommandItemViewModel
     private string _category;
 
     /// <inheritdoc/>
-    public ObservableCollection<InputParameter> Parameters { get; }
+    public SynchronizedObservableCollection<InputParameter> Parameters { get; }
 }

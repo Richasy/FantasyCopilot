@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
@@ -102,12 +102,12 @@ public interface IKnowledgeBaseSessionViewModel : INotifyPropertyChanged
     /// <summary>
     /// Message list.
     /// </summary>
-    ObservableCollection<Message> Messages { get; }
+    SynchronizedObservableCollection<Message> Messages { get; }
 
     /// <summary>
     /// Contexts found in advanced search.
     /// </summary>
-    ObservableCollection<IKnowledgeContextViewModel> Contexts { get; }
+    SynchronizedObservableCollection<IKnowledgeContextViewModel> Contexts { get; }
 
     /// <summary>
     /// Q&A results for Advanced Search.

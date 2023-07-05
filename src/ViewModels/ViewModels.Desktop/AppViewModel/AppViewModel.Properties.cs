@@ -62,10 +62,10 @@ public sealed partial class AppViewModel
     public event EventHandler<string> RequestShowMessage;
 
     /// <inheritdoc/>
-    public ObservableCollection<NavigateItem> NavigateItems { get; }
+    public SynchronizedObservableCollection<NavigateItem> NavigateItems { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+    public SynchronizedObservableCollection<IConnectorConfigViewModel> Connectors { get; }
 
     /// <inheritdoc/>
     public Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }

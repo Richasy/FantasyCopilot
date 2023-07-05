@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Files;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -38,9 +38,9 @@ public sealed partial class StoragePageViewModel : ViewModelBase, IStoragePageVi
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
         IsInitialTipVisible = true;
-        Items = new ObservableCollection<FileItem>();
-        FileSearchEntries = new ObservableCollection<FileSearchEntry>();
-        AudioSearchEntries = new ObservableCollection<AudioSearchEntry>();
+        Items = new SynchronizedObservableCollection<FileItem>();
+        FileSearchEntries = new SynchronizedObservableCollection<FileSearchEntry>();
+        AudioSearchEntries = new SynchronizedObservableCollection<AudioSearchEntry>();
         InitializeFileSearchTypes();
         InitializeAudioSearchTypes();
         ResetSearchState();

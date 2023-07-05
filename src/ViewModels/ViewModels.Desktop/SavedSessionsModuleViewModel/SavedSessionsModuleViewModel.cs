@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -31,7 +31,7 @@ public sealed partial class SavedSessionsModuleViewModel : ViewModelBase, ISaved
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        Sessions = new ObservableCollection<SessionMetadata>();
+        Sessions = new SynchronizedObservableCollection<SessionMetadata>();
         Sessions.CollectionChanged += OnSessionsCollectionChanged;
         _cacheToolkit.SessionListChanged += OnSessionListChanged;
         CheckIsEmpty();

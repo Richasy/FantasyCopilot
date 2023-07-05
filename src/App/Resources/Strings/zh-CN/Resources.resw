@@ -1614,4 +1614,7 @@
   <data name="OpenConfig" xml:space="preserve">
     <value>打开配置</value>
   </data>
+  <data name="GetOnlineModelListFailed" xml:space="preserve">
+    <value>获取在线模型列表失败</value>
+  </data>
 </root>

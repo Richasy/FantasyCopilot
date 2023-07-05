@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Image;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -40,10 +40,10 @@ public sealed partial class TextToImageModuleViewModel : ViewModelBase, ITextToI
         _logger = logger;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        Models = new ObservableCollection<Model>();
-        Samplers = new ObservableCollection<Sampler>();
-        Embeddings = new ObservableCollection<string>();
-        Loras = new ObservableCollection<string>();
+        Models = new SynchronizedObservableCollection<Model>();
+        Samplers = new SynchronizedObservableCollection<Sampler>();
+        Embeddings = new SynchronizedObservableCollection<string>();
+        Loras = new SynchronizedObservableCollection<string>();
 
         AttachIsRunningToAsyncCommand(p => IsInitializing = p, InitializeCommand);
         AttachIsRunningToAsyncCommand(p => IsGenerating = p, GenerateCommand);

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.Constants;
 
@@ -76,7 +76,7 @@ public interface IWorkflowEditorViewModel : INotifyPropertyChanged
     /// <summary>
     /// Workflow steps.
     /// </summary>
-    ObservableCollection<IWorkflowStepViewModel> Steps { get; }
+    SynchronizedObservableCollection<IWorkflowStepViewModel> Steps { get; }
 
     /// <summary>
     /// Inject workflow metadata and initialize.

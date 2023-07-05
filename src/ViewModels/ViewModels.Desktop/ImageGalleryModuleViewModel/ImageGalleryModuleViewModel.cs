@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -37,7 +37,7 @@ public sealed partial class ImageGalleryModuleViewModel : ViewModelBase, IImageG
         _logger = logger;
         _currentPage = 1;
 
-        Images = new ObservableCollection<ICivitaiImageViewModel>();
+        Images = new SynchronizedObservableCollection<ICivitaiImageViewModel>();
         IsEmpty = true;
         HasNext = true;
         Images.CollectionChanged += OnImagesCollectionChanged;

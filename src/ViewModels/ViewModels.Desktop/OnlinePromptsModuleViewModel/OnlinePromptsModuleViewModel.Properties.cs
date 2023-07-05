@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
@@ -33,8 +32,8 @@ public sealed partial class OnlinePromptsModuleViewModel
     private string _cacheTime;
 
     /// <inheritdoc/>
-    public ObservableCollection<OnlinePrompt> Prompts { get; }
+    public SynchronizedObservableCollection<OnlinePrompt> Prompts { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<OnlinePromptSource> Sources { get; }
+    public SynchronizedObservableCollection<OnlinePromptSource> Sources { get; }
 }

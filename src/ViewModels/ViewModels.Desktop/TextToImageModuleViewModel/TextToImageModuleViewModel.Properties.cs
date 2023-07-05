@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Image;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -61,14 +61,14 @@ public sealed partial class TextToImageModuleViewModel
     public event EventHandler<byte[]> ImageGenerated;
 
     /// <inheritdoc/>
-    public ObservableCollection<Model> Models { get; set; }
+    public SynchronizedObservableCollection<Model> Models { get; set; }
 
     /// <inheritdoc/>
-    public ObservableCollection<Sampler> Samplers { get; set; }
+    public SynchronizedObservableCollection<Sampler> Samplers { get; set; }
 
     /// <inheritdoc/>
-    public ObservableCollection<string> Embeddings { get; set; }
+    public SynchronizedObservableCollection<string> Embeddings { get; set; }
 
     /// <inheritdoc/>
-    public ObservableCollection<string> Loras { get; set; }
+    public SynchronizedObservableCollection<string> Loras { get; set; }
 }

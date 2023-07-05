@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
@@ -26,5 +26,5 @@ public sealed partial class FavoritePromptsModuleViewModel
     private bool _isInitialized;
 
     /// <inheritdoc/>
-    public ObservableCollection<SessionMetadata> Prompts { get; }
+    public SynchronizedObservableCollection<SessionMetadata> Prompts { get; }
 }

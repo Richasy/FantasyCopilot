@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -45,7 +45,7 @@ public interface IImageGalleryModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Images.
     /// </summary>
-    ObservableCollection<ICivitaiImageViewModel> Images { get; }
+    SynchronizedObservableCollection<ICivitaiImageViewModel> Images { get; }
 
     /// <summary>
     /// Refresh the current list.

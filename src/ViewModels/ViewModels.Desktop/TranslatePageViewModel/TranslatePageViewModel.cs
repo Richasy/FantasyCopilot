@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -34,8 +33,8 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
         _translateService = translateService;
         _appViewModel = appViewModel;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        SourceLanguages = new ObservableCollection<LocaleInfo>();
-        TargetLanguages = new ObservableCollection<LocaleInfo>();
+        SourceLanguages = new SynchronizedObservableCollection<LocaleInfo>();
+        TargetLanguages = new SynchronizedObservableCollection<LocaleInfo>();
 
         AttachIsRunningToAsyncCommand(p => p = IsInitializing = p, InitializeCommand);
         AttachIsRunningToAsyncCommand(p => IsTranslating = p, TranslateCommand);

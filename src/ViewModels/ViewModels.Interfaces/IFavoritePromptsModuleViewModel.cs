@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -25,7 +25,7 @@ public interface IFavoritePromptsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Prompts list.
     /// </summary>
-    ObservableCollection<SessionMetadata> Prompts { get; }
+    SynchronizedObservableCollection<SessionMetadata> Prompts { get; }
 
     /// <summary>
     /// Open a saved prompt command.

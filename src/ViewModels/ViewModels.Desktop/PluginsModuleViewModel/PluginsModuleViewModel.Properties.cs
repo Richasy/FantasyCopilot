@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
@@ -33,5 +33,5 @@ public sealed partial class PluginsModuleViewModel
     private bool _isImporting;
 
     /// <inheritdoc/>
-    public ObservableCollection<IPluginItemViewModel> Plugins { get; set; }
+    public SynchronizedObservableCollection<IPluginItemViewModel> Plugins { get; set; }
 }

@@ -684,6 +684,9 @@
   <data name="GenrePlaceholderText" xml:space="preserve">
     <value>Search for music by genre</value>
   </data>
+  <data name="GetOnlineModelListFailed" xml:space="preserve">
+    <value>Failed to get online model list</value>
+  </data>
   <data name="HasImageMetadata" xml:space="preserve">
     <value>Contains Image Metadata</value>
   </data>

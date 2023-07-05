@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -9,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
@@ -45,8 +45,8 @@ public sealed partial class KnowledgeBaseSessionViewModel : ViewModelBase, IKnow
         _logger = logger;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-        Messages = new ObservableCollection<Message>();
-        Contexts = new ObservableCollection<IKnowledgeContextViewModel>();
+        Messages = new SynchronizedObservableCollection<Message>();
+        Contexts = new SynchronizedObservableCollection<IKnowledgeContextViewModel>();
         SearchType = _settingsToolkit.ReadLocalSetting(SettingNames.LastKnowledgeSearchType, KnowledgeSearchType.Quick);
         QuickUserInput = string.Empty;
         Messages.CollectionChanged += OnMessageCollectionChanged;

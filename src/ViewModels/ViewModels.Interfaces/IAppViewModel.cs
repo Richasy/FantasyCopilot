@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -91,12 +90,12 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// List of navigation items.
     /// </summary>
-    ObservableCollection<NavigateItem> NavigateItems { get; }
+    SynchronizedObservableCollection<NavigateItem> NavigateItems { get; }
 
     /// <summary>
     /// Collection of all connectors.
     /// </summary>
-    ObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+    SynchronizedObservableCollection<IConnectorConfigViewModel> Connectors { get; }
 
     /// <summary>
     /// Custom connector group.

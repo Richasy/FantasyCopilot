@@ -2,12 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.Constants;
@@ -38,7 +38,7 @@ public sealed partial class WorkflowEditorViewModel : ViewModelBase, IWorkflowEd
 
         InitializeInputCommands();
         InitializeOutputCommands();
-        Steps = new ObservableCollection<IWorkflowStepViewModel>();
+        Steps = new SynchronizedObservableCollection<IWorkflowStepViewModel>();
         Steps.CollectionChanged += OnStepsCollectionChanged;
         AttachIsRunningToAsyncCommand(p => IsInspiring = p, InspireCommand);
         IsStepEmpty = true;

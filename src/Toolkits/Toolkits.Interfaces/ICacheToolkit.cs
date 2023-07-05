@@ -361,8 +361,9 @@ public interface ICacheToolkit
     /// </summary>
     /// <param name="config">Connector config.</param>
     /// <param name="connectorZipPath">The connector package path.</param>
+    /// <param name="progressAction">Actions that process progress.</param>
     /// <returns>The resulting connector configuration.</returns>
-    Task ImportConnectorConfigAsync(ConnectorConfig config, string connectorZipPath);
+    Task ImportConnectorConfigAsync(ConnectorConfig config, string connectorZipPath, Action<int> progressAction);
 
     /// <summary>
     /// Removes the specified connector.

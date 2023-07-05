@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
@@ -33,8 +32,8 @@ public sealed partial class OnlinePromptsModuleViewModel : ViewModelBase, IOnlin
         _cacheToolkit = cacheToolkit;
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
-        Prompts = new ObservableCollection<OnlinePrompt>();
-        Sources = new ObservableCollection<OnlinePromptSource>();
+        Prompts = new SynchronizedObservableCollection<OnlinePrompt>();
+        Sources = new SynchronizedObservableCollection<OnlinePromptSource>();
 
         AttachIsRunningToAsyncCommand(p => IsLoading = p, ChangeSourceCommand, RefreshCommand);
         var sources = _promptExplorerService.GetSupportSources();

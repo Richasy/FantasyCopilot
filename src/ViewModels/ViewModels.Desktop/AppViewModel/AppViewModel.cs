@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,9 +35,9 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         _resourceToolkit = resourceToolkit;
         _settingsToolkit = settingsToolkit;
         _cacheToolkit = cacheToolkit;
-        NavigateItems = new ObservableCollection<NavigateItem>();
+        NavigateItems = new SynchronizedObservableCollection<NavigateItem>();
 
-        Connectors = new ObservableCollection<IConnectorConfigViewModel>();
+        Connectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
         ConnectorGroup = new Dictionary<ConnectorType, IConnectorConfigViewModel>();
     }
 

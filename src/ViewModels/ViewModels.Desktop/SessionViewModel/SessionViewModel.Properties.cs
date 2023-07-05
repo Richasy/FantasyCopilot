@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -74,7 +75,7 @@ public sealed partial class SessionViewModel
     public event EventHandler RequestScrollToBottom;
 
     /// <inheritdoc/>
-    public ObservableCollection<Message> Messages { get; }
+    public SynchronizedObservableCollection<Message> Messages { get; }
 
     /// <inheritdoc/>
     public string Id { get; set; }

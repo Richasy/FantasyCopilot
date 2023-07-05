@@ -2,13 +2,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
+using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
@@ -40,11 +41,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         _fileToolkit = fileToolkit;
         _appViewModel = appViewModel;
         _logger = logger;
+        _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         BuildYear = 2023;
 
-        ChatConnectors = new ObservableCollection<IConnectorConfigViewModel>();
-        TextCompletionConnectors = new ObservableCollection<IConnectorConfigViewModel>();
-        EmbeddingConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        ChatConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
+        TextCompletionConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
+        EmbeddingConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
+
+        AzureOpenAIChatModels = new SynchronizedObservableCollection<string>();
+        AzureOpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
+        AzureOpenAIEmbeddingModels = new SynchronizedObservableCollection<string>();
+        OpenAIChatModels = new SynchronizedObservableCollection<string>();
+        OpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
+        OpenAIEmbeddingModels = new SynchronizedObservableCollection<string>();
         Initialize();
     }
 
@@ -273,7 +282,23 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
                 }
             }
 
-            await cacheToolkit.ImportConnectorConfigAsync(config, file.Path);
+            IsConnectorImporting = true;
+            try
+            {
+                await cacheToolkit.ImportConnectorConfigAsync(config, file.Path, progress =>
+                {
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        ConnectorImportProgress = progress;
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Connector import failed");
+            }
+
+            IsConnectorImporting = false;
             _appViewModel.RefreshConnectorsCommand.Execute(false);
             VerifyConnectors();
         }
@@ -285,9 +310,96 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
     }
 
     [RelayCommand]
-    private void RefreshConnector()
+    private void RefreshConnector() => _appViewModel.RefreshConnectorsCommand.Execute(true);
+
+    [RelayCommand]
+    private async Task LoadModelsAsync(bool force)
     {
-        _appViewModel.RefreshConnectorsCommand.Execute(true);
+        if (AiSource == AISource.Custom || _isModelLoading)
+        {
+            return;
+        }
+
+        if (force)
+        {
+            _isOpenAIModelLoaded = AiSource != AISource.OpenAI && _isOpenAIModelLoaded;
+            _isAzureModelLoaded = AiSource != AISource.Azure && _isAzureModelLoaded;
+        }
+
+        if ((AiSource == AISource.Azure && (_isAzureModelLoaded || string.IsNullOrEmpty(AzureOpenAIAccessKey) || string.IsNullOrEmpty(AzureOpenAIEndpoint)))
+            || (AiSource == AISource.OpenAI && (_isOpenAIModelLoaded || string.IsNullOrEmpty(OpenAIAccessKey))))
+        {
+            return;
+        }
+
+        _isModelLoading = true;
+        var kernelService = Locator.Current.GetService<IKernelService>();
+        try
+        {
+            var (chatModels, textCompletions, embeddings) = await kernelService.GetSupportModelsAsync(AiSource);
+            if (AiSource == AISource.Azure)
+            {
+                InitCollection(AzureOpenAIChatModels, chatModels);
+                InitCollection(AzureOpenAITextCompletionModels, textCompletions);
+                InitCollection(AzureOpenAIEmbeddingModels, embeddings);
+
+                if (!AzureOpenAIChatModels.Contains(AzureOpenAIChatModelName))
+                {
+                    AzureOpenAIChatModelName = AzureOpenAIChatModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!AzureOpenAITextCompletionModels.Contains(AzureOpenAICompletionModelName))
+                {
+                    AzureOpenAICompletionModelName = AzureOpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!AzureOpenAIEmbeddingModels.Contains(AzureOpenAIEmbeddingModelName))
+                {
+                    AzureOpenAIEmbeddingModelName = AzureOpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                _isAzureModelLoaded = true;
+            }
+            else if (AiSource == AISource.OpenAI)
+            {
+                InitCollection(OpenAIChatModels, chatModels);
+                InitCollection(OpenAITextCompletionModels, textCompletions);
+                InitCollection(OpenAIEmbeddingModels, embeddings);
+
+                if (!OpenAIChatModels.Contains(OpenAIChatModelName))
+                {
+                    OpenAIChatModelName = OpenAIChatModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!OpenAITextCompletionModels.Contains(OpenAICompletionModelName))
+                {
+                    OpenAICompletionModelName = OpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!OpenAIEmbeddingModels.Contains(OpenAIEmbeddingModelName))
+                {
+                    OpenAIEmbeddingModelName = OpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                _isOpenAIModelLoaded = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Load models error.");
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.GetOnlineModelListFailed), InfoType.Warning);
+        }
+
+        _isModelLoading = false;
+
+        void InitCollection(SynchronizedObservableCollection<string> collection, IEnumerable<string> items)
+        {
+            TryClear(collection);
+            foreach (var item in items)
+            {
+                collection.Add(item);
+            }
+        }
     }
 
     private void CheckAISource()
@@ -295,6 +407,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         IsAzureOpenAIShown = AiSource == AISource.Azure;
         IsOpenAIShown = AiSource == AISource.OpenAI;
         IsCustomAIShown = AiSource == AISource.Custom;
+        LoadModelsCommand.Execute(default);
     }
 
     private void CheckTranslateSource()

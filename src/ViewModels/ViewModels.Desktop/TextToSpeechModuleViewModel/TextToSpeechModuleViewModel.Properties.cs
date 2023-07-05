@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
@@ -51,8 +50,8 @@ public sealed partial class TextToSpeechModuleViewModel
     private bool _isAudioEnabled;
 
     /// <inheritdoc/>
-    public ObservableCollection<LocaleInfo> SupportCultures { get; }
+    public SynchronizedObservableCollection<LocaleInfo> SupportCultures { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<VoiceMetadata> DisplayVoices { get; }
+    public SynchronizedObservableCollection<VoiceMetadata> DisplayVoices { get; }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -45,6 +46,19 @@ public class ViewModelBase : ObservableObject
         catch (Exception)
         {
             // Do nothing.
+        }
+    }
+
+    /// <summary>
+    /// Try clear collection.
+    /// </summary>
+    /// <typeparam name="T">Item type.</typeparam>
+    /// <param name="collection">Collection.</param>
+    protected static void TryClear<T>(SynchronizedObservableCollection<T> collection)
+    {
+        if (collection.Count > 0)
+        {
+            collection.Clear();
         }
     }
 }

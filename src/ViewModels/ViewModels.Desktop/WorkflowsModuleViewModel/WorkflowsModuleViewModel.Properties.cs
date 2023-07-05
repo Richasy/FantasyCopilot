@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
@@ -34,5 +34,5 @@ public sealed partial class WorkflowsModuleViewModel
     private bool _isInitialized;
 
     /// <inheritdoc />
-    public ObservableCollection<WorkflowMetadata> Workflows { get; }
+    public SynchronizedObservableCollection<WorkflowMetadata> Workflows { get; }
 }

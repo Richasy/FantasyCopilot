@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -48,7 +48,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         };
 
         _progressTimer.Tick += OnProgressTimerTick;
-        Bases = new ObservableCollection<IKnowledgeBaseItemViewModel>();
+        Bases = new SynchronizedObservableCollection<IKnowledgeBaseItemViewModel>();
         Bases.CollectionChanged += OnBasesCollectionChanged;
         _cacheToolkit.KnowledgeBaseListChanged += OnKnowledgeBaseListChangedAsync;
         CheckIsEmpty();

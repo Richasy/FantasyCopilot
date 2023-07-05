@@ -48,7 +48,7 @@ public sealed partial class CacheToolkit
         else
         {
             var caches = await _fileToolkit.GetDataFromFileAsync(ConnectorConstants.ConnectorCacheFileName, new List<ConnectorConfig>());
-            _connectors = caches;
+            _connectors = caches ?? new List<ConnectorConfig>();
         }
     }
 
@@ -83,7 +83,7 @@ public sealed partial class CacheToolkit
     }
 
     /// <inheritdoc/>
-    public async Task ImportConnectorConfigAsync(ConnectorConfig config, string connectorZipPath)
+    public async Task ImportConnectorConfigAsync(ConnectorConfig config, string connectorZipPath, Action<int> progressAction)
     {
         var connectorFolder = Path.Combine(GetConnectorFolder(), config.Id);
         if (!Directory.Exists(connectorFolder))
@@ -93,7 +93,30 @@ public sealed partial class CacheToolkit
 
         await Task.Run(() =>
         {
-            ZipFile.ExtractToDirectory(connectorZipPath, connectorFolder, true);
+            using var archive = ZipFile.OpenRead(connectorZipPath);
+            long totalBytes = 0;
+            foreach (var entry in archive.Entries)
+            {
+                totalBytes += entry.Length;
+            }
+
+            long extractedBytes = 0;
+            foreach (var entry in archive.Entries)
+            {
+                var fullPath = Path.Combine(connectorFolder, entry.FullName);
+                if (entry.FullName.EndsWith("/") || entry.FullName.EndsWith("\\"))
+                {
+                    Directory.CreateDirectory(fullPath);
+                }
+                else
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                    entry.ExtractToFile(fullPath);
+                    extractedBytes += entry.Length;
+                    var progress = (int)((double)extractedBytes / totalBytes * 100);
+                    progressAction(progress);
+                }
+            }
         });
 
         _connectors?.Add(config);

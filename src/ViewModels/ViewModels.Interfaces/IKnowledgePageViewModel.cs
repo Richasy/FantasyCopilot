@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Knowledge;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -50,7 +50,7 @@ public interface IKnowledgePageViewModel : INotifyPropertyChanged
     /// <summary>
     /// A list of knowledge bases.
     /// </summary>
-    ObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; }
+    SynchronizedObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; }
 
     /// <summary>
     /// Initialize.

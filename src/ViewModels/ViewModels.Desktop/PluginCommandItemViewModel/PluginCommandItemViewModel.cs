@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Linq;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -19,7 +19,7 @@ public sealed partial class PluginCommandItemViewModel : ViewModelBase, IPluginC
     /// </summary>
     public PluginCommandItemViewModel(IResourceToolkit resourceToolkit)
     {
-        Parameters = new ObservableCollection<InputParameter>();
+        Parameters = new SynchronizedObservableCollection<InputParameter>();
         _resourceToolkit = resourceToolkit;
     }
 

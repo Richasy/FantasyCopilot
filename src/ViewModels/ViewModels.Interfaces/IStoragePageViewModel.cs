@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Files;
 using FantasyCopilot.Models.Constants;
 
@@ -111,17 +111,17 @@ public interface IStoragePageViewModel : INotifyPropertyChanged
     /// <summary>
     /// Search results.
     /// </summary>
-    ObservableCollection<FileItem> Items { get; }
+    SynchronizedObservableCollection<FileItem> Items { get; }
 
     /// <summary>
     /// File search selections.
     /// </summary>
-    ObservableCollection<FileSearchEntry> FileSearchEntries { get; }
+    SynchronizedObservableCollection<FileSearchEntry> FileSearchEntries { get; }
 
     /// <summary>
     /// File search selections.
     /// </summary>
-    ObservableCollection<AudioSearchEntry> AudioSearchEntries { get; }
+    SynchronizedObservableCollection<AudioSearchEntry> AudioSearchEntries { get; }
 
     /// <summary>
     /// Search files.
