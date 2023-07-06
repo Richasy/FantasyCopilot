@@ -29,14 +29,6 @@
             VerticalAlignment="Center"
             Fill="{ThemeResource ControlStrongFillColorDisabledBrush}"
             ToolTipService.ToolTip="{ext:Locale Name=Disconnected}" />
-        <ProgressRing
-            x:Name="ConnectingRing"
-            Width="16"
-            Height="16"
-            MinWidth="16"
-            MinHeight="16"
-            VerticalAlignment="Center"
-            IsActive="False" />
         <TextBlock
             Grid.Column="1"
             Margin="12,0,0,0"
@@ -97,8 +89,8 @@
                 <VisualState x:Name="DisconnectedState" />
                 <VisualState x:Name="ConnectingState">
                     <VisualState.Setters>
-                        <Setter Target="StateCircle.Visibility" Value="Collapsed" />
-                        <Setter Target="ConnectingRing.Visibility" Value="Visible" />
+                        <Setter Target="StateCircle.Fill" Value="{ThemeResource SystemFillColorCautionBrush}" />
+                        <Setter Target="StateCircle.(ToolTipService.ToolTip)" Value="{ext:Locale Name=Connecting}" />
                         <Setter Target="ConnectButton.Visibility" Value="Collapsed" />
                         <Setter Target="DisconnectButton.Visibility" Value="Visible" />
                     </VisualState.Setters>

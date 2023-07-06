@@ -45,6 +45,11 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         _config = config;
         Id = config.Id;
         DisplayName = config.Name;
+        if (config.Features == null)
+        {
+            config.Features = new System.Collections.Generic.List<ConnectorFeature>();
+        }
+
         SupportChat = config.Features.Any(f => f.Type == ConnectorConstants.ChatType);
         SupportChatStream = SupportChat && config.Features.First(p => p.Type == ConnectorConstants.ChatType).Endpoints.Any(p => p.Type == ConnectorConstants.ChatStreamType);
         SupportTextCompletion = config.Features.Any(f => f.Type == ConnectorConstants.TextCompletionType);
@@ -114,6 +119,8 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         if (_process != null && !_process.HasExited)
         {
             _process.Kill();
+            IsLaunched = false;
+            State = ConnectorState.NotStarted;
             _appViewModel.ShowTip(string.Format(_resourceToolkit.GetLocalizedString(StringNames.ConnectorClosed), DisplayName), InfoType.Information);
         }
 
@@ -122,6 +129,11 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
     private void OnConnectorErrorDataReceived(object sender, DataReceivedEventArgs e)
     {
+        if (!_dispatcherQueue.HasThreadAccess)
+        {
+            return;
+        }
+
         _dispatcherQueue.TryEnqueue(() =>
         {
             LogContent += $"{e.Data}\n";
@@ -137,6 +149,11 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
     private void OnConnectorOutputDataReceived(object sender, DataReceivedEventArgs e)
     {
+        if (!_dispatcherQueue.HasThreadAccess)
+        {
+            return;
+        }
+
         // When we receive the process output, it is determined that the service has started.
         _dispatcherQueue.TryEnqueue(() =>
         {

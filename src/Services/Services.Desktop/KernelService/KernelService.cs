@@ -272,6 +272,7 @@ public sealed partial class KernelService : IKernelService
     {
         IsChatSupport = isBaseValid && (hasChatModel || hasCompletionModel);
         HasChatModel = hasChatModel;
+        HasTextCompletionModel = hasCompletionModel;
         IsMemorySupport = IsChatSupport && hasEmbeddingModel;
     }
 

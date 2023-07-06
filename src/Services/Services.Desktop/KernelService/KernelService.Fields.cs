@@ -23,6 +23,9 @@ public sealed partial class KernelService
     public bool HasChatModel { get; set; }
 
     /// <inheritdoc/>
+    public bool HasTextCompletionModel { get; set; }
+
+    /// <inheritdoc/>
     public bool IsMemorySupport { get; set; }
 
     /// <inheritdoc/>

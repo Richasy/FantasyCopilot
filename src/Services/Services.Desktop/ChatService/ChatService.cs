@@ -45,7 +45,7 @@ public sealed partial class ChatService : IChatService
             _chatFunctions = _kernel.ImportSkill(_chatSkill);
         }
 
-        if (_completeSkill == null && !_kernelService.HasChatModel)
+        if (_completeSkill == null && _kernelService.HasTextCompletionModel)
         {
             _completeSkill = new TextCompleteSkill();
             _completeSkill.CharacterReceived += (s, e) => CharacterReceived?.Invoke(this, e);

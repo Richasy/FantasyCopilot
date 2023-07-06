@@ -231,7 +231,7 @@
                 Header="{ext:Locale Name=ChatModelName}"
                 Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
                 <StackPanel Orientation="Horizontal">
-                    <StackPanel Visibility="{x:Bind ViewModel.SelectedChatConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedChatConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
                         <Button
                             Margin="0,0,4,0"
                             Command="{x:Bind ViewModel.SelectedChatConnector.OpenReadMeCommand, Mode=OneWay}"
@@ -256,6 +256,82 @@
                         ItemsSource="{x:Bind ViewModel.ChatConnectors}"
                         Loaded="OnChatModelComboBoxLoadedAsync"
                         SelectionChanged="OnChatModelComboBoxSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=EmbeddingModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedEmbeddingConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedEmbeddingConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        x:Name="EmbeddingModelComboBox"
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.EmbeddingConnectors}"
+                        Loaded="OnEmbeddingModelComboBoxLoadedAsync"
+                        SelectionChanged="OnEmbeddingModelComboBoxSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=TextCompletionModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedTextCompletionConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedTextCompletionConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        x:Name="TextCompletionModelComboBox"
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.TextCompletionConnectors}"
+                        Loaded="OnTextCompletionModelComboBoxLoadedAsync"
+                        SelectionChanged="OnTextCompletionModelComboBoxSelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
                                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />

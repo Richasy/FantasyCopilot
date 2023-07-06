@@ -52,6 +52,16 @@ public sealed partial class AISettingSection : SettingSectionBase
             await Task.Delay(100);
             ChatModelComboBox.SelectedItem = ViewModel.SelectedChatConnector;
         }
+        else if (e.PropertyName == nameof(ViewModel.SelectedTextCompletionConnector))
+        {
+            await Task.Delay(100);
+            TextCompletionModelComboBox.SelectedItem = ViewModel.SelectedTextCompletionConnector;
+        }
+        else if (e.PropertyName == nameof(ViewModel.SelectedEmbeddingConnector))
+        {
+            await Task.Delay(100);
+            EmbeddingModelComboBox.SelectedItem = ViewModel.SelectedEmbeddingConnector;
+        }
     }
 
     private void OnAISourceComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -76,6 +86,39 @@ public sealed partial class AISettingSection : SettingSectionBase
     private void OnChatModelComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var item = ChatModelComboBox.SelectedItem as IConnectorConfigViewModel;
-        ViewModel.SelectedChatConnector = item;
+        if (item != ViewModel.SelectedChatConnector)
+        {
+            ViewModel.SelectedChatConnector = item;
+        }
+    }
+
+    private async void OnTextCompletionModelComboBoxLoadedAsync(object sender, RoutedEventArgs e)
+    {
+        await Task.Delay(100);
+        TextCompletionModelComboBox.SelectedItem = ViewModel.SelectedTextCompletionConnector;
+    }
+
+    private void OnTextCompletionModelComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var item = TextCompletionModelComboBox.SelectedItem as IConnectorConfigViewModel;
+        if (item != ViewModel.SelectedTextCompletionConnector)
+        {
+            ViewModel.SelectedTextCompletionConnector = item;
+        }
+    }
+
+    private async void OnEmbeddingModelComboBoxLoadedAsync(object sender, RoutedEventArgs e)
+    {
+        await Task.Delay(100);
+        EmbeddingModelComboBox.SelectedItem = ViewModel.SelectedEmbeddingConnector;
+    }
+
+    private void OnEmbeddingModelComboBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var item = EmbeddingModelComboBox.SelectedItem as IConnectorConfigViewModel;
+        if (item != ViewModel.SelectedEmbeddingConnector)
+        {
+            ViewModel.SelectedEmbeddingConnector = item;
+        }
     }
 }

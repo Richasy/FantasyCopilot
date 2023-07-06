@@ -347,17 +347,17 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
                 InitCollection(AzureOpenAITextCompletionModels, textCompletions);
                 InitCollection(AzureOpenAIEmbeddingModels, embeddings);
 
-                if (!AzureOpenAIChatModels.Contains(AzureOpenAIChatModelName))
+                if (!AzureOpenAIChatModels.Contains(AzureOpenAIChatModelName) && !string.IsNullOrEmpty(AzureOpenAIChatModelName))
                 {
                     AzureOpenAIChatModelName = AzureOpenAIChatModels.FirstOrDefault() ?? string.Empty;
                 }
 
-                if (!AzureOpenAITextCompletionModels.Contains(AzureOpenAICompletionModelName))
+                if (!AzureOpenAITextCompletionModels.Contains(AzureOpenAICompletionModelName) && !string.IsNullOrEmpty(AzureOpenAICompletionModelName))
                 {
                     AzureOpenAICompletionModelName = AzureOpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
                 }
 
-                if (!AzureOpenAIEmbeddingModels.Contains(AzureOpenAIEmbeddingModelName))
+                if (!AzureOpenAIEmbeddingModels.Contains(AzureOpenAIEmbeddingModelName) && !string.IsNullOrEmpty(AzureOpenAIEmbeddingModelName))
                 {
                     AzureOpenAIEmbeddingModelName = AzureOpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
                 }
@@ -370,17 +370,17 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
                 InitCollection(OpenAITextCompletionModels, textCompletions);
                 InitCollection(OpenAIEmbeddingModels, embeddings);
 
-                if (!OpenAIChatModels.Contains(OpenAIChatModelName))
+                if (!OpenAIChatModels.Contains(OpenAIChatModelName) && !string.IsNullOrEmpty(OpenAIChatModelName))
                 {
                     OpenAIChatModelName = OpenAIChatModels.FirstOrDefault() ?? string.Empty;
                 }
 
-                if (!OpenAITextCompletionModels.Contains(OpenAICompletionModelName))
+                if (!OpenAITextCompletionModels.Contains(OpenAICompletionModelName) && !string.IsNullOrEmpty(OpenAICompletionModelName))
                 {
                     OpenAICompletionModelName = OpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
                 }
 
-                if (!OpenAIEmbeddingModels.Contains(OpenAIEmbeddingModelName))
+                if (!OpenAIEmbeddingModels.Contains(OpenAIEmbeddingModelName) && !string.IsNullOrEmpty(OpenAIEmbeddingModelName))
                 {
                     OpenAIEmbeddingModelName = OpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
                 }
@@ -485,6 +485,12 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         {
             EmbeddingConnectors.Add(item);
         }
+
+        var noneVM = Locator.Current.GetService<IConnectorConfigViewModel>();
+        noneVM.InjectData(new Models.App.Connectors.ConnectorConfig { Id = string.Empty, Name = "N/A" });
+        ChatConnectors.Insert(0, noneVM);
+        TextCompletionConnectors.Insert(0, noneVM);
+        EmbeddingConnectors.Insert(0, noneVM);
 
         await Task.Delay(100);
         SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault();

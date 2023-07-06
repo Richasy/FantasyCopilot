@@ -20,6 +20,11 @@ public interface IKernelService
     bool HasChatModel { get; }
 
     /// <summary>
+    /// Can the kernel provide a text completion model.
+    /// </summary>
+    bool HasTextCompletionModel { get; }
+
+    /// <summary>
     /// Does the current user have a valid config.
     /// </summary>
     bool IsMemorySupport { get; }
