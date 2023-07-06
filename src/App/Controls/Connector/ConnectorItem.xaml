@@ -74,7 +74,7 @@
                 </VisualState>
                 <VisualState x:Name="ConnectedState">
                     <VisualState.Setters>
-                        <Setter Target="State.Circle.Fill" Value="{ThemeResource SystemFillColorSuccessBrush}" />
+                        <Setter Target="StateCircle.Fill" Value="{ThemeResource SystemFillColorSuccessBrush}" />
                         <Setter Target="StateCircle.(ToolTipService.ToolTip)" Value="{ext:Locale Name=Connected}" />
                         <Setter Target="ConnectButton.Visibility" Value="Collapsed" />
                         <Setter Target="DisconnectButton.Visibility" Value="Visible" />
