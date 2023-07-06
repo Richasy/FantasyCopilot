@@ -360,8 +360,14 @@
   <data name="ConnectingImageService" xml:space="preserve">
     <value>Connecting to the image service</value>
   </data>
+  <data name="ConnectorClosed" xml:space="preserve">
+    <value>{0} is closed</value>
+  </data>
   <data name="ConnectorHeader" xml:space="preserve">
     <value>Import the external connector as an AI provider</value>
+  </data>
+  <data name="ConnectorLaunched" xml:space="preserve">
+    <value>{0} has launched</value>
   </data>
   <data name="ConnectorManager" xml:space="preserve">
     <value>Connector management</value>

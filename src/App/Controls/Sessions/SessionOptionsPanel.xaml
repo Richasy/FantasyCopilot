@@ -88,6 +88,7 @@
         <labs:SettingsCard
             Description="{ext:Locale Name=StreamOutputDescription}"
             Header="{ext:Locale Name=StreamOutput}"
+            IsEnabled="{x:Bind ViewModel.IsStreamOutputEnabled, Mode=OneWay}"
             Visibility="{x:Bind IsSemanticOptions, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
             <labs:SettingsCard.HeaderIcon>
                 <controls:FluentIcon Symbol="Diagram" />

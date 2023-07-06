@@ -11,7 +11,8 @@
     mc:Ignorable="d">
 
     <Grid
-        Padding="8"
+        MinWidth="240"
+        Padding="12,8"
         HorizontalAlignment="Stretch"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         CornerRadius="{StaticResource ControlCornerRadius}">
@@ -29,7 +30,7 @@
             ToolTipService.ToolTip="{ext:Locale Name=Disconnected}" />
         <TextBlock
             Grid.Column="1"
-            Margin="8,0,0,0"
+            Margin="12,0,0,0"
             VerticalAlignment="Center"
             FontSize="12"
             Text="{x:Bind ViewModel.DisplayName, Mode=OneWay}" />
@@ -44,7 +45,7 @@
             <controls:FluentIcon
                 FontSize="12"
                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                Symbol="CellularData1" />
+                Symbol="PlugConnected" />
         </Button>
         <Button
             x:Name="DisconnectButton"
@@ -58,7 +59,7 @@
             <controls:FluentIcon
                 FontSize="12"
                 Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                Symbol="CellularOff" />
+                Symbol="PlugDisconnected" />
         </Button>
 
         <VisualStateManager.VisualStateGroups>

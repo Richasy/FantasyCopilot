@@ -58,7 +58,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
     }
 
     /// <inheritdoc/>
-    public void Initialize()
+    public async void Initialize()
     {
         DefaultConversationType = _settingsToolkit.ReadLocalSetting(SettingNames.LastConversationType, ConversationType.Continuous);
         var copyrightTemplate = _resourceToolkit.GetLocalizedString(StringNames.Copyright);
@@ -113,7 +113,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         CheckAISource();
         CheckTranslateSource();
-        VerifyConnectors();
+        await VerifyConnectorsAsync();
     }
 
     [RelayCommand]
@@ -300,7 +300,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
             IsConnectorImporting = false;
             _appViewModel.RefreshConnectorsCommand.Execute(false);
-            VerifyConnectors();
+            await VerifyConnectorsAsync();
         }
         catch (Exception ex)
         {
@@ -453,7 +453,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         return authResult == UserConsentVerificationResult.Verified;
     }
 
-    private void VerifyConnectors()
+    private async Task VerifyConnectorsAsync()
     {
         var chatConnectors = _appViewModel.Connectors.Where(p => p.SupportChat);
         var textConnectors = _appViewModel.Connectors.Where(p => p.SupportTextCompletion);
@@ -482,6 +482,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
             EmbeddingConnectors.Add(item);
         }
 
+        await Task.Delay(100);
         SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault();
         SelectedTextCompletionConnector = TextCompletionConnectors.FirstOrDefault(p => p.Id == currentTextId) ?? TextCompletionConnectors.FirstOrDefault();
         SelectedEmbeddingConnector = EmbeddingConnectors.FirstOrDefault(p => p.Id == currentEmbeddingId) ?? EmbeddingConnectors.FirstOrDefault();

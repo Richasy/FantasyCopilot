@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <TextBlock
             HorizontalAlignment="Left"
+            FontSize="16"
             Style="{StaticResource SubtitleTextBlockStyle}"
             Text="{ext:Locale Name=ConnectorViewer}" />
         <ScrollViewer

@@ -2,10 +2,13 @@
 
 using System;
 using System.Diagnostics;
-using System.Timers;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
+using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -14,10 +17,12 @@ namespace FantasyCopilot.ViewModels;
 /// </summary>
 public sealed partial class ConnectorConfigViewModel
 {
-    private readonly Timer _timer;
+    private readonly DispatcherQueue _dispatcherQueue;
+    private readonly ILogger<ConnectorConfigViewModel> _logger;
+    private readonly IAppViewModel _appViewModel;
+    private readonly IResourceToolkit _resourceToolkit;
     private ConnectorConfig _config;
     private Process _process;
-    private bool _isTryConnecting;
 
     [ObservableProperty]
     private string _id;

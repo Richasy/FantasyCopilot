@@ -61,6 +61,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
             await LoadAllConnectorsAsync();
             ReloadAllServices();
             Navigate(lastOpenPage);
+            CleanConnectorPorts();
         }
 
         _logger.LogTrace("Application completes initialization");
@@ -169,6 +170,37 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         LoadConnectorsAfterInitialized();
     }
 
+    private void CleanConnectorPorts()
+    {
+        if (ConnectorGroup.Count == 0)
+        {
+            return;
+        }
+
+        var connectors = ConnectorGroup.Values.Select(p => p.GetData().BaseUrl).ToList();
+        var ports = new List<string>();
+        foreach (var connector in connectors)
+        {
+            if (Uri.TryCreate(connector, UriKind.Absolute, out var uri))
+            {
+                if (uri.Port > 0 && !uri.IsDefaultPort)
+                {
+                    ports.Add(uri.Port.ToString());
+                }
+            }
+        }
+
+        if (ports.Count > 0)
+        {
+            var command = string.Join(" | ", ports.Select(p => $"Stop-Process -Id (Get-NetTCPConnection -LocalPort {p}).OwningProcess -Force"));
+            var psi = new ProcessStartInfo("powershell.exe", command);
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            Process.Start(psi);
+            _logger.LogInformation($"The port used by the connector has been released");
+        }
+    }
+
     private void LoadNavItems()
     {
         TryClear(NavigateItems);
@@ -249,6 +281,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
                 ConnectorGroup.Clear();
             }
 
+            IsConnectorViewerShown = false;
             return;
         }
 

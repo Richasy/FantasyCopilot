@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Linq;
 using FantasyCopilot.App.Controls;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
 using H.NotifyIcon;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -135,6 +137,18 @@ public partial class App : Application
         return new PointInt32(left, top);
     }
 
+    private static void CleanupConnectors()
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        if (appVM.ConnectorGroup.Any())
+        {
+            foreach (var item in appVM.ConnectorGroup)
+            {
+                item.Value.ExitCommand.Execute(default);
+            }
+        }
+    }
+
     private void InitializeTrayIcon()
     {
         if (TrayIcon != null)
@@ -222,6 +236,10 @@ public partial class App : Application
 
             _window.Hide();
         }
+        else
+        {
+            CleanupConnectors();
+        }
     }
 
     private void MoveAndResize()
@@ -250,6 +268,7 @@ public partial class App : Application
 
     private void ExitApp()
     {
+        CleanupConnectors();
         HandleCloseEvents = false;
         TrayIcon?.Dispose();
         _window?.Close();

@@ -63,8 +63,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.AzureOpenAIChatModels}"
-                    Text="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=ChatModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=ChatModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
@@ -73,8 +73,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.AzureOpenAIEmbeddingModels}"
-                    Text="{x:Bind ViewModel.AzureOpenAIEmbeddingModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=EmbeddingModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=EmbeddingModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.AzureOpenAIEmbeddingModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
@@ -83,8 +83,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.AzureOpenAITextCompletionModels}"
-                    Text="{x:Bind ViewModel.AzureOpenAICompletionModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=TextCompletionModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.AzureOpenAICompletionModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
 
             <!--  Open AI  -->
@@ -124,8 +124,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.OpenAIChatModels}"
-                    Text="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=ChatModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=ChatModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
@@ -134,8 +134,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.OpenAIEmbeddingModels}"
-                    Text="{x:Bind ViewModel.OpenAIEmbeddingModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=EmbeddingModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=EmbeddingModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.OpenAIEmbeddingModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
@@ -144,8 +144,8 @@
                 <AutoSuggestBox
                     Width="200"
                     ItemsSource="{x:Bind ViewModel.OpenAITextCompletionModels}"
-                    Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay}"
-                    ToolTipService.ToolTip="{ext:Locale Name=TextCompletionModelNamePlaceholderText}" />
+                    PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
+                    Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
 
             <!--  Custom AI  -->
