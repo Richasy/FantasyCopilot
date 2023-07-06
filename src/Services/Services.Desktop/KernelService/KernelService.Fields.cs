@@ -26,8 +26,5 @@ public sealed partial class KernelService
     public bool IsMemorySupport { get; set; }
 
     /// <inheritdoc/>
-    public bool IsSemanticSupport { get; set; }
-
-    /// <inheritdoc/>
     public AISource CurrentAISource { get; set; }
 }

@@ -246,15 +246,24 @@ public sealed partial class KernelService : IKernelService
         var kernelBuilder = new KernelBuilder();
         var cacheToolkit = Locator.Current.GetService<ICacheToolkit>();
         var chatConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomChatConnectorId, string.Empty);
+        var textConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomTextCompletionConnectorId, string.Empty);
         var chatConnector = cacheToolkit.GetConnectorFromId(chatConnectorId);
+        var textConnector = cacheToolkit.GetConnectorFromId(textConnectorId);
+
         var hasChatModel = chatConnector != null;
+        var hasTextModel = textConnector != null;
 
         if (hasChatModel)
         {
             kernelBuilder.WithCustomChatCompletionService(chatConnector);
         }
 
-        SetSupportState(true, hasChatModel, false, false);
+        if (hasTextModel)
+        {
+            kernelBuilder.WithCustomTextCompletionService(textConnector);
+        }
+
+        SetSupportState(true, hasChatModel, false, hasTextModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
         _logger.LogInformation("Custom AI source is not supported yet.");
     }

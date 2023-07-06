@@ -5,55 +5,43 @@ using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel.AI;
-using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.AI.TextCompletion;
+using Microsoft.SemanticKernel.Orchestration;
 
 namespace FantasyCopilot.Libs.CustomConnector;
 
 /// <summary>
-/// Custom chat completion service.
+/// Custom text completion service.
 /// </summary>
-public sealed class CustomChatCompletion : IChatCompletion
+public sealed class CustomTextCompletion : ITextCompletion
 {
     private readonly ConnectorConfig _connectorConfig;
     private readonly HttpClient _httpClient;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CustomChatCompletion"/> class.
+    /// Initializes a new instance of the <see cref="CustomTextCompletion"/> class.
     /// </summary>
     /// <param name="config">Connector config.</param>
-    public CustomChatCompletion(ConnectorConfig config)
+    public CustomTextCompletion(ConnectorConfig config)
     {
         _connectorConfig = config;
         _httpClient = new HttpClient();
     }
 
     /// <inheritdoc/>
-    public ChatHistory CreateNewChat(string? instructions = null)
+    public async Task<IReadOnlyList<ITextResult>> GetCompletionsAsync(string text, CompleteRequestSettings requestSettings, CancellationToken cancellationToken = default)
     {
-        var chatHistory = new ChatHistory();
-        if (!string.IsNullOrEmpty(instructions))
-        {
-            chatHistory.AddSystemMessage(instructions);
-        }
-
-        return chatHistory;
-    }
-
-    /// <inheritdoc/>
-    public async Task<IReadOnlyList<IChatResult>> GetChatCompletionsAsync(ChatHistory chat, ChatRequestSettings? requestSettings = null, CancellationToken cancellationToken = default)
-    {
-        Utils.VerifyNotNull(chat);
+        Utils.VerifyNotNull(requestSettings);
         requestSettings ??= new();
         var config = _connectorConfig.Features
-            .First(p => p.Type == ConnectorConstants.ChatType)
+            .First(p => p.Type == ConnectorConstants.TextCompletionType)
             .Endpoints
-            .First(p => p.Type == ConnectorConstants.ChatRestType);
+            .First(p => p.Type == ConnectorConstants.TextCompletionRestType);
         var url = new Uri(_connectorConfig.BaseUrl + config.Path);
-        var requestData = GetRequest(chat, requestSettings);
+        var requestData = GetRequest(text, requestSettings);
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, url)
         {
             Content = JsonContent.Create(requestData),
@@ -70,20 +58,20 @@ public sealed class CustomChatCompletion : IChatCompletion
 
         return result.IsError
             ? throw new AIException(AIException.ErrorCodes.ServiceError, result.Content ?? "Something error")
-            : new List<IChatResult> { new CustomChatCompletionResult(result) }.AsReadOnly();
+            : new List<ITextResult> { new CustomTextResult(result) }.AsReadOnly();
     }
 
     /// <inheritdoc/>
-    public async IAsyncEnumerable<IChatStreamingResult> GetStreamingChatCompletionsAsync(ChatHistory chat, ChatRequestSettings? requestSettings = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    public async IAsyncEnumerable<ITextStreamingResult> GetStreamingCompletionsAsync(string text, CompleteRequestSettings requestSettings, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        Utils.VerifyNotNull(chat);
+        Utils.VerifyNotNull(requestSettings);
         requestSettings ??= new();
         var config = _connectorConfig.Features
-            .First(p => p.Type == ConnectorConstants.ChatType)
+            .First(p => p.Type == ConnectorConstants.TextCompletionType)
             .Endpoints
-            .First(p => p.Type == ConnectorConstants.ChatStreamType);
+            .First(p => p.Type == ConnectorConstants.TextCompletionStreamType);
         var url = new Uri(_connectorConfig.BaseUrl + config.Path);
-        var requestData = GetRequest(chat, requestSettings);
+        var requestData = GetRequest(text, requestSettings);
         var json = JsonSerializer.Serialize(requestData);
         using var tcpClient = new TcpClient();
         tcpClient.Connect(url.Host, url.Port);
@@ -97,13 +85,13 @@ public sealed class CustomChatCompletion : IChatCompletion
                  json;
         var requestBytes = Encoding.ASCII.GetBytes(request);
         await stream.WriteAsync(requestBytes, 0, requestBytes.Length, cancellationToken);
-        yield return new CustomChatStreamingResult(stream, cancellationToken, () =>
+        yield return new CustomTextStreamingResult(stream, cancellationToken, () =>
         {
             // Try call stream cancel endpoint
             var cancelConfig = _connectorConfig.Features
-            .First(p => p.Type == ConnectorConstants.ChatType)
+            .First(p => p.Type == ConnectorConstants.TextCompletionType)
             .Endpoints
-            .FirstOrDefault(p => p.Type == ConnectorConstants.ChatStreamCancelType);
+            .FirstOrDefault(p => p.Type == ConnectorConstants.TextCompletionStreamCancelType);
             if (cancelConfig != null)
             {
                 var cancelUrl = new Uri(_connectorConfig.BaseUrl + cancelConfig.Path);
@@ -113,18 +101,8 @@ public sealed class CustomChatCompletion : IChatCompletion
         });
     }
 
-    private static Request GetRequest(ChatHistory chat, ChatRequestSettings requestSettings)
+    private static RequestBase GetRequest(string text, CompleteRequestSettings requestSettings)
     {
-        var userMsg = chat.LastOrDefault(p => p.Role == AuthorRole.User)
-            ?? throw new AIException(AIException.ErrorCodes.InvalidRequest);
-        var history = new List<Message>();
-        for (var i = 0; i < chat.Messages.Count - 1; i++)
-        {
-            var item = chat.Messages[i];
-            var msg = new Message { Content = item.Content, Role = item.Role.ToString() };
-            history.Add(msg);
-        }
-
         var settings = new RequestSettings
         {
             FrequencyPenalty = requestSettings.FrequencyPenalty,
@@ -134,26 +112,30 @@ public sealed class CustomChatCompletion : IChatCompletion
             TopP = requestSettings.TopP,
         };
 
-        return new Request
+        return new RequestBase
         {
-            Message = userMsg.Content,
-            History = history,
+            Message = text,
             Settings = settings,
         };
     }
 
-    internal class CustomChatCompletionResult : IChatResult
+    internal sealed class CustomTextResult : ITextResult
     {
         private readonly MessageResult _messageResult;
 
-        public CustomChatCompletionResult(MessageResult result)
-            => _messageResult = result;
+        public CustomTextResult(MessageResult resultData)
+        {
+            _messageResult = resultData;
+            ModelResult = new ModelResult(resultData);
+        }
 
-        public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
-            => Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, _messageResult.Content));
+        public ModelResult ModelResult { get; }
+
+        public Task<string> GetCompletionAsync(CancellationToken cancellationToken = default)
+            => Task.FromResult(_messageResult.Content);
     }
 
-    internal class CustomChatStreamingResult : IChatStreamingResult
+    internal sealed class CustomTextStreamingResult : ITextStreamingResult
     {
         private readonly Stream _stream;
         private readonly StreamReader _reader;
@@ -161,22 +143,25 @@ public sealed class CustomChatCompletion : IChatCompletion
         private readonly Action _action;
         private string _line;
 
-        public CustomChatStreamingResult(Stream stream, CancellationToken token, Action cancelAction)
+        public CustomTextStreamingResult(Stream stream, CancellationToken token, Action cancelAction)
         {
             _stream = stream;
             _line = string.Empty;
             _reader = new StreamReader(stream);
             _token = token;
             _action = cancelAction;
+            ModelResult = new ModelResult(stream);
         }
 
-        public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
+        public ModelResult ModelResult { get; }
+
+        public Task<string> GetCompletionAsync(CancellationToken cancellationToken = default)
         {
             var msg = JsonSerializer.Deserialize<MessageResult>(_line);
-            return Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, msg.Content));
+            return Task.FromResult(msg.Content);
         }
 
-        public async IAsyncEnumerable<ChatMessageBase> GetStreamingChatMessageAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<string> GetCompletionStreamingAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             using (_stream)
             using (_reader)
@@ -200,33 +185,10 @@ public sealed class CustomChatCompletion : IChatCompletion
                     }
                     else if (_line.StartsWith("{"))
                     {
-                        yield return await GetChatMessageAsync(cancellationToken).ConfigureAwait(false);
+                        yield return await GetCompletionAsync(cancellationToken).ConfigureAwait(false);
                     }
                 }
             }
-        }
-    }
-
-    internal class Message
-    {
-        [JsonPropertyName("role")]
-        public string Role { get; set; }
-
-        [JsonPropertyName("content")]
-        public string Content { get; set; }
-    }
-
-    internal class Request : RequestBase
-    {
-        [JsonPropertyName("history")]
-        public List<Message> History { get; set; }
-    }
-
-    private sealed class ChatMessage : ChatMessageBase
-    {
-        public ChatMessage(AuthorRole authorRole, string content)
-            : base(authorRole, content)
-        {
         }
     }
 }
