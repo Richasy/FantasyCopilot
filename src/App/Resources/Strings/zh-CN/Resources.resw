@@ -1620,4 +1620,19 @@
   <data name="ConnectorViewer" xml:space="preserve">
     <value>连接器看板</value>
   </data>
+  <data name="Connect" xml:space="preserve">
+    <value>连接</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>已连接</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>连接中</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>断开连接</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>已断开连接</value>
+  </data>
 </root>

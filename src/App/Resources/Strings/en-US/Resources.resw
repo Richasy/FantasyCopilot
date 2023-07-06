@@ -342,8 +342,17 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Connect</value>
+  </data>
   <data name="ConnectDatabaseFailed" xml:space="preserve">
     <value>Failed to connect to the database</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>Connected</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>Connecting</value>
   </data>
   <data name="ConnectingDatabase" xml:space="preserve">
     <value>Connecting to database</value>
@@ -506,6 +515,12 @@
   </data>
   <data name="DirectoryPlaceholderText" xml:space="preserve">
     <value>Get files or folders in the directory</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>Disconnect</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>Disconnected</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Documentation</value>

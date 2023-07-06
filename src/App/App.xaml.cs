@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Linq;
 using FantasyCopilot.App.Controls;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using H.NotifyIcon;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -39,6 +37,7 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        System.Diagnostics.Debug.WriteLine($"App created: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         UnhandledException += OnUnhandledException;
     }
 
@@ -81,6 +80,7 @@ public partial class App : Application
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         // We expect our app is single instanced.
+        System.Diagnostics.Debug.WriteLine($"App launched: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         var instance = AppInstance.FindOrRegisterForKey(Guid);
         var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
 
@@ -98,6 +98,7 @@ public partial class App : Application
         instance.Activated += OnInstanceActivated;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         DI.App.Factory.RegisterAppRequiredServices();
+        System.Diagnostics.Debug.WriteLine($"DI registered: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         LaunchWindow();
     }
 
@@ -134,21 +135,6 @@ public partial class App : Application
         return new PointInt32(left, top);
     }
 
-    private static void CleanupConnectors()
-    {
-        var appVM = Locator.Current.GetService<IAppViewModel>();
-        if (appVM.ConnectorGroup.Any())
-        {
-            foreach (var item in appVM.ConnectorGroup)
-            {
-                if (item.Value.IsLaunched)
-                {
-                    item.Value.ExitCommand.Execute(default);
-                }
-            }
-        }
-    }
-
     private void InitializeTrayIcon()
     {
         if (TrayIcon != null)
@@ -169,6 +155,7 @@ public partial class App : Application
     private void LaunchWindow()
     {
         _window = new MainWindow();
+        System.Diagnostics.Debug.WriteLine($"window created: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         var appWindow = _window.AppWindow;
         appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -183,7 +170,9 @@ public partial class App : Application
 
         _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
         HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
+        System.Diagnostics.Debug.WriteLine($"Setting read: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         _window.Activate();
+        System.Diagnostics.Debug.WriteLine($"window activated: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
     }
 
     private void OnInstanceActivated(object sender, AppActivationArguments e)
@@ -233,10 +222,6 @@ public partial class App : Application
 
             _window.Hide();
         }
-        else
-        {
-            CleanupConnectors();
-        }
     }
 
     private void MoveAndResize()
@@ -265,7 +250,6 @@ public partial class App : Application
 
     private void ExitApp()
     {
-        CleanupConnectors();
         HandleCloseEvents = false;
         TrayIcon?.Dispose();
         _window?.Close();

@@ -23,6 +23,16 @@ namespace FantasyCopilot.ViewModels;
 /// </summary>
 public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnectorConfigViewModel
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ConnectorConfigViewModel"/> class.
+    /// </summary>
+    public ConnectorConfigViewModel()
+    {
+        _timer = new Timer(1000);
+        _timer.Enabled = false;
+        _timer.Elapsed += OnConnectorTimerElapsed;
+    }
+
     /// <inheritdoc/>
     public ConnectorConfig GetData()
         => _config;
@@ -31,9 +41,6 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
     public void InjectData(ConnectorConfig config)
     {
         _config = config;
-        _timer = new Timer(1000);
-        _timer.Enabled = false;
-        _timer.Elapsed += OnConnectorTimerElapsed;
         Id = config.Id;
         DisplayName = config.Name;
         SupportChat = config.Features.Any(f => f.Type == ConnectorConstants.ChatType);

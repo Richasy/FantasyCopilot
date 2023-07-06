@@ -16,6 +16,7 @@ public sealed partial class ConnectorItem : ConnectorItemBase
     public ConnectorItem()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
         Unloaded += OnUnloaded;
     }
 
@@ -29,8 +30,12 @@ public sealed partial class ConnectorItem : ConnectorItemBase
         if (e.NewValue is IConnectorConfigViewModel newVM)
         {
             newVM.PropertyChanged += OnViewModelPropertyChanged;
+            CheckState();
         }
     }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+        => CheckState();
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
@@ -42,7 +47,28 @@ public sealed partial class ConnectorItem : ConnectorItemBase
 
     private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if(e.PropertyName == nameof(IConnectorConfigViewModel.))
+        if (e.PropertyName == nameof(IConnectorConfigViewModel.State))
+        {
+            CheckState();
+        }
+    }
+
+    private void CheckState()
+    {
+        switch (ViewModel.State)
+        {
+            case ConnectorState.NotStarted:
+                VisualStateManager.GoToState(this, nameof(DisconnectedState), false);
+                break;
+            case ConnectorState.Launching:
+                VisualStateManager.GoToState(this, nameof(ConnectingState), false);
+                break;
+            case ConnectorState.Connected:
+                VisualStateManager.GoToState(this, nameof(ConnectedState), false);
+                break;
+            default:
+                break;
+        }
     }
 }
 

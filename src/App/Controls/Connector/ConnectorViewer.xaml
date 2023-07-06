@@ -19,13 +19,18 @@
             HorizontalAlignment="Left"
             Style="{StaticResource SubtitleTextBlockStyle}"
             Text="{ext:Locale Name=ConnectorViewer}" />
-        <ScrollViewer Style="{StaticResource DefaultScrollViewerStyle}" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer
+            Grid.Row="1"
+            Style="{StaticResource DefaultScrollViewerStyle}"
+            VerticalScrollBarVisibility="Auto">
             <ItemsRepeater x:Name="ConnectorRepeater">
                 <ItemsRepeater.Layout>
                     <StackLayout Spacing="8" />
                 </ItemsRepeater.Layout>
                 <ItemsRepeater.ItemTemplate>
-                    <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel" />
+                    <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                        <local:ConnectorItem HorizontalAlignment="Stretch" ViewModel="{x:Bind}" />
+                    </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
         </ScrollViewer>
