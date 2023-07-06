@@ -381,6 +381,9 @@
 3. If you already have a connector catalog, refresh it after changing the connector catalog.
 4. For more information about connectors, check out the GitHub project wiki.</value>
   </data>
+  <data name="ConnectorOutput" xml:space="preserve">
+    <value>Connector output</value>
+  </data>
   <data name="ConnectorViewer" xml:space="preserve">
     <value>Connector viewer</value>
   </data>

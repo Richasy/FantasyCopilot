@@ -50,6 +50,8 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         SupportTextCompletion = config.Features.Any(f => f.Type == ConnectorConstants.TextCompletionType);
         SupportTextCompletionStream = SupportTextCompletion && config.Features.First(p => p.Type == ConnectorConstants.TextCompletionType).Endpoints.Any(p => p.Type == ConnectorConstants.TextCompletionStreamType);
         SupportEmbedding = config.Features.Any(f => f.Type == ConnectorConstants.EmbeddingType);
+        HasConfig = !string.IsNullOrEmpty(config.ConfigPath);
+        HasReadMe = !string.IsNullOrEmpty(config.ReadMe);
         State = ConnectorState.NotStarted;
     }
 
@@ -83,6 +85,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
             return;
         }
 
+        LogContent = string.Empty;
         var folder = GetConnectorFolder();
         var exePath = Path.Combine(folder, _config.ExecuteName);
         _process = new Process();
@@ -118,13 +121,27 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
     }
 
     private void OnConnectorErrorDataReceived(object sender, DataReceivedEventArgs e)
-        => _logger.LogError($"Connector {_config.Name} throw an error: {e.Data}");
+    {
+        _dispatcherQueue.TryEnqueue(() =>
+        {
+            LogContent += $"{e.Data}\n";
+            LogContent = LogContent.Trim();
+            _logger.LogError($"Connector {_config.Name} throw an error: {e.Data}");
+
+            // Sometimes the error is not an error, but an output.
+            // As long as the process does not exit,
+            // then we judge that it is connected successfully.
+            State = ConnectorState.Connected;
+        });
+    }
 
     private void OnConnectorOutputDataReceived(object sender, DataReceivedEventArgs e)
     {
         // When we receive the process output, it is determined that the service has started.
         _dispatcherQueue.TryEnqueue(() =>
         {
+            LogContent += $"{e.Data}\n";
+            LogContent = LogContent.Trim();
             State = ConnectorState.Connected;
         });
     }

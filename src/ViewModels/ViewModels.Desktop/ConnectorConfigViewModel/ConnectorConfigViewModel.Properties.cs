@@ -55,6 +55,9 @@ public sealed partial class ConnectorConfigViewModel
     private bool _isLaunched;
 
     [ObservableProperty]
+    private string _logContent;
+
+    [ObservableProperty]
     private ConnectorState _state;
 
     /// <inheritdoc/>

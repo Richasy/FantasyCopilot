@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.Net.Http.Json;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using FantasyCopilot.Models.App.Connectors;
@@ -83,13 +85,19 @@ public sealed class CustomChatCompletion : IChatCompletion
         var url = new Uri(_connectorConfig.BaseUrl + config.Path);
         var requestData = GetRequest(chat, requestSettings);
         var json = JsonSerializer.Serialize(requestData);
-        Stream responseStream;
-        try
-        {
-            var response = await _httpClient.PostAsync(url, JsonContent.Create(requestData), cancellationToken);
-            responseStream = await response.Content.ReadAsStreamAsync(cancellationToken);
-        }
-        catch (OperationCanceledException)
+        using var tcpClient = new TcpClient();
+        tcpClient.Connect(url.Host, url.Port);
+        var stream = tcpClient.GetStream();
+        var contentLength = Encoding.UTF8.GetByteCount(json);
+        var request = $"POST {url.PathAndQuery} HTTP/1.1\r\n" +
+                 $"Host: {_connectorConfig.BaseUrl}\r\n" +
+                 "Content-Type: application/json\r\n" +
+                 $"Content-Length: {contentLength}\r\n" +
+                 "\r\n" +
+                 json;
+        var requestBytes = Encoding.ASCII.GetBytes(request);
+        await stream.WriteAsync(requestBytes, 0, requestBytes.Length, cancellationToken);
+        yield return new CustomChatStreamingResult(stream, cancellationToken, () =>
         {
             // Try call stream cancel endpoint
             var cancelConfig = _connectorConfig.Features
@@ -102,15 +110,7 @@ public sealed class CustomChatCompletion : IChatCompletion
                 var cancelRequest = new HttpRequestMessage(HttpMethod.Post, cancelUrl);
                 _ = _httpClient.SendAsync(cancelRequest, CancellationToken.None);
             }
-
-            throw;
-        }
-        catch (Exception)
-        {
-            throw;
-        }
-
-        yield return new CustomChatStreamingResult(responseStream);
+        });
     }
 
     private static void VerifyNotNull(object obj)
@@ -165,13 +165,17 @@ public sealed class CustomChatCompletion : IChatCompletion
     {
         private readonly Stream _stream;
         private readonly StreamReader _reader;
+        private readonly CancellationToken _token;
+        private readonly Action _action;
         private string _line;
 
-        public CustomChatStreamingResult(Stream stream)
+        public CustomChatStreamingResult(Stream stream, CancellationToken token, Action cancelAction)
         {
             _stream = stream;
             _line = string.Empty;
             _reader = new StreamReader(stream);
+            _token = token;
+            _action = cancelAction;
         }
 
         public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
@@ -187,6 +191,16 @@ public sealed class CustomChatCompletion : IChatCompletion
             {
                 while ((_line = await _reader.ReadLineAsync(cancellationToken)) != null && _line != "[DONE]")
                 {
+                    try
+                    {
+                        _token.ThrowIfCancellationRequested();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        _action?.Invoke();
+                        throw;
+                    }
+
                     if (_line.StartsWith("error:"))
                     {
                         break;

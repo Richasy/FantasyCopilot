@@ -1641,4 +1641,7 @@
   <data name="ConnectorLaunched" xml:space="preserve">
     <value>{0} 已经启动</value>
   </data>
+  <data name="ConnectorOutput" xml:space="preserve">
+    <value>连接器日志输出</value>
+  </data>
 </root>

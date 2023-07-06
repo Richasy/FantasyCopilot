@@ -299,7 +299,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
             }
 
             IsConnectorImporting = false;
-            _appViewModel.RefreshConnectorsCommand.Execute(false);
+            await _appViewModel.RefreshConnectorsCommand.ExecuteAsync(false);
             await VerifyConnectorsAsync();
         }
         catch (Exception ex)
@@ -310,7 +310,11 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
     }
 
     [RelayCommand]
-    private void RefreshConnector() => _appViewModel.RefreshConnectorsCommand.Execute(true);
+    private async Task RefreshConnectorAsync()
+    {
+        await _appViewModel.RefreshConnectorsCommand.ExecuteAsync(true);
+        await VerifyConnectorsAsync();
+    }
 
     [RelayCommand]
     private async Task LoadModelsAsync(bool force)

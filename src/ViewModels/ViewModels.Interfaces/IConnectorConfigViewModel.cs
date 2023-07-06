@@ -63,6 +63,11 @@ public interface IConnectorConfigViewModel : INotifyPropertyChanged
     bool IsLaunched { get; }
 
     /// <summary>
+    /// Output when the service is running.
+    /// </summary>
+    string LogContent { get; }
+
+    /// <summary>
     /// Current state.
     /// </summary>
     ConnectorState State { get; }

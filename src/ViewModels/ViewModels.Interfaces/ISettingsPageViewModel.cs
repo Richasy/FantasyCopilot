@@ -350,7 +350,7 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// <summary>
     /// Refresh connectors.
     /// </summary>
-    IRelayCommand RefreshConnectorCommand { get; }
+    IAsyncRelayCommand RefreshConnectorCommand { get; }
 
     /// <summary>
     /// Restart the app.

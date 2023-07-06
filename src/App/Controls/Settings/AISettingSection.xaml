@@ -250,10 +250,12 @@
                         </Button>
                     </StackPanel>
                     <ComboBox
+                        x:Name="ChatModelComboBox"
                         MaxWidth="160"
                         VerticalAlignment="Center"
                         ItemsSource="{x:Bind ViewModel.ChatConnectors}"
-                        SelectedItem="{x:Bind ViewModel.SelectedChatConnector, Mode=TwoWay}">
+                        Loaded="OnChatModelComboBoxLoadedAsync"
+                        SelectionChanged="OnChatModelComboBoxSelectionChanged">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
                                 <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
