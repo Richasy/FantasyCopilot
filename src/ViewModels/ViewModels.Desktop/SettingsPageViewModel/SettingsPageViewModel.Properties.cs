@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
@@ -191,13 +192,13 @@ public sealed partial class SettingsPageViewModel
     private IConnectorConfigViewModel _selectedEmbeddingConnector;
 
     /// <inheritdoc/>
-    public SynchronizedObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+    public ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
 
     /// <inheritdoc/>
-    public SynchronizedObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+    public ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
 
     /// <inheritdoc/>
-    public SynchronizedObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
+    public ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 
     /// <inheritdoc/>
     public SynchronizedObservableCollection<string> AzureOpenAIChatModels { get; }

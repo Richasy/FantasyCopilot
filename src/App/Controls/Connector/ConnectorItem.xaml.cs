@@ -35,7 +35,10 @@ public sealed partial class ConnectorItem : ConnectorItemBase
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
-        => CheckState();
+    {
+        LogTextBlock.Text = string.Empty;
+        CheckState();
+    }
 
     private void OnUnloaded(object sender, RoutedEventArgs e)
     {
@@ -50,6 +53,10 @@ public sealed partial class ConnectorItem : ConnectorItemBase
         if (e.PropertyName == nameof(IConnectorConfigViewModel.State))
         {
             CheckState();
+        }
+        else if (e.PropertyName == nameof(IConnectorConfigViewModel.LogContent))
+        {
+            LogTextBlock.Text = ViewModel.LogContent.Trim();
         }
     }
 

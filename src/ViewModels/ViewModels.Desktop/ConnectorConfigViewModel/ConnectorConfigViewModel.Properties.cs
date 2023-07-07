@@ -21,6 +21,7 @@ public sealed partial class ConnectorConfigViewModel
     private readonly ILogger<ConnectorConfigViewModel> _logger;
     private readonly IAppViewModel _appViewModel;
     private readonly IResourceToolkit _resourceToolkit;
+    private readonly Guid _internalId;
     private ConnectorConfig _config;
     private Process _process;
 
@@ -61,7 +62,7 @@ public sealed partial class ConnectorConfigViewModel
     private ConnectorState _state;
 
     /// <inheritdoc/>
-    public override bool Equals(object obj) => obj is ConnectorConfigViewModel model && Id == model.Id;
+    public override bool Equals(object obj) => obj is ConnectorConfigViewModel model && Id == model.Id && _internalId == model._internalId;
 
     /// <inheritdoc/>
     public override int GetHashCode() => HashCode.Combine(Id);

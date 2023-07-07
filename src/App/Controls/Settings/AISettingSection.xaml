@@ -184,6 +184,7 @@
                                         FontSize="12"
                                         FontStyle="Italic"
                                         Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                        IsTextSelectionEnabled="True"
                                         Text="{x:Bind ViewModel.ConnectorFolderPath, Mode=OneWay}"
                                         TextWrapping="Wrap" />
                                     <TextBlock

@@ -50,8 +50,9 @@
             <Button.Flyout>
                 <Flyout>
                     <TextBlock
-                        MaxWidth="300"
-                        Text="{x:Bind ViewModel.LogContent, Mode=OneWay}"
+                        x:Name="LogTextBlock"
+                        Width="300"
+                        IsTextSelectionEnabled="True"
                         TextWrapping="Wrap" />
                 </Flyout>
             </Button.Flyout>

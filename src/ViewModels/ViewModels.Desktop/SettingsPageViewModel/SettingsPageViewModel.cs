@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,9 +45,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         BuildYear = 2023;
 
-        ChatConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
-        TextCompletionConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
-        EmbeddingConnectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
+        ChatConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        TextCompletionConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        EmbeddingConnectors = new ObservableCollection<IConnectorConfigViewModel>();
 
         AzureOpenAIChatModels = new SynchronizedObservableCollection<string>();
         AzureOpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
@@ -486,15 +487,19 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
             EmbeddingConnectors.Add(item);
         }
 
-        var noneVM = Locator.Current.GetService<IConnectorConfigViewModel>();
-        noneVM.InjectData(new Models.App.Connectors.ConnectorConfig { Id = string.Empty, Name = "N/A" });
-        ChatConnectors.Insert(0, noneVM);
-        TextCompletionConnectors.Insert(0, noneVM);
-        EmbeddingConnectors.Insert(0, noneVM);
-
+        ChatConnectors.Insert(0, GetNA());
+        TextCompletionConnectors.Insert(0, GetNA());
+        EmbeddingConnectors.Insert(0, GetNA());
         await Task.Delay(100);
         SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault();
         SelectedTextCompletionConnector = TextCompletionConnectors.FirstOrDefault(p => p.Id == currentTextId) ?? TextCompletionConnectors.FirstOrDefault();
         SelectedEmbeddingConnector = EmbeddingConnectors.FirstOrDefault(p => p.Id == currentEmbeddingId) ?? EmbeddingConnectors.FirstOrDefault();
+
+        IConnectorConfigViewModel GetNA()
+        {
+            var noneVM = Locator.Current.GetService<IConnectorConfigViewModel>();
+            noneVM.InjectData(new Models.App.Connectors.ConnectorConfig { Id = string.Empty, Name = "N/A" });
+            return noneVM;
+        }
     }
 }

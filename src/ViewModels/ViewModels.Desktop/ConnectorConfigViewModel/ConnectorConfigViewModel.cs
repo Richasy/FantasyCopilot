@@ -33,6 +33,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         _appViewModel = appViewModel;
         _resourceToolkit = resourceToolkit;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        _internalId = Guid.NewGuid();
     }
 
     /// <inheritdoc/>
@@ -129,15 +130,9 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
     private void OnConnectorErrorDataReceived(object sender, DataReceivedEventArgs e)
     {
-        if (!_dispatcherQueue.HasThreadAccess)
-        {
-            return;
-        }
-
         _dispatcherQueue.TryEnqueue(() =>
         {
             LogContent += $"{e.Data}\n";
-            LogContent = LogContent.Trim();
             _logger.LogError($"Connector {_config.Name} throw an error: {e.Data}");
 
             // Sometimes the error is not an error, but an output.
@@ -149,16 +144,10 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
     private void OnConnectorOutputDataReceived(object sender, DataReceivedEventArgs e)
     {
-        if (!_dispatcherQueue.HasThreadAccess)
-        {
-            return;
-        }
-
         // When we receive the process output, it is determined that the service has started.
         _dispatcherQueue.TryEnqueue(() =>
         {
             LogContent += $"{e.Data}\n";
-            LogContent = LogContent.Trim();
             State = ConnectorState.Connected;
         });
     }
