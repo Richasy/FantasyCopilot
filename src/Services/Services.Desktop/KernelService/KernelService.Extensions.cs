@@ -4,6 +4,7 @@ using FantasyCopilot.Libs.CustomConnector;
 using FantasyCopilot.Models.App.Connectors;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.AI.TextCompletion;
 
 namespace FantasyCopilot.Services;
@@ -21,6 +22,13 @@ internal static class CustomAIKernelBuilderExtensions
     {
         var service = new CustomTextCompletion(connectorConfig);
         builder.WithAIService<ITextCompletion>(default, service);
+        return builder;
+    }
+
+    public static KernelBuilder WithCustomTextEmbeddingGenerationService(this KernelBuilder builder, ConnectorConfig connectorConfig)
+    {
+        var service = new CustomTextEmbeddingGeneration(connectorConfig);
+        builder.WithAIService<ITextEmbeddingGeneration>(default, service);
         return builder;
     }
 }

@@ -247,11 +247,14 @@ public sealed partial class KernelService : IKernelService
         var cacheToolkit = Locator.Current.GetService<ICacheToolkit>();
         var chatConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomChatConnectorId, string.Empty);
         var textConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomTextCompletionConnectorId, string.Empty);
+        var embeddingConnectorId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomEmbeddingConnectorId, string.Empty);
         var chatConnector = cacheToolkit.GetConnectorFromId(chatConnectorId);
         var textConnector = cacheToolkit.GetConnectorFromId(textConnectorId);
+        var embeddingConnector = cacheToolkit.GetConnectorFromId(embeddingConnectorId);
 
         var hasChatModel = chatConnector != null;
         var hasTextModel = textConnector != null;
+        var hasEmbeddingModel = embeddingConnector != null;
 
         if (hasChatModel)
         {
@@ -263,7 +266,12 @@ public sealed partial class KernelService : IKernelService
             kernelBuilder.WithCustomTextCompletionService(textConnector);
         }
 
-        SetSupportState(true, hasChatModel, false, hasTextModel);
+        if (hasEmbeddingModel)
+        {
+            kernelBuilder.WithCustomTextEmbeddingGenerationService(embeddingConnector);
+        }
+
+        SetSupportState(true, hasChatModel, hasEmbeddingModel, hasTextModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
         _logger.LogInformation("Custom AI source is not supported yet.");
     }
