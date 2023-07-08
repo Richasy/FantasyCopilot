@@ -29,11 +29,11 @@ public sealed partial class ChatSessionPageViewModel : ViewModelBase, IChatSessi
             CurrentSession = session;
         }
 
-        CheckChatConnectorAvaiable();
+        CheckChatConnectorAvailable();
         CheckConnectorStreamOption();
     }
 
-    private static void CheckChatConnectorAvaiable()
+    private static void CheckChatConnectorAvailable()
     {
         var appVM = Locator.Current.GetService<IAppViewModel>();
         if (appVM.ConnectorGroup.ContainsKey(ConnectorType.Chat))

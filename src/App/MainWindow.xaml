@@ -65,7 +65,10 @@
                                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                                 Symbol="Connector" />
                             <Button.Flyout>
-                                <Flyout Opened="OnConnectorViewerFlyoutOpened" Placement="Top">
+                                <Flyout
+                                    Opened="OnConnectorViewerFlyoutOpened"
+                                    Placement="Top"
+                                    ShouldConstrainToRootBounds="False">
                                     <connector:ConnectorViewer x:Name="ConnectorViewer" />
                                 </Flyout>
                             </Button.Flyout>

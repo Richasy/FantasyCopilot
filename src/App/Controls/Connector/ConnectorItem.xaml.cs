@@ -36,7 +36,7 @@ public sealed partial class ConnectorItem : ConnectorItemBase
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        LogTextBlock.Text = string.Empty;
+        LogTextBlock.Text = ViewModel.LogContent.Trim();
         CheckState();
     }
 

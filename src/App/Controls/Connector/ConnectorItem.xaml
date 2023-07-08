@@ -48,7 +48,7 @@
                 Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
                 Symbol="WindowConsole" />
             <Button.Flyout>
-                <Flyout>
+                <Flyout ShouldConstrainToRootBounds="False">
                     <TextBlock
                         x:Name="LogTextBlock"
                         Width="300"

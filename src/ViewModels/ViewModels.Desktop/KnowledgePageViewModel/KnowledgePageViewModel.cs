@@ -76,6 +76,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
             Bases.Add(vm);
         }
 
+        CheckChatConnectorAvailable();
         _isInitialized = true;
     }
 
@@ -149,6 +150,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
             {
                 Id = Guid.NewGuid().ToString("N"),
                 Name = data.Name,
+                Description = data.Description,
                 DatabasePath = data.DatabasePath,
             };
 
@@ -264,6 +266,18 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
 
     private void CheckIsEmpty()
         => IsEmpty = Bases.Count == 0;
+
+    private void CheckChatConnectorAvailable()
+    {
+        if (_appViewModel.ConnectorGroup.ContainsKey(ConnectorType.Embedding))
+        {
+            var connector = _appViewModel.ConnectorGroup[ConnectorType.Embedding];
+            if (!connector.IsLaunched)
+            {
+                connector.LaunchCommand.Execute(default);
+            }
+        }
+    }
 
     private void OnProgressTimerTick(object sender, object e)
     {
