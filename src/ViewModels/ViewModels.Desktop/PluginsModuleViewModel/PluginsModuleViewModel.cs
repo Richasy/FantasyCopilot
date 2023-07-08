@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -37,7 +37,7 @@ public sealed partial class PluginsModuleViewModel : ViewModelBase, IPluginsModu
         _appViewModel = appViewModel;
         _logger = logger;
 
-        Plugins = new ObservableCollection<IPluginItemViewModel>();
+        Plugins = new SynchronizedObservableCollection<IPluginItemViewModel>();
         Plugins.CollectionChanged += (_, _) => CheckIsEmpty();
         CheckIsEmpty();
 

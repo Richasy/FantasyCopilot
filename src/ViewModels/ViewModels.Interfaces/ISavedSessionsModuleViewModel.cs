@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -25,7 +25,7 @@ public interface ISavedSessionsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Session list.
     /// </summary>
-    ObservableCollection<SessionMetadata> Sessions { get; }
+    SynchronizedObservableCollection<SessionMetadata> Sessions { get; }
 
     /// <summary>
     /// Open a saved session command.

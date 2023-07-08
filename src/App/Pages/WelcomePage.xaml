@@ -70,7 +70,7 @@
                 <StackPanel.ChildrenTransitions>
                     <RepositionThemeTransition IsStaggeringEnabled="False" />
                 </StackPanel.ChildrenTransitions>
-                <settings:AISettingSection />
+                <settings:AISettingSection IsCustomEnabled="False" />
                 <settings:AzureVoiceSettingSection />
                 <settings:TranslateSettingSection />
                 <settings:StableDiffusionSettingSection />

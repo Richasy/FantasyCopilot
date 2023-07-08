@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Files;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -78,11 +78,11 @@ public sealed partial class StoragePageViewModel
     private bool _isImageSearch;
 
     /// <inheritdoc/>
-    public ObservableCollection<FileItem> Items { get; }
+    public SynchronizedObservableCollection<FileItem> Items { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<FileSearchEntry> FileSearchEntries { get; }
+    public SynchronizedObservableCollection<FileSearchEntry> FileSearchEntries { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<AudioSearchEntry> AudioSearchEntries { get; }
+    public SynchronizedObservableCollection<AudioSearchEntry> AudioSearchEntries { get; }
 }

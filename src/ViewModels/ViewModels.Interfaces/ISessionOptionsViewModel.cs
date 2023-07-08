@@ -48,6 +48,11 @@ public interface ISessionOptionsViewModel : INotifyPropertyChanged
     bool AutoRemoveEarlierMessage { get; set; }
 
     /// <summary>
+    /// Whether to enable streaming output options.
+    /// </summary>
+    bool IsStreamOutputEnabled { get; set; }
+
+    /// <summary>
     /// Initialize the view model.
     /// </summary>
     /// <param name="options">Existing configuration.</param>

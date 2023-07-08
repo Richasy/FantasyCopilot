@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -24,7 +24,7 @@ public sealed partial class PluginItemViewModel : ViewModelBase, IPluginItemView
     /// Initializes a new instance of the <see cref="PluginItemViewModel"/> class.
     /// </summary>
     public PluginItemViewModel()
-        => Commands = new ObservableCollection<IPluginCommandItemViewModel>();
+        => Commands = new SynchronizedObservableCollection<IPluginCommandItemViewModel>();
 
     /// <inheritdoc/>
     public void InjectData(PluginConfig config)

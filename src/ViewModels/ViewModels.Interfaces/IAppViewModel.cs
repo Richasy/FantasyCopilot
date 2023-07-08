@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -91,7 +90,22 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// List of navigation items.
     /// </summary>
-    ObservableCollection<NavigateItem> NavigateItems { get; }
+    SynchronizedObservableCollection<NavigateItem> NavigateItems { get; }
+
+    /// <summary>
+    /// Collection of all connectors.
+    /// </summary>
+    SynchronizedObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+
+    /// <summary>
+    /// Custom connector group.
+    /// </summary>
+    Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }
+
+    /// <summary>
+    /// Whether to display the connector viewer button.
+    /// </summary>
+    bool IsConnectorViewerShown { get; }
 
     /// <summary>
     /// Navigate back command.
@@ -119,6 +133,11 @@ public interface IAppViewModel : INotifyPropertyChanged
     IRelayCommand RestartAsAdminCommand { get; }
 
     /// <summary>
+    /// Refresh connectors.
+    /// </summary>
+    IAsyncRelayCommand<bool> RefreshConnectorsCommand { get; }
+
+    /// <summary>
     /// Navigate to a page.
     /// </summary>
     /// <param name="page">Page id.</param>
@@ -128,7 +147,8 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize the view model.
     /// </summary>
-    void Initialize();
+    /// <returns><see cref="Task"/>.</returns>
+    Task InitializeAsync();
 
     /// <summary>
     /// Show tip.

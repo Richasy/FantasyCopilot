@@ -14,7 +14,7 @@ An exploration of mutual achievement between humans and AI.
 
 ---
 
-"Fantasy Copilot" integrates Open AI and Azure's AI services, dedicated to building a personal assistant tool with a large language model as the core and high scalability.
+**Fantasy Copilot** integrates Open AI and Azure's AI services, dedicated to building a personal assistant tool with a large language model as the core and high scalability.
 
 ## 🙌 Simple Start
 
@@ -43,12 +43,15 @@ The application does not provide initial key configuration, which requires you t
 
 | Service                  | Involved Functionality                                                           |
 | ------------------------ | -------------------------------------------------------------------------------- |
-| Open AI or Azure Open AI | Chat, prompt management, session management, knowledge base, semantic skills |
+| Open AI / Azure Open AI / Open Model | Chat, prompt management, session management, knowledge base, semantic skills |
 | Azure Speech Service     | Text-to-speech, speech recognition                                               |
 | Azure Translator / Baidu Translator        | Text translation                                                                 |
 | Everything               | File search                                                                      |
 | Stable Diffusion         | Text to Image                                           |
 
+### Custom Connectors
+
+If you want to use community open source models, Fantasy Copilot also provides support for this. You can view detailed information in the [Custom Connector Overview](https://github.com/Richasy/FantasyCopilot/wiki/Custom-Connector-Overview).
 
 ## ❓ FAQ
 
@@ -84,6 +87,7 @@ We welcome like-minded friends to participate in the **Fantasy Copilot** project
 | Application development | Provide users with a stable and reliable service foundation |
 | Core library development | Provide sufficient general and basic tools for users or other plugin developers |
 | Plugin development | Provide plugins for many users to use, and many hands make light work |
+| Connector development | Supporting more and more open source models |
 | Experience sharing | We sincerely invite you to share your usage experience with other users and put forward your new expectations for the application |
 | More | We welcome any form of contribution |
 

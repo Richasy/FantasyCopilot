@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -30,7 +30,7 @@ public interface ISemanticSkillsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Skill list.
     /// </summary>
-    ObservableCollection<SemanticSkillConfig> Skills { get; }
+    SynchronizedObservableCollection<SemanticSkillConfig> Skills { get; }
 
     /// <summary>
     /// Edit config command.

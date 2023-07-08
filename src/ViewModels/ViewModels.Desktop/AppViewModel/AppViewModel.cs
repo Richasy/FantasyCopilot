@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -27,16 +28,21 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     public AppViewModel(
         IResourceToolkit resourceToolkit,
         ISettingsToolkit settingsToolkit,
+        ICacheToolkit cacheToolkit,
         ILogger<AppViewModel> logger)
     {
         _logger = logger;
         _resourceToolkit = resourceToolkit;
         _settingsToolkit = settingsToolkit;
-        NavigateItems = new ObservableCollection<NavigateItem>();
+        _cacheToolkit = cacheToolkit;
+        NavigateItems = new SynchronizedObservableCollection<NavigateItem>();
+
+        Connectors = new SynchronizedObservableCollection<IConnectorConfigViewModel>();
+        ConnectorGroup = new Dictionary<ConnectorType, IConnectorConfigViewModel>();
     }
 
     /// <inheritdoc/>
-    public void Initialize()
+    public async Task InitializeAsync()
     {
         var isSkipWelcome = _settingsToolkit.IsSettingKeyExist(SettingNames.IsSkipWelcomeScreen);
         if (!isSkipWelcome)
@@ -45,7 +51,6 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         }
         else
         {
-            ReloadAllServicesCommand.Execute(default);
             LoadNavItems();
             var lastOpenPage = _settingsToolkit.ReadLocalSetting(SettingNames.LastOpenPageType, PageType.ChatSession);
             if (!NavigateItems.Any(p => p.Type == lastOpenPage))
@@ -53,7 +58,10 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
                 lastOpenPage = NavigateItems.First().Type;
             }
 
+            await LoadAllConnectorsAsync();
+            ReloadAllServices();
             Navigate(lastOpenPage);
+            CleanConnectorPorts();
         }
 
         _logger.LogTrace("Application completes initialization");
@@ -137,6 +145,8 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         IsImageAvailable = imageService.HasValidConfig;
         IsTranslateAvailable = translateService.HasValidConfig;
         IsStorageAvailable = storageService.HasValidConfig;
+
+        CheckConnectorGroup();
     }
 
     [RelayCommand]
@@ -151,6 +161,44 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     {
         var imageService = Locator.Current.GetService<IImageService>();
         IsImageAvailable = imageService.HasValidConfig;
+    }
+
+    [RelayCommand]
+    private async Task RefreshConnectorsAsync(bool force = false)
+    {
+        await _cacheToolkit.InitializeConnectorsAsync(force);
+        LoadConnectorsAfterInitialized();
+    }
+
+    private void CleanConnectorPorts()
+    {
+        if (ConnectorGroup.Count == 0)
+        {
+            return;
+        }
+
+        var connectors = ConnectorGroup.Values.Select(p => p.GetData().BaseUrl).Distinct().ToList();
+        var ports = new List<string>();
+        foreach (var connector in connectors)
+        {
+            if (Uri.TryCreate(connector, UriKind.Absolute, out var uri))
+            {
+                if (uri.Port > 0 && !uri.IsDefaultPort)
+                {
+                    ports.Add(uri.Port.ToString());
+                }
+            }
+        }
+
+        if (ports.Count > 0)
+        {
+            var command = string.Join(" | ", ports.Select(p => $"Stop-Process -Id (Get-NetTCPConnection -LocalPort {p}).OwningProcess -Force"));
+            var psi = new ProcessStartInfo("powershell.exe", command);
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            Process.Start(psi);
+            _logger.LogInformation($"The port used by the connector has been released");
+        }
     }
 
     private void LoadNavItems()
@@ -195,6 +243,77 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         }
 
         NavigateItems.Add(new NavigateItem(_resourceToolkit.GetLocalizedString(StringNames.Workspace), PageType.Workspace, FluentSymbol.Beaker));
+    }
+
+    private async Task LoadAllConnectorsAsync()
+    {
+        await _cacheToolkit.InitializeConnectorsAsync();
+        LoadConnectorsAfterInitialized();
+        CheckConnectorGroup();
+    }
+
+    private void LoadConnectorsAfterInitialized()
+    {
+        var connectors = _cacheToolkit.GetConnectors();
+        TryClear(Connectors);
+        if (connectors.Any())
+        {
+            foreach (var connector in connectors)
+            {
+                var vm = Locator.Current.GetService<IConnectorConfigViewModel>();
+                vm.InjectData(connector);
+                Connectors.Add(vm);
+            }
+        }
+    }
+
+    private void CheckConnectorGroup()
+    {
+        var isCustomConnectorEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.AISource, AISource.Azure) == AISource.Custom;
+        if (!isCustomConnectorEnabled)
+        {
+            if (ConnectorGroup.Any())
+            {
+                foreach (var connector in ConnectorGroup)
+                {
+                    connector.Value.ExitCommand.Execute(default);
+                }
+
+                ConnectorGroup.Clear();
+            }
+
+            IsConnectorViewerShown = false;
+            return;
+        }
+
+        CheckAndAddConnector(SettingNames.CustomChatConnectorId, ConnectorType.Chat);
+        CheckAndAddConnector(SettingNames.CustomTextCompletionConnectorId, ConnectorType.TextCompletion);
+        CheckAndAddConnector(SettingNames.CustomEmbeddingConnectorId, ConnectorType.Embedding);
+
+        IsConnectorViewerShown = ConnectorGroup.Any();
+
+        void CheckAndAddConnector(SettingNames connectorIdSetting, ConnectorType connectorType)
+        {
+            var connectorId = _settingsToolkit.ReadLocalSetting(connectorIdSetting, string.Empty);
+            var connector = Connectors.FirstOrDefault(p => p.Id == connectorId);
+            if (ConnectorGroup.ContainsKey(connectorType))
+            {
+                var source = ConnectorGroup[connectorType];
+                if (source.Id != connectorId)
+                {
+                    source.ExitCommand.Execute(default);
+                    ConnectorGroup.Remove(connectorType);
+                    if (connector != null)
+                    {
+                        ConnectorGroup.Add(connectorType, connector);
+                    }
+                }
+            }
+            else if (connector != null)
+            {
+                ConnectorGroup.Add(connectorType, connector);
+            }
+        }
     }
 
     partial void OnCurrentNavigateItemChanged(NavigateItem value)

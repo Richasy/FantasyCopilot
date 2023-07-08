@@ -1,0 +1,44 @@
+{
+    "id": "com.richasy.chatglm",
+    "name": "ChatGLM2-6B",
+    "base_url": "http://127.0.0.1:8000",
+    "config_path": "config.json",
+    "readme": "README.txt",
+    "script_file": "run.ps1",
+    "features":[
+        {
+            "type": "chat",
+            "endpoints":[
+                {
+                    "type": "chat-rest",
+                    "path": "/chat"
+                },
+                {
+                    "type": "chat-stream",
+                    "path": "/chat-stream"
+                },
+                {
+                    "type": "chat-stream-cancel",
+                    "path": "/chat-stop"
+                }
+            ]
+        },
+        {
+            "type": "text-completion",
+            "endpoints":[
+                {
+                    "type": "text-completion-rest",
+                    "path": "/text"
+                },
+                {
+                    "type": "text-completion-stream",
+                    "path": "/text-stream"
+                },
+                {
+                    "type": "text-completion-stream-cancel",
+                    "path": "/text-stop"
+                }
+            ]
+        }
+    ]
+}

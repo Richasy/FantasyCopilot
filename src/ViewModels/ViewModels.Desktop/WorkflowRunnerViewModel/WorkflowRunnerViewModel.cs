@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Security.Principal;
 using System.Threading;
@@ -39,7 +38,7 @@ public sealed partial class WorkflowRunnerViewModel : ViewModelBase, IWorkflowRu
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
         _workflowContext = Locator.Current.GetVariable<WorkflowContext>();
-        Steps = new ObservableCollection<IWorkflowStepViewModel>();
+        Steps = new SynchronizedObservableCollection<IWorkflowStepViewModel>();
         AttachIsRunningToAsyncCommand(p => IsRunning = p, ExecuteCommand);
         _workflowContext.ResultUpdated += OnContextResultUpdated;
     }

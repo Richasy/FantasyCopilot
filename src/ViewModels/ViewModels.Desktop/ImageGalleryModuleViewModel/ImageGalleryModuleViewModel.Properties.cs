@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -44,5 +44,5 @@ public sealed partial class ImageGalleryModuleViewModel
     private bool _isEmpty;
 
     /// <inheritdoc/>
-    public ObservableCollection<ICivitaiImageViewModel> Images { get; }
+    public SynchronizedObservableCollection<ICivitaiImageViewModel> Images { get; }
 }

@@ -37,53 +37,54 @@ public sealed partial class CacheToolkit
     /// <inheritdoc/>
     public async Task<PluginConfig> GetPluginConfigFromZipAsync(string pluginZipPath)
     {
-        return await Task.Run(async () =>
+        var tempFolderPath = ApplicationData.Current.TemporaryFolder.Path;
+        var tempConfigPath = Path.Combine(tempFolderPath, WorkflowConstants.PluginConfigFileName);
+        await Task.Run(() =>
         {
-            var tempFolderPath = ApplicationData.Current.TemporaryFolder.Path;
-            var tempConfigPath = Path.Combine(tempFolderPath, WorkflowConstants.PluginConfigFileName);
             using var archive = ZipFile.OpenRead(pluginZipPath);
             archive.Entries
                 .FirstOrDefault(p => p.Name == WorkflowConstants.PluginConfigFileName)
                 .ExtractToFile(tempConfigPath);
-
-            var fileContent = await File.ReadAllTextAsync(tempConfigPath);
-            var config = JsonSerializer.Deserialize<PluginConfig>(fileContent);
-            File.Delete(tempConfigPath);
-
-            return config;
         });
+
+        var fileContent = await File.ReadAllTextAsync(tempConfigPath);
+        var config = JsonSerializer.Deserialize<PluginConfig>(fileContent);
+
+        await Task.Run(() => { File.Delete(tempConfigPath); });
+        return config;
     }
 
     /// <inheritdoc/>
     public async Task ImportPluginConfigAsync(PluginConfig config, string pluginZipPath)
     {
+        var pluginFolder = Path.Combine(GetPluginFolder(), config.Id);
+        if (!Directory.Exists(pluginFolder))
+        {
+            Directory.CreateDirectory(pluginFolder);
+        }
+
         await Task.Run(() =>
         {
-            var pluginFolder = Path.Combine(GetPluginFolder(), config.Id);
-            if (!Directory.Exists(pluginFolder))
-            {
-                Directory.CreateDirectory(pluginFolder);
-            }
-
             ZipFile.ExtractToDirectory(pluginZipPath, pluginFolder, true);
-            _plugins?.Add(config);
         });
+
+        _plugins?.Add(config);
     }
 
     /// <inheritdoc/>
     public async Task RemovePluginAsync(string pluginId)
     {
-        await Task.Run(() =>
+        var folder = GetPluginFolder();
+        var pluginFolder = Path.Combine(folder, pluginId);
+        if (Directory.Exists(pluginFolder))
         {
-            var folder = GetPluginFolder();
-            var pluginFolder = Path.Combine(folder, pluginId);
-            if (Directory.Exists(pluginFolder))
+            await Task.Run(() =>
             {
                 Directory.Delete(pluginFolder, true);
-            }
+            });
+        }
 
-            _plugins?.Remove(_plugins.FirstOrDefault(p => p.Id == pluginId));
-        });
+        _plugins?.Remove(_plugins.FirstOrDefault(p => p.Id == pluginId));
     }
 
     private static string GetPluginFolder()

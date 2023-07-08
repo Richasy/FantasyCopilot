@@ -1,9 +1,13 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 
 namespace FantasyCopilot.ViewModels;
 
@@ -16,6 +20,11 @@ public sealed partial class SettingsPageViewModel
     private readonly IResourceToolkit _resourceToolkit;
     private readonly IFileToolkit _fileToolkit;
     private readonly IAppViewModel _appViewModel;
+    private readonly DispatcherQueue _dispatcherQueue;
+    private readonly ILogger<SettingsPageViewModel> _logger;
+    private bool _isAzureModelLoaded;
+    private bool _isOpenAIModelLoaded;
+    private bool _isModelLoading;
 
     [ObservableProperty]
     private string _packageVersion;
@@ -87,6 +96,9 @@ public sealed partial class SettingsPageViewModel
     private bool _isOpenAIShown;
 
     [ObservableProperty]
+    private bool _isCustomAIShown;
+
+    [ObservableProperty]
     private int _maxSplitContentLength;
 
     [ObservableProperty]
@@ -156,5 +168,53 @@ public sealed partial class SettingsPageViewModel
     private bool _messageUseMarkdown;
 
     [ObservableProperty]
+    private bool _isConnectorRefreshing;
+
+    [ObservableProperty]
+    private bool _isConnectorImporting;
+
+    [ObservableProperty]
+    private string _connectorFolderPath;
+
+    [ObservableProperty]
+    private int _connectorImportProgress;
+
+    [ObservableProperty]
     private ConversationType _defaultConversationType;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedChatConnector;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedTextCompletionConnector;
+
+    [ObservableProperty]
+    private IConnectorConfigViewModel _selectedEmbeddingConnector;
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> AzureOpenAIChatModels { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> AzureOpenAITextCompletionModels { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> AzureOpenAIEmbeddingModels { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> OpenAIChatModels { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> OpenAITextCompletionModels { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<string> OpenAIEmbeddingModels { get; }
 }

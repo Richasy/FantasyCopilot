@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -100,6 +102,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Whether to display configuration items for Open AI.
     /// </summary>
     bool IsOpenAIShown { get; }
+
+    /// <summary>
+    /// Whether to display configuration items for Custom AI.
+    /// </summary>
+    bool IsCustomAIShown { get; }
 
     /// <summary>
     /// The maximum number of characters a single file can accept for text storage.
@@ -217,9 +224,89 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     bool MessageUseMarkdown { get; set; }
 
     /// <summary>
+    /// Whether the list of connectors is refreshing.
+    /// </summary>
+    bool IsConnectorRefreshing { get; }
+
+    /// <summary>
+    /// Whether the connector is being imported.
+    /// </summary>
+    bool IsConnectorImporting { get; }
+
+    /// <summary>
+    /// Connector directory path.
+    /// </summary>
+    string ConnectorFolderPath { get; }
+
+    /// <summary>
+    /// Connector import progress.
+    /// </summary>
+    int ConnectorImportProgress { get; }
+
+    /// <summary>
     /// Default conversation type.
     /// </summary>
     ConversationType DefaultConversationType { get; set; }
+
+    /// <summary>
+    /// The selected chat connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedChatConnector { get; set; }
+
+    /// <summary>
+    /// The selected text completion connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedTextCompletionConnector { get; set; }
+
+    /// <summary>
+    /// The selected embedding connector.
+    /// </summary>
+    IConnectorConfigViewModel SelectedEmbeddingConnector { get; set; }
+
+    /// <summary>
+    /// List of Azure Open AI chat models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAIChatModels { get; }
+
+    /// <summary>
+    /// List of Azure Open AI text completion models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAITextCompletionModels { get; }
+
+    /// <summary>
+    /// List of Azure Open AI embedding models.
+    /// </summary>
+    SynchronizedObservableCollection<string> AzureOpenAIEmbeddingModels { get; }
+
+    /// <summary>
+    /// List of Open AI chat models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAIChatModels { get; }
+
+    /// <summary>
+    /// List of Open AI text completion models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAITextCompletionModels { get; }
+
+    /// <summary>
+    /// List of Open AI embedding models.
+    /// </summary>
+    SynchronizedObservableCollection<string> OpenAIEmbeddingModels { get; }
+
+    /// <summary>
+    /// A collection of connectors to use for chat.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
+
+    /// <summary>
+    /// A collection of connectors to use for text completion.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> TextCompletionConnectors { get; }
+
+    /// <summary>
+    /// A collection of connectors to use for embedding.
+    /// </summary>
+    ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 
     /// <summary>
     /// Import app configuration.
@@ -247,9 +334,34 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     IAsyncRelayCommand OpenLogFolderCommand { get; }
 
     /// <summary>
+    /// Import ai connector.
+    /// </summary>
+    IAsyncRelayCommand ImportConnectorCommand { get; }
+
+    /// <summary>
+    /// Command to open the plug-in folder.
+    /// </summary>
+    IAsyncRelayCommand OpenConnectorFolderCommand { get; }
+
+    /// <summary>
+    /// Change the plugin folder.
+    /// </summary>
+    IAsyncRelayCommand ChangeConnectorFolderCommand { get; }
+
+    /// <summary>
+    /// Refresh connectors.
+    /// </summary>
+    IAsyncRelayCommand RefreshConnectorCommand { get; }
+
+    /// <summary>
     /// Restart the app.
     /// </summary>
     IRelayCommand RestartCommand { get; }
+
+    /// <summary>
+    /// Load AI models.
+    /// </summary>
+    IAsyncRelayCommand<bool> LoadModelsCommand { get; }
 
     /// <summary>
     /// Initialize settings.

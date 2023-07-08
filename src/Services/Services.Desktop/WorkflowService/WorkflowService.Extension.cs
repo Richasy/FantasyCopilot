@@ -208,6 +208,7 @@ public sealed partial class WorkflowService
             var skipError = false;
             var newProcess = new Process();
             newProcess.StartInfo.FileName = fileName;
+            newProcess.StartInfo.WorkingDirectory = Path.GetDirectoryName(fileName);
             newProcess.StartInfo.RedirectStandardOutput = true;
             newProcess.StartInfo.RedirectStandardError = true;
             newProcess.StartInfo.UseShellExecute = false;

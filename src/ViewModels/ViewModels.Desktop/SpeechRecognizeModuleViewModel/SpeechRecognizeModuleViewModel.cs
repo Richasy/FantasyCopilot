@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,7 +34,7 @@ public sealed partial class SpeechRecognizeModuleViewModel : ViewModelBase, ISpe
         _settingsToolkit = settingsToolkit;
         _appViewModel = appViewModel;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        SupportCultures = new ObservableCollection<LocaleInfo>();
+        SupportCultures = new SynchronizedObservableCollection<LocaleInfo>();
         _cacheTextList = new List<string>();
         IsContinuous = _settingsToolkit.ReadLocalSetting(SettingNames.ContinuousSpeechRecognize, false);
         _voiceService.SpeechRecognizing += OnSpeechRecognizing;

@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -32,7 +32,7 @@ public sealed partial class SemanticSkillsModuleViewModel : ViewModelBase, ISema
         _resourceToolkit = resourceToolkit;
         _appVM = appViewModel;
         _editModuleVM = editModuleVM;
-        Skills = new ObservableCollection<SemanticSkillConfig>();
+        Skills = new SynchronizedObservableCollection<SemanticSkillConfig>();
         Skills.CollectionChanged += OnSkillsCollectionChanged;
         _cacheToolkit.SemanticSkillListChanged += OnSemanticSkillListChanged;
         AttachIsRunningToAsyncCommand(p => IsLoading = p, InitializeCommand);

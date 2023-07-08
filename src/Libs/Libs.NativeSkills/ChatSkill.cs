@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
@@ -56,8 +58,9 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunction(WorkflowConstants.Chat.InitializeDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.InitializeName)]
+    [SKFunction]
+    [Description(WorkflowConstants.Chat.InitializeDescription)]
+    [SKName(WorkflowConstants.Chat.InitializeName),]
     public Task InitializeAsync(SKContext context)
     {
         context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
@@ -80,14 +83,15 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.Chat.SendDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.SendName)]
+    [SKFunction]
+    [SKName(WorkflowConstants.Chat.SendName)]
+    [Description(WorkflowConstants.Chat.SendDescription)]
     public async Task<string> SendAsync(SKContext context)
     {
         var reply = string.Empty;
         try
         {
-            _chatHistory.AddMessage(AuthorRole.System, context.Result);
+            _chatHistory.AddMessage(AuthorRole.User, context.Result);
             reply = await _chatCompletion.GenerateMessageAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
 
             // If the response is empty, remove the last sent message.
@@ -123,6 +127,12 @@ public sealed class ChatSkill
                 reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
             }
         }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Chat skill error.");
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
+        }
 
         return reply;
     }
@@ -132,8 +142,9 @@ public sealed class ChatSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.Chat.GenerateStreamDescription)]
-    [SKFunctionName(WorkflowConstants.Chat.GenerateStreamName)]
+    [Description(WorkflowConstants.Chat.GenerateStreamDescription)]
+    [SKName(WorkflowConstants.Chat.GenerateStreamName)]
+    [SKFunction]
     public async Task<string> GenerateStreamAsync(SKContext context)
     {
         var reply = string.Empty;
@@ -154,7 +165,14 @@ public sealed class ChatSkill
                     continue;
                 }
 
-                reply += msg;
+                if (_chatCompletion is not AzureChatCompletion && _chatCompletion is not OpenAIChatCompletion)
+                {
+                    reply = msg;
+                }
+                else
+                {
+                    reply += msg;
+                }
 
                 if (_waitingMilliseconds > 50)
                 {
@@ -199,6 +217,12 @@ public sealed class ChatSkill
             {
                 reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
             }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Chat skill error.");
+            _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
+            reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
         }
 
         _respondTimer.Stop();

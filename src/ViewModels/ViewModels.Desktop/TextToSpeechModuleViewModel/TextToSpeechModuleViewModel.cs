@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -42,8 +41,8 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
         _player = new MediaPlayer();
         _player.CurrentStateChanged += OnMediaPlayerStateChanged;
         IsPaused = true;
-        SupportCultures = new ObservableCollection<LocaleInfo>();
-        DisplayVoices = new ObservableCollection<VoiceMetadata>();
+        SupportCultures = new SynchronizedObservableCollection<LocaleInfo>();
+        DisplayVoices = new SynchronizedObservableCollection<VoiceMetadata>();
     }
 
     [RelayCommand]
@@ -83,9 +82,11 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
             }
 
             var localLocale = new LocaleInfo(CultureInfo.CurrentCulture);
-            SelectedCulture = allCultures.Contains(localLocale)
+            var culture = allCultures.Contains(localLocale)
                 ? localLocale
                 : SupportCultures.FirstOrDefault();
+
+            SelectedCulture = culture;
         }
         catch (System.Exception)
         {
@@ -179,6 +180,25 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
         }
     }
 
+    [RelayCommand]
+    private async Task ResetVoiceAsync()
+    {
+        TryClear(DisplayVoices);
+        var voices = _allVoices
+             .Where(p => p.Locale.Equals(SelectedCulture.Id, StringComparison.InvariantCultureIgnoreCase))
+             .OrderBy(p => p.IsFemale)
+             .ToList();
+        foreach (var item in voices)
+        {
+            DisplayVoices.Add(item);
+        }
+
+        var voice = DisplayVoices.FirstOrDefault();
+
+        await Task.Delay(100);
+        SelectedVoice = voice;
+    }
+
     private void OnMediaPlayerStateChanged(MediaPlayer sender, object args)
     {
         _dispatcherQueue.TryEnqueue(() =>
@@ -189,19 +209,11 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
 
     partial void OnSelectedCultureChanged(LocaleInfo value)
     {
-        _dispatcherQueue.TryEnqueue(() =>
+        if (value == null)
         {
-            TryClear(DisplayVoices);
-            var voices = _allVoices
-                .Where(p => p.Locale.Equals(value.Id, StringComparison.InvariantCultureIgnoreCase))
-                .OrderBy(p => p.IsFemale)
-                .ToList();
-            foreach (var item in voices)
-            {
-                DisplayVoices.Add(item);
-            }
+            return;
+        }
 
-            SelectedVoice = DisplayVoices.FirstOrDefault();
-        });
+        ResetVoiceCommand.Execute(default);
     }
 }

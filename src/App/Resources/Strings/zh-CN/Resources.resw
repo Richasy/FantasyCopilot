@@ -1572,4 +1572,76 @@
   <data name="WorkflowExportTip" xml:space="preserve">
     <value>导出功能只会导出工作流配置，关联的语义技能等需要单独导出</value>
   </data>
+  <data name="Custom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="ConnectorHeader" xml:space="preserve">
+    <value>导入外部连接器作为 AI 服务提供商</value>
+  </data>
+  <data name="ConnectorManager" xml:space="preserve">
+    <value>连接器管理</value>
+  </data>
+  <data name="ConnectorManagerDescription" xml:space="preserve">
+    <value>关于本地或在线连接器的管理，请点击详情按钮</value>
+  </data>
+  <data name="ConnectorManagerTip" xml:space="preserve">
+    <value>1. 如果你的连接器包含本地模型文件，建议迁移至新的连接器目录
+2. 如果需要删除连接器，请打开连接器目录手动删除对应的文件夹，然后点击刷新按钮
+3. 如果你已经有一个连接器目录，请在更改连接器目录后刷新
+4. 更多关于连接器的信息，请查看 GitHub 项目 wiki</value>
+  </data>
+  <data name="ImportConnector" xml:space="preserve">
+    <value>导入连接器</value>
+  </data>
+  <data name="CheckReadMe" xml:space="preserve">
+    <value>阅读说明书</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="FeatureMustHaveEndpoints" xml:space="preserve">
+    <value>功能至少提供一个终结点</value>
+  </data>
+  <data name="MustHaveExecuteFile" xml:space="preserve">
+    <value>必须提供可执行文件</value>
+  </data>
+  <data name="MustHaveFeature" xml:space="preserve">
+    <value>连接器必须包含功能</value>
+  </data>
+  <data name="MustHaveType" xml:space="preserve">
+    <value>必须提供类型</value>
+  </data>
+  <data name="OpenConfig" xml:space="preserve">
+    <value>打开配置</value>
+  </data>
+  <data name="GetOnlineModelListFailed" xml:space="preserve">
+    <value>获取在线模型列表失败</value>
+  </data>
+  <data name="ConnectorViewer" xml:space="preserve">
+    <value>连接器看板</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>连接</value>
+  </data>
+  <data name="Connected" xml:space="preserve">
+    <value>已连接</value>
+  </data>
+  <data name="Connecting" xml:space="preserve">
+    <value>连接中</value>
+  </data>
+  <data name="Disconnect" xml:space="preserve">
+    <value>断开连接</value>
+  </data>
+  <data name="Disconnected" xml:space="preserve">
+    <value>已断开连接</value>
+  </data>
+  <data name="ConnectorClosed" xml:space="preserve">
+    <value>{0} 已经关闭</value>
+  </data>
+  <data name="ConnectorLaunched" xml:space="preserve">
+    <value>{0} 已经启动</value>
+  </data>
+  <data name="ConnectorOutput" xml:space="preserve">
+    <value>连接器日志输出</value>
+  </data>
 </root>

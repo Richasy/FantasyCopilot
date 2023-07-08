@@ -1,0 +1,17 @@
+{
+    "id": "com.richasy.text2vec-base",
+    "name": "text2vec-base-chinese",
+    "base_url": "http://127.0.0.1:4212",
+    "script_file": "run.ps1",
+    "features": [
+        {
+            "type": "embedding",
+            "endpoints": [
+                {
+                    "type": "embedding-rest",
+                    "path": "/embedding"
+                }
+            ]
+        }
+    ]
+}

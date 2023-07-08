@@ -28,6 +28,22 @@ public sealed partial class ChatSessionPageViewModel : ViewModelBase, IChatSessi
         {
             CurrentSession = session;
         }
+
+        CheckChatConnectorAvailable();
+        CheckConnectorStreamOption();
+    }
+
+    private static void CheckChatConnectorAvailable()
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        if (appVM.ConnectorGroup.ContainsKey(ConnectorType.Chat))
+        {
+            var chatConnector = appVM.ConnectorGroup[ConnectorType.Chat];
+            if (!chatConnector.IsLaunched)
+            {
+                chatConnector.LaunchCommand.Execute(default);
+            }
+        }
     }
 
     [RelayCommand]
@@ -45,6 +61,32 @@ public sealed partial class ChatSessionPageViewModel : ViewModelBase, IChatSessi
             newVM.Initialize();
             CurrentSession = newVM;
         }
+
+        CheckConnectorStreamOption();
+    }
+
+    private void CheckConnectorStreamOption()
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        if (appVM.ConnectorGroup.Count > 0)
+        {
+            if (appVM.ConnectorGroup.ContainsKey(ConnectorType.Chat))
+            {
+                var connector = appVM.ConnectorGroup[ConnectorType.Chat];
+                CurrentSession.Options.IsStreamOutputEnabled = connector.SupportChatStream;
+            }
+            else
+            {
+                CurrentSession.Options.IsStreamOutputEnabled = false;
+            }
+        }
+        else
+        {
+            CurrentSession.Options.IsStreamOutputEnabled = true;
+        }
+
+        var sessionService = Locator.Current.GetService<ISessionService>();
+        sessionService.UpdateSessionOptions(CurrentSession?.Options.GetOptions());
     }
 
     partial void OnIsInSettingsChanged(bool value)

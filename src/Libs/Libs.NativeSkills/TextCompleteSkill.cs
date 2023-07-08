@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -58,8 +59,9 @@ public class TextCompleteSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunction(WorkflowConstants.TextCompletion.InitializeDescription)]
-    [SKFunctionName(WorkflowConstants.TextCompletion.InitializeName)]
+    [Description(WorkflowConstants.TextCompletion.InitializeDescription)]
+    [SKName(WorkflowConstants.TextCompletion.InitializeName)]
+    [SKFunction]
     public Task InitializeAsync(SKContext context)
     {
         context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
@@ -82,8 +84,9 @@ public class TextCompleteSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.TextCompletion.CompleteDescription)]
-    [SKFunctionName(WorkflowConstants.TextCompletion.CompleteName)]
+    [Description(WorkflowConstants.TextCompletion.CompleteDescription)]
+    [SKName(WorkflowConstants.TextCompletion.CompleteName)]
+    [SKFunction]
     public async Task<string> CompleteAsync(SKContext context)
     {
         var reply = string.Empty;
@@ -137,8 +140,9 @@ public class TextCompleteSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Message response.</returns>
-    [SKFunction(WorkflowConstants.TextCompletion.CompleteStreamDescription)]
-    [SKFunctionName(WorkflowConstants.TextCompletion.CompleteStreamName)]
+    [Description(WorkflowConstants.TextCompletion.CompleteStreamDescription)]
+    [SKName(WorkflowConstants.TextCompletion.CompleteStreamName)]
+    [SKFunction]
     public async Task<string> CompleteStreamAsync(SKContext context)
     {
         var reply = string.Empty;

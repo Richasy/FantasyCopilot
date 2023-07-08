@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.ComponentModel;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -34,9 +35,9 @@ public sealed class TextSkill
     /// </summary>
     /// <param name="context">Context.</param>
     /// <returns>Translated text.</returns>
-    [SKFunction(WorkflowConstants.Text.TranslateDescription)]
-    [SKFunctionName(WorkflowConstants.Text.TranslateName)]
-    [SKFunctionContextParameter(Description = "The text to be translated.", Name = "INPUT")]
+    [Description(WorkflowConstants.Text.TranslateDescription)]
+    [SKName(WorkflowConstants.Text.TranslateName)]
+    [SKFunction]
     public async Task<string> TranslateAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TranslateStep>();
@@ -61,9 +62,9 @@ public sealed class TextSkill
     /// </summary>
     /// <param name="context">Context.</param>
     /// <returns>New text.</returns>
-    [SKFunctionName(WorkflowConstants.Text.OverwriteName)]
-    [SKFunction(WorkflowConstants.Text.OverwriteDescription)]
-    [SKFunctionContextParameter(Description = "The text to be overwritten.", Name = "INPUT")]
+    [SKName(WorkflowConstants.Text.OverwriteName)]
+    [Description(WorkflowConstants.Text.OverwriteDescription)]
+    [SKFunction]
     public async Task<string> TextOverwriteAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<TextOverwriteStep>();
@@ -83,8 +84,9 @@ public sealed class TextSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunctionName(WorkflowConstants.Text.VariableRedirectName)]
-    [SKFunction(WorkflowConstants.Text.VariableRedirectDescription)]
+    [SKName(WorkflowConstants.Text.VariableRedirectName)]
+    [Description(WorkflowConstants.Text.VariableRedirectDescription)]
+    [SKFunction]
     public Task<SKContext> VariableRedirectAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<VariableRedirectStep>();
@@ -112,8 +114,9 @@ public sealed class TextSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns><see cref="Task"/>.</returns>
-    [SKFunctionName(WorkflowConstants.Text.VariableCreateName)]
-    [SKFunction(WorkflowConstants.Text.VariableCreateDescription)]
+    [SKName(WorkflowConstants.Text.VariableCreateName)]
+    [Description(WorkflowConstants.Text.VariableCreateDescription)]
+    [SKFunction]
     public async Task<SKContext> VariableCreateAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<VariableCreateStep>();

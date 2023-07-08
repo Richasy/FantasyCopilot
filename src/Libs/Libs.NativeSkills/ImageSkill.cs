@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
@@ -40,8 +41,9 @@ public sealed class ImageSkill
     /// </summary>
     /// <param name="context">Current context.</param>
     /// <returns>Image path.</returns>
-    [SKFunctionName(WorkflowConstants.Image.DrawName)]
-    [SKFunction(WorkflowConstants.Image.DrawDescription)]
+    [SKName(WorkflowConstants.Image.DrawName)]
+    [Description(WorkflowConstants.Image.DrawDescription)]
+    [SKFunction]
     public async Task<string> DrawAsync(SKContext context)
     {
         var parameters = _workflowContext.GetStepParameters<ImageStep>();

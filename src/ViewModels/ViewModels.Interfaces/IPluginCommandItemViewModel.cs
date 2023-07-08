@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -24,7 +24,7 @@ public interface IPluginCommandItemViewModel : INotifyPropertyChanged
     /// <summary>
     /// Command parameters.
     /// </summary>
-    ObservableCollection<InputParameter> Parameters { get; }
+    SynchronizedObservableCollection<InputParameter> Parameters { get; }
 
     /// <summary>
     /// Whether the command has no extra parameters.

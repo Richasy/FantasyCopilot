@@ -71,4 +71,8 @@ public enum SettingNames
     ShouldAskBeforeWindowClosed,
     MessageUseMarkdown,
     ShouldSkipWorkflowExportTip,
+    ConnectorFolderPath,
+    CustomChatConnectorId,
+    CustomTextCompletionConnectorId,
+    CustomEmbeddingConnectorId,
 }

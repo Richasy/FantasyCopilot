@@ -5,6 +5,7 @@
     xmlns:controls="using:FantasyCopilot.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:FantasyCopilot.App.Controls.Settings"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,6 +28,7 @@
             SelectionChanged="OnAISourceComboBoxSelectionChanged">
             <ComboBoxItem Content="Azure Open AI" />
             <ComboBoxItem Content="Open AI" />
+            <ComboBoxItem Content="{ext:Locale Name=Custom}" IsEnabled="{x:Bind IsCustomEnabled, Mode=OneWay}" />
         </ComboBox>
 
         <labs:SettingsExpander.Items>
@@ -39,6 +41,7 @@
                 <PasswordBox
                     x:Name="AzureOpenAIAccessKeyBox"
                     Width="200"
+                    LostFocus="OnAIKeyBoxLostFocus"
                     Password="{x:Bind ViewModel.AzureOpenAIAccessKey, Mode=TwoWay}"
                     PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
             </labs:SettingsCard>
@@ -49,6 +52,7 @@
                 <TextBox
                     x:Name="AzureOpenAIEndpointBox"
                     Width="200"
+                    LostFocus="OnAIKeyBoxLostFocus"
                     PlaceholderText="{ext:Locale Name=EndpointPlaceholderText}"
                     Text="{x:Bind ViewModel.AzureOpenAIEndpoint, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -56,8 +60,9 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=ChatModelName}"
                 Visibility="{x:Bind ViewModel.IsAzureOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.AzureOpenAIChatModels}"
                     PlaceholderText="{ext:Locale Name=ChatModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.AzureOpenAIChatModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -65,8 +70,9 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=EmbeddingModelName}"
                 Visibility="{x:Bind ViewModel.IsAzureOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.AzureOpenAIEmbeddingModels}"
                     PlaceholderText="{ext:Locale Name=EmbeddingModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.AzureOpenAIEmbeddingModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -74,8 +80,9 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=TextCompletionModelName}"
                 Visibility="{x:Bind ViewModel.IsAzureOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.AzureOpenAITextCompletionModels}"
                     PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.AzureOpenAICompletionModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -87,13 +94,14 @@
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
                 <PasswordBox
                     Width="200"
+                    LostFocus="OnAIKeyBoxLostFocus"
                     Password="{x:Bind ViewModel.OpenAIAccessKey, Mode=TwoWay}"
                     PlaceholderText="{ext:Locale Name=AccessKeyPlaceholderText}" />
             </labs:SettingsCard>
             <labs:SettingsCard
                 HorizontalContentAlignment="Stretch"
-                Header="{ext:Locale Name=ProxyEndpoint}"
                 Description="{ext:Locale Name=ProxyWarning}"
+                Header="{ext:Locale Name=ProxyEndpoint}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
                 <TextBox
                     Width="200"
@@ -113,8 +121,9 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=ChatModelName}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.OpenAIChatModels}"
                     PlaceholderText="{ext:Locale Name=ChatModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.OpenAIChatModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -122,8 +131,9 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=EmbeddingModelName}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.OpenAIEmbeddingModels}"
                     PlaceholderText="{ext:Locale Name=EmbeddingModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.OpenAIEmbeddingModelName, Mode=TwoWay}" />
             </labs:SettingsCard>
@@ -131,10 +141,205 @@
                 HorizontalContentAlignment="Stretch"
                 Header="{ext:Locale Name=TextCompletionModelName}"
                 Visibility="{x:Bind ViewModel.IsOpenAIShown, Mode=OneWay}">
-                <TextBox
+                <AutoSuggestBox
                     Width="200"
+                    ItemsSource="{x:Bind ViewModel.OpenAITextCompletionModels}"
                     PlaceholderText="{ext:Locale Name=TextCompletionModelNamePlaceholderText}"
                     Text="{x:Bind ViewModel.OpenAICompletionModelName, Mode=TwoWay}" />
+            </labs:SettingsCard>
+
+            <!--  Custom AI  -->
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=ConnectorHeader}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel>
+                    <Button
+                        MinWidth="120"
+                        Command="{x:Bind ViewModel.ImportConnectorCommand}"
+                        Content="{ext:Locale Name=ImportConnector}" />
+                    <ProgressBar
+                        Margin="0,4,0,0"
+                        HorizontalAlignment="Stretch"
+                        Maximum="100"
+                        Visibility="{x:Bind ViewModel.IsConnectorImporting, Mode=OneWay}"
+                        Value="{x:Bind ViewModel.ConnectorImportProgress, Mode=OneWay}" />
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Description="{ext:Locale Name=ConnectorManagerDescription}"
+                Header="{ext:Locale Name=ConnectorManager}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <Button Style="{StaticResource IconButtonStyle}" ToolTipService.ToolTip="{ext:Locale Name=Detail}">
+                        <controls:FluentIcon
+                            FontSize="14"
+                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                            Symbol="Info" />
+                        <Button.Flyout>
+                            <Flyout>
+                                <StackPanel MaxWidth="280" Spacing="12">
+                                    <TextBlock
+                                        FontSize="12"
+                                        FontStyle="Italic"
+                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                        IsTextSelectionEnabled="True"
+                                        Text="{x:Bind ViewModel.ConnectorFolderPath, Mode=OneWay}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                        Text="{ext:Locale Name=ConnectorManagerTip}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button
+                        Command="{x:Bind ViewModel.OpenConnectorFolderCommand}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=OpenFolder}">
+                        <controls:FluentIcon FontSize="14" Symbol="FolderOpen" />
+                    </Button>
+                    <Button
+                        Command="{x:Bind ViewModel.ChangeConnectorFolderCommand}"
+                        Style="{StaticResource IconButtonStyle}"
+                        ToolTipService.ToolTip="{ext:Locale Name=ChangeFolder}">
+                        <controls:FluentIcon FontSize="14" Symbol="BoxArrowLeft" />
+                    </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <Button
+                            Command="{x:Bind ViewModel.RefreshConnectorCommand}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=Refresh}">
+                            <controls:FluentIcon FontSize="14" Symbol="ArrowSync" />
+                        </Button>
+                        <ProgressRing
+                            Width="20"
+                            Height="20"
+                            MinWidth="20"
+                            MinHeight="20"
+                            Margin="2,0,0,0"
+                            VerticalAlignment="Center"
+                            IsActive="{x:Bind ViewModel.IsConnectorRefreshing, Mode=OneWay}"
+                            Visibility="{x:Bind ViewModel.IsConnectorRefreshing, Mode=OneWay}" />
+                    </StackPanel>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=ChatModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedChatConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedChatConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedChatConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedChatConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedChatConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        x:Name="ChatModelComboBox"
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.ChatConnectors}"
+                        Loaded="OnChatModelComboBoxLoadedAsync"
+                        SelectionChanged="OnChatModelComboBoxSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=EmbeddingModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedEmbeddingConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedEmbeddingConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedEmbeddingConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        x:Name="EmbeddingModelComboBox"
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.EmbeddingConnectors}"
+                        Loaded="OnEmbeddingModelComboBoxLoadedAsync"
+                        SelectionChanged="OnEmbeddingModelComboBoxSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </labs:SettingsCard>
+            <labs:SettingsCard
+                HorizontalAlignment="Stretch"
+                Header="{ext:Locale Name=TextCompletionModelName}"
+                Visibility="{x:Bind ViewModel.IsCustomAIShown, Mode=OneWay}">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector, Mode=OneWay, Converter={StaticResource ObjectToVisibilityConverter}}">
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedTextCompletionConnector.OpenReadMeCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=CheckReadMe}"
+                            Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector.HasReadMe, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Receipt" />
+                        </Button>
+                        <Button
+                            Margin="0,0,4,0"
+                            Command="{x:Bind ViewModel.SelectedTextCompletionConnector.OpenConfigCommand, Mode=OneWay}"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTipService.ToolTip="{ext:Locale Name=OpenConfig}"
+                            Visibility="{x:Bind ViewModel.SelectedTextCompletionConnector.HasConfig, Mode=OneWay}">
+                            <controls:FluentIcon FontSize="14" Symbol="Options" />
+                        </Button>
+                    </StackPanel>
+                    <ComboBox
+                        x:Name="TextCompletionModelComboBox"
+                        MaxWidth="160"
+                        VerticalAlignment="Center"
+                        ItemsSource="{x:Bind ViewModel.TextCompletionConnectors}"
+                        Loaded="OnTextCompletionModelComboBoxLoadedAsync"
+                        SelectionChanged="OnTextCompletionModelComboBoxSelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="interfaces:IConnectorConfigViewModel">
+                                <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
             </labs:SettingsCard>
         </labs:SettingsExpander.Items>
     </labs:SettingsExpander>

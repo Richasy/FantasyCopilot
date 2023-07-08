@@ -2,8 +2,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -60,5 +60,5 @@ public sealed partial class WorkflowEditorViewModel
     public IReadOnlyList<WorkCommandBase> OutputCommands { get; set; }
 
     /// <inheritdoc/>
-    public ObservableCollection<IWorkflowStepViewModel> Steps { get; }
+    public SynchronizedObservableCollection<IWorkflowStepViewModel> Steps { get; }
 }

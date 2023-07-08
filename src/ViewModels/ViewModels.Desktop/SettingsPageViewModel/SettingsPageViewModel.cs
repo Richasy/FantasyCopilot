@@ -2,14 +2,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
+using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.Extensions.Logging;
 using Windows.ApplicationModel;
 using Windows.Security.Credentials.UI;
 using Windows.Storage;
@@ -30,18 +34,32 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         ISettingsToolkit settingsToolkit,
         IResourceToolkit resourceToolkit,
         IFileToolkit fileToolkit,
-        IAppViewModel appViewModel)
+        IAppViewModel appViewModel,
+        ILogger<SettingsPageViewModel> logger)
     {
         _settingsToolkit = settingsToolkit;
         _resourceToolkit = resourceToolkit;
         _fileToolkit = fileToolkit;
         _appViewModel = appViewModel;
+        _logger = logger;
+        _dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         BuildYear = 2023;
+
+        ChatConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        TextCompletionConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+        EmbeddingConnectors = new ObservableCollection<IConnectorConfigViewModel>();
+
+        AzureOpenAIChatModels = new SynchronizedObservableCollection<string>();
+        AzureOpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
+        AzureOpenAIEmbeddingModels = new SynchronizedObservableCollection<string>();
+        OpenAIChatModels = new SynchronizedObservableCollection<string>();
+        OpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
+        OpenAIEmbeddingModels = new SynchronizedObservableCollection<string>();
         Initialize();
     }
 
     /// <inheritdoc/>
-    public void Initialize()
+    public async void Initialize()
     {
         DefaultConversationType = _settingsToolkit.ReadLocalSetting(SettingNames.LastConversationType, ConversationType.Continuous);
         var copyrightTemplate = _resourceToolkit.GetLocalizedString(StringNames.Copyright);
@@ -84,6 +102,8 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         HideWhenCloseWindow = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, false);
         MessageUseMarkdown = _settingsToolkit.ReadLocalSetting(SettingNames.MessageUseMarkdown, true);
 
+        ConnectorFolderPath = GetConnectorFolder();
+
         IsChatEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsChatEnabled, true);
         IsImageEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsImageEnabled, true);
         IsVoiceEnabled = _settingsToolkit.ReadLocalSetting(SettingNames.IsVoiceEnabled, true);
@@ -94,6 +114,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
 
         CheckAISource();
         CheckTranslateSource();
+        await VerifyConnectorsAsync();
     }
 
     [RelayCommand]
@@ -163,10 +184,241 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         pluginVM.ReloadPluginCommand.Execute(default);
     }
 
+    [RelayCommand]
+    private async Task ChangeConnectorFolderAsync()
+    {
+        var folderObj = await _fileToolkit.PickFolderAsync(_appViewModel.MainWindow);
+        if (folderObj is not StorageFolder folder)
+        {
+            return;
+        }
+
+        var sourceFolder = GetConnectorFolder();
+        if (sourceFolder == folder.Path)
+        {
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.CanNotSelectSameFolder), InfoType.Error);
+            return;
+        }
+
+        if (!Directory.GetFiles(folder.Path).Any())
+        {
+            var connectors = Directory.GetDirectories(sourceFolder);
+            var tasks = new List<Task>();
+            foreach (var connectorFolder in connectors)
+            {
+                tasks.Add(Task.Run(() =>
+                {
+                    var tempFolder = connectorFolder;
+                    var connectorName = new DirectoryInfo(tempFolder).Name;
+                    var destPath = Path.Combine(folder.Path, connectorName);
+                    if (Directory.Exists(destPath))
+                    {
+                        Directory.Delete(destPath, true);
+                    }
+
+                    Directory.Move(tempFolder, destPath);
+                }));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        _settingsToolkit.WriteLocalSetting(SettingNames.ConnectorFolderPath, folder.Path);
+        ConnectorFolderPath = folder.Path;
+        _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.MoveCompleted), InfoType.Success);
+    }
+
+    [RelayCommand]
+    private async Task OpenConnectorFolderAsync()
+    {
+        var folderPath = GetConnectorFolder();
+        var folder = await StorageFolder.GetFolderFromPathAsync(folderPath);
+        await Launcher.LaunchFolderAsync(folder);
+    }
+
+    [RelayCommand]
+    private async Task ImportConnectorAsync()
+    {
+        var cacheToolkit = Locator.Current.GetService<ICacheToolkit>();
+        var fileObj = await _fileToolkit.PickFileAsync(ConnectorConstants.ConnectorExtension, _appViewModel.MainWindow);
+        if (fileObj is not StorageFile file)
+        {
+            return;
+        }
+
+        try
+        {
+            var config = await cacheToolkit.GetConnectorConfigFromZipAsync(file.Path);
+
+            if (string.IsNullOrEmpty(config.Name))
+            {
+                throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveNameOrDescription));
+            }
+
+            if (string.IsNullOrEmpty(config.Id))
+            {
+                throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveId));
+            }
+
+            if (config.Features == null || config.Features.Count == 0)
+            {
+                throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveFeature));
+            }
+
+            foreach (var feature in config.Features)
+            {
+                if (string.IsNullOrEmpty(feature.Type))
+                {
+                    throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveType));
+                }
+
+                if (feature.Endpoints == null || feature.Endpoints.Count == 0)
+                {
+                    throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.FeatureMustHaveEndpoints));
+                }
+            }
+
+            IsConnectorImporting = true;
+            try
+            {
+                await cacheToolkit.ImportConnectorConfigAsync(config, file.Path, progress =>
+                {
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        ConnectorImportProgress = progress;
+                    });
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Connector import failed");
+            }
+
+            IsConnectorImporting = false;
+            await _appViewModel.RefreshConnectorsCommand.ExecuteAsync(false);
+            await VerifyConnectorsAsync();
+
+            // If the connector has a readme file, open it.
+            if (!string.IsNullOrEmpty(config.ReadMe))
+            {
+                var folderPath = GetConnectorFolder();
+                var filePath = Path.Combine(folderPath, config.ReadMe);
+                if (File.Exists(filePath))
+                {
+                    await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(filePath));
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, nameof(ImportConnectorAsync));
+            _appViewModel.ShowTip(ex.Message, InfoType.Error);
+        }
+    }
+
+    [RelayCommand]
+    private async Task RefreshConnectorAsync()
+    {
+        await _appViewModel.RefreshConnectorsCommand.ExecuteAsync(true);
+        await VerifyConnectorsAsync();
+    }
+
+    [RelayCommand]
+    private async Task LoadModelsAsync(bool force)
+    {
+        if (AiSource == AISource.Custom || _isModelLoading)
+        {
+            return;
+        }
+
+        if (force)
+        {
+            _isOpenAIModelLoaded = AiSource != AISource.OpenAI && _isOpenAIModelLoaded;
+            _isAzureModelLoaded = AiSource != AISource.Azure && _isAzureModelLoaded;
+        }
+
+        if ((AiSource == AISource.Azure && (_isAzureModelLoaded || string.IsNullOrEmpty(AzureOpenAIAccessKey) || string.IsNullOrEmpty(AzureOpenAIEndpoint)))
+            || (AiSource == AISource.OpenAI && (_isOpenAIModelLoaded || string.IsNullOrEmpty(OpenAIAccessKey))))
+        {
+            return;
+        }
+
+        _isModelLoading = true;
+        var kernelService = Locator.Current.GetService<IKernelService>();
+        try
+        {
+            var (chatModels, textCompletions, embeddings) = await kernelService.GetSupportModelsAsync(AiSource);
+            if (AiSource == AISource.Azure)
+            {
+                InitCollection(AzureOpenAIChatModels, chatModels);
+                InitCollection(AzureOpenAITextCompletionModels, textCompletions);
+                InitCollection(AzureOpenAIEmbeddingModels, embeddings);
+
+                if (!AzureOpenAIChatModels.Contains(AzureOpenAIChatModelName) && !string.IsNullOrEmpty(AzureOpenAIChatModelName))
+                {
+                    AzureOpenAIChatModelName = AzureOpenAIChatModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!AzureOpenAITextCompletionModels.Contains(AzureOpenAICompletionModelName) && !string.IsNullOrEmpty(AzureOpenAICompletionModelName))
+                {
+                    AzureOpenAICompletionModelName = AzureOpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!AzureOpenAIEmbeddingModels.Contains(AzureOpenAIEmbeddingModelName) && !string.IsNullOrEmpty(AzureOpenAIEmbeddingModelName))
+                {
+                    AzureOpenAIEmbeddingModelName = AzureOpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                _isAzureModelLoaded = true;
+            }
+            else if (AiSource == AISource.OpenAI)
+            {
+                InitCollection(OpenAIChatModels, chatModels);
+                InitCollection(OpenAITextCompletionModels, textCompletions);
+                InitCollection(OpenAIEmbeddingModels, embeddings);
+
+                if (!OpenAIChatModels.Contains(OpenAIChatModelName) && !string.IsNullOrEmpty(OpenAIChatModelName))
+                {
+                    OpenAIChatModelName = OpenAIChatModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!OpenAITextCompletionModels.Contains(OpenAICompletionModelName) && !string.IsNullOrEmpty(OpenAICompletionModelName))
+                {
+                    OpenAICompletionModelName = OpenAITextCompletionModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                if (!OpenAIEmbeddingModels.Contains(OpenAIEmbeddingModelName) && !string.IsNullOrEmpty(OpenAIEmbeddingModelName))
+                {
+                    OpenAIEmbeddingModelName = OpenAIEmbeddingModels.FirstOrDefault() ?? string.Empty;
+                }
+
+                _isOpenAIModelLoaded = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Load models error.");
+            _appViewModel.ShowTip(_resourceToolkit.GetLocalizedString(StringNames.GetOnlineModelListFailed), InfoType.Warning);
+        }
+
+        _isModelLoading = false;
+
+        void InitCollection(SynchronizedObservableCollection<string> collection, IEnumerable<string> items)
+        {
+            TryClear(collection);
+            foreach (var item in items)
+            {
+                collection.Add(item);
+            }
+        }
+    }
+
     private void CheckAISource()
     {
         IsAzureOpenAIShown = AiSource == AISource.Azure;
         IsOpenAIShown = AiSource == AISource.OpenAI;
+        IsCustomAIShown = AiSource == AISource.Custom;
+        LoadModelsCommand.Execute(default);
     }
 
     private void CheckTranslateSource()
@@ -181,9 +433,22 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         if (string.IsNullOrEmpty(pluginFolder))
         {
             pluginFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, WorkflowConstants.DefaultPluginFolderName);
+            Directory.CreateDirectory(pluginFolder);
         }
 
         return pluginFolder;
+    }
+
+    private string GetConnectorFolder()
+    {
+        var connectorFolder = _settingsToolkit.ReadLocalSetting(SettingNames.ConnectorFolderPath, string.Empty);
+        if (string.IsNullOrEmpty(connectorFolder))
+        {
+            connectorFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, ConnectorConstants.DefaultConnectorFolderName);
+            Directory.CreateDirectory(connectorFolder);
+        }
+
+        return connectorFolder;
     }
 
     private async Task<bool> VerifyUserAsync()
@@ -197,5 +462,50 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         }
 
         return authResult == UserConsentVerificationResult.Verified;
+    }
+
+    private async Task VerifyConnectorsAsync()
+    {
+        var chatConnectors = _appViewModel.Connectors.Where(p => p.SupportChat);
+        var textConnectors = _appViewModel.Connectors.Where(p => p.SupportTextCompletion);
+        var embeddingConnectors = _appViewModel.Connectors.Where(p => p.SupportEmbedding);
+
+        var currentChatId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomChatConnectorId, string.Empty);
+        var currentTextId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomTextCompletionConnectorId, string.Empty);
+        var currentEmbeddingId = _settingsToolkit.ReadLocalSetting(SettingNames.CustomEmbeddingConnectorId, string.Empty);
+
+        TryClear(ChatConnectors);
+        TryClear(TextCompletionConnectors);
+        TryClear(EmbeddingConnectors);
+
+        foreach (var item in chatConnectors)
+        {
+            ChatConnectors.Add(item);
+        }
+
+        foreach (var item in textConnectors)
+        {
+            TextCompletionConnectors.Add(item);
+        }
+
+        foreach (var item in embeddingConnectors)
+        {
+            EmbeddingConnectors.Add(item);
+        }
+
+        ChatConnectors.Insert(0, GetNA());
+        TextCompletionConnectors.Insert(0, GetNA());
+        EmbeddingConnectors.Insert(0, GetNA());
+        await Task.Delay(100);
+        SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault();
+        SelectedTextCompletionConnector = TextCompletionConnectors.FirstOrDefault(p => p.Id == currentTextId) ?? TextCompletionConnectors.FirstOrDefault();
+        SelectedEmbeddingConnector = EmbeddingConnectors.FirstOrDefault(p => p.Id == currentEmbeddingId) ?? EmbeddingConnectors.FirstOrDefault();
+
+        IConnectorConfigViewModel GetNA()
+        {
+            var noneVM = Locator.Current.GetService<IConnectorConfigViewModel>();
+            noneVM.InjectData(new Models.App.Connectors.ConnectorConfig { Id = string.Empty, Name = "N/A" });
+            return noneVM;
+        }
     }
 }

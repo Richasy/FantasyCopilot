@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
@@ -45,8 +44,8 @@ public sealed partial class TranslatePageViewModel
     private bool _isError;
 
     /// <inheritdoc/>
-    public ObservableCollection<LocaleInfo> SourceLanguages { get; }
+    public SynchronizedObservableCollection<LocaleInfo> SourceLanguages { get; }
 
     /// <inheritdoc/>
-    public ObservableCollection<LocaleInfo> TargetLanguages { get; }
+    public SynchronizedObservableCollection<LocaleInfo> TargetLanguages { get; }
 }

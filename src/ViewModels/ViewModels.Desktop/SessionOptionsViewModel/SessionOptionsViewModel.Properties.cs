@@ -32,4 +32,7 @@ public sealed partial class SessionOptionsViewModel
 
     [ObservableProperty]
     private bool _autoRemoveEarlierMessage;
+
+    [ObservableProperty]
+    private bool _isStreamOutputEnabled;
 }

@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Image;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -60,22 +60,22 @@ public interface ITextToImageModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Model list.
     /// </summary>
-    ObservableCollection<Model> Models { get; }
+    SynchronizedObservableCollection<Model> Models { get; }
 
     /// <summary>
     /// Sampler list.
     /// </summary>
-    ObservableCollection<Sampler> Samplers { get; }
+    SynchronizedObservableCollection<Sampler> Samplers { get; }
 
     /// <summary>
     /// Embedding list.
     /// </summary>
-    ObservableCollection<string> Embeddings { get; }
+    SynchronizedObservableCollection<string> Embeddings { get; }
 
     /// <summary>
     /// Lora list.
     /// </summary>
-    ObservableCollection<string> Loras { get; }
+    SynchronizedObservableCollection<string> Loras { get; }
 
     /// <summary>
     /// Generate options.

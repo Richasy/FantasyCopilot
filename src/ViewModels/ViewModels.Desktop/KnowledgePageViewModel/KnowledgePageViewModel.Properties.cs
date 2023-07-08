@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -50,5 +50,5 @@ public sealed partial class KnowledgePageViewModel
     private KnowledgeBase _currentBase;
 
     /// <inheritdoc/>
-    public ObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; set; }
+    public SynchronizedObservableCollection<IKnowledgeBaseItemViewModel> Bases { get; set; }
 }

@@ -31,7 +31,7 @@ public sealed partial class WelcomePage : PageBase
     private void OnStartButtonClick(object sender, RoutedEventArgs e)
     {
         Locator.Current.GetService<ISettingsToolkit>().WriteLocalSetting(SettingNames.IsSkipWelcomeScreen, true);
-        Locator.Current.GetService<IAppViewModel>().Initialize();
+        Locator.Current.GetService<IAppViewModel>().InitializeAsync();
     }
 
     private void OnImportButtonClick(object sender, RoutedEventArgs e)

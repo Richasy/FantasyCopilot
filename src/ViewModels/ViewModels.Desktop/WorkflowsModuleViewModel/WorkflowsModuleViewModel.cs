@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -32,7 +32,7 @@ public sealed partial class WorkflowsModuleViewModel : ViewModelBase, IWorkflows
         _resourceToolkit = resourceToolkit;
         _appViewModel = appViewModel;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        Workflows = new ObservableCollection<WorkflowMetadata>();
+        Workflows = new SynchronizedObservableCollection<WorkflowMetadata>();
         Workflows.CollectionChanged += OnWorkflowsCollectionChanged;
         _cacheToolkit.WorkflowListChanged += OnWorkflowListChanged;
         CheckIsEmpty();

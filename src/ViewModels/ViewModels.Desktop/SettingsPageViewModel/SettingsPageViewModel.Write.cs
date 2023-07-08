@@ -168,4 +168,13 @@ public sealed partial class SettingsPageViewModel
 
     partial void OnMessageUseMarkdownChanged(bool value)
         => WriteSetting(SettingNames.MessageUseMarkdown, value);
+
+    partial void OnSelectedChatConnectorChanged(IConnectorConfigViewModel value)
+        => WriteSetting(SettingNames.CustomChatConnectorId, value?.Id ?? string.Empty);
+
+    partial void OnSelectedTextCompletionConnectorChanged(IConnectorConfigViewModel value)
+        => WriteSetting(SettingNames.CustomTextCompletionConnectorId, value?.Id ?? string.Empty);
+
+    partial void OnSelectedEmbeddingConnectorChanged(IConnectorConfigViewModel value)
+        => WriteSetting(SettingNames.CustomEmbeddingConnectorId, value?.Id ?? string.Empty);
 }

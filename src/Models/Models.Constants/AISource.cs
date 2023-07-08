@@ -16,4 +16,9 @@ public enum AISource
     /// From Open AI.
     /// </summary>
     OpenAI,
+
+    /// <summary>
+    /// Custom models.
+    /// </summary>
+    Custom,
 }

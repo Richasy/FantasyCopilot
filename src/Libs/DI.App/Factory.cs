@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System;
 using System.IO;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -25,9 +26,11 @@ public sealed class Factory
     /// </summary>
     public static void RegisterAppRequiredServices()
     {
+        System.Diagnostics.Debug.WriteLine($"开始注册: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         var rootFolder = ApplicationData.Current.LocalFolder;
         var logFolderName = AppConstants.LogFolderName;
         var fullPath = Path.Combine(rootFolder.Path, logFolderName);
+        System.Diagnostics.Debug.WriteLine($"路径获取完成: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
         Locator.Current
             .RegisterVariable(typeof(WorkflowContext), new WorkflowContext())
             .RegisterVariable(typeof(IKernel), new KernelBuilder().Build())
@@ -58,6 +61,7 @@ public sealed class Factory
             .RegisterTransient<IPluginItemViewModel, PluginItemViewModel>()
             .RegisterTransient<IKnowledgeBaseItemViewModel, KnowledgeBaseItemViewModel>()
             .RegisterTransient<IKnowledgeContextViewModel, KnowledgeContextViewModel>()
+            .RegisterTransient<IConnectorConfigViewModel, ConnectorConfigViewModel>()
 
             .RegisterSingleton<IChatSessionPageViewModel, ChatSessionPageViewModel>()
             .RegisterSingleton<ISavedSessionsModuleViewModel, SavedSessionsModuleViewModel>()
@@ -85,8 +89,12 @@ public sealed class Factory
             .RegisterSingleton<IWorkspacePageViewModel, WorkspacePageViewModel>()
             .RegisterSingleton<ISettingsPageViewModel, SettingsPageViewModel>()
 
-            .RegisterLogger(fullPath)
+            .RegisterLogger(fullPath);
 
-            .Build();
+        System.Diagnostics.Debug.WriteLine($"已注册所有类型: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
+
+        Locator.Current.Build();
+
+        System.Diagnostics.Debug.WriteLine($"已构建: {new TimeSpan(DateTime.Now.Ticks).TotalMilliseconds}");
     }
 }

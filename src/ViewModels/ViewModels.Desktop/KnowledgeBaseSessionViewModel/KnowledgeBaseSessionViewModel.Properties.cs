@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
@@ -87,8 +87,8 @@ public sealed partial class KnowledgeBaseSessionViewModel
     public event EventHandler RequestScrollToBottom;
 
     /// <inheritdoc/>
-    public ObservableCollection<Message> Messages { get; set; }
+    public SynchronizedObservableCollection<Message> Messages { get; set; }
 
     /// <inheritdoc/>
-    public ObservableCollection<IKnowledgeContextViewModel> Contexts { get; set; }
+    public SynchronizedObservableCollection<IKnowledgeContextViewModel> Contexts { get; set; }
 }

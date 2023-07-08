@@ -89,7 +89,7 @@ public sealed partial class CacheToolkit
         }
         catch (Exception ex)
         {
-            _logger.LogError("Failed to import semantic skill list", ex);
+            _logger.LogError(ex, "Failed to import semantic skill list");
         }
 
         return false;

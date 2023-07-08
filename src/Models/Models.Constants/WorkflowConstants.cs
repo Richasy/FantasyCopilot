@@ -95,9 +95,9 @@ public static class WorkflowConstants
     public const string QAPrompt = """
         {{$Content}}
         ---
-        Considering only the information above, answer the following.
+        Answer user questions concisely and professionally based only on known information above.
+        If you can't get an answer out of it, please let me know that you can't answer the question, no fabrication is allowed in the answer.
         Question: {{$input}}
-
         Answer:
         """;
     public const string QADescription = "Answer the question.";

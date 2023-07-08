@@ -80,7 +80,7 @@ public sealed partial class CacheToolkit
         }
         catch (Exception ex)
         {
-            _logger.LogError("Failed to import prompt list", ex);
+            _logger.LogError(ex, "Failed to import prompt list");
         }
 
         return false;

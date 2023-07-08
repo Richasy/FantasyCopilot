@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Knowledge;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
@@ -48,7 +48,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
         };
 
         _progressTimer.Tick += OnProgressTimerTick;
-        Bases = new ObservableCollection<IKnowledgeBaseItemViewModel>();
+        Bases = new SynchronizedObservableCollection<IKnowledgeBaseItemViewModel>();
         Bases.CollectionChanged += OnBasesCollectionChanged;
         _cacheToolkit.KnowledgeBaseListChanged += OnKnowledgeBaseListChangedAsync;
         CheckIsEmpty();
@@ -76,6 +76,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
             Bases.Add(vm);
         }
 
+        CheckChatConnectorAvailable();
         _isInitialized = true;
     }
 
@@ -149,6 +150,7 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
             {
                 Id = Guid.NewGuid().ToString("N"),
                 Name = data.Name,
+                Description = data.Description,
                 DatabasePath = data.DatabasePath,
             };
 
@@ -264,6 +266,18 @@ public sealed partial class KnowledgePageViewModel : ViewModelBase, IKnowledgePa
 
     private void CheckIsEmpty()
         => IsEmpty = Bases.Count == 0;
+
+    private void CheckChatConnectorAvailable()
+    {
+        if (_appViewModel.ConnectorGroup.ContainsKey(ConnectorType.Embedding))
+        {
+            var connector = _appViewModel.ConnectorGroup[ConnectorType.Embedding];
+            if (!connector.IsLaunched)
+            {
+                connector.LaunchCommand.Execute(default);
+            }
+        }
+    }
 
     private void OnProgressTimerTick(object sender, object e)
     {

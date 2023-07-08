@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -36,12 +35,12 @@ public interface IOnlinePromptsModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Prompt list.
     /// </summary>
-    ObservableCollection<OnlinePrompt> Prompts { get; }
+    SynchronizedObservableCollection<OnlinePrompt> Prompts { get; }
 
     /// <summary>
     /// Prompt source list.
     /// </summary>
-    ObservableCollection<OnlinePromptSource> Sources { get; }
+    SynchronizedObservableCollection<OnlinePromptSource> Sources { get; }
 
     /// <summary>
     /// Create session with current prompt.

@@ -1,13 +1,16 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Linq;
 using FantasyCopilot.App.Controls;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
 using H.NotifyIcon;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.Windows.AppLifecycle;
 using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -25,7 +28,7 @@ public partial class App : Application
     /// </summary>
     public const string Guid = "376AEAAB-331B-42AC-A069-146F7230765E";
 
-    private readonly ISettingsToolkit _settingsToolkit;
+    private ISettingsToolkit _settingsToolkit;
     private Window _window;
     private DispatcherQueue _dispatcherQueue;
 
@@ -36,10 +39,6 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-        Factory = new DI.App.Factory();
-        DI.App.Factory.RegisterAppRequiredServices();
-        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
-        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
         UnhandledException += OnUnhandledException;
     }
 
@@ -79,10 +78,26 @@ public partial class App : Application
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
+        // We expect our app is single instanced.
+        var instance = AppInstance.FindOrRegisterForKey(Guid);
+        var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+
+        // If the current instance is not the previously registered instance
+        if (!instance.IsCurrent)
+        {
+            // Redirect to the existing instance
+            await instance.RedirectActivationToAsync(activatedArgs);
+
+            // Kill the current instance
+            Current.Exit();
+            return;
+        }
+
+        instance.Activated += OnInstanceActivated;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
-        InitializeTrayIcon();
+        DI.App.Factory.RegisterAppRequiredServices();
         LaunchWindow();
     }
 
@@ -119,8 +134,25 @@ public partial class App : Application
         return new PointInt32(left, top);
     }
 
+    private static void CleanupConnectors()
+    {
+        var appVM = Locator.Current.GetService<IAppViewModel>();
+        if (appVM.ConnectorGroup.Any())
+        {
+            foreach (var item in appVM.ConnectorGroup)
+            {
+                item.Value.ExitCommand.Execute(default);
+            }
+        }
+    }
+
     private void InitializeTrayIcon()
     {
+        if (TrayIcon != null)
+        {
+            return;
+        }
+
         var showHideWindowCommand = (XamlUICommand)Resources["ShowHideWindowCommand"];
         showHideWindowCommand.ExecuteRequested += OnShowHideWindowCommandExecuteRequested;
 
@@ -138,16 +170,27 @@ public partial class App : Application
         appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         appWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
-        appWindow.SetIcon("Assets/logo.ico");
         appWindow.Title = Locator.Current.GetService<IResourceToolkit>().GetLocalizedString(StringNames.AppName);
+        appWindow.SetIcon("Assets/logo.ico");
         var presenter = appWindow.Presenter as OverlappedPresenter;
         presenter.IsResizable = false;
         presenter.IsMaximizable = false;
         MoveAndResize();
-
         _window.Closed += OnMainWindowClosedAsync;
 
+        _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
         _window.Activate();
+    }
+
+    private void OnInstanceActivated(object sender, AppActivationArguments e)
+    {
+        if (e.Kind == ExtendedActivationKind.Protocol)
+        {
+            return;
+        }
+
+        InitializeTrayIcon();
     }
 
     private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
@@ -187,6 +230,10 @@ public partial class App : Application
 
             _window.Hide();
         }
+        else
+        {
+            CleanupConnectors();
+        }
     }
 
     private void MoveAndResize()
@@ -215,6 +262,7 @@ public partial class App : Application
 
     private void ExitApp()
     {
+        CleanupConnectors();
         HandleCloseEvents = false;
         TrayIcon?.Dispose();
         _window?.Close();

@@ -89,7 +89,7 @@ public sealed partial class CacheToolkit
         }
         catch (Exception ex)
         {
-            _logger.LogError("Failed to import image skill list", ex);
+            _logger.LogError(ex, "Failed to import image skill list");
         }
 
         return false;

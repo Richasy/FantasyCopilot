@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
+using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace FantasyCopilot.ViewModels;
@@ -17,6 +19,7 @@ public sealed partial class AppViewModel
 {
     private readonly IResourceToolkit _resourceToolkit;
     private readonly ISettingsToolkit _settingsToolkit;
+    private readonly ICacheToolkit _cacheToolkit;
     private readonly ILogger<AppViewModel> _logger;
 
     [ObservableProperty]
@@ -46,6 +49,9 @@ public sealed partial class AppViewModel
     [ObservableProperty]
     private bool _isKnowledgeAvailable;
 
+    [ObservableProperty]
+    private bool _isConnectorViewerShown;
+
     /// <inheritdoc/>
     public event EventHandler BackRequest;
 
@@ -59,7 +65,13 @@ public sealed partial class AppViewModel
     public event EventHandler<string> RequestShowMessage;
 
     /// <inheritdoc/>
-    public ObservableCollection<NavigateItem> NavigateItems { get; }
+    public SynchronizedObservableCollection<NavigateItem> NavigateItems { get; }
+
+    /// <inheritdoc/>
+    public SynchronizedObservableCollection<IConnectorConfigViewModel> Connectors { get; }
+
+    /// <inheritdoc/>
+    public Dictionary<ConnectorType, IConnectorConfigViewModel> ConnectorGroup { get; }
 
     /// <inheritdoc/>
     public PageType CurrentPage { get; set; }

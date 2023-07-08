@@ -23,10 +23,10 @@ public sealed partial class KernelService
     public bool HasChatModel { get; set; }
 
     /// <inheritdoc/>
-    public bool IsMemorySupport { get; set; }
+    public bool HasTextCompletionModel { get; set; }
 
     /// <inheritdoc/>
-    public bool IsSemanticSupport { get; set; }
+    public bool IsMemorySupport { get; set; }
 
     /// <inheritdoc/>
     public AISource CurrentAISource { get; set; }

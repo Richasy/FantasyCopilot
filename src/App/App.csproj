@@ -29,6 +29,8 @@
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\plannerPrompt.txt" />
     <None Remove="Controls\CloseWindowTipDialog.xaml" />
+    <None Remove="Controls\ConnectorViewer.xaml" />
+    <None Remove="Controls\Connector\ConnectorItem.xaml" />
     <None Remove="Controls\FavoritePromptsPanel.xaml" />
     <None Remove="Controls\Images\CivitaiImageControl.xaml" />
     <None Remove="Controls\Images\CivitaiImageGalleryPanel.xaml" />
@@ -114,7 +116,7 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.TokenView" Version="0.0.6" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.108" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.2-beta">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -315,26 +317,7 @@
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
   </PropertyGroup>
-
-  <!-- Needed for implementing single instance mode. See https://blogs.windows.com/windowsdeveloper/2022/01/28/making-the-app-single-instanced-part-3 -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
-    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-  </PropertyGroup>
+    
   <ItemGroup>
     <CustomAdditionalCompileInputs Remove="Controls\Steps\TextOverwriteStepItem.xaml" />
   </ItemGroup>
@@ -460,6 +443,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\MarkdownSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\ConnectorViewer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Connector\ConnectorItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">
