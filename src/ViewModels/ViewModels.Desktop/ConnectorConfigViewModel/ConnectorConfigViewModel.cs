@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -46,11 +47,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         _config = config;
         Id = config.Id;
         DisplayName = config.Name;
-        if (config.Features == null)
-        {
-            config.Features = new System.Collections.Generic.List<ConnectorFeature>();
-        }
-
+        config.Features ??= new System.Collections.Generic.List<ConnectorFeature>();
         SupportChat = config.Features.Any(f => f.Type == ConnectorConstants.ChatType);
         SupportChatStream = SupportChat && config.Features.First(p => p.Type == ConnectorConstants.ChatType).Endpoints.Any(p => p.Type == ConnectorConstants.ChatStreamType);
         SupportTextCompletion = config.Features.Any(f => f.Type == ConnectorConstants.TextCompletionType);
@@ -93,9 +90,31 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
 
         LogContent = string.Empty;
         var folder = GetConnectorFolder();
-        var exePath = Path.Combine(folder, _config.ExecuteName);
+
         _process = new Process();
-        _process.StartInfo.FileName = exePath;
+        if (!string.IsNullOrEmpty(_config.ExecuteName))
+        {
+            var exePath = Path.Combine(folder, _config.ExecuteName);
+            _process.StartInfo.FileName = exePath;
+        }
+        else if (!string.IsNullOrEmpty(_config.ScriptFile))
+        {
+            _process.StartInfo.FileName = "powershell.exe";
+            _process.StartInfo.Arguments = $"-ExecutionPolicy Bypass -File \"{Path.Combine(folder, _config.ScriptFile)}\"";
+        }
+        else if (!string.IsNullOrEmpty(_config.ScriptCommand))
+        {
+            _process.StartInfo.FileName = "powershell.exe";
+            _process.StartInfo.Arguments = $"-ExecutionPolicy Bypass -Command \"{_config.ScriptCommand}\"";
+        }
+        else
+        {
+            // no script or execute name, we can't launch the connector.
+            IsLaunched = false;
+            _logger.LogInformation($"{_config.Name} do not have script or execute file, maybe no need to launch.");
+            return;
+        }
+
         _process.StartInfo.WorkingDirectory = folder;
         _process.StartInfo.UseShellExecute = false;
         _process.StartInfo.CreateNoWindow = true;
@@ -108,10 +127,21 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
         _process.Exited += OnConnectorExited;
         IsLaunched = true;
         CheckConnectorState();
-        _process.Start();
-        _process.BeginOutputReadLine();
-        _process.BeginErrorReadLine();
-        _appViewModel.ShowTip(string.Format(_resourceToolkit.GetLocalizedString(StringNames.ConnectorLaunched), DisplayName), InfoType.Information);
+        try
+        {
+            _process.Start();
+            _process.BeginOutputReadLine();
+            _process.BeginErrorReadLine();
+            _appViewModel.ShowTip(string.Format(_resourceToolkit.GetLocalizedString(StringNames.ConnectorLaunched), DisplayName), InfoType.Information);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"Failed to launch connector {_config.Name}");
+            IsLaunched = false;
+            State = ConnectorState.NotStarted;
+            _process?.Dispose();
+            _process = null;
+        }
     }
 
     [RelayCommand]
@@ -125,6 +155,7 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
             _appViewModel.ShowTip(string.Format(_resourceToolkit.GetLocalizedString(StringNames.ConnectorClosed), DisplayName), InfoType.Information);
         }
 
+        CleanPort();
         _process = null;
     }
 
@@ -166,6 +197,28 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
             }
 
             State = ConnectorState.Launching;
+        }
+    }
+
+    private void CleanPort()
+    {
+        var port = 0;
+        if (Uri.TryCreate(_config.BaseUrl, UriKind.Absolute, out var uri))
+        {
+            if (uri.Port > 0 && !uri.IsDefaultPort)
+            {
+                port = uri.Port;
+            }
+        }
+
+        if (port > 0)
+        {
+            var command = $"Stop-Process -Id (Get-NetTCPConnection -LocalPort {port}).OwningProcess -Force";
+            var psi = new ProcessStartInfo("powershell.exe", command);
+            psi.UseShellExecute = false;
+            psi.CreateNoWindow = true;
+            Process.Start(psi);
+            _logger.LogInformation($"The port used by the connector has been released");
         }
     }
 

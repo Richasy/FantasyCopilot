@@ -47,6 +47,18 @@ public sealed class ConnectorConfig
     public string ExecuteName { get; set; }
 
     /// <summary>
+    /// Script file at initialization.
+    /// </summary>
+    [JsonPropertyName("script_file")]
+    public string ScriptFile { get; set; }
+
+    /// <summary>
+    /// Script command at initialization.
+    /// </summary>
+    [JsonPropertyName("script_command")]
+    public string ScriptCommand { get; set; }
+
+    /// <summary>
     /// A list of features supported by the connector.
     /// </summary>
     [JsonPropertyName("features")]

@@ -177,7 +177,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
             return;
         }
 
-        var connectors = ConnectorGroup.Values.Select(p => p.GetData().BaseUrl).ToList();
+        var connectors = ConnectorGroup.Values.Select(p => p.GetData().BaseUrl).Distinct().ToList();
         var ports = new List<string>();
         foreach (var connector in connectors)
         {
@@ -249,6 +249,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     {
         await _cacheToolkit.InitializeConnectorsAsync();
         LoadConnectorsAfterInitialized();
+        CheckConnectorGroup();
     }
 
     private void LoadConnectorsAfterInitialized()

@@ -22,21 +22,16 @@ public sealed partial class ConnectorItem : ConnectorItemBase
 
     internal override void OnViewModelChanged(DependencyPropertyChangedEventArgs e)
     {
-        if (e.OldValue is IConnectorConfigViewModel oldVM)
-        {
-            oldVM.PropertyChanged -= OnViewModelPropertyChanged;
-        }
-
         if (e.NewValue is IConnectorConfigViewModel newVM)
         {
-            newVM.PropertyChanged += OnViewModelPropertyChanged;
             CheckState();
         }
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        LogTextBlock.Text = ViewModel.LogContent.Trim();
+        LogTextBlock.Text = ViewModel.LogContent?.Trim() ?? string.Empty;
+        ViewModel.PropertyChanged += OnViewModelPropertyChanged;
         CheckState();
     }
 

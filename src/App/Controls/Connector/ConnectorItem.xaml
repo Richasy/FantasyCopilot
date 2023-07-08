@@ -87,7 +87,14 @@
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="DisconnectedState" />
+                <VisualState x:Name="DisconnectedState">
+                    <VisualState.Setters>
+                        <Setter Target="StateCircle.Fill" Value="{ThemeResource ControlStrongFillColorDisabledBrush}" />
+                        <Setter Target="StateCircle.(ToolTipService.ToolTip)" Value="{ext:Locale Name=Disconnected}" />
+                        <Setter Target="ConnectButton.Visibility" Value="Visible" />
+                        <Setter Target="DisconnectButton.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
                 <VisualState x:Name="ConnectingState">
                     <VisualState.Setters>
                         <Setter Target="StateCircle.Fill" Value="{ThemeResource SystemFillColorCautionBrush}" />

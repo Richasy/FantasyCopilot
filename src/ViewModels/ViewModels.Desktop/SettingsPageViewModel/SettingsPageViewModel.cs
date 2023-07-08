@@ -260,11 +260,6 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
                 throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveId));
             }
 
-            if (string.IsNullOrEmpty(config.ExecuteName))
-            {
-                throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveExecuteFile));
-            }
-
             if (config.Features == null || config.Features.Count == 0)
             {
                 throw new ArgumentException(_resourceToolkit.GetLocalizedString(StringNames.MustHaveFeature));
@@ -302,6 +297,17 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
             IsConnectorImporting = false;
             await _appViewModel.RefreshConnectorsCommand.ExecuteAsync(false);
             await VerifyConnectorsAsync();
+
+            // If the connector has a readme file, open it.
+            if (!string.IsNullOrEmpty(config.ReadMe))
+            {
+                var folderPath = GetConnectorFolder();
+                var filePath = Path.Combine(folderPath, config.ReadMe);
+                if (File.Exists(filePath))
+                {
+                    await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(filePath));
+                }
+            }
         }
         catch (Exception ex)
         {
