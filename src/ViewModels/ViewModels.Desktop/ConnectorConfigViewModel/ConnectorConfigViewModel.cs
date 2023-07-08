@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -147,11 +146,11 @@ public sealed partial class ConnectorConfigViewModel : ViewModelBase, IConnector
     [RelayCommand]
     private void Exit()
     {
+        IsLaunched = false;
+        State = ConnectorState.NotStarted;
         if (_process != null && !_process.HasExited)
         {
             _process.Kill();
-            IsLaunched = false;
-            State = ConnectorState.NotStarted;
             _appViewModel.ShowTip(string.Format(_resourceToolkit.GetLocalizedString(StringNames.ConnectorClosed), DisplayName), InfoType.Information);
         }
 

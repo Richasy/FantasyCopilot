@@ -1,0 +1,1 @@
+You need download the [THUDM/chatglm2-6b](https://huggingface.co/THUDM/chatglm2-6b) model here.
