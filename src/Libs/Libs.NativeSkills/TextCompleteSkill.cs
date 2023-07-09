@@ -260,14 +260,20 @@ public class TextCompleteSkill
         {
             var kernel = Locator.Current.GetVariable<IKernel>();
             var kernelService = Locator.Current.GetService<IKernelService>();
-            if (!kernelService.HasChatModel)
+            if (!kernelService.HasTextCompletionModel)
             {
                 return;
             }
 
-            var textCompletion = kernel.GetService<ITextCompletion>();
-
-            _textCompletion = textCompletion;
+            try
+            {
+                var textCompletion = kernel.GetService<ITextCompletion>();
+                _textCompletion = textCompletion;
+            }
+            catch (Exception)
+            {
+                _textCompletion = null;
+            }
         }
     }
 
