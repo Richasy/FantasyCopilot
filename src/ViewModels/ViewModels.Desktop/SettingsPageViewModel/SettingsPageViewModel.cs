@@ -302,7 +302,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
             if (!string.IsNullOrEmpty(config.ReadMe))
             {
                 var folderPath = GetConnectorFolder();
-                var filePath = Path.Combine(folderPath, config.ReadMe);
+                var filePath = Path.Combine(folderPath, config.Id, config.ReadMe);
                 if (File.Exists(filePath))
                 {
                     await Launcher.LaunchFileAsync(await StorageFile.GetFileFromPathAsync(filePath));
