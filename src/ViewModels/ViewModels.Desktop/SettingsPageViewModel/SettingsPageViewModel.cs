@@ -497,9 +497,9 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         TextCompletionConnectors.Insert(0, GetNA());
         EmbeddingConnectors.Insert(0, GetNA());
         await Task.Delay(100);
-        SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault(p => !string.IsNullOrEmpty(p.Id));
-        SelectedTextCompletionConnector = TextCompletionConnectors.FirstOrDefault(p => p.Id == currentTextId) ?? TextCompletionConnectors.FirstOrDefault(p => !string.IsNullOrEmpty(p.Id));
-        SelectedEmbeddingConnector = EmbeddingConnectors.FirstOrDefault(p => p.Id == currentEmbeddingId) ?? EmbeddingConnectors.FirstOrDefault(p => !string.IsNullOrEmpty(p.Id));
+        SelectedChatConnector = ChatConnectors.FirstOrDefault(p => p.Id == currentChatId) ?? ChatConnectors.FirstOrDefault();
+        SelectedTextCompletionConnector = TextCompletionConnectors.FirstOrDefault(p => p.Id == currentTextId) ?? TextCompletionConnectors.FirstOrDefault();
+        SelectedEmbeddingConnector = EmbeddingConnectors.FirstOrDefault(p => p.Id == currentEmbeddingId) ?? EmbeddingConnectors.FirstOrDefault();
 
         IConnectorConfigViewModel GetNA()
         {
