@@ -180,6 +180,11 @@ public partial class App : Application
 
         _settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
         HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
+        if (HandleCloseEvents)
+        {
+            InitializeTrayIcon();
+        }
+
         _window.Activate();
     }
 
@@ -189,13 +194,12 @@ public partial class App : Application
         {
             return;
         }
-
-        InitializeTrayIcon();
     }
 
     private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
     {
         SaveCurrentWindowPosition();
+        HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
         if (HandleCloseEvents)
         {
             args.Handled = true;
@@ -228,6 +232,7 @@ public partial class App : Application
                 }
             }
 
+            InitializeTrayIcon();
             _window.Hide();
         }
         else
