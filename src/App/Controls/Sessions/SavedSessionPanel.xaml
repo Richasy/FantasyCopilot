@@ -28,7 +28,7 @@
                         x:Name="NoMessageContainer"
                         Title="{ext:Locale Name=NoSession}"
                         Description="{ext:Locale Name=NoSessionDescription}"
-                        Emoji="&#x1FAE3;"
+                        Emoji="&#x1F4A4;"
                         Style="{StaticResource BasicEmptyHolderStyle}"
                         Visibility="{x:Bind ViewModel.IsEmpty, Mode=OneWay}">
                         <controls:EmptyHolder.ActionElement>

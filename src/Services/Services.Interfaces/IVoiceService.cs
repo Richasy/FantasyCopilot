@@ -25,6 +25,11 @@ public interface IVoiceService : IConfigServiceBase
     event EventHandler RecognizeStopped;
 
     /// <summary>
+    /// Whether the application needs to download C++ dependencies.
+    /// </summary>
+    bool NeedDependencies { get; }
+
+    /// <summary>
     /// Get all voices.
     /// </summary>
     /// <returns>Voice list.</returns>

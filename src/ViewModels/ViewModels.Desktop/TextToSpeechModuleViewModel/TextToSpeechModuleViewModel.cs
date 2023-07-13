@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -41,8 +42,8 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
         _player = new MediaPlayer();
         _player.CurrentStateChanged += OnMediaPlayerStateChanged;
         IsPaused = true;
-        SupportCultures = new SynchronizedObservableCollection<LocaleInfo>();
-        DisplayVoices = new SynchronizedObservableCollection<VoiceMetadata>();
+        SupportCultures = new ObservableCollection<LocaleInfo>();
+        DisplayVoices = new ObservableCollection<VoiceMetadata>();
     }
 
     [RelayCommand]

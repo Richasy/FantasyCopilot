@@ -24,6 +24,9 @@ public sealed partial class AzureVoiceService
     private bool _hasValidConfig;
     private SpeechRecognizer _speechRecognizer;
 
+    /// <inheritdoc/>
+    public bool NeedDependencies { get; set; }
+
     private void CheckConfig()
     {
         var voiceKey = _settingsToolkit.RetrieveSecureString(SettingNames.AzureVoiceKey);
@@ -33,8 +36,18 @@ public sealed partial class AzureVoiceService
 
         if (_hasValidConfig && _speechConfig == null)
         {
-            var region = _settingsToolkit.ReadLocalSetting(SettingNames.AzureVoiceRegion, string.Empty);
-            _speechConfig = SpeechConfig.FromSubscription(voiceKey, region);
+            try
+            {
+                var region = _settingsToolkit.ReadLocalSetting(SettingNames.AzureVoiceRegion, string.Empty);
+                _speechConfig = SpeechConfig.FromSubscription(voiceKey, region);
+                NeedDependencies = false;
+            }
+            catch (DllNotFoundException)
+            {
+                // Users need to be guided to download C++ dependencies.
+                NeedDependencies = true;
+                _hasValidConfig = false;
+            }
         }
     }
 

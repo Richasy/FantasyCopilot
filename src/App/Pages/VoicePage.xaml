@@ -50,13 +50,32 @@
             <controls:SpeechRecognizePanel x:Name="RecognizePanel" x:Load="{x:Bind ViewModel.IsTextToSpeechSelected, Mode=OneWay, Converter={StaticResource ObjectToBoolReverseConverter}}" />
         </Grid>
 
-        <controls:EmptyHolder
-            x:Name="InvalidContainer"
-            Title="{ext:Locale Name=VoiceInvalid}"
+        <StackPanel
             Grid.Row="1"
-            Description="{ext:Locale Name=VoiceInvalidDescription}"
-            Emoji="&#x1F923;"
-            Style="{StaticResource BasicEmptyHolderStyle}"
-            Visibility="{x:Bind CoreViewModel.IsVoiceAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+            <controls:EmptyHolder
+                x:Name="InvalidContainer"
+                Title="{ext:Locale Name=VoiceInvalid}"
+                Description="{ext:Locale Name=VoiceInvalidDescription}"
+                Emoji="&#x1F923;"
+                Style="{StaticResource BasicEmptyHolderStyle}"
+                Visibility="{x:Bind CoreViewModel.IsVoiceAvailable, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}" />
+            <TextBlock
+                x:Name="DownloadTip"
+                MaxWidth="320"
+                Margin="0,12,0,0"
+                HorizontalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                TextAlignment="Center"
+                TextWrapping="Wrap">
+                <Run Text="{ext:Locale Name=NeedDownloadCPPDependencies}" />
+                <LineBreak />
+                <Hyperlink NavigateUri="https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022">
+                    <Run Text="Microsoft Visual C++ Redistributable" />
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </local:VoicePageBase>

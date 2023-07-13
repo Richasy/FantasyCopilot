@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -15,12 +16,12 @@ public interface ITextToSpeechModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Supported language.
     /// </summary>
-    SynchronizedObservableCollection<LocaleInfo> SupportCultures { get; }
+    ObservableCollection<LocaleInfo> SupportCultures { get; }
 
     /// <summary>
     /// Voice list displayed.
     /// </summary>
-    SynchronizedObservableCollection<VoiceMetadata> DisplayVoices { get; }
+    ObservableCollection<VoiceMetadata> DisplayVoices { get; }
 
     /// <summary>
     /// Selected language.

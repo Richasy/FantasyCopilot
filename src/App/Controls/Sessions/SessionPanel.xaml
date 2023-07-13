@@ -125,7 +125,7 @@
                         x:Name="NoMessageContainer"
                         Title="{ext:Locale Name=NoMessage}"
                         Description="{ext:Locale Name=NoMessageDescription}"
-                        Emoji="&#x1FAE7;"
+                        Emoji="&#x1F37B;"
                         Style="{StaticResource BasicEmptyHolderStyle}"
                         Visibility="{x:Bind ViewModel.IsChatEmpty, Mode=OneWay}" />
                     <StackPanel>
