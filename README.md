@@ -34,7 +34,7 @@ An exploration of mutual achievement between humans and AI.
 
 |                  |                               |
 | ---------------- | ----------------------------- |
-| Operating System | Windows 11 ver 22000 or later |
+| Operating System | Windows 10 ver 19041 or later |
 | Runtime          | .NET 7                        |
 
 ### Service Configuration
