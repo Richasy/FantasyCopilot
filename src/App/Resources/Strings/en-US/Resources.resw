@@ -1005,6 +1005,9 @@
   <data name="NeedAdminDescription" xml:space="preserve">
     <value>The operation you are about to perform requires administrator privileges, please restart the application in administrator mode</value>
   </data>
+  <data name="NeedDownloadCPPDependencies" xml:space="preserve">
+    <value>You need to click the link below to download the C++ dependency to use this feature</value>
+  </data>
   <data name="NeedFillRequiredFields" xml:space="preserve">
     <value>Please fill in the content completely</value>
   </data>

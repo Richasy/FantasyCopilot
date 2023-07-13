@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using FantasyCopilot.DI.Container;
+using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
 
 namespace FantasyCopilot.App.Pages;
@@ -19,6 +21,7 @@ public sealed partial class VoicePage : VoicePageBase
     {
         CoreViewModel.IsBackButtonShown = false;
         ModulePicker.SelectedIndex = ViewModel.IsTextToSpeechSelected ? 0 : 1;
+        DownloadTip.Visibility = Locator.Current.GetService<IVoiceService>().NeedDependencies ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private void OnModulePickerSelectionChanged(object sender, SelectionChangedEventArgs e)

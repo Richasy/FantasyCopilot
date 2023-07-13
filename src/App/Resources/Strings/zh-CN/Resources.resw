@@ -1644,4 +1644,7 @@
   <data name="ConnectorOutput" xml:space="preserve">
     <value>连接器日志输出</value>
   </data>
+  <data name="NeedDownloadCPPDependencies" xml:space="preserve">
+    <value>你需要点击下面的链接下载C++依赖才能使用该功能</value>
+  </data>
 </root>

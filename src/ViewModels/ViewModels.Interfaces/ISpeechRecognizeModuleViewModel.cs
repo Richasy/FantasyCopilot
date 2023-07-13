@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
@@ -39,7 +40,7 @@ public interface ISpeechRecognizeModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Support cultures.
     /// </summary>
-    SynchronizedObservableCollection<LocaleInfo> SupportCultures { get; }
+    ObservableCollection<LocaleInfo> SupportCultures { get; }
 
     /// <summary>
     /// Start speech recognition.

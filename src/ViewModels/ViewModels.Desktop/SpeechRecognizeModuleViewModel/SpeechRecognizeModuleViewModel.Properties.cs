@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Services.Interfaces;
@@ -38,5 +39,5 @@ public sealed partial class SpeechRecognizeModuleViewModel
     private bool _isInitializing;
 
     /// <inheritdoc/>
-    public SynchronizedObservableCollection<LocaleInfo> SupportCultures { get; }
+    public ObservableCollection<LocaleInfo> SupportCultures { get; }
 }
