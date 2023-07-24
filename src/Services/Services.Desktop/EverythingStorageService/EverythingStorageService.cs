@@ -22,20 +22,14 @@ public sealed partial class EverythingStorageService : IStorageService
         => _logger = logger;
 
     /// <inheritdoc/>
-    public bool HasValidConfig
-    {
-        get
-        {
-            CheckConfig();
-            return _hasValidConfig;
-        }
-    }
+    public bool HasValidConfig => _hasValidConfig;
 
     /// <inheritdoc/>
-    public void ReloadConfig()
+    public Task ReloadConfigAsync()
     {
         _client = default;
         CheckConfig();
+        return Task.CompletedTask;
     }
 
     /// <inheritdoc/>

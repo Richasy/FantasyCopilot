@@ -17,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.AI.TextCompletion;
 using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Orchestration;
-using Microsoft.SemanticKernel.Security;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Windows.Storage;
 
@@ -50,10 +49,6 @@ public sealed partial class WorkflowService
         public bool IsSemantic { get; } = false;
 
         public CompleteRequestSettings RequestSettings => default;
-
-        public bool IsSensitive => false;
-
-        public ITrustService TrustServiceInstance => default;
 
         public FunctionView Describe()
         {
@@ -108,7 +103,7 @@ public sealed partial class WorkflowService
                     {
                         parameters.TryAdd(parameter.Name, parameter.DefaultValue);
                     }
-                    else if (context.Variables.TryGetValue(parameter.Id, out string v))
+                    else if (context.Variables.TryGetValue(parameter.Id, out var v))
                     {
                         parameters.TryAdd(parameter.Name, v);
                     }
@@ -202,7 +197,7 @@ public sealed partial class WorkflowService
 
         public ISKFunction SetDefaultSkillCollection(IReadOnlySkillCollection skills) => this;
 
-        private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context, bool shouldRunAsAdmin = false)
+        private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context)
         {
             var finalOutput = string.Empty;
             var skipError = false;

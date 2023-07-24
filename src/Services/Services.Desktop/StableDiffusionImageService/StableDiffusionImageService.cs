@@ -35,14 +35,7 @@ public sealed partial class StableDiffusionImageService : IImageService
     }
 
     /// <inheritdoc/>
-    public bool HasValidConfig
-    {
-        get
-        {
-            CheckConfig();
-            return _hasValidConfig;
-        }
-    }
+    public bool HasValidConfig => _hasValidConfig;
 
     /// <inheritdoc/>
     public async Task<(byte[] ImageData, string Context)> GenerateImageAsync(string prompt, string negativePrompt, GenerateOptions options, CancellationToken cancellationToken)
@@ -227,10 +220,11 @@ public sealed partial class StableDiffusionImageService : IImageService
     }
 
     /// <inheritdoc/>
-    public void ReloadConfig()
+    public Task ReloadConfigAsync()
     {
         _stableDiffusionUrl = default;
         CheckConfig();
+        return Task.CompletedTask;
     }
 
     private void CheckConfig()

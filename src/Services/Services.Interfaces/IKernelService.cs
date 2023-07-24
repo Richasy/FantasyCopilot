@@ -37,7 +37,8 @@ public interface IKernelService
     /// <summary>
     /// Reload config.
     /// </summary>
-    void ReloadConfig();
+    /// <returns><see cref="Task"/>.</returns>
+    Task ReloadConfigAsync();
 
     /// <summary>
     /// Get a list of available models.

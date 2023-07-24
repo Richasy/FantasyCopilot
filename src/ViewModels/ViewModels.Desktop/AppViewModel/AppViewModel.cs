@@ -59,7 +59,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
             }
 
             await LoadAllConnectorsAsync();
-            ReloadAllServices();
+            await ReloadAllServicesAsync();
             Navigate(lastOpenPage);
             CleanConnectorPorts();
         }
@@ -125,7 +125,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     }
 
     [RelayCommand]
-    private void ReloadAllServices()
+    private async Task ReloadAllServicesAsync()
     {
         var kernelService = Locator.Current.GetService<IKernelService>();
         var voiceService = Locator.Current.GetService<IVoiceService>();
@@ -133,11 +133,11 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         var translateService = Locator.Current.GetService<ITranslateService>();
         var storageService = Locator.Current.GetService<IStorageService>();
 
-        kernelService.ReloadConfig();
-        voiceService.ReloadConfig();
-        imageService.ReloadConfig();
-        translateService.ReloadConfig();
-        storageService.ReloadConfig();
+        await kernelService.ReloadConfigAsync();
+        await voiceService.ReloadConfigAsync();
+        await imageService.ReloadConfigAsync();
+        await translateService.ReloadConfigAsync();
+        await storageService.ReloadConfigAsync();
 
         IsChatAvailable = kernelService.IsChatSupport;
         IsKnowledgeAvailable = kernelService.IsMemorySupport;

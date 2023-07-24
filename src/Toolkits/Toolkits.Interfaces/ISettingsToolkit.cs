@@ -52,5 +52,5 @@ public interface ISettingsToolkit
     /// </summary>
     /// <param name="settingName">Key.</param>
     /// <returns>Stored text or empty.</returns>
-    string RetrieveSecureString(SettingNames settingName);
+    Task<string> RetrieveSecureStringAsync(SettingNames settingName);
 }

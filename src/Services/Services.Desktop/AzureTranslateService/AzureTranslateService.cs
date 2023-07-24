@@ -44,10 +44,10 @@ public sealed partial class AzureTranslateService : ITranslateService
     }
 
     /// <inheritdoc/>
-    public void ReloadConfig()
+    public async Task ReloadConfigAsync()
     {
         _translationClient = default;
-        CheckConfig();
+        await CheckConfigAsync();
     }
 
     /// <inheritdoc/>

@@ -25,7 +25,7 @@ public sealed partial class SessionOptionsViewModel : ViewModelBase, ISessionOpt
         if (options == null)
         {
             Temperature = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTemperature, 0.4);
-            MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultMaxResponseTokens, 400);
+            MaxResponseTokens = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultMaxResponseTokens, AppConstants.DefaultMaxResponseTokens);
             TopP = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTopP, 0d);
             FrequencyPenalty = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultFrequencyPenalty, 0d);
             PresencePenalty = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultPresencePenalty, 0d);
