@@ -101,6 +101,9 @@
                             <Setter Target="MessageBackground.Fill" Value="{ThemeResource AccentFillColorDefaultBrush}" />
                             <Setter Target="MessageBackground.Stroke" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
                             <Setter Target="MarkdownMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                            <Setter Target="MarkdownMessageBlock.CodeForeground" Value="White" />
+                            <Setter Target="MarkdownMessageBlock.CodeBackground" Value="{ThemeResource SolidBackgroundFillColorSecondaryBrush}" />
+                            <Setter Target="MarkdownMessageBlock.InlineCodeBackground" Value="{ThemeResource SolidBackgroundFillColorQuarternaryBrush}" />
                             <Setter Target="PlainMessageBlock.Foreground" Value="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
                             <Setter Target="Container.HorizontalAlignment" Value="Right" />
                             <Setter Target="DateBlock.HorizontalAlignment" Value="Right" />
