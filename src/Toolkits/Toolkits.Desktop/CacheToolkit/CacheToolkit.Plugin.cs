@@ -65,7 +65,25 @@ public sealed partial class CacheToolkit
 
         await Task.Run(() =>
         {
-            ZipFile.ExtractToDirectory(pluginZipPath, pluginFolder, true);
+            try
+            {
+                ZipFile.ExtractToDirectory(pluginZipPath, pluginFolder, true);
+            }
+            catch (System.Exception)
+            {
+                var tempFolderPath = ApplicationData.Current.TemporaryFolder.Path;
+                var tempDirectory = new DirectoryInfo(tempFolderPath);
+                var files = tempDirectory.GetFiles();
+                if (files.Length > 0)
+                {
+                    foreach (var file in files)
+                    {
+                        file.Delete();
+                    }
+                }
+
+                throw;
+            }
         });
 
         _plugins?.Add(config);
