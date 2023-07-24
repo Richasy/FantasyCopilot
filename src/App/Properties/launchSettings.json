@@ -2,9 +2,8 @@
   "profiles": {
     "FantasyCopilot.App (Package)": {
       "commandName": "MsixPackage",
-      "remoteDebugEnabled": true,
-      "authenticationMode": "None",
-      "remoteDebugMachine": "DESKTOP-102HJ60:4026"
+      "remoteDebugEnabled": false,
+      "authenticationMode": "None"
     },
     "FantasyCopilot.App (Unpackaged)": {
       "commandName": "Project"
