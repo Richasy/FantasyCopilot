@@ -93,29 +93,47 @@ public sealed partial class CacheToolkit
 
         await Task.Run(() =>
         {
-            using var archive = ZipFile.OpenRead(connectorZipPath);
-            long totalBytes = 0;
-            foreach (var entry in archive.Entries)
+            try
             {
-                totalBytes += entry.Length;
-            }
+                using var archive = ZipFile.OpenRead(connectorZipPath);
+                long totalBytes = 0;
+                foreach (var entry in archive.Entries)
+                {
+                    totalBytes += entry.Length;
+                }
 
-            long extractedBytes = 0;
-            foreach (var entry in archive.Entries)
+                long extractedBytes = 0;
+                foreach (var entry in archive.Entries)
+                {
+                    var fullPath = Path.Combine(connectorFolder, entry.FullName);
+                    if (entry.FullName.EndsWith("/") || entry.FullName.EndsWith("\\"))
+                    {
+                        Directory.CreateDirectory(fullPath);
+                    }
+                    else
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                        entry.ExtractToFile(fullPath);
+                        extractedBytes += entry.Length;
+                        var progress = (int)((double)extractedBytes / totalBytes * 100);
+                        progressAction(progress);
+                    }
+                }
+            }
+            catch (Exception)
             {
-                var fullPath = Path.Combine(connectorFolder, entry.FullName);
-                if (entry.FullName.EndsWith("/") || entry.FullName.EndsWith("\\"))
+                var tempFolderPath = ApplicationData.Current.TemporaryFolder.Path;
+                var tempDirectory = new DirectoryInfo(tempFolderPath);
+                var files = tempDirectory.GetFiles();
+                if (files.Length > 0)
                 {
-                    Directory.CreateDirectory(fullPath);
+                    foreach (var file in files)
+                    {
+                        file.Delete();
+                    }
                 }
-                else
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
-                    entry.ExtractToFile(fullPath);
-                    extractedBytes += entry.Length;
-                    var progress = (int)((double)extractedBytes / totalBytes * 100);
-                    progressAction(progress);
-                }
+
+                throw;
             }
         });
 
