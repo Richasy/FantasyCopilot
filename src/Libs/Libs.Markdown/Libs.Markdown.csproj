@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="ColorCode.WinUI" Version="2.0.14" />
+      <PackageReference Include="ColorCode.WinUI" Version="2.0.15" />
       <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
       <PackageReference Include="Markdig" Version="0.31.0" />
       <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />

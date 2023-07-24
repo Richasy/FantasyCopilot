@@ -15,5 +15,6 @@ public interface IConfigServiceBase
     /// <summary>
     /// Reload config.
     /// </summary>
-    void ReloadConfig();
+    /// <returns><see cref="Task"/>.</returns>
+    Task ReloadConfigAsync();
 }

@@ -128,7 +128,7 @@ public sealed class CustomChatCompletion : IChatCompletion
         var settings = new RequestSettings
         {
             FrequencyPenalty = requestSettings.FrequencyPenalty,
-            MaxResponseTokens = requestSettings.MaxTokens,
+            MaxResponseTokens = requestSettings.MaxTokens ?? AppConstants.DefaultMaxResponseTokens,
             PresencePenalty = requestSettings.PresencePenalty,
             Temperature = requestSettings.Temperature,
             TopP = requestSettings.TopP,

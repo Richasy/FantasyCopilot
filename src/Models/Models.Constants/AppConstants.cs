@@ -41,4 +41,6 @@ public static class AppConstants
     public const string KnowledgeBaseCollectionId = "KnowledgeBase";
 
     public const string TokenLimitMessage = @"maximum context length.*?(\d+).*?(\d+)";
+
+    public const int DefaultMaxResponseTokens = 800;
 }

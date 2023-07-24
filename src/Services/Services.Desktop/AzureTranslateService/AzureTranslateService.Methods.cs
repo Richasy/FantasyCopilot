@@ -22,9 +22,9 @@ public sealed partial class AzureTranslateService
     /// <inheritdoc/>
     public bool HasValidConfig { get; set; }
 
-    private void CheckConfig()
+    private async Task CheckConfigAsync()
     {
-        var translateKey = _settingsToolkit.RetrieveSecureString(SettingNames.AzureTranslateKey);
+        var translateKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureTranslateKey);
         var hasRegion = _settingsToolkit.IsSettingKeyExist(SettingNames.AzureTranslateRegion);
 
         HasValidConfig = !string.IsNullOrEmpty(translateKey) && hasRegion;

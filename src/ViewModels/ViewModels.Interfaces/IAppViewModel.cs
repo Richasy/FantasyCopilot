@@ -115,7 +115,7 @@ public interface IAppViewModel : INotifyPropertyChanged
     /// <summary>
     /// Check the status of all services.
     /// </summary>
-    IRelayCommand ReloadAllServicesCommand { get; }
+    IAsyncRelayCommand ReloadAllServicesCommand { get; }
 
     /// <summary>
     /// Verify the availability of the storage search service.

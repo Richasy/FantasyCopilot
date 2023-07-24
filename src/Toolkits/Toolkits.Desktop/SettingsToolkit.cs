@@ -2,6 +2,7 @@
 
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using Windows.Security.Credentials;
@@ -73,17 +74,20 @@ public sealed class SettingsToolkit : ISettingsToolkit
     }
 
     /// <inheritdoc/>
-    public string RetrieveSecureString(SettingNames settingName)
+    public async Task<string> RetrieveSecureStringAsync(SettingNames settingName)
     {
-        try
+        return await Task.Run(() =>
         {
-            var credential = new PasswordVault().Retrieve(Assembly.GetAssembly(GetType()).FullName, settingName.ToString());
-            credential.RetrievePassword();
-            return credential.Password;
-        }
-        catch (Exception)
-        {
-            return string.Empty;
-        }
+            try
+            {
+                var credential = new PasswordVault().Retrieve(Assembly.GetAssembly(GetType()).FullName, settingName.ToString());
+                credential.RetrievePassword();
+                return credential.Password;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        });
     }
 }
