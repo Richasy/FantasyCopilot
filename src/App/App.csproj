@@ -43,6 +43,7 @@
     <None Remove="Controls\Knowledge\KnowledgeBaseSessionPanel.xaml" />
     <None Remove="Controls\Knowledge\KnowledgeContextItem.xaml" />
     <None Remove="Controls\PromptLibraryPanel.xaml" />
+    <None Remove="Controls\QuickChatDialog.xaml" />
     <None Remove="Controls\SavedSessionPanel.xaml" />
     <None Remove="Controls\SemanticSkillEditor.xaml" />
     <None Remove="Controls\SemanticSkillPanel.xaml" />
@@ -449,6 +450,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Connector\ConnectorItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\QuickChatDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="NLog.config">

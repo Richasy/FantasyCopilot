@@ -64,7 +64,7 @@ public class TextCompleteSkill
     [SKFunction]
     public Task InitializeAsync(SKContext context)
     {
-        context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out string optionsStr);
+        context.Variables.TryGetValue(AppConstants.SessionOptionsKey, out var optionsStr);
         var options = JsonSerializer.Deserialize<SessionOptions>(optionsStr);
         _completeRequestSettings = new CompleteRequestSettings()
         {

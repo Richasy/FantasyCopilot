@@ -1647,4 +1647,7 @@
   <data name="NeedDownloadCPPDependencies" xml:space="preserve">
     <value>你需要点击下面的链接下载C++依赖才能使用该功能</value>
   </data>
+  <data name="QuickChat" xml:space="preserve">
+    <value>快速对话</value>
+  </data>
 </root>
