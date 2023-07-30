@@ -1,11 +1,15 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.ComponentModel;
+using System.IO;
+using System.Text.Json;
+using System.Web;
 using FantasyCopilot.App.Controls;
 using FantasyCopilot.App.Pages;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.ViewModels.Interfaces;
+using Windows.ApplicationModel.Activation;
 using Windows.Graphics;
 using WinRT.Interop;
 
@@ -17,13 +21,15 @@ namespace FantasyCopilot.App;
 public sealed partial class MainWindow : Window
 {
     private readonly IAppViewModel _appViewModel;
+    private readonly IActivatedEventArgs _launchArgs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
     /// </summary>
-    public MainWindow()
+    public MainWindow(IActivatedEventArgs args = default)
     {
         InitializeComponent();
+        _launchArgs = args;
         _appViewModel = Locator.Current.GetService<IAppViewModel>();
         SystemBackdrop = new MicaBackdrop();
         _appViewModel.MainWindow = this;
@@ -60,6 +66,43 @@ public sealed partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// 显示协议提示词信息.
+    /// </summary>
+    /// <param name="e">激活事件参数.</param>
+    public async void ActivateArgumentsAsync(IActivatedEventArgs e = default)
+    {
+        e ??= _launchArgs;
+
+        if (e.Kind == ActivationKind.Protocol)
+        {
+            var args = e as ProtocolActivatedEventArgs;
+            var command = args.Uri.Host;
+            if (command == "chat")
+            {
+                var queryCollection = HttpUtility.ParseQueryString(args.Uri.Query);
+                var jsonStr = queryCollection["json"];
+                var data = Uri.UnescapeDataString(jsonStr);
+                if (data.StartsWith("path:"))
+                {
+                    var path = data.Substring(5);
+                    var content = await File.ReadAllTextAsync(path);
+                    data = Uri.UnescapeDataString(content);
+                    File.Delete(path);
+                }
+
+                var prompt = JsonSerializer.Deserialize<ProtocolPrompt>(data);
+
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    var dialog = new QuickChatDialog(prompt);
+                    dialog.XamlRoot = MainFrame.XamlRoot;
+                    await dialog.ShowAsync();
+                });
+            }
+        }
+    }
+
     private void Initialize()
     {
         SetTitleBarDragRect();
@@ -67,6 +110,11 @@ public sealed partial class MainWindow : Window
         DispatcherQueue.TryEnqueue(async () =>
         {
             await _appViewModel.InitializeAsync();
+
+            if (_launchArgs != null)
+            {
+                ActivateArgumentsAsync();
+            }
         });
     }
 

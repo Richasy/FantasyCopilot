@@ -11,6 +11,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.AppLifecycle;
+using Windows.ApplicationModel.Activation;
 using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -78,7 +79,7 @@ public partial class App : Application
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
         // We expect our app is single instanced.
         var instance = AppInstance.FindOrRegisterForKey(Guid);
@@ -98,7 +99,7 @@ public partial class App : Application
         instance.Activated += OnInstanceActivated;
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         DI.App.Factory.RegisterAppRequiredServices();
-        LaunchWindow();
+        LaunchWindow(args.UWPLaunchActivatedEventArgs);
     }
 
     private static RectInt32 GetRenderRect(DisplayArea displayArea, IntPtr windowHandle)
@@ -163,9 +164,9 @@ public partial class App : Application
         TrayIcon.ForceCreate();
     }
 
-    private void LaunchWindow()
+    private void LaunchWindow(IActivatedEventArgs args = default)
     {
-        _window = new MainWindow();
+        _window = new MainWindow(args);
         var appWindow = _window.AppWindow;
         appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -190,9 +191,9 @@ public partial class App : Application
 
     private void OnInstanceActivated(object sender, AppActivationArguments e)
     {
-        if (e.Kind == ExtendedActivationKind.Protocol)
+        if (e.Data is IActivatedEventArgs args)
         {
-            return;
+            MainWindow.Instance.ActivateArgumentsAsync(args);
         }
     }
 
