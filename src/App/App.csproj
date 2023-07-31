@@ -135,6 +135,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppServices\AppServices.csproj" />
     <ProjectReference Include="..\Libs\DI.App\DI.App.csproj" />
     <ProjectReference Include="..\Libs\DI.Container\DI.Container.csproj" />
     <ProjectReference Include="..\Libs\Libs.Markdown\Libs.Markdown.csproj" />
