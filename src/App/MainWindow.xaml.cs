@@ -22,6 +22,7 @@ public sealed partial class MainWindow : Window
 {
     private readonly IAppViewModel _appViewModel;
     private readonly IActivatedEventArgs _launchArgs;
+    private ContentDialog _quickChatDialog;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -95,9 +96,20 @@ public sealed partial class MainWindow : Window
 
                 DispatcherQueue.TryEnqueue(async () =>
                 {
-                    var dialog = new QuickChatDialog(prompt);
-                    dialog.XamlRoot = MainFrame.XamlRoot;
+                    Activate();
+                    if (_quickChatDialog != null)
+                    {
+                        _quickChatDialog.Hide();
+                        _quickChatDialog = null;
+                    }
+
+                    var dialog = new QuickChatDialog(prompt)
+                    {
+                        XamlRoot = MainFrame.XamlRoot,
+                    };
+                    _quickChatDialog = dialog;
                     await dialog.ShowAsync();
+                    _quickChatDialog = null;
                 });
             }
         }
