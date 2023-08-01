@@ -1,24 +1,14 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.IO;
 using System.Text.Json;
 using System.Threading;
-using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits;
-using FantasyCopilot.Toolkits.Interfaces;
-using Microsoft.Extensions.Logging;
-using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.TextCompletion;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
-using Windows.Storage;
 
 namespace FantasyCopilot.AppServices;
 
@@ -37,24 +27,10 @@ public sealed class AIService : IBackgroundTask
         _deferral = taskInstance.GetDeferral();
 
         taskInstance.Canceled += TaskInstance_Canceled;
-        RegisterServices();
 
         var detail = taskInstance.TriggerDetails as AppServiceTriggerDetails;
         _connection = detail.AppServiceConnection;
         _connection.RequestReceived += Connection_RequestReceivedAsync;
-    }
-
-    private static void RegisterServices()
-    {
-        var rootFolder = ApplicationData.Current.LocalFolder;
-        var logFolderName = AppConstants.LogFolderName;
-        var fullPath = Path.Combine(rootFolder.Path, logFolderName);
-        Locator.Current
-            .RegisterVariable(typeof(IKernel), new KernelBuilder().Build())
-            .RegisterSingleton<ISettingsToolkit, SettingsToolkit>()
-            .RegisterSingleton<IKernelService, KernelService>()
-            .RegisterLogger(fullPath);
-        Locator.Current.Build();
     }
 
     private async void Connection_RequestReceivedAsync(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
@@ -67,8 +43,6 @@ public sealed class AIService : IBackgroundTask
         var command = msg["Command"] as string;
         var request = msg["Request"] as string;
 
-        var logger = Locator.Current.GetLogger<AIService>();
-
         if (!string.IsNullOrEmpty(command))
         {
             _cancellation = new CancellationTokenSource();
@@ -77,7 +51,13 @@ public sealed class AIService : IBackgroundTask
                 if (command.Equals("quickchat", StringComparison.InvariantCultureIgnoreCase))
                 {
                     var data = JsonSerializer.Deserialize<QuickChatPrompt>(request);
-                    var kernel = Locator.Current.GetVariable<IKernel>();
+                    var kernel = await Utils.GetSemanticKernelAsync();
+
+                    if (kernel == null)
+                    {
+                        returnData.Add("Error", "Kernel is not available");
+                    }
+
                     if (data.UseChat)
                     {
                         var chatCompletion = kernel.GetService<IChatCompletion>() ?? throw new Exception("Chat completion service is not available");
@@ -113,7 +93,6 @@ public sealed class AIService : IBackgroundTask
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error while processing app service");
                 returnData.Add("Error", ex.Message);
             }
 
@@ -128,9 +107,8 @@ public sealed class AIService : IBackgroundTask
         {
             await args.Request.SendResponseAsync(returnData);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            logger.LogError(ex, "Error while handle app service");
         }
         finally
         {

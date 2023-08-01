@@ -15,7 +15,6 @@ using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.AI.TextCompletion;
-using Microsoft.SemanticKernel.Memory;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Windows.Storage;
@@ -68,7 +67,7 @@ public sealed partial class WorkflowService
             return new FunctionView(Name, SkillName, Description, parameterList, IsSemantic);
         }
 
-        public async Task<SKContext> InvokeAsync(SKContext context, CompleteRequestSettings settings)
+        public async Task<SKContext> InvokeAsync(SKContext context, CompleteRequestSettings settings, CancellationToken cancellationToken)
         {
             var workflowContext = Locator.Current.GetVariable<WorkflowContext>();
             var settingsToolkit = Locator.Current.GetService<ISettingsToolkit>();
@@ -119,7 +118,7 @@ public sealed partial class WorkflowService
             }
 
             var exeFile = Path.Combine(pluginFolder, _source.ExecuteName);
-            var finalOutput = await RunProcessAsync(exeFile, isShowWindow, parameters, context);
+            var finalOutput = await RunProcessAsync(exeFile, isShowWindow, parameters, context, cancellationToken);
             finalOutput = finalOutput.Trim();
             if (!string.IsNullOrEmpty(finalOutput))
             {
@@ -180,15 +179,13 @@ public sealed partial class WorkflowService
             return context;
         }
 
-        public Task<SKContext> InvokeAsync(string input = null, CompleteRequestSettings settings = null, ISemanticTextMemory memory = null, ILogger logger = null, CancellationToken cancellationToken = default)
+        public Task<SKContext> InvokeAsync(string input = null, CompleteRequestSettings settings = null, ILogger logger = null, CancellationToken cancellationToken = default)
         {
             var context = new SKContext(
                 new ContextVariables(input),
-                memory: memory,
-                logger: logger,
-                cancellationToken: cancellationToken);
+                logger: logger);
 
-            return InvokeAsync(context, settings);
+            return InvokeAsync(context, settings, cancellationToken);
         }
 
         public ISKFunction SetAIConfiguration(CompleteRequestSettings settings) => this;
@@ -197,7 +194,7 @@ public sealed partial class WorkflowService
 
         public ISKFunction SetDefaultSkillCollection(IReadOnlySkillCollection skills) => this;
 
-        private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context)
+        private async Task<string> RunProcessAsync(string fileName, bool isShowWindow, Dictionary<string, string> parameters, SKContext context, CancellationToken cancellationToken)
         {
             var finalOutput = string.Empty;
             var skipError = false;
@@ -243,7 +240,7 @@ public sealed partial class WorkflowService
                 context.Fail($"{_source.Name} failed: {e.Data}");
             };
 
-            await newProcess.WaitForExitAsync(context.CancellationToken);
+            await newProcess.WaitForExitAsync(cancellationToken);
             return finalOutput;
         }
     }

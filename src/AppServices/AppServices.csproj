@@ -15,14 +15,12 @@
   	  <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.18.230725.3-preview" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libs\DI.Container\DI.Container.csproj" />
-    <ProjectReference Include="..\Services\Services.Desktop\Services.Desktop.csproj" />
-    <ProjectReference Include="..\Services\Services.Interfaces\Services.Interfaces.csproj" />
-    <ProjectReference Include="..\Toolkits\Toolkits.Desktop\Toolkits.Desktop.csproj" />
-    <ProjectReference Include="..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
+    <ProjectReference Include="..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\Models\Models.Constants\Models.Constants.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="WinRT.Host.runtimeconfig.json">

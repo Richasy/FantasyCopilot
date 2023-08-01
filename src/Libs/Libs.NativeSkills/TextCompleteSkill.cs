@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
@@ -28,7 +28,7 @@ public class TextCompleteSkill
 {
     private readonly ILogger<TextCompleteSkill> _logger;
     private readonly List<ChatMessageBase> _completeHistory;
-    private readonly Timer _respondTimer;
+    private readonly System.Timers.Timer _respondTimer;
     private ITextCompletion _textCompletion;
     private CompleteRequestSettings _completeRequestSettings;
     private string _systemPrompt;
@@ -45,7 +45,7 @@ public class TextCompleteSkill
         _completeHistory = new List<ChatMessageBase>();
         Locator.Current.VariableChanged += OnVariableChanged;
         _textCompletion = kernel.GetService<ITextCompletion>();
-        _respondTimer = new Timer(TimeSpan.FromMilliseconds(10));
+        _respondTimer = new System.Timers.Timer(TimeSpan.FromMilliseconds(10));
         _respondTimer.Elapsed += (_, _) => _waitingMilliseconds += 10;
     }
 
@@ -87,14 +87,14 @@ public class TextCompleteSkill
     [Description(WorkflowConstants.TextCompletion.CompleteDescription)]
     [SKName(WorkflowConstants.TextCompletion.CompleteName)]
     [SKFunction]
-    public async Task<string> CompleteAsync(SKContext context)
+    public async Task<string> CompleteAsync(SKContext context, CancellationToken cancellationToken)
     {
         var reply = string.Empty;
         try
         {
             _completeHistory.Add(new ChatMessage(AuthorRole.User, context.Result));
             var previousText = GenerateContextString();
-            reply = await _textCompletion.CompleteAsync(previousText, _completeRequestSettings, context.CancellationToken);
+            reply = await _textCompletion.CompleteAsync(previousText, _completeRequestSettings, cancellationToken);
             reply = reply.Replace(previousText, string.Empty).Trim();
 
             // If the response is empty, remove the last sent message.
@@ -122,7 +122,7 @@ public class TextCompleteSkill
                 {
                     retried = true;
                     _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
-                    reply = await CompleteAsync(context);
+                    reply = await CompleteAsync(context, cancellationToken);
                 }
             }
 
@@ -143,14 +143,14 @@ public class TextCompleteSkill
     [Description(WorkflowConstants.TextCompletion.CompleteStreamDescription)]
     [SKName(WorkflowConstants.TextCompletion.CompleteStreamName)]
     [SKFunction]
-    public async Task<string> CompleteStreamAsync(SKContext context)
+    public async Task<string> CompleteStreamAsync(SKContext context, CancellationToken cancellationToken)
     {
         var reply = string.Empty;
         try
         {
             _completeHistory.Add(new ChatMessage(AuthorRole.User, context.Result));
             var previousText = GenerateContextString();
-            var response = _textCompletion.CompleteStreamAsync(previousText, _completeRequestSettings, context.CancellationToken);
+            var response = _textCompletion.CompleteStreamAsync(previousText, _completeRequestSettings, cancellationToken);
 
             await foreach (var msg in response)
             {
@@ -199,7 +199,7 @@ public class TextCompleteSkill
                 if (canRetry)
                 {
                     retried = true;
-                    reply = await CompleteStreamAsync(context);
+                    reply = await CompleteStreamAsync(context, cancellationToken);
                 }
             }
 

@@ -3,6 +3,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -44,7 +45,7 @@ public sealed class ImageSkill
     [SKName(WorkflowConstants.Image.DrawName)]
     [Description(WorkflowConstants.Image.DrawDescription)]
     [SKFunction]
-    public async Task<string> DrawAsync(SKContext context)
+    public async Task<string> DrawAsync(SKContext context, CancellationToken cancellationToken)
     {
         var parameters = _workflowContext.GetStepParameters<ImageStep>();
         if (parameters == null)
@@ -63,11 +64,11 @@ public sealed class ImageSkill
         var templateEngine = new PromptTemplateEngine();
         var prompt = await templateEngine.RenderAsync(config.Prompt, context);
         var negativePrompt = await templateEngine.RenderAsync(config.NegativePrompt, context);
-        var (imageData, imageDesc) = await _imageService.GenerateImageAsync(prompt, negativePrompt, config, context.CancellationToken);
+        var (imageData, imageDesc) = await _imageService.GenerateImageAsync(prompt, negativePrompt, config, cancellationToken);
         var descKey = string.Format(WorkflowConstants.Txt2ImgResultKey, _workflowContext.CurrentStepIndex);
         context.Variables.Set(descKey, imageDesc);
         var tempFilePath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, Guid.NewGuid().ToString("N") + ".jpeg");
-        await File.WriteAllBytesAsync(tempFilePath, imageData, context.CancellationToken);
+        await File.WriteAllBytesAsync(tempFilePath, imageData, cancellationToken);
         return tempFilePath;
     }
 }

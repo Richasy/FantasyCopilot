@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App.Gpt;
 using FantasyCopilot.Models.Constants;
@@ -27,7 +27,7 @@ namespace FantasyCopilot.Libs.NativeSkills;
 public sealed class ChatSkill
 {
     private readonly ILogger<ChatSkill> _logger;
-    private readonly Timer _respondTimer;
+    private readonly System.Timers.Timer _respondTimer;
     private IChatCompletion _chatCompletion;
     private ChatHistory _chatHistory;
     private ChatRequestSettings _chatRequestSettings;
@@ -44,7 +44,7 @@ public sealed class ChatSkill
         _logger = Locator.Current.GetLogger<ChatSkill>();
         Locator.Current.VariableChanged += OnVariableChanged;
         _chatCompletion = kernel.GetService<IChatCompletion>();
-        _respondTimer = new Timer(TimeSpan.FromMilliseconds(10));
+        _respondTimer = new System.Timers.Timer(TimeSpan.FromMilliseconds(10));
         _respondTimer.Elapsed += (_, _) => _waitingMilliseconds += 10;
     }
 
@@ -86,13 +86,13 @@ public sealed class ChatSkill
     [SKFunction]
     [SKName(WorkflowConstants.Chat.SendName)]
     [Description(WorkflowConstants.Chat.SendDescription)]
-    public async Task<string> SendAsync(SKContext context)
+    public async Task<string> SendAsync(SKContext context, CancellationToken cancellationToken)
     {
         var reply = string.Empty;
         try
         {
             _chatHistory.AddMessage(AuthorRole.User, context.Result);
-            reply = await _chatCompletion.GenerateMessageAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
+            reply = await _chatCompletion.GenerateMessageAsync(_chatHistory, _chatRequestSettings, cancellationToken);
 
             // If the response is empty, remove the last sent message.
             if (string.IsNullOrEmpty(reply))
@@ -118,7 +118,7 @@ public sealed class ChatSkill
                 if (canRetry)
                 {
                     retried = true;
-                    reply = await SendAsync(context);
+                    reply = await SendAsync(context, cancellationToken);
                 }
             }
 
@@ -145,13 +145,13 @@ public sealed class ChatSkill
     [Description(WorkflowConstants.Chat.GenerateStreamDescription)]
     [SKName(WorkflowConstants.Chat.GenerateStreamName)]
     [SKFunction]
-    public async Task<string> GenerateStreamAsync(SKContext context)
+    public async Task<string> GenerateStreamAsync(SKContext context, CancellationToken cancellationToken)
     {
         var reply = string.Empty;
         try
         {
             _chatHistory.AddMessage(AuthorRole.User, context.Result);
-            var response = _chatCompletion.GenerateMessageStreamAsync(_chatHistory, _chatRequestSettings, context.CancellationToken);
+            var response = _chatCompletion.GenerateMessageStreamAsync(_chatHistory, _chatRequestSettings, cancellationToken);
 
             await foreach (var msg in response)
             {
@@ -209,7 +209,7 @@ public sealed class ChatSkill
                 {
                     retried = true;
                     _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
-                    reply = await GenerateStreamAsync(context);
+                    reply = await GenerateStreamAsync(context, cancellationToken);
                 }
             }
 
