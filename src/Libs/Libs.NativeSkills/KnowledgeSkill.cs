@@ -3,6 +3,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -46,7 +47,7 @@ public sealed class KnowledgeSkill
     [SKName(WorkflowConstants.Knowledge.GetKnowledgeName)]
     [Description(WorkflowConstants.Knowledge.GetKnowledgeDescription)]
     [SKFunction]
-    public async Task<string> GetKnowledgeAsync(SKContext context)
+    public async Task<string> GetKnowledgeAsync(SKContext context, CancellationToken cancellationToken)
     {
         var @base = await TryConnectKnowledgeBaseAsync(context);
         if (@base == null)
@@ -63,7 +64,7 @@ public sealed class KnowledgeSkill
             Temperature = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTemperature, 0.4),
             TopP = _settingsToolkit.ReadLocalSetting(SettingNames.DefaultTopP, 0),
         };
-        var answer = await _memoryService.QuickSearchMemoryAsync(context.Result, sessionOptions, context.CancellationToken);
+        var answer = await _memoryService.QuickSearchMemoryAsync(context.Result, sessionOptions, cancellationToken);
         if (answer.IsError)
         {
             context.Fail(answer.Content);

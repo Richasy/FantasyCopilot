@@ -47,7 +47,7 @@ public sealed partial class AzureVoiceService : IVoiceService
     /// <inheritdoc/>
     public async Task<Stream> GetSpeechAsync(string text, string voiceId)
     {
-        await CheckConfigAsync();
+        CheckConfig();
         _speechConfig.SpeechSynthesisVoiceName = voiceId;
         using var speech = new SpeechSynthesizer(_speechConfig, default);
         using var result = await speech.SpeakTextAsync(text);
@@ -108,7 +108,7 @@ public sealed partial class AzureVoiceService : IVoiceService
     /// <inheritdoc/>
     public async Task<string> RecognizeOnceAsync(string locale)
     {
-        await InitializeSpeechRecognizerAsync(locale);
+        InitializeSpeechRecognizer(locale);
         var result = await _speechRecognizer.RecognizeOnceAsync();
         if (result.Reason == ResultReason.Canceled)
         {
@@ -126,7 +126,7 @@ public sealed partial class AzureVoiceService : IVoiceService
     /// <inheritdoc/>
     public async Task StartRecognizingAsync(string locale)
     {
-        await InitializeSpeechRecognizerAsync(locale);
+        InitializeSpeechRecognizer(locale);
         _speechRecognizer.Recognizing += OnSpeechRecognizerRecognizing;
         _speechRecognizer.Recognized += OnSpeechRecognizerRecognized;
         _speechRecognizer.SessionStopped += OnSpeechSessionStopped;
@@ -141,9 +141,9 @@ public sealed partial class AzureVoiceService : IVoiceService
         => _speechRecognizer.StopContinuousRecognitionAsync();
 
     /// <inheritdoc/>
-    public async Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
         _speechConfig = default;
-        await CheckConfigAsync();
+        CheckConfig();
     }
 }

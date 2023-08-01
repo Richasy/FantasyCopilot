@@ -26,7 +26,7 @@ public sealed partial class TranslateService : ITranslateService
         => _currentService?.GetSupportLanguagesAsync() ?? Task.FromResult<IEnumerable<LocaleInfo>>(default);
 
     /// <inheritdoc/>
-    public async Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
         var translateService = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateSource, TranslateSource.Azure);
         if (_currentTranslateSource != translateService || _currentService == null)
@@ -40,7 +40,7 @@ public sealed partial class TranslateService : ITranslateService
             };
         }
 
-        await _currentService.ReloadConfigAsync();
+        _currentService.ReloadConfig();
     }
 
     /// <inheritdoc/>

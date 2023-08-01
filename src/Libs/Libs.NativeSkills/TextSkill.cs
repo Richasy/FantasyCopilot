@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
@@ -38,7 +39,7 @@ public sealed class TextSkill
     [Description(WorkflowConstants.Text.TranslateDescription)]
     [SKName(WorkflowConstants.Text.TranslateName)]
     [SKFunction]
-    public async Task<string> TranslateAsync(SKContext context)
+    public async Task<string> TranslateAsync(SKContext context, CancellationToken cancellationToken)
     {
         var parameters = _workflowContext.GetStepParameters<TranslateStep>();
         if (parameters == null)
@@ -53,7 +54,7 @@ public sealed class TextSkill
             context.Fail("The text content to be translated cannot be empty");
         }
 
-        var result = await _translateService.TranslateTextAsync(text, parameters.Source, parameters.Target, context.CancellationToken);
+        var result = await _translateService.TranslateTextAsync(text, parameters.Source, parameters.Target, cancellationToken);
         return result;
     }
 
@@ -98,7 +99,7 @@ public sealed class TextSkill
             return default;
         }
 
-        var hasSource = context.Variables.TryGetValue(parameters.SourceName, out string value);
+        var hasSource = context.Variables.TryGetValue(parameters.SourceName, out var value);
         if (!hasSource)
         {
             context.Fail("Do not have source variable.");

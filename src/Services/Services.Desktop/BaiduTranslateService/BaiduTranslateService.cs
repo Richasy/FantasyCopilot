@@ -41,9 +41,9 @@ public sealed partial class BaiduTranslateService : ITranslateService
     }
 
     /// <inheritdoc/>
-    public async Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
-        await CheckConfigAsync();
+        CheckConfig();
         _salt = new Random().Next(100000).ToString();
     }
 

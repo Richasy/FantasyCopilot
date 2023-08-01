@@ -23,9 +23,6 @@ public sealed partial class SettingsPageViewModel
         }
     }
 
-    private void WriteSecureSetting(SettingNames name, string text)
-        => _settingsToolkit.SaveSecureString(name, text);
-
     partial void OnDefaultConversationTypeChanged(ConversationType value)
         => WriteSetting(SettingNames.LastConversationType, value);
 
@@ -44,7 +41,7 @@ public sealed partial class SettingsPageViewModel
     }
 
     partial void OnAzureOpenAIAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureOpenAIAccessKey, value);
+        => WriteSetting(SettingNames.AzureOpenAIAccessKey, value);
 
     partial void OnAzureOpenAIChatModelNameChanged(string value)
         => WriteSetting(SettingNames.AzureOpenAIChatModelName, value);
@@ -59,7 +56,7 @@ public sealed partial class SettingsPageViewModel
         => WriteSetting(SettingNames.AzureOpenAIEndpoint, value);
 
     partial void OnOpenAIAccessKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.OpenAIAccessKey, value);
+        => WriteSetting(SettingNames.OpenAIAccessKey, value);
 
     partial void OnOpenAICustomEndpointChanging(string value)
     {
@@ -85,22 +82,22 @@ public sealed partial class SettingsPageViewModel
         => WriteSetting(SettingNames.OpenAIOrganization, value);
 
     partial void OnAzureVoiceKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureVoiceKey, value);
+        => WriteSetting(SettingNames.AzureVoiceKey, value);
 
     partial void OnAzureVoiceRegionChanged(string value)
         => WriteSetting(SettingNames.AzureVoiceRegion, value);
 
     partial void OnAzureTranslateKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.AzureTranslateKey, value);
+        => WriteSetting(SettingNames.AzureTranslateKey, value);
 
     partial void OnAzureTranslateRegionChanged(string value)
         => WriteSetting(SettingNames.AzureTranslateRegion, value);
 
     partial void OnBaiduTranslateAppIdChanged(string value)
-        => WriteSecureSetting(SettingNames.BaiduTranslateAppId, value);
+        => WriteSetting(SettingNames.BaiduTranslateAppId, value);
 
     partial void OnBaiduTranslateAppKeyChanged(string value)
-        => WriteSecureSetting(SettingNames.BaiduTranslateAppKey, value);
+        => WriteSetting(SettingNames.BaiduTranslateAppKey, value);
 
     partial void OnStableDiffusionUrlChanged(string value)
     {

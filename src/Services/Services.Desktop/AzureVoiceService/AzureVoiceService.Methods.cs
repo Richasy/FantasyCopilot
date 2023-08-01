@@ -27,9 +27,9 @@ public sealed partial class AzureVoiceService
     /// <inheritdoc/>
     public bool NeedDependencies { get; set; }
 
-    private async Task CheckConfigAsync()
+    private void CheckConfig()
     {
-        var voiceKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureVoiceKey);
+        var voiceKey = _settingsToolkit.ReadLocalSetting(SettingNames.AzureVoiceKey, string.Empty);
         var hasRegion = _settingsToolkit.IsSettingKeyExist(SettingNames.AzureVoiceRegion);
 
         _hasValidConfig = !string.IsNullOrEmpty(voiceKey) && hasRegion;
@@ -59,9 +59,9 @@ public sealed partial class AzureVoiceService
         return data;
     }
 
-    private async Task InitializeSpeechRecognizerAsync(string locale)
+    private void InitializeSpeechRecognizer(string locale)
     {
-        await CheckConfigAsync();
+        CheckConfig();
         if (!string.IsNullOrEmpty(locale))
         {
             _speechConfig.SpeechRecognitionLanguage = locale;

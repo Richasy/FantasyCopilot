@@ -75,4 +75,5 @@ public enum SettingNames
     CustomChatConnectorId,
     CustomTextCompletionConnectorId,
     CustomEmbeddingConnectorId,
+    NeedMigrateKeys,
 }

@@ -108,7 +108,7 @@ public sealed partial class WorkflowService
 
     private async Task<SKContext> RunWorkflowAsync(ContextVariables variables, CancellationToken cancellationToken, params ISKFunction[] pipeline)
     {
-        var context = new SKContext(variables, default, _kernel.Skills, _kernel.Log, cancellationToken);
+        var context = new SKContext(variables, _kernel.Skills, _kernel.Log);
         _workflowContext.CurrentStepIndex = -1;
         context.Variables.Set(WorkflowConstants.OriginalKey, variables.Input);
         foreach (var f in pipeline)
@@ -134,8 +134,8 @@ public sealed partial class WorkflowService
 
             try
             {
-                context.CancellationToken.ThrowIfCancellationRequested();
-                context = await f.InvokeAsync(context).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                context = await f.InvokeAsync(context, default, cancellationToken).ConfigureAwait(false);
 
                 if (context.ErrorOccurred)
                 {

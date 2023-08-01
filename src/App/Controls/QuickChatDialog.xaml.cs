@@ -15,13 +15,13 @@ namespace FantasyCopilot.App.Controls;
 /// </summary>
 public sealed partial class QuickChatDialog : ContentDialog
 {
-    private readonly ProtocolPrompt _prompt;
+    private readonly QuickChatPrompt _prompt;
     private CancellationTokenSource _cancellationTokenSource;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="QuickChatDialog"/> class.
     /// </summary>
-    public QuickChatDialog(ProtocolPrompt prompt)
+    public QuickChatDialog(QuickChatPrompt prompt)
     {
         _prompt = prompt;
         InitializeComponent();

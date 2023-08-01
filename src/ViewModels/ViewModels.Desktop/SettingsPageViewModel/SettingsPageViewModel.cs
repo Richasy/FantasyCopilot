@@ -69,13 +69,13 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         AiSource = _settingsToolkit.ReadLocalSetting(SettingNames.AISource, AISource.Azure);
         TranslateSource = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateSource, TranslateSource.Azure);
 
-        AzureOpenAIAccessKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureOpenAIAccessKey);
+        AzureOpenAIAccessKey = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         AzureOpenAIChatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIChatModelName, string.Empty);
         AzureOpenAICompletionModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAICompletionModelName, string.Empty);
         AzureOpenAIEmbeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIEmbeddingModelName, string.Empty);
         AzureOpenAIEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
 
-        OpenAIAccessKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.OpenAIAccessKey);
+        OpenAIAccessKey = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIAccessKey, string.Empty);
         OpenAIOrganization = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIOrganization, string.Empty);
         OpenAICustomEndpoint = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAICustomEndpoint, string.Empty);
         OpenAIChatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIChatModelName, string.Empty);
@@ -87,14 +87,14 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         ContextLimit = _settingsToolkit.ReadLocalSetting(SettingNames.ContextLimit, 3);
         MinRelevanceScore = _settingsToolkit.ReadLocalSetting(SettingNames.ContextMinRelevanceScore, 0.7d);
 
-        AzureVoiceKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureVoiceKey);
+        AzureVoiceKey = _settingsToolkit.ReadLocalSetting(SettingNames.AzureVoiceKey, string.Empty);
         AzureVoiceRegion = _settingsToolkit.ReadLocalSetting(SettingNames.AzureVoiceRegion, string.Empty);
 
-        AzureTranslateKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureTranslateKey);
+        AzureTranslateKey = _settingsToolkit.ReadLocalSetting(SettingNames.AzureTranslateKey, string.Empty);
         AzureTranslateRegion = _settingsToolkit.ReadLocalSetting(SettingNames.AzureTranslateRegion, string.Empty);
 
-        BaiduTranslateAppId = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.BaiduTranslateAppId);
-        BaiduTranslateAppKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.BaiduTranslateAppKey);
+        BaiduTranslateAppId = _settingsToolkit.ReadLocalSetting(SettingNames.BaiduTranslateAppId, string.Empty);
+        BaiduTranslateAppKey = _settingsToolkit.ReadLocalSetting(SettingNames.BaiduTranslateAppKey, string.Empty);
 
         StableDiffusionUrl = _settingsToolkit.ReadLocalSetting(SettingNames.StableDiffusionUrl, string.Empty);
 

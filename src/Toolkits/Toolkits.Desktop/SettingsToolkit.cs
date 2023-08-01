@@ -90,4 +90,14 @@ public sealed class SettingsToolkit : ISettingsToolkit
             }
         });
     }
+
+    /// <inheritdoc/>
+    public async void MigrateSecureStringToLocalSetting(SettingNames settingName)
+    {
+        var value = await RetrieveSecureStringAsync(settingName);
+        if (!string.IsNullOrEmpty(value))
+        {
+            WriteLocalSetting(settingName, value);
+        }
+    }
 }

@@ -35,17 +35,17 @@ public sealed partial class KernelService : IKernelService
     }
 
     /// <inheritdoc/>
-    public async Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
         var currentSource = _settingsToolkit.ReadLocalSetting(SettingNames.AISource, AISource.Azure);
         CurrentAISource = currentSource;
         switch (currentSource)
         {
             case AISource.Azure:
-                await AddAzureOpenAIServiceAsync();
+                AddAzureOpenAIService();
                 break;
             case AISource.OpenAI:
-                await AddOpenAIServiceAsync();
+                AddOpenAIService();
                 break;
             case AISource.Custom:
                 AddCustomAIService();
@@ -64,7 +64,7 @@ public sealed partial class KernelService : IKernelService
         if (source == AISource.Azure)
         {
             var endpoint = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
-            var key = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureOpenAIAccessKey);
+            var key = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
             var url = $"{endpoint.TrimEnd('/')}/openai/deployments?api-version=2022-12-01";
 
             var aoaiChatModels = new List<string>();
@@ -107,7 +107,7 @@ public sealed partial class KernelService : IKernelService
         }
         else if (source == AISource.OpenAI)
         {
-            var key = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.OpenAIAccessKey);
+            var key = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIAccessKey, string.Empty);
             var url = $"https://api.openai.com/v1/models";
             var oaiChatModels = new List<string>();
             var oaiCompletionModels = new List<string>();
@@ -168,9 +168,9 @@ public sealed partial class KernelService : IKernelService
         return string.Empty;
     }
 
-    private async Task AddAzureOpenAIServiceAsync()
+    private void AddAzureOpenAIService()
     {
-        var key = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.AzureOpenAIAccessKey);
+        var key = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         var endPoint = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
         var chatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIChatModelName, string.Empty);
         var embeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.AzureOpenAIEmbeddingModelName, string.Empty);
@@ -202,9 +202,9 @@ public sealed partial class KernelService : IKernelService
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
     }
 
-    private async Task AddOpenAIServiceAsync()
+    private void AddOpenAIService()
     {
-        var key = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.OpenAIAccessKey);
+        var key = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIAccessKey, string.Empty);
         var organization = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIOrganization, string.Empty);
         var chatModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIChatModelName, string.Empty);
         var embeddingModelName = _settingsToolkit.ReadLocalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);

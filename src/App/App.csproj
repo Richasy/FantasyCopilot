@@ -11,9 +11,6 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-    <SuppressTrimAnalysisWarnings>true</SuppressTrimAnalysisWarnings>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TrimMode>partial</TrimMode>
     <DefaultLanguage>en-US</DefaultLanguage>
     <PackageCertificateKeyFile>FantasyCopilot.App_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
@@ -121,7 +118,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230602002" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.3.230724000" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -135,6 +132,7 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppServices\AppServices.csproj" />
     <ProjectReference Include="..\Libs\DI.App\DI.App.csproj" />
     <ProjectReference Include="..\Libs\DI.Container\DI.Container.csproj" />
     <ProjectReference Include="..\Libs\Libs.Markdown\Libs.Markdown.csproj" />

@@ -53,4 +53,10 @@ public interface ISettingsToolkit
     /// <param name="settingName">Key.</param>
     /// <returns>Stored text or empty.</returns>
     Task<string> RetrieveSecureStringAsync(SettingNames settingName);
+
+    /// <summary>
+    /// Migrate secure string to local setting.
+    /// </summary>
+    /// <param name="settingName">Key.</param>
+    void MigrateSecureStringToLocalSetting(SettingNames settingName);
 }
