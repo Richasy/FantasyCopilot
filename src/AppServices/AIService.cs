@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using FantasyCopilot.Models.App;
