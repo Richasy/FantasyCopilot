@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using System;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using FantasyCopilot.Models.App;
@@ -51,7 +52,7 @@ public sealed class AIService : IBackgroundTask
                 if (command.Equals("quickchat", StringComparison.InvariantCultureIgnoreCase))
                 {
                     var data = JsonSerializer.Deserialize<QuickChatPrompt>(request);
-                    var kernel = await Utils.GetSemanticKernelAsync();
+                    var kernel = Utils.GetSemanticKernel();
 
                     if (kernel == null)
                     {

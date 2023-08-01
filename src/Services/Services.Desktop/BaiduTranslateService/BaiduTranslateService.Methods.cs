@@ -3,7 +3,6 @@
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 
@@ -25,10 +24,10 @@ public sealed partial class BaiduTranslateService
     /// <inheritdoc/>
     public bool HasValidConfig { get; set; }
 
-    private async Task CheckConfigAsync()
+    private void CheckConfig()
     {
-        _appId = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.BaiduTranslateAppId);
-        _appKey = await _settingsToolkit.RetrieveSecureStringAsync(SettingNames.BaiduTranslateAppKey);
+        _appId = _settingsToolkit.ReadLocalSetting(SettingNames.BaiduTranslateAppId, string.Empty);
+        _appKey = _settingsToolkit.ReadLocalSetting(SettingNames.BaiduTranslateAppKey, string.Empty);
 
         HasValidConfig = !string.IsNullOrEmpty(_appId) && !string.IsNullOrEmpty(_appKey);
     }

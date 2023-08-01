@@ -2,12 +2,10 @@
 
 using System;
 using System.Net.Http;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel;
-using Windows.Security.Credentials;
 using Windows.Storage;
 
 namespace FantasyCopilot.AppServices;
@@ -37,13 +35,13 @@ internal static class Utils
         }
     }
 
-    internal static async Task<IKernel> GetSemanticKernelAsync()
+    internal static IKernel GetSemanticKernel()
     {
         var currentSource = ReadLocalSetting(SettingNames.AISource, AISource.Azure);
         return currentSource switch
         {
-            AISource.Azure => await GetAzureOpenAIServiceAsync(),
-            AISource.OpenAI => await GetOpenAIServiceAsync(),
+            AISource.Azure => GetAzureOpenAIService(),
+            AISource.OpenAI => GetOpenAIService(),
             _ => throw new NotSupportedException()
         };
     }
@@ -51,27 +49,9 @@ internal static class Utils
     private static bool IsSettingKeyExist(SettingNames settingName)
         => ApplicationData.Current.LocalSettings.Values.ContainsKey(settingName.ToString());
 
-    private static async Task<string> RetrieveSecureStringAsync(SettingNames settingName)
+    private static IKernel GetAzureOpenAIService()
     {
-        return await Task.Run(() =>
-        {
-            try
-            {
-                var name = Assembly.GetAssembly(typeof(Utils)).FullName.Replace("AppServices", "Toolkits");
-                var credential = new PasswordVault().Retrieve(name, settingName.ToString());
-                credential.RetrievePassword();
-                return credential.Password;
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        });
-    }
-
-    private static async Task<IKernel> GetAzureOpenAIServiceAsync()
-    {
-        var key = await RetrieveSecureStringAsync(SettingNames.AzureOpenAIAccessKey);
+        var key = ReadLocalSetting(SettingNames.AzureOpenAIAccessKey, string.Empty);
         var endPoint = ReadLocalSetting(SettingNames.AzureOpenAIEndpoint, string.Empty);
         var chatModelName = ReadLocalSetting(SettingNames.AzureOpenAIChatModelName, string.Empty);
         var embeddingModelName = ReadLocalSetting(SettingNames.AzureOpenAIEmbeddingModelName, string.Empty);
@@ -101,9 +81,9 @@ internal static class Utils
         return kernelBuilder.Build();
     }
 
-    private static async Task<IKernel> GetOpenAIServiceAsync()
+    private static IKernel GetOpenAIService()
     {
-        var key = await RetrieveSecureStringAsync(SettingNames.OpenAIAccessKey);
+        var key = ReadLocalSetting(SettingNames.OpenAIAccessKey, string.Empty);
         var organization = ReadLocalSetting(SettingNames.OpenAIOrganization, string.Empty);
         var chatModelName = ReadLocalSetting(SettingNames.OpenAIChatModelName, string.Empty);
         var embeddingModelName = ReadLocalSetting(SettingNames.OpenAIEmbeddingModelName, string.Empty);

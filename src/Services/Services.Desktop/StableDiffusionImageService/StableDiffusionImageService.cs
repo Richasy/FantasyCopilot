@@ -220,11 +220,10 @@ public sealed partial class StableDiffusionImageService : IImageService
     }
 
     /// <inheritdoc/>
-    public Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
         _stableDiffusionUrl = default;
         CheckConfig();
-        return Task.CompletedTask;
     }
 
     private void CheckConfig()

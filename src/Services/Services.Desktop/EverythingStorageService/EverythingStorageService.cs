@@ -25,11 +25,10 @@ public sealed partial class EverythingStorageService : IStorageService
     public bool HasValidConfig => _hasValidConfig;
 
     /// <inheritdoc/>
-    public Task ReloadConfigAsync()
+    public void ReloadConfig()
     {
         _client = default;
         CheckConfig();
-        return Task.CompletedTask;
     }
 
     /// <inheritdoc/>

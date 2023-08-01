@@ -47,10 +47,19 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         var isSkipWelcome = _settingsToolkit.IsSettingKeyExist(SettingNames.IsSkipWelcomeScreen);
         if (!isSkipWelcome)
         {
+            _settingsToolkit.WriteLocalSetting(SettingNames.NeedMigrateKeys, false);
             Navigate(PageType.Welcome);
         }
         else
         {
+            // Since the security string does not apply to the Background Task,
+            // it still needs to be migrated to the local setting.
+            if (_settingsToolkit.ReadLocalSetting(SettingNames.NeedMigrateKeys, true))
+            {
+                MigrateServiceKeys();
+                _settingsToolkit.WriteLocalSetting(SettingNames.NeedMigrateKeys, false);
+            }
+
             LoadNavItems();
             var lastOpenPage = _settingsToolkit.ReadLocalSetting(SettingNames.LastOpenPageType, PageType.ChatSession);
             if (!NavigateItems.Any(p => p.Type == lastOpenPage))
@@ -59,7 +68,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
             }
 
             await LoadAllConnectorsAsync();
-            await ReloadAllServicesAsync();
+            ReloadAllServices();
             Navigate(lastOpenPage);
             CleanConnectorPorts();
         }
@@ -125,7 +134,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     }
 
     [RelayCommand]
-    private async Task ReloadAllServicesAsync()
+    private void ReloadAllServices()
     {
         var kernelService = Locator.Current.GetService<IKernelService>();
         var voiceService = Locator.Current.GetService<IVoiceService>();
@@ -133,11 +142,11 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
         var translateService = Locator.Current.GetService<ITranslateService>();
         var storageService = Locator.Current.GetService<IStorageService>();
 
-        await kernelService.ReloadConfigAsync();
-        await voiceService.ReloadConfigAsync();
-        await imageService.ReloadConfigAsync();
-        await translateService.ReloadConfigAsync();
-        await storageService.ReloadConfigAsync();
+        kernelService.ReloadConfig();
+        voiceService.ReloadConfig();
+        imageService.ReloadConfig();
+        translateService.ReloadConfig();
+        storageService.ReloadConfig();
 
         IsChatAvailable = kernelService.IsChatSupport;
         IsKnowledgeAvailable = kernelService.IsMemorySupport;
@@ -314,6 +323,16 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
                 ConnectorGroup.Add(connectorType, connector);
             }
         }
+    }
+
+    private void MigrateServiceKeys()
+    {
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.AzureOpenAIAccessKey);
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.OpenAIAccessKey);
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.AzureTranslateKey);
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.AzureVoiceKey);
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.BaiduTranslateAppId);
+        _settingsToolkit.MigrateSecureStringToLocalSetting(SettingNames.BaiduTranslateAppKey);
     }
 
     partial void OnCurrentNavigateItemChanged(NavigateItem value)
