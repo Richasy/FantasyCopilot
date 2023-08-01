@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 namespace FantasyCopilot.Models.App;
 
 /// <summary>
-/// 协议提示词.
+/// 快速对话提示词.
 /// </summary>
-public sealed class ProtocolPrompt
+public sealed class QuickChatPrompt
 {
     /// <summary>
     /// 显示在界面上的提示词.

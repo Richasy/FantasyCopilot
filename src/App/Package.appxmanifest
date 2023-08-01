@@ -48,8 +48,8 @@
         <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService" EntryPoint="AppServices.QuickChat">
-          <uap:AppService Name="com.fantasycopilot.quickchat" uap4:SupportsMultipleInstances="true"/>
+        <uap:Extension Category="windows.appService" EntryPoint="FantasyCopilot.AppServices.AISerice">
+          <uap:AppService Name="com.fantasycopilot.aiservice" uap4:SupportsMultipleInstances="true"/>
         </uap:Extension>
         <uap:Extension Category="windows.protocol">
             <uap:Protocol Name="fancop" DesiredView="useLess" />
@@ -62,7 +62,7 @@
       <Extension Category="windows.activatableClass.inProcessServer">
           <InProcessServer>
               <Path>WinRT.Host.dll</Path>
-              <ActivatableClass ActivatableClassId="AppServices.QuickChat" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="FantasyCopilot.AppServices.AIService" ThreadingModel="both" />
           </InProcessServer>
       </Extension>
   </Extensions>

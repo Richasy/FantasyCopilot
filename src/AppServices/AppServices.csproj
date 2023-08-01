@@ -1,21 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net7.0-windows10.0.22000.0</TargetFramework>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>FantasyCopilot.AppServices</RootNamespace>
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
-      <Platforms>x64;x86;arm64</Platforms>
+    <Platforms>x64;x86;arm64</Platforms>
+    <AssemblyName>FantasyCopilot.AppServices</AssemblyName>
   </PropertyGroup>
   
   <!-- CsWinRT properties -->
   <PropertyGroup>
   	  <CsWinRTComponent>true</CsWinRTComponent>
   	  <CsWinRTWindowsMetadata>10.0.22000.0</CsWinRTWindowsMetadata>
-  	  <PlatformTarget>AnyCPU</PlatformTarget>
+  	  <PlatformTarget>x64</PlatformTarget>
   	  <GenerateDocumentationFile>False</GenerateDocumentationFile>
-  	  <AssemblyName>AppServices</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libs\DI.Container\DI.Container.csproj" />
+    <ProjectReference Include="..\Services\Services.Desktop\Services.Desktop.csproj" />
+    <ProjectReference Include="..\Services\Services.Interfaces\Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Toolkits\Toolkits.Desktop\Toolkits.Desktop.csproj" />
+    <ProjectReference Include="..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="WinRT.Host.runtimeconfig.json">
