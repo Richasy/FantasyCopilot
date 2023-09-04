@@ -47,14 +47,21 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
     }
 
     [RelayCommand]
-    private async Task InitializeAsync()
+    private async Task InitializeAsync(string preloadContent = default)
     {
         if (!_voiceService.HasValidConfig || _allVoices.Count != 0)
         {
+            if (!string.IsNullOrEmpty(preloadContent))
+            {
+                Text = preloadContent;
+                ReadCommand.Execute(default);
+            }
+
             return;
         }
 
         await ReloadMetadataAsync();
+        _preloadText = preloadContent;
     }
 
     [RelayCommand]
@@ -198,6 +205,13 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
 
         await Task.Delay(100);
         SelectedVoice = voice;
+
+        if (!string.IsNullOrEmpty(_preloadText))
+        {
+            Text = _preloadText;
+            ReadCommand.Execute(default);
+            _preloadText = default;
+        }
     }
 
     private void OnMediaPlayerStateChanged(MediaPlayer sender, object args)

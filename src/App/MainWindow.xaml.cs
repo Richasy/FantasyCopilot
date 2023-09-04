@@ -2,6 +2,7 @@
 
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Web;
 using FantasyCopilot.App.Controls;
@@ -77,7 +78,7 @@ public sealed partial class MainWindow : Window
 
         if (e.Kind == ActivationKind.Protocol)
         {
-            var args = e as ProtocolActivatedEventArgs;
+            var args = e as IProtocolActivatedEventArgs;
             var command = args.Uri.Host;
             if (command == "chat")
             {
@@ -110,6 +111,46 @@ public sealed partial class MainWindow : Window
                     _quickChatDialog = dialog;
                     await dialog.ShowAsync();
                     _quickChatDialog = null;
+                });
+            }
+            else if (command == "translate")
+            {
+                var queryCollection = HttpUtility.ParseQueryString(args.Uri.Query);
+                var content = queryCollection["content"];
+                var targetLanguage = queryCollection.AllKeys.Contains("target") ? queryCollection["target"] : string.Empty;
+                var data = Uri.UnescapeDataString(content);
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    Activate();
+                    var args = new TranslateActivateEventArgs(content, targetLanguage);
+                    if (_appViewModel.CurrentPage == PageType.Translate && MainFrame.Content is TranslatePage)
+                    {
+                        Locator.Current.GetService<ITranslatePageViewModel>().InitializeCommand.Execute(args);
+                    }
+                    else
+                    {
+                        _appViewModel.Navigate(PageType.Translate, args);
+                    }
+                });
+            }
+            else if (command == "tts")
+            {
+                var queryCollection = HttpUtility.ParseQueryString(args.Uri.Query);
+                var content = queryCollection["content"];
+                var data = Uri.UnescapeDataString(content);
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    Activate();
+                    var args = new VoicePageActivateEventArgs(true, content);
+                    if (_appViewModel.CurrentPage == PageType.Voice && MainFrame.Content is VoicePage)
+                    {
+                        Locator.Current.GetService<IVoicePageViewModel>().IsTextToSpeechSelected = true;
+                        Locator.Current.GetService<ITextToSpeechModuleViewModel>().InitializeCommand.Execute(args.Content);
+                    }
+                    else
+                    {
+                        _appViewModel.Navigate(PageType.Voice, args);
+                    }
                 });
             }
         }

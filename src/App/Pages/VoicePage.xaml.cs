@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
 using FantasyCopilot.DI.Container;
+using FantasyCopilot.Models.App;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace FantasyCopilot.App.Pages;
 
@@ -15,6 +17,16 @@ public sealed partial class VoicePage : VoicePageBase
     /// Initializes a new instance of the <see cref="VoicePage"/> class.
     /// </summary>
     public VoicePage() => InitializeComponent();
+
+    /// <inheritdoc/>
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        if (e.Parameter is VoicePageActivateEventArgs args)
+        {
+            ViewModel.IsTextToSpeechSelected = args.IsTextToSpeech;
+            Locator.Current.GetService<ITextToSpeechModuleViewModel>().InitializeCommand.Execute(args.Content);
+        }
+    }
 
     /// <inheritdoc/>
     protected override void OnPageLoaded()

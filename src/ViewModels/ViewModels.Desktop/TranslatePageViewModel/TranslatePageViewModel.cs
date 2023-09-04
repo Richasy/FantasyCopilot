@@ -41,10 +41,20 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
     }
 
     [RelayCommand]
-    private async Task InitializeAsync()
+    private async Task InitializeAsync(TranslateActivateEventArgs args = default)
     {
         if (SourceLanguages.Count > 0 || IsInitializing)
         {
+            if (args != null)
+            {
+                SourceText = args.Content;
+                SelectedSourceLanguage = SourceLanguages.First();
+                SelectedTargetLanguage = string.IsNullOrEmpty(args.TargetLanguage)
+                    ? SelectedTargetLanguage
+                    : TargetLanguages.FirstOrDefault(p => p.Id == args.TargetLanguage) ?? TargetLanguages.FirstOrDefault(p => p.Id == "en");
+                TranslateCommand.Execute(default);
+            }
+
             return;
         }
 
@@ -63,8 +73,20 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
         var localTargetLanguage = _settingsToolkit.ReadLocalSetting(SettingNames.TranslateTargetLanguage, localLocale?.Id ?? string.Empty);
 
         await Task.Delay(100);
+        if (args != null)
+        {
+            SourceText = args.Content;
+            localSourceLanguage = string.Empty;
+            localTargetLanguage = args.TargetLanguage;
+        }
+
         SelectedSourceLanguage = SourceLanguages.FirstOrDefault(p => p.Id == localSourceLanguage) ?? autoDetect;
         SelectedTargetLanguage = TargetLanguages.FirstOrDefault(p => p.Id == localTargetLanguage) ?? TargetLanguages.FirstOrDefault(p => p.Id == "en");
+
+        if (args != null)
+        {
+            TranslateCommand.Execute(default);
+        }
     }
 
     [RelayCommand]

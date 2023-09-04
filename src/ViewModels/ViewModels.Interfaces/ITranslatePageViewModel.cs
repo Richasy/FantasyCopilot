@@ -64,5 +64,5 @@ public interface ITranslatePageViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize page.
     /// </summary>
-    IAsyncRelayCommand InitializeCommand { get; }
+    IAsyncRelayCommand<TranslateActivateEventArgs> InitializeCommand { get; }
 }
