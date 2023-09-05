@@ -28,10 +28,10 @@ public sealed class CustomTextEmbeddingGeneration : ITextEmbeddingGeneration
     }
 
     /// <inheritdoc/>
-    public async Task<IList<Embedding<float>>> GenerateEmbeddingsAsync(IList<string> data, CancellationToken cancellationToken = default)
+    public async Task<IList<ReadOnlyMemory<float>>> GenerateEmbeddingsAsync(IList<string> data, CancellationToken cancellationToken = default)
     {
         Utils.VerifyNotNull(data);
-        var result = new List<Embedding<float>>();
+        var result = new List<ReadOnlyMemory<float>>();
         var config = _connectorConfig.Features
             .First(p => p.Type == ConnectorConstants.EmbeddingType)
             .Endpoints
@@ -45,7 +45,7 @@ public sealed class CustomTextEmbeddingGeneration : ITextEmbeddingGeneration
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync(cancellationToken);
             var embeddingResult = JsonSerializer.Deserialize<EmbeddingResult>(content);
-            result.Add(new Embedding<float>(embeddingResult.Embedding, transferOwnership: true));
+            result.Add(new ReadOnlyMemory<float>(embeddingResult.Embedding.ToArray()));
         }
 
         return result;

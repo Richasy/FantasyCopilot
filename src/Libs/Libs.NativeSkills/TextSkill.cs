@@ -8,6 +8,7 @@ using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Microsoft.SemanticKernel.TemplateEngine;
@@ -41,17 +42,13 @@ public sealed class TextSkill
     [SKFunction]
     public async Task<string> TranslateAsync(SKContext context, CancellationToken cancellationToken)
     {
-        var parameters = _workflowContext.GetStepParameters<TranslateStep>();
-        if (parameters == null)
-        {
-            context.Fail("Do not have translate parameters");
-            return default;
-        }
+        var parameters = _workflowContext.GetStepParameters<TranslateStep>()
+            ?? throw new SKException("Do not have translate parameters");
 
         var text = context.Result;
         if (string.IsNullOrEmpty(text))
         {
-            context.Fail("The text content to be translated cannot be empty");
+            throw new SKException("The text content to be translated cannot be empty");
         }
 
         var result = await _translateService.TranslateTextAsync(text, parameters.Source, parameters.Target, cancellationToken);
@@ -68,12 +65,8 @@ public sealed class TextSkill
     [SKFunction]
     public async Task<string> TextOverwriteAsync(SKContext context)
     {
-        var parameters = _workflowContext.GetStepParameters<TextOverwriteStep>();
-        if (parameters == null)
-        {
-            context.Fail("Do not have overwrite parameters");
-            return default;
-        }
+        var parameters = _workflowContext.GetStepParameters<TextOverwriteStep>()
+            ?? throw new SKException("Do not have overwrite parameters");
 
         var templateEngine = new PromptTemplateEngine();
         var finalResult = await templateEngine.RenderAsync(parameters.Text, context);
@@ -95,15 +88,13 @@ public sealed class TextSkill
             || string.IsNullOrEmpty(parameters.SourceName)
             || string.IsNullOrEmpty(parameters.TargetName))
         {
-            context.Fail("Do not have variable redirect parameters");
-            return default;
+            throw new SKException("Do not have variable redirect parameters");
         }
 
         var hasSource = context.Variables.TryGetValue(parameters.SourceName, out var value);
         if (!hasSource)
         {
-            context.Fail("Do not have source variable.");
-            return default;
+            throw new SKException("Do not have source variable.");
         }
 
         context.Variables.Set(parameters.TargetName, value);
@@ -125,8 +116,7 @@ public sealed class TextSkill
             || string.IsNullOrEmpty(parameters.Name)
             || string.IsNullOrEmpty(parameters.Value))
         {
-            context.Fail("Invalid variable");
-            return default;
+            throw new SKException("Do not have variable create parameters");
         }
 
         var engine = new PromptTemplateEngine();

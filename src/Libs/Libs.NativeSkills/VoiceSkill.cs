@@ -8,6 +8,7 @@ using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Windows.Storage;
@@ -41,17 +42,13 @@ public sealed class VoiceSkill
     [SKFunction]
     public async Task<string> ReadAsync(SKContext context)
     {
-        var parameters = _workflowContext.GetStepParameters<TextToSpeechStep>();
-        if (parameters == null)
-        {
-            context.Fail("Do not have text-to-speech parameters");
-            return default;
-        }
+        var parameters = _workflowContext.GetStepParameters<TextToSpeechStep>()
+            ?? throw new SKException("Do not have text-to-speech parameters");
 
         var text = context.Result;
         if (string.IsNullOrEmpty(text))
         {
-            context.Fail("The text content to be read cannot be empty");
+            throw new SKException("The text content to be read cannot be empty");
         }
 
         var stream = await _voiceService.GetSpeechAsync(text, parameters.Voice);

@@ -78,4 +78,5 @@ public enum SettingNames
     NeedMigrateKeys,
     TTSLanguage,
     TTSVoice,
+    WindowHeight,
 }

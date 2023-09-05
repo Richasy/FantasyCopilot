@@ -28,7 +28,6 @@
                 x:Name="TokenNumberBox"
                 MinWidth="120"
                 LargeChange="200"
-                Maximum="4000"
                 Minimum="10"
                 SmallChange="50"
                 SpinButtonPlacementMode="Compact"

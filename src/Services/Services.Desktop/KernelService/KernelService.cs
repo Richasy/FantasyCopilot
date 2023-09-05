@@ -14,6 +14,7 @@ using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
+using NLog.Extensions.Logging;
 
 namespace FantasyCopilot.Services;
 
@@ -197,7 +198,10 @@ public sealed partial class KernelService : IKernelService
             kernelBuilder.WithAzureTextCompletionService(completionModelName, endPoint, key);
         }
 
-        kernelBuilder.WithLogger(_logger);
+        kernelBuilder.WithLoggerFactory(LoggerFactory.Create(builder =>
+        {
+            builder.AddNLog();
+        }));
         SetSupportState(isBaseValid, hasChatModel, hasEmbeddingModel, hasCompletionModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
     }
@@ -236,7 +240,10 @@ public sealed partial class KernelService : IKernelService
             kernelBuilder.WithOpenAITextCompletionService(completionModelName, key, organization, httpClient: customHttpClient);
         }
 
-        kernelBuilder.WithLogger(_logger);
+        kernelBuilder.WithLoggerFactory(LoggerFactory.Create(builder =>
+        {
+            builder.AddNLog();
+        }));
         SetSupportState(isBaseValid, hasChatModel, hasEmbeddingModel, hasCompletionModel);
         Locator.Current.RegisterVariable(typeof(IKernel), kernelBuilder.Build());
     }

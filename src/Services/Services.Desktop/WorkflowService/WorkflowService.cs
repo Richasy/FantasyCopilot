@@ -101,7 +101,7 @@ public sealed partial class WorkflowService : IWorkflowService
         }
         else
         {
-            _workflowContext.StepResults.Add(WorkflowConstants.ErrorKey, result.LastErrorDescription);
+            _workflowContext.StepResults.Add(WorkflowConstants.ErrorKey, result.LastException.Message);
         }
 
         _workflowContext.RaiseResultUpdated();

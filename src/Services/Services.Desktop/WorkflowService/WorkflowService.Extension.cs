@@ -13,8 +13,8 @@ using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Plugins;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
-using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Windows.Storage;
@@ -112,7 +112,7 @@ public sealed partial class WorkflowService
                     }
                     else if (parameter.Required)
                     {
-                        context.Fail($"Missing variable: {parameter.Id}");
+                        throw new SKException($"Missing variable: {parameter.Id}");
                     }
                 }
             }
@@ -179,15 +179,6 @@ public sealed partial class WorkflowService
             return context;
         }
 
-        public Task<SKContext> InvokeAsync(string input = null, CompleteRequestSettings settings = null, ILogger logger = null, CancellationToken cancellationToken = default)
-        {
-            var context = new SKContext(
-                new ContextVariables(input),
-                logger: logger);
-
-            return InvokeAsync(context, settings, cancellationToken);
-        }
-
         public ISKFunction SetAIConfiguration(CompleteRequestSettings settings) => this;
 
         public ISKFunction SetAIService(Func<ITextCompletion> serviceFactory) => this;
@@ -237,7 +228,7 @@ public sealed partial class WorkflowService
                     return;
                 }
 
-                context.Fail($"{_source.Name} failed: {e.Data}");
+                throw new SKException($"{_source.Name} failed: {e.Data}");
             };
 
             await newProcess.WaitForExitAsync(cancellationToken);

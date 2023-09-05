@@ -33,6 +33,7 @@
                     <DataTemplate x:DataType="app:LocaleInfo">
                         <TextBlock
                             MaxWidth="240"
+                            HorizontalAlignment="Left"
                             Text="{x:Bind Name}"
                             TextTrimming="CharacterEllipsis" />
                     </DataTemplate>
@@ -48,7 +49,10 @@
                 SelectedItem="{x:Bind ViewModel.SelectedVoice, Mode=TwoWay}">
                 <ComboBox.ItemTemplate>
                     <DataTemplate x:DataType="voice:VoiceMetadata">
-                        <Grid MaxWidth="240" ColumnSpacing="4">
+                        <Grid
+                            MaxWidth="240"
+                            HorizontalAlignment="Left"
+                            ColumnSpacing="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
