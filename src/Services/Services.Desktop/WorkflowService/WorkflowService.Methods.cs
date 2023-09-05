@@ -10,6 +10,7 @@ using FantasyCopilot.Models.App.Workspace;
 using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
 using Microsoft.Extensions.Logging;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SemanticFunctions;
 using Microsoft.SemanticKernel.SkillDefinition;
@@ -108,18 +109,18 @@ public sealed partial class WorkflowService
 
     private async Task<SKContext> RunWorkflowAsync(ContextVariables variables, CancellationToken cancellationToken, params ISKFunction[] pipeline)
     {
-        var context = new SKContext(variables, _kernel.Skills, _kernel.Log);
+        var context = new SKContext(variables, _kernel.Skills, _kernel.LoggerFactory);
         _workflowContext.CurrentStepIndex = -1;
         context.Variables.Set(WorkflowConstants.OriginalKey, variables.Input);
         foreach (var f in pipeline)
         {
             if (context.ErrorOccurred)
             {
-                _kernel.Log.LogError(
+                _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
                     context.LastException,
                     "Something went wrong in pipeline step {0}:'{1}'",
                     _workflowContext.CurrentStepIndex,
-                    context.LastErrorDescription);
+                    context.LastException.Message);
                 return context;
             }
 
@@ -139,26 +140,25 @@ public sealed partial class WorkflowService
 
                 if (context.ErrorOccurred)
                 {
-                    _kernel.Log.LogError(
+                    _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
                         "Function call fail during pipeline step {0}: {1}.{2}. Error: {3}",
                         _workflowContext.CurrentStepIndex,
                         f.SkillName,
                         f.Name,
-                        context.LastErrorDescription);
+                        context.LastException.Message);
                     return context;
                 }
             }
             catch (Exception e)
             {
-                _kernel.Log.LogError(
+                _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
                     e,
                     "Something went wrong in pipeline step {0}: {1}.{2}. Error: {3}",
                     _workflowContext.CurrentStepIndex,
                     f.SkillName,
                     f.Name,
                     e.Message);
-                context.Fail(e.Message, e);
-                return context;
+                throw new SKException(e.Message, e);
             }
         }
 

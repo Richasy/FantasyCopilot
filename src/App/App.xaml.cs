@@ -16,6 +16,7 @@ using Windows.Graphics;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace FantasyCopilot.App;
 
@@ -30,7 +31,7 @@ public partial class App : Application
     public const string Guid = "376AEAAB-331B-42AC-A069-146F7230765E";
 
     private ISettingsToolkit _settingsToolkit;
-    private Window _window;
+    private WindowEx _window;
     private DispatcherQueue _dispatcherQueue;
 
     /// <summary>
@@ -105,8 +106,10 @@ public partial class App : Application
     {
         var workArea = displayArea.WorkArea;
         var scaleFactor = PInvoke.GetDpiForWindow(new HWND(windowHandle)) / 96d;
+        var settingToolkit = Locator.Current.GetService<ISettingsToolkit>();
+        var previousHeight = settingToolkit.ReadLocalSetting(SettingNames.WindowHeight, 800d);
         var width = Convert.ToInt32(500 * scaleFactor);
-        var height = Convert.ToInt32(800 * scaleFactor);
+        var height = Convert.ToInt32(previousHeight * scaleFactor);
 
         // Ensure the window is not larger than the work area.
         if (height > workArea.Height - 20)
@@ -173,9 +176,6 @@ public partial class App : Application
         appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
         appWindow.Title = Locator.Current.GetService<IResourceToolkit>().GetLocalizedString(StringNames.AppName);
         appWindow.SetIcon("Assets/logo.ico");
-        var presenter = appWindow.Presenter as OverlappedPresenter;
-        presenter.IsResizable = false;
-        presenter.IsMaximizable = false;
         MoveAndResize();
         _window.Closed += OnMainWindowClosedAsync;
 
@@ -191,7 +191,7 @@ public partial class App : Application
 
     private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
     {
-        SaveCurrentWindowPosition();
+        SaveCurrentWindowStats();
         HandleCloseEvents = _settingsToolkit.ReadLocalSetting(SettingNames.HideWhenCloseWindow, true);
         if (HandleCloseEvents)
         {
@@ -245,17 +245,30 @@ public partial class App : Application
         if (displayArea != null)
         {
             var rect = GetRenderRect(displayArea, hwnd);
+            var scaleFactor = PInvoke.GetDpiForWindow(new HWND(hwnd)) / 96d;
+            _window.MinWidth = 500;
+            _window.MaxWidth = 500;
+            _window.MinHeight = 500;
+
+            var maxHeight = (displayArea.WorkArea.Height / scaleFactor) + 16;
+            _window.MaxHeight = maxHeight < 400 ? 400 : maxHeight;
             _window.AppWindow.MoveAndResize(rect);
         }
     }
 
-    private void SaveCurrentWindowPosition()
+    private void SaveCurrentWindowStats()
     {
+        if (_window.Height == _window.MaxHeight)
+        {
+            return;
+        }
+
         var left = _window.AppWindow.Position.X;
         var top = _window.AppWindow.Position.Y;
         var settingToolkit = Locator.Current.GetService<ISettingsToolkit>();
         settingToolkit.WriteLocalSetting(SettingNames.WindowPositionLeft, left);
         settingToolkit.WriteLocalSetting(SettingNames.WindowPositionTop, top);
+        settingToolkit.WriteLocalSetting(SettingNames.WindowHeight, _window.Height > 400 ? _window.Height : 800);
     }
 
     private void ExitApp()

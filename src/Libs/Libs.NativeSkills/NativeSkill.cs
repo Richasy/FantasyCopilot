@@ -7,6 +7,7 @@ using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Microsoft.SemanticKernel.TemplateEngine;
@@ -39,8 +40,7 @@ public sealed class NativeSkill
         var parameters = _workflowContext.GetStepParameters<TextNotificationStep>();
         if (parameters == null || string.IsNullOrEmpty(parameters.Text))
         {
-            context.Fail("No notification parameters found.");
-            return context;
+            throw new SKException("No notification parameters found.");
         }
 
         var engine = new PromptTemplateEngine();

@@ -13,13 +13,14 @@ using FantasyCopilot.ViewModels.Interfaces;
 using Windows.ApplicationModel.Activation;
 using Windows.Graphics;
 using WinRT.Interop;
+using WinUIEx;
 
 namespace FantasyCopilot.App;
 
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class MainWindow : Window
+public sealed partial class MainWindow : WindowEx
 {
     private readonly IAppViewModel _appViewModel;
     private readonly IActivatedEventArgs _launchArgs;
@@ -32,6 +33,7 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
         _launchArgs = args;
+        IsMaximizable = false;
         _appViewModel = Locator.Current.GetService<IAppViewModel>();
         SystemBackdrop = new MicaBackdrop();
         _appViewModel.MainWindow = this;

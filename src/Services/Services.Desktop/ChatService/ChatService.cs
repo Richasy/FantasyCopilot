@@ -78,7 +78,7 @@ public sealed partial class ChatService : IChatService
         contextVariables.Set(AppConstants.SessionOptionsKey, JsonSerializer.Serialize(options));
         var result = await _kernel.RunAsync(contextVariables, cancellationToken, pipelines.ToArray());
         return result.ErrorOccurred
-            ? new MessageResponse(true, result.LastErrorDescription)
+            ? new MessageResponse(true, result.LastException.Message)
             : result.Result == null
                 ? new MessageResponse(true, "No response.")
                 : result.Result.StartsWith(AppConstants.ExceptionTag)

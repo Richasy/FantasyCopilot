@@ -13,6 +13,7 @@ using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
@@ -67,8 +68,7 @@ public sealed class KnowledgeSkill
         var answer = await _memoryService.QuickSearchMemoryAsync(context.Result, sessionOptions, cancellationToken);
         if (answer.IsError)
         {
-            context.Fail(answer.Content);
-            return default;
+            throw new SKException(answer.Content);
         }
 
         var sourceKey = string.Format(WorkflowConstants.KnowledgeSourceKey, _workflowContext.CurrentStepIndex);
@@ -92,8 +92,7 @@ public sealed class KnowledgeSkill
         if (!File.Exists(path))
         {
             _memoryService.DisconnectSQLiteKnowledgeBase();
-            context.Fail("File not found.");
-            return default;
+            throw new SKException("File not found.");
         }
 
         var @base = await TryConnectKnowledgeBaseAsync(context);
@@ -107,8 +106,7 @@ public sealed class KnowledgeSkill
         if (!isImported)
         {
             _memoryService.DisconnectSQLiteKnowledgeBase();
-            context.Fail("Can not import file.");
-            return default;
+            throw new SKException("Can not import file.");
         }
 
         _memoryService.DisconnectSQLiteKnowledgeBase();
@@ -134,8 +132,7 @@ public sealed class KnowledgeSkill
         var path = context.Result;
         if (!Directory.Exists(path))
         {
-            context.Fail("Folder not found.");
-            return default;
+            throw new SKException("Folder not found.");
         }
 
         var @base = await TryConnectKnowledgeBaseAsync(context);
@@ -149,8 +146,7 @@ public sealed class KnowledgeSkill
         if (total == failed)
         {
             _memoryService.DisconnectSQLiteKnowledgeBase();
-            context.Fail("Can not import folder.");
-            return default;
+            throw new SKException("Can not import folder.");
         }
 
         _memoryService.DisconnectSQLiteKnowledgeBase();
@@ -159,34 +155,19 @@ public sealed class KnowledgeSkill
 
     private async Task<KnowledgeBase> TryConnectKnowledgeBaseAsync(SKContext context)
     {
-        var parameters = _workflowContext.GetStepParameters<KnowledgeBaseStep>();
-        if (parameters == null)
-        {
-            context.Fail("Do not have knowledge base parameters");
-            return default;
-        }
+        var parameters = _workflowContext.GetStepParameters<KnowledgeBaseStep>()
+            ?? throw new SKException("Do not have knowledge base parameters");
 
         var input = context.Result;
         if (string.IsNullOrEmpty(input))
         {
-            context.Fail("Input is empty.");
-            return default;
+            throw new SKException("Input is empty.");
         }
 
-        var config = (await _cacheToolkit.GetKnowledgeBasesAsync()).FirstOrDefault(p => p.Id == parameters.KnowledgeBaseId);
-        if (config == null)
-        {
-            context.Fail("Knowledge base not found.");
-            return default;
-        }
+        var config = (await _cacheToolkit.GetKnowledgeBasesAsync()).FirstOrDefault(p => p.Id == parameters.KnowledgeBaseId)
+            ?? throw new SKException("Knowledge base not found.");
 
         var isConnected = await _memoryService.ConnectSQLiteKnowledgeBaseAsync(config.DatabasePath);
-        if (!isConnected)
-        {
-            context.Fail("Can not connect to database.");
-            return default;
-        }
-
-        return config;
+        return !isConnected ? throw new SKException("Can not connect to database.") : config;
     }
 }

@@ -11,6 +11,7 @@ using FantasyCopilot.Models.App.Workspace.Steps;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Microsoft.SemanticKernel.TemplateEngine;
@@ -47,19 +48,9 @@ public sealed class ImageSkill
     [SKFunction]
     public async Task<string> DrawAsync(SKContext context, CancellationToken cancellationToken)
     {
-        var parameters = _workflowContext.GetStepParameters<ImageStep>();
-        if (parameters == null)
-        {
-            context.Fail("Do not have text-to-image parameters");
-            return default;
-        }
+        var parameters = _workflowContext.GetStepParameters<ImageStep>() ?? throw new SKException("Do not have text-to-image parameters");
 
-        var config = await _cacheToolkit.GetImageSkillByIdAsync(parameters.Id);
-        if (config == null)
-        {
-            context.Fail("Image skill config not found.");
-            return default;
-        }
+        var config = await _cacheToolkit.GetImageSkillByIdAsync(parameters.Id) ?? throw new SKException("Image skill config not found.");
 
         var templateEngine = new PromptTemplateEngine();
         var prompt = await templateEngine.RenderAsync(config.Prompt, context);
