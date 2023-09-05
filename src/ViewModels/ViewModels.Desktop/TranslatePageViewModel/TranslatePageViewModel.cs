@@ -77,7 +77,10 @@ public sealed partial class TranslatePageViewModel : ViewModelBase, ITranslatePa
         {
             SourceText = args.Content;
             localSourceLanguage = string.Empty;
-            localTargetLanguage = args.TargetLanguage;
+            if (!string.IsNullOrEmpty(args.TargetLanguage))
+            {
+                localTargetLanguage = args.TargetLanguage;
+            }
         }
 
         SelectedSourceLanguage = SourceLanguages.FirstOrDefault(p => p.Id == localSourceLanguage) ?? autoDetect;

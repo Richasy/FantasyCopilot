@@ -89,7 +89,10 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
                 SupportCultures.Add(item);
             }
 
-            var localLocale = new LocaleInfo(CultureInfo.CurrentCulture);
+            var localLanguage = _settingsToolkit.ReadLocalSetting(SettingNames.TTSLanguage, string.Empty);
+            var localLocale = string.IsNullOrEmpty(localLanguage)
+                ? new LocaleInfo(CultureInfo.CurrentCulture)
+                : new LocaleInfo(new CultureInfo(localLanguage));
             var culture = allCultures.Contains(localLocale)
                 ? localLocale
                 : SupportCultures.FirstOrDefault();
@@ -201,7 +204,10 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
             DisplayVoices.Add(item);
         }
 
-        var voice = DisplayVoices.FirstOrDefault();
+        var localVoiceId = _settingsToolkit.ReadLocalSetting(SettingNames.TTSVoice, string.Empty);
+        var voice = string.IsNullOrEmpty(localVoiceId)
+            ? DisplayVoices.FirstOrDefault()
+            : DisplayVoices.FirstOrDefault(p => p.Id == localVoiceId) ?? DisplayVoices.FirstOrDefault();
 
         await Task.Delay(100);
         SelectedVoice = voice;
@@ -229,6 +235,10 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
             return;
         }
 
+        _settingsToolkit.WriteLocalSetting(SettingNames.TTSLanguage, value.Id);
         ResetVoiceCommand.Execute(default);
     }
+
+    partial void OnSelectedVoiceChanged(VoiceMetadata value)
+        => _settingsToolkit.WriteLocalSetting(SettingNames.TTSVoice, value?.Id ?? string.Empty);
 }
