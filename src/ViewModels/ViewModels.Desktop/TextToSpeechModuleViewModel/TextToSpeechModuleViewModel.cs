@@ -47,14 +47,21 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
     }
 
     [RelayCommand]
-    private async Task InitializeAsync()
+    private async Task InitializeAsync(string preloadContent = default)
     {
         if (!_voiceService.HasValidConfig || _allVoices.Count != 0)
         {
+            if (!string.IsNullOrEmpty(preloadContent))
+            {
+                Text = preloadContent;
+                ReadCommand.Execute(default);
+            }
+
             return;
         }
 
         await ReloadMetadataAsync();
+        _preloadText = preloadContent;
     }
 
     [RelayCommand]
@@ -82,7 +89,10 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
                 SupportCultures.Add(item);
             }
 
-            var localLocale = new LocaleInfo(CultureInfo.CurrentCulture);
+            var localLanguage = _settingsToolkit.ReadLocalSetting(SettingNames.TTSLanguage, string.Empty);
+            var localLocale = string.IsNullOrEmpty(localLanguage)
+                ? new LocaleInfo(CultureInfo.CurrentCulture)
+                : new LocaleInfo(new CultureInfo(localLanguage));
             var culture = allCultures.Contains(localLocale)
                 ? localLocale
                 : SupportCultures.FirstOrDefault();
@@ -194,10 +204,20 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
             DisplayVoices.Add(item);
         }
 
-        var voice = DisplayVoices.FirstOrDefault();
+        var localVoiceId = _settingsToolkit.ReadLocalSetting(SettingNames.TTSVoice, string.Empty);
+        var voice = string.IsNullOrEmpty(localVoiceId)
+            ? DisplayVoices.FirstOrDefault()
+            : DisplayVoices.FirstOrDefault(p => p.Id == localVoiceId) ?? DisplayVoices.FirstOrDefault();
 
         await Task.Delay(100);
         SelectedVoice = voice;
+
+        if (!string.IsNullOrEmpty(_preloadText))
+        {
+            Text = _preloadText;
+            ReadCommand.Execute(default);
+            _preloadText = default;
+        }
     }
 
     private void OnMediaPlayerStateChanged(MediaPlayer sender, object args)
@@ -215,6 +235,10 @@ public sealed partial class TextToSpeechModuleViewModel : ViewModelBase, ITextTo
             return;
         }
 
+        _settingsToolkit.WriteLocalSetting(SettingNames.TTSLanguage, value.Id);
         ResetVoiceCommand.Execute(default);
     }
+
+    partial void OnSelectedVoiceChanged(VoiceMetadata value)
+        => _settingsToolkit.WriteLocalSetting(SettingNames.TTSVoice, value?.Id ?? string.Empty);
 }

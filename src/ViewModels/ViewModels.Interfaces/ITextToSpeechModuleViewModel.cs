@@ -61,7 +61,7 @@ public interface ITextToSpeechModuleViewModel : INotifyPropertyChanged
     /// <summary>
     /// Initialize module.
     /// </summary>
-    IAsyncRelayCommand InitializeCommand { get; }
+    IAsyncRelayCommand<string> InitializeCommand { get; }
 
     /// <summary>
     /// Read text.

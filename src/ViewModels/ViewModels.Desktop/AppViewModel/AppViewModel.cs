@@ -79,7 +79,7 @@ public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
     /// <inheritdoc/>
     public void Navigate(PageType page, object parameter = null)
     {
-        if (CurrentPage == page)
+        if (CurrentPage == page && parameter == null)
         {
             return;
         }

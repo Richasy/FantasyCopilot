@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Fantasy Copilot. All rights reserved.
 
+using FantasyCopilot.Models.App;
 using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Input;
+using Microsoft.UI.Xaml.Navigation;
 using Windows.UI.Core;
 
 namespace FantasyCopilot.App.Pages;
@@ -11,16 +13,28 @@ namespace FantasyCopilot.App.Pages;
 /// </summary>
 public sealed partial class TranslatePage : TranslatePageBase
 {
+    private bool _isOpenThroughProtocol;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="TranslatePage"/> class.
     /// </summary>
     public TranslatePage() => InitializeComponent();
 
     /// <inheritdoc/>
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        if (e.Parameter is TranslateActivateEventArgs args)
+        {
+            _isOpenThroughProtocol = true;
+            ViewModel.InitializeCommand.Execute(args);
+        }
+    }
+
+    /// <inheritdoc/>
     protected override void OnPageLoaded()
     {
         CoreViewModel.IsBackButtonShown = false;
-        if (CoreViewModel.IsTranslateAvailable)
+        if (CoreViewModel.IsTranslateAvailable && !_isOpenThroughProtocol)
         {
             ViewModel.InitializeCommand.Execute(default);
         }

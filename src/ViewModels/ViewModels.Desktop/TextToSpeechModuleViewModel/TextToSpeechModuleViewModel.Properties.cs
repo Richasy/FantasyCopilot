@@ -28,6 +28,7 @@ public sealed partial class TextToSpeechModuleViewModel
     private readonly DispatcherQueue _dispatcherQueue;
 
     private Stream _speechStream;
+    private string _preloadText;
 
     [ObservableProperty]
     private LocaleInfo _selectedCulture;

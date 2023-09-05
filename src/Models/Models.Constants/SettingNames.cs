@@ -76,4 +76,6 @@ public enum SettingNames
     CustomTextCompletionConnectorId,
     CustomEmbeddingConnectorId,
     NeedMigrateKeys,
+    TTSLanguage,
+    TTSVoice,
 }

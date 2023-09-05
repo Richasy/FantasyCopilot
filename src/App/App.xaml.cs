@@ -40,6 +40,8 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+        var mainAppInstance = AppInstance.FindOrRegisterForKey(Guid);
+        mainAppInstance.Activated += OnAppInstanceActivated;
         UnhandledException += OnUnhandledException;
     }
 
@@ -55,7 +57,7 @@ public partial class App : Application
     /// <summary>
     /// Try activating the window and bringing it to the foreground.
     /// </summary>
-    public void ActivateWindow()
+    public void ActivateWindow(AppActivationArguments arguments = default)
     {
         _dispatcherQueue.TryEnqueue(() =>
         {
@@ -63,7 +65,7 @@ public partial class App : Application
             {
                 LaunchWindow();
             }
-            else if (_window.Visible)
+            else if (_window.Visible && HandleCloseEvents && arguments.Data != null)
             {
                 _window.Hide();
             }
@@ -72,6 +74,11 @@ public partial class App : Application
                 _window.Activate();
                 PInvoke.SetForegroundWindow(new HWND(WindowNative.GetWindowHandle(_window)));
             }
+
+            if (arguments.Data is IActivatedEventArgs args)
+            {
+                MainWindow.Instance.ActivateArgumentsAsync(args);
+            }
         });
     }
 
@@ -79,27 +86,19 @@ public partial class App : Application
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
-    protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
         // We expect our app is single instanced.
         var instance = AppInstance.FindOrRegisterForKey(Guid);
-        var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
-
-        // If the current instance is not the previously registered instance
-        if (!instance.IsCurrent)
-        {
-            // Redirect to the existing instance
-            await instance.RedirectActivationToAsync(activatedArgs);
-
-            // Kill the current instance
-            Current.Exit();
-            return;
-        }
-
-        instance.Activated += OnInstanceActivated;
+        var eventArgs = instance.GetActivatedEventArgs();
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         DI.App.Factory.RegisterAppRequiredServices();
-        LaunchWindow(args.UWPLaunchActivatedEventArgs);
+
+        var data = eventArgs.Data is IActivatedEventArgs
+            ? eventArgs.Data as IActivatedEventArgs
+            : args.UWPLaunchActivatedEventArgs;
+
+        LaunchWindow(data);
     }
 
     private static RectInt32 GetRenderRect(DisplayArea displayArea, IntPtr windowHandle)
@@ -171,6 +170,7 @@ public partial class App : Application
         appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         appWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
         appWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        appWindow.TitleBar.IconShowOptions = IconShowOptions.HideIconAndSystemMenu;
         appWindow.Title = Locator.Current.GetService<IResourceToolkit>().GetLocalizedString(StringNames.AppName);
         appWindow.SetIcon("Assets/logo.ico");
         var presenter = appWindow.Presenter as OverlappedPresenter;
@@ -187,14 +187,6 @@ public partial class App : Application
         }
 
         _window.Activate();
-    }
-
-    private void OnInstanceActivated(object sender, AppActivationArguments e)
-    {
-        if (e.Data is IActivatedEventArgs args)
-        {
-            MainWindow.Instance.ActivateArgumentsAsync(args);
-        }
     }
 
     private async void OnMainWindowClosedAsync(object sender, WindowEventArgs args)
@@ -272,7 +264,7 @@ public partial class App : Application
         HandleCloseEvents = false;
         TrayIcon?.Dispose();
         _window?.Close();
-        Exit();
+        Environment.Exit(0);
     }
 
     private void OnUnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
@@ -287,4 +279,7 @@ public partial class App : Application
 
     private void OnShowHideWindowCommandExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         => ActivateWindow();
+
+    private void OnAppInstanceActivated(object sender, AppActivationArguments e)
+        => ActivateWindow(e);
 }
