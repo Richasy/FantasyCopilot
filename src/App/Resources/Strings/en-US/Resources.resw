@@ -225,6 +225,15 @@ After getting your permission, the app can get the key information you configure
   <data name="AudioSearch" xml:space="preserve">
     <value>Audio search</value>
   </data>
+  <data name="AuthorizeAppManagement" xml:space="preserve">
+    <value>Authorized app management</value>
+  </data>
+  <data name="AuthorizeAppManagementDescription" xml:space="preserve">
+    <value>View or deauthorize apps</value>
+  </data>
+  <data name="AuthorizedAppsIsEmpty" xml:space="preserve">
+    <value>There are no authorized apps</value>
+  </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>Automatically detect</value>
   </data>
@@ -1301,6 +1310,9 @@ After getting your permission, the app can get the key information you configure
   </data>
   <data name="RegionPlaceholderText" xml:space="preserve">
     <value>Service region</value>
+  </data>
+  <data name="RemoveAuthorizeWarning" xml:space="preserve">
+    <value>Do you want to deauthorize the app? After cancellation, Fantasy Copilot denies the app's access request for sensitive information</value>
   </data>
   <data name="RemoveMessage" xml:space="preserve">
     <value>Remove message</value>

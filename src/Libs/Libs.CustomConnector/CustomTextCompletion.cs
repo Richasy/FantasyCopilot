@@ -7,8 +7,8 @@ using System.Text;
 using System.Text.Json;
 using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
-using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 
 namespace FantasyCopilot.Libs.CustomConnector;
@@ -57,7 +57,7 @@ public sealed class CustomTextCompletion : ITextCompletion
         }
 
         return result.IsError
-            ? throw new AIException(AIException.ErrorCodes.ServiceError, result.Content ?? "Something error")
+            ? throw new HttpOperationException(System.Net.HttpStatusCode.InternalServerError, resultContent, result.Content ?? "Something error", default)
             : new List<ITextResult> { new CustomTextResult(result) }.AsReadOnly();
     }
 
@@ -181,7 +181,7 @@ public sealed class CustomTextCompletion : ITextCompletion
                     if (_line.StartsWith("error:"))
                     {
                         break;
-                        throw new AIException(AIException.ErrorCodes.ServiceError, _line[6..].Trim());
+                        throw new HttpOperationException(System.Net.HttpStatusCode.BadRequest, default, _line[6..].Trim(), default);
                     }
                     else if (_line.StartsWith("{"))
                     {

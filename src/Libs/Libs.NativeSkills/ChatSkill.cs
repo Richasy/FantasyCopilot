@@ -16,6 +16,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.Connectors.AI.OpenAI.ChatCompletion;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
@@ -104,14 +105,14 @@ public sealed class ChatSkill
                 _chatHistory.AddMessage(AuthorRole.Assistant, reply);
             }
         }
-        catch (AIException e)
+        catch (HttpOperationException e)
         {
             _logger.LogError(e, "Chat skill error.");
             _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
-                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
-                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+                && e.StatusCode == System.Net.HttpStatusCode.BadRequest
+                && e.Message.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
                 var canRetry = StaticHelpers.TryRemoveEarlierMessage(_chatHistory, maxTokens, msgTokens);
@@ -124,7 +125,7 @@ public sealed class ChatSkill
 
             if (!retried)
             {
-                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+                reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
             }
         }
         catch (Exception e)
@@ -193,14 +194,14 @@ public sealed class ChatSkill
                 _chatHistory.AddMessage(AuthorRole.Assistant, reply);
             }
         }
-        catch (AIException e)
+        catch (HttpOperationException e)
         {
             _logger.LogError(e, "Chat skill error.");
             _chatHistory.Remove(_chatHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
-                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
-                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+                && e.StatusCode == System.Net.HttpStatusCode.BadRequest
+                && e.Message.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
                 var msgs = _chatHistory;
@@ -215,7 +216,7 @@ public sealed class ChatSkill
 
             if (!retried)
             {
-                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+                reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
             }
         }
         catch (Exception e)

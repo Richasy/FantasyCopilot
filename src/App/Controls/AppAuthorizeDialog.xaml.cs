@@ -69,6 +69,7 @@ public sealed partial class AppAuthorizeDialog : ContentDialog
         var newApp = new AuthorizedApp
         {
             PackageId = _packageId,
+            PackageName = _packageName,
             RequestTime = DateTimeOffset.Now,
             Scopes = _scopes,
         };

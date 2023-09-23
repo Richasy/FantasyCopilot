@@ -51,6 +51,7 @@
                 <settings:AzureVoiceSettingSection />
                 <settings:TranslateSettingSection />
                 <settings:StableDiffusionSettingSection />
+                <settings:AuthorizeSettingSection />
 
                 <TextBlock
                     Margin="0,16,0,8"

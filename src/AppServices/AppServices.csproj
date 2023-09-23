@@ -16,7 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="0.21.230828.2-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.24.230918.1-preview" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,11 @@ public sealed class AuthorizedApp
     public string PackageId { get; set; }
 
     /// <summary>
+    /// Package name of the app.
+    /// </summary>
+    public string PackageName { get; set; }
+
+    /// <summary>
     /// Time of the request.
     /// </summary>
     public DateTimeOffset RequestTime { get; set; }

@@ -3,6 +3,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using FantasyCopilot.Models.App;
+using FantasyCopilot.Models.App.Authorize;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Toolkits.Interfaces;
 using FantasyCopilot.ViewModels.Interfaces;
@@ -191,6 +192,9 @@ public sealed partial class SettingsPageViewModel
     [ObservableProperty]
     private IConnectorConfigViewModel _selectedEmbeddingConnector;
 
+    [ObservableProperty]
+    private bool _isAuthorizedAppsEmpty;
+
     /// <inheritdoc/>
     public ObservableCollection<IConnectorConfigViewModel> ChatConnectors { get; }
 
@@ -217,4 +221,7 @@ public sealed partial class SettingsPageViewModel
 
     /// <inheritdoc/>
     public SynchronizedObservableCollection<string> OpenAIEmbeddingModels { get; }
+
+    /// <inheritdoc/>
+    public ObservableCollection<AuthorizedApp> AuthorizedApps { get; }
 }

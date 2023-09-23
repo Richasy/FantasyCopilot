@@ -11,7 +11,7 @@ using FantasyCopilot.Services.Interfaces;
 using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
-using Microsoft.SemanticKernel.TemplateEngine;
+using Microsoft.SemanticKernel.TemplateEngine.Prompt;
 
 namespace FantasyCopilot.Libs.NativeSkills;
 
