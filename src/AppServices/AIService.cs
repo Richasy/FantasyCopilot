@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Translation.Text;
 using FantasyCopilot.AppServices.Utils;
 using FantasyCopilot.Models.App;
 using FantasyCopilot.Models.App.Authorize;
@@ -236,23 +235,6 @@ public sealed class AIService : IBackgroundTask
                         }
 
                         returnData.Add("Response", JsonSerializer.Serialize(config));
-                    }
-                }
-                else if (command.Equals("translate", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    var data = JsonSerializer.Deserialize<QuickTranslateRequest>(request);
-                    var translateServiceType = BasicUtils.ReadLocalSetting(SettingNames.TranslateSource, TranslateSource.Azure);
-                    if (translateServiceType == TranslateSource.Azure)
-                    {
-                        var textType = data.Type == "html" ? TextType.Html : TextType.Plain;
-                        var translateService = new AzureTranslateUtils();
-                        var translateContent = await translateService.TranslateTextAsync(data.Content, data.TargetLanguage, textType, _cancellation.Token);
-                        var result = new
-                        {
-                            Content = translateContent,
-                            data.Index,
-                        };
-                        returnData.Add("Response", JsonSerializer.Serialize(result));
                     }
                 }
             }
