@@ -43,4 +43,6 @@ public static class AppConstants
     public const string TokenLimitMessage = @"maximum context length.*?(\d+).*?(\d+)";
 
     public const int DefaultMaxResponseTokens = 800;
+
+    public const string AuthorizedAppsFileName = "AuthorizedApps.json";
 }
