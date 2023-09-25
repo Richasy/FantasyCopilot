@@ -214,6 +214,7 @@ public sealed class AIService : IBackgroundTask
 
                         var preferredTranslate = BasicUtils.ReadLocalSetting(SettingNames.TranslateSource, TranslateSource.Azure);
                         var preferredStr = preferredTranslate == TranslateSource.Azure ? "azure" : "baidu";
+                        config.PreferredTranslate = preferredStr;
                         returnData.Add("Response", JsonSerializer.Serialize(config));
                     }
                 }
