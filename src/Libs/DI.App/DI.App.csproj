@@ -6,7 +6,7 @@
     <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <AssemblyName>FantasyCopilot.DI.App</AssemblyName>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
