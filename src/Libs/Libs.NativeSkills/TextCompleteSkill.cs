@@ -13,9 +13,9 @@ using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 
@@ -107,14 +107,14 @@ public class TextCompleteSkill
                 _completeHistory.Add(new ChatMessage(AuthorRole.Assistant, reply));
             }
         }
-        catch (AIException e)
+        catch (HttpOperationException e)
         {
             _logger.LogError(e, "Text Completion skill error.");
             _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
-                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
-                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+                && e.StatusCode == System.Net.HttpStatusCode.BadRequest
+                && e.Message.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
                 var canRetry = StaticHelpers.TryRemoveEarlierMessage(_completeHistory, maxTokens, msgTokens);
@@ -128,7 +128,7 @@ public class TextCompleteSkill
 
             if (!retried)
             {
-                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+                reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
             }
         }
 
@@ -185,14 +185,14 @@ public class TextCompleteSkill
                 _completeHistory.Add(new ChatMessage(AuthorRole.Assistant, reply));
             }
         }
-        catch (AIException e)
+        catch (HttpOperationException e)
         {
             _logger.LogError(e, "Text Completion skill error.");
             _completeHistory.Remove(_completeHistory.LastOrDefault(p => p.Role == AuthorRole.User));
             var retried = false;
             if (_autoRemoveEarlierMessage
-                && e.ErrorCode == AIException.ErrorCodes.InvalidRequest
-                && e.Detail.TryGetTokenLimit(out var maxTokens, out var msgTokens))
+                && e.StatusCode == System.Net.HttpStatusCode.BadRequest
+                && e.Message.TryGetTokenLimit(out var maxTokens, out var msgTokens))
             {
                 _logger.LogInformation("Older messages have been removed, retrying");
                 var canRetry = StaticHelpers.TryRemoveEarlierMessage(_completeHistory, maxTokens, msgTokens);
@@ -205,7 +205,7 @@ public class TextCompleteSkill
 
             if (!retried)
             {
-                reply = $"{AppConstants.ExceptionTag}{e.Detail}{AppConstants.ExceptionTag}";
+                reply = $"{AppConstants.ExceptionTag}{e.Message}{AppConstants.ExceptionTag}";
             }
         }
 

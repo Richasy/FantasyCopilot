@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.Models.App;
+using FantasyCopilot.Models.App.Authorize;
 using FantasyCopilot.Models.Constants;
 
 namespace FantasyCopilot.ViewModels.Interfaces;
@@ -249,6 +250,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     ConversationType DefaultConversationType { get; set; }
 
     /// <summary>
+    /// Whether the authorized app is empty.
+    /// </summary>
+    bool IsAuthorizedAppsEmpty { get; }
+
+    /// <summary>
     /// The selected chat connector.
     /// </summary>
     IConnectorConfigViewModel SelectedChatConnector { get; set; }
@@ -309,6 +315,11 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     ObservableCollection<IConnectorConfigViewModel> EmbeddingConnectors { get; }
 
     /// <summary>
+    /// A collection of authorized apps.
+    /// </summary>
+    ObservableCollection<AuthorizedApp> AuthorizedApps { get; }
+
+    /// <summary>
     /// Import app configuration.
     /// </summary>
     IAsyncRelayCommand ImportConfigurationCommand { get; }
@@ -362,6 +373,16 @@ public interface ISettingsPageViewModel : INotifyPropertyChanged
     /// Load AI models.
     /// </summary>
     IAsyncRelayCommand<bool> LoadModelsCommand { get; }
+
+    /// <summary>
+    /// Load authorized apps.
+    /// </summary>
+    IAsyncRelayCommand LoadAuthorizedAppsCommand { get; }
+
+    /// <summary>
+    /// Remove authorized app.
+    /// </summary>
+    IAsyncRelayCommand<AuthorizedApp> RemoveAuthorizedAppCommand { get; }
 
     /// <summary>
     /// Initialize settings.

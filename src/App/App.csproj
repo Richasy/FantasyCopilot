@@ -25,6 +25,7 @@
     <None Remove="Assets\FluentIcon.ttf" />
     <None Remove="Assets\logo.ico" />
     <None Remove="Assets\plannerPrompt.txt" />
+    <None Remove="Controls\AppAuthorizeDialog.xaml" />
     <None Remove="Controls\CloseWindowTipDialog.xaml" />
     <None Remove="Controls\ConnectorViewer.xaml" />
     <None Remove="Controls\Connector\ConnectorItem.xaml" />
@@ -45,6 +46,7 @@
     <None Remove="Controls\SemanticSkillEditor.xaml" />
     <None Remove="Controls\SemanticSkillPanel.xaml" />
     <None Remove="Controls\Settings\AISettingSection.xaml" />
+    <None Remove="Controls\Settings\AuthorizeSettingSection.xaml" />
     <None Remove="Controls\Settings\AzureVoiceSettingSection.xaml" />
     <None Remove="Controls\Settings\CloseBehaviorSettingSection.xaml" />
     <None Remove="Controls\Settings\FeatureEnabledSettingSection.xaml" />
@@ -113,14 +115,14 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.18" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.0.1" />
     <PackageReference Include="CommunityToolkit.Labs.WinUI.TokenView" Version="0.0.6" />
-    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.115" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.18-beta">
+    <PackageReference Include="H.NotifyIcon.WinUI" Version="2.0.118" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.46-beta">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230913002" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
-    <PackageReference Include="WinUIEx" Version="2.2.0" />
+    <PackageReference Include="WinUIEx" Version="2.3.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -454,6 +456,9 @@
     <Page Update="Controls\QuickChatDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Update="Controls\Settings\AuthorizeSettingSection.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -518,4 +523,10 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
         <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
+    <ItemGroup>
+      <CustomAdditionalCompileInputs Remove="Controls\AppAuthorizeDialog.xaml" />
+    </ItemGroup>
+    <ItemGroup>
+      <Resource Remove="Controls\AppAuthorizeDialog.xaml" />
+    </ItemGroup>
 </Project>

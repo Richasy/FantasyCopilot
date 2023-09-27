@@ -76,7 +76,7 @@ public partial class App : Application
                 PInvoke.SetForegroundWindow(new HWND(WindowNative.GetWindowHandle(_window)));
             }
 
-            if (arguments.Data is IActivatedEventArgs args)
+            if (arguments?.Data is IActivatedEventArgs args)
             {
                 MainWindow.Instance.ActivateArgumentsAsync(args);
             }

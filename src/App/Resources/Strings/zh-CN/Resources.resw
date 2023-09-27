@@ -1650,4 +1650,31 @@
   <data name="QuickChat" xml:space="preserve">
     <value>快速对话</value>
   </data>
+  <data name="AppRegistration" xml:space="preserve">
+    <value>应用注册</value>
+  </data>
+  <data name="AppRegistrationTip" xml:space="preserve">
+    <value>{0} 想访问你的应用配置，该应用所需的配置如下：
+
+{1}
+
+在得到你的许可后，该应用可以获取你配置好的密钥信息。
+
+**因此，请确保该应用可靠**</value>
+  </data>
+  <data name="AuthorizeAppManagement" xml:space="preserve">
+    <value>授权应用管理</value>
+  </data>
+  <data name="AuthorizeAppManagementDescription" xml:space="preserve">
+    <value>查看或取消已授权的应用</value>
+  </data>
+  <data name="AuthorizedAppsIsEmpty" xml:space="preserve">
+    <value>暂无授权应用</value>
+  </data>
+  <data name="CanNotGetAppInfo" xml:space="preserve">
+    <value>无法获取应用信息</value>
+  </data>
+  <data name="RemoveAuthorizeWarning" xml:space="preserve">
+    <value>是否取消对该应用的授权？取消后，小幻助理将拒绝该应用对敏感信息的访问请求</value>
+  </data>
 </root>

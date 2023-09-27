@@ -185,9 +185,19 @@ public sealed partial class MemoryService : IMemoryService
         var variables = new ContextVariables(query);
         var text = string.Join("\n====\n", contextList.Select(x => x.Content));
         variables.Set("Content", text);
-        var context = await _kernel.RunAsync(variables, func);
-        text = context.Result.Trim();
-        var isError = context.ErrorOccurred || string.IsNullOrEmpty(text);
+
+        var isError = false;
+        try
+        {
+            var context = await _kernel.RunAsync(variables, func);
+            text = context.Result.Trim();
+            isError = string.IsNullOrEmpty(text);
+        }
+        catch (Exception)
+        {
+            isError = true;
+        }
+
         var data = isError ? "Something error" : text;
         return new MessageResponse(isError, data, string.Join(" | ", contextList.Select(p => p.FileName)));
     }

@@ -8,8 +8,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using FantasyCopilot.Models.App.Connectors;
 using FantasyCopilot.Models.Constants;
-using Microsoft.SemanticKernel.AI;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using Microsoft.SemanticKernel.Diagnostics;
+using Microsoft.SemanticKernel.Orchestration;
 
 namespace FantasyCopilot.Libs.CustomConnector;
 
@@ -69,7 +70,7 @@ public sealed class CustomChatCompletion : IChatCompletion
         }
 
         return result.IsError
-            ? throw new AIException(AIException.ErrorCodes.ServiceError, result.Content ?? "Something error")
+            ? throw new HttpOperationException(System.Net.HttpStatusCode.InternalServerError, resultContent, result.Content ?? "Something error", default)
             : new List<IChatResult> { new CustomChatCompletionResult(result) }.AsReadOnly();
     }
 
@@ -116,7 +117,7 @@ public sealed class CustomChatCompletion : IChatCompletion
     private static Request GetRequest(ChatHistory chat, ChatRequestSettings requestSettings)
     {
         var userMsg = chat.LastOrDefault(p => p.Role == AuthorRole.User)
-            ?? throw new AIException(AIException.ErrorCodes.InvalidRequest);
+            ?? throw new HttpOperationException(System.Net.HttpStatusCode.BadRequest, default, default, default);
         var history = new List<Message>();
         for (var i = 0; i < chat.Messages.Count - 1; i++)
         {
@@ -144,13 +145,13 @@ public sealed class CustomChatCompletion : IChatCompletion
 
     internal class CustomChatCompletionResult : IChatResult
     {
-        private readonly MessageResult _messageResult;
-
         public CustomChatCompletionResult(MessageResult result)
-            => _messageResult = result;
+            => ModelResult = new ModelResult(result);
+
+        public ModelResult ModelResult { get; set; }
 
         public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
-            => Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, _messageResult.Content));
+            => Task.FromResult((ChatMessageBase)new ChatMessage(AuthorRole.Assistant, ModelResult.GetResult<MessageResult>().Content));
     }
 
     internal class CustomChatStreamingResult : IChatStreamingResult
@@ -169,6 +170,8 @@ public sealed class CustomChatCompletion : IChatCompletion
             _token = token;
             _action = cancelAction;
         }
+
+        public ModelResult ModelResult { get; set; }
 
         public Task<ChatMessageBase> GetChatMessageAsync(CancellationToken cancellationToken = default)
         {
@@ -196,7 +199,7 @@ public sealed class CustomChatCompletion : IChatCompletion
                     if (_line.StartsWith("error:"))
                     {
                         break;
-                        throw new AIException(AIException.ErrorCodes.ServiceError, _line[6..].Trim());
+                        throw new HttpOperationException(System.Net.HttpStatusCode.InternalServerError, default, _line[6..].Trim(), default);
                     }
                     else if (_line.StartsWith("{"))
                     {

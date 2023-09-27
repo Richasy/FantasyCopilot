@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using FantasyCopilot.DI.Container;
 using FantasyCopilot.Models.App;
+using FantasyCopilot.Models.App.Authorize;
 using FantasyCopilot.Models.Constants;
 using FantasyCopilot.Services.Interfaces;
 using FantasyCopilot.Toolkits.Interfaces;
@@ -55,6 +57,7 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
         OpenAIChatModels = new SynchronizedObservableCollection<string>();
         OpenAITextCompletionModels = new SynchronizedObservableCollection<string>();
         OpenAIEmbeddingModels = new SynchronizedObservableCollection<string>();
+        AuthorizedApps = new ObservableCollection<AuthorizedApp>();
         Initialize();
     }
 
@@ -411,6 +414,27 @@ public sealed partial class SettingsPageViewModel : ViewModelBase, ISettingsPage
                 collection.Add(item);
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task LoadAuthorizedAppsAsync()
+    {
+        TryClear(AuthorizedApps);
+        var data = await _fileToolkit.GetDataFromFileAsync(AppConstants.AuthorizedAppsFileName, new List<AuthorizedApp>());
+        foreach (var item in data)
+        {
+            AuthorizedApps.Add(item);
+        }
+
+        IsAuthorizedAppsEmpty = !AuthorizedApps.Any();
+    }
+
+    [RelayCommand]
+    private async Task RemoveAuthorizedAppAsync(AuthorizedApp app)
+    {
+        AuthorizedApps.Remove(app);
+        IsAuthorizedAppsEmpty = !AuthorizedApps.Any();
+        await _fileToolkit.WriteContentAsync(JsonSerializer.Serialize(AuthorizedApps.ToList()), AppConstants.AuthorizedAppsFileName);
     }
 
     private void CheckAISource()

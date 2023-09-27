@@ -6,35 +6,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel;
-using Windows.Storage;
+using static FantasyCopilot.AppServices.Utils.BasicUtils;
 
-namespace FantasyCopilot.AppServices;
+namespace FantasyCopilot.AppServices.Utils;
 
-internal static class Utils
+internal static class AIUtils
 {
-    internal static T ReadLocalSetting<T>(SettingNames settingName, T defaultValue)
-    {
-        var settingContainer = ApplicationData.Current.LocalSettings;
-
-        if (IsSettingKeyExist(settingName))
-        {
-            if (defaultValue is Enum)
-            {
-                var tempValue = settingContainer.Values[settingName.ToString()].ToString();
-                Enum.TryParse(typeof(T), tempValue, out var result);
-                return (T)result;
-            }
-            else
-            {
-                return (T)settingContainer.Values[settingName.ToString()];
-            }
-        }
-        else
-        {
-            return defaultValue;
-        }
-    }
-
     internal static IKernel GetSemanticKernel()
     {
         var currentSource = ReadLocalSetting(SettingNames.AISource, AISource.Azure);
@@ -45,9 +22,6 @@ internal static class Utils
             _ => throw new NotSupportedException()
         };
     }
-
-    private static bool IsSettingKeyExist(SettingNames settingName)
-        => ApplicationData.Current.LocalSettings.Values.ContainsKey(settingName.ToString());
 
     private static IKernel GetAzureOpenAIService()
     {

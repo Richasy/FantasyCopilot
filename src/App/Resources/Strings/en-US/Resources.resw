@@ -198,6 +198,18 @@
   <data name="AppName" xml:space="preserve">
     <value>Fantasy Copilot</value>
   </data>
+  <data name="AppRegistration" xml:space="preserve">
+    <value>App Registration</value>
+  </data>
+  <data name="AppRegistrationTip" xml:space="preserve">
+    <value>{0} want to access your app configuration, the app requires the following configurations:
+
+{1}
+
+After getting your permission, the app can get the key information you configured.
+
+**So, make sure the app is reliable**</value>
+  </data>
   <data name="Artist" xml:space="preserve">
     <value>Artist</value>
   </data>
@@ -212,6 +224,15 @@
   </data>
   <data name="AudioSearch" xml:space="preserve">
     <value>Audio search</value>
+  </data>
+  <data name="AuthorizeAppManagement" xml:space="preserve">
+    <value>Authorized app management</value>
+  </data>
+  <data name="AuthorizeAppManagementDescription" xml:space="preserve">
+    <value>View or deauthorize apps</value>
+  </data>
+  <data name="AuthorizedAppsIsEmpty" xml:space="preserve">
+    <value>There are no authorized apps</value>
   </data>
   <data name="AutoDetect" xml:space="preserve">
     <value>Automatically detect</value>
@@ -281,6 +302,9 @@
   </data>
   <data name="CancelBecauseNotVerified" xml:space="preserve">
     <value>The operation was canceled because your identity could not be verified</value>
+  </data>
+  <data name="CanNotGetAppInfo" xml:space="preserve">
+    <value>Unable to get app information</value>
   </data>
   <data name="CanNotSelectSameFolder" xml:space="preserve">
     <value>You cannot select the same folder</value>
@@ -1286,6 +1310,9 @@
   </data>
   <data name="RegionPlaceholderText" xml:space="preserve">
     <value>Service region</value>
+  </data>
+  <data name="RemoveAuthorizeWarning" xml:space="preserve">
+    <value>Do you want to deauthorize the app? After cancellation, Fantasy Copilot denies the app's access request for sensitive information</value>
   </data>
   <data name="RemoveMessage" xml:space="preserve">
     <value>Remove message</value>

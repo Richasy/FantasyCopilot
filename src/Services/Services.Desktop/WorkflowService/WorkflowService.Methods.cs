@@ -114,16 +114,6 @@ public sealed partial class WorkflowService
         context.Variables.Set(WorkflowConstants.OriginalKey, variables.Input);
         foreach (var f in pipeline)
         {
-            if (context.ErrorOccurred)
-            {
-                _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
-                    context.LastException,
-                    "Something went wrong in pipeline step {0}:'{1}'",
-                    _workflowContext.CurrentStepIndex,
-                    context.LastException.Message);
-                return context;
-            }
-
             if (_workflowContext.CurrentStepIndex >= 0)
             {
                 _workflowContext.StepResults.Add(_workflowContext.CurrentStepIndex, context.Result);
@@ -137,17 +127,6 @@ public sealed partial class WorkflowService
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 context = await f.InvokeAsync(context, default, cancellationToken).ConfigureAwait(false);
-
-                if (context.ErrorOccurred)
-                {
-                    _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
-                        "Function call fail during pipeline step {0}: {1}.{2}. Error: {3}",
-                        _workflowContext.CurrentStepIndex,
-                        f.SkillName,
-                        f.Name,
-                        context.LastException.Message);
-                    return context;
-                }
             }
             catch (Exception e)
             {

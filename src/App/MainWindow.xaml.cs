@@ -155,6 +155,23 @@ public sealed partial class MainWindow : WindowEx
                     }
                 });
             }
+            else if (command == "authorize")
+            {
+                var queryCollection = HttpUtility.ParseQueryString(args.Uri.Query);
+                var packageId = queryCollection["packageId"];
+                var name = queryCollection["name"];
+                var scopes = queryCollection["scopes"].Split(',');
+                var dialog = new AppAuthorizeDialog(packageId, name, scopes)
+                {
+                    XamlRoot = MainFrame.XamlRoot,
+                };
+
+                DispatcherQueue.TryEnqueue(async () =>
+                {
+                    Activate();
+                    await dialog.ShowAsync();
+                });
+            }
         }
     }
 

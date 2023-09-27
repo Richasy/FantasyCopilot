@@ -93,21 +93,27 @@ public sealed partial class WorkflowService : IWorkflowService
             }
         }
 
-        var result = await RunWorkflowAsync(contextVariables, cancellationToken, list.ToArray());
-        var hasError = result.ErrorOccurred;
-        if (!hasError)
+        var isError = false;
+        try
         {
+            var result = await RunWorkflowAsync(contextVariables, cancellationToken, list.ToArray());
             _workflowContext.StepResults.Add(_workflowContext.CurrentStepIndex, result.Result);
         }
-        else
+        catch (Exception ex)
         {
-            _workflowContext.StepResults.Add(WorkflowConstants.ErrorKey, result.LastException.Message);
+            _kernel.LoggerFactory.CreateLogger<WorkflowService>().LogError(
+                    ex,
+                    "Something went wrong in pipeline step {0}:'{1}'",
+                    _workflowContext.CurrentStepIndex,
+                    ex.Message);
+            isError = true;
+            _workflowContext.StepResults.Add(WorkflowConstants.ErrorKey, ex.Message);
         }
 
         _workflowContext.RaiseResultUpdated();
         _logger.LogDebug("Workflow execution ended.");
 
-        return !hasError;
+        return !isError;
     }
 
     /// <inheritdoc/>
