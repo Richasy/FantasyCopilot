@@ -12,7 +12,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <PackageCertificateKeyFile>RichasyAssistant.App_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>App_TemporaryKey.pfx</PackageCertificateKeyFile>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
   </PropertyGroup>
   <ItemGroup>

@@ -10,7 +10,7 @@
 
   <Identity
     Name="Richasy.RichasyAssistant"
-    Publisher="CN=richasy"
+    Publisher="CN=Richasy"
     Version="1.0.0.0" />
 
   <Properties>
