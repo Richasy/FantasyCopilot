@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Models.App.Files;
+namespace RichasyAssistant.Models.App.Files;
 
 /// <summary>
 /// File search selection type.

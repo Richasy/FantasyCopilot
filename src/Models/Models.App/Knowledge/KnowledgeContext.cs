@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App.Knowledge;
+namespace RichasyAssistant.Models.App.Knowledge;
 
 /// <summary>
 /// Knowledge base context.

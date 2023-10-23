@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App.Web;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App.Web;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Services.Interfaces;
+namespace RichasyAssistant.Services.Interfaces;
 
 /// <summary>
 /// Interface definition for Civitai service.

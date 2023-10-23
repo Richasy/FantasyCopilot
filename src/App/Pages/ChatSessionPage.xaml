@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:ChatSessionPageBase
-    x:Class="FantasyCopilot.App.Pages.ChatSessionPage"
+    x:Class="RichasyAssistant.App.Pages.ChatSessionPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:session="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:session="using:RichasyAssistant.App.Controls.Sessions"
     mc:Ignorable="d">
 
     <Grid>

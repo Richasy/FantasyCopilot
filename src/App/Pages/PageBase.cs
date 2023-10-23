@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Xaml.Navigation;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Pages
+namespace RichasyAssistant.App.Pages
 {
     /// <summary>
     /// 应用页面基类.

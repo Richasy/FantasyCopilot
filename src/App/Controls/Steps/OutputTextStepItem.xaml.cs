@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Steps;
+namespace RichasyAssistant.App.Controls.Steps;
 
 /// <summary>
 /// Output text panel.

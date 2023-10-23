@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Markdig.Renderers;
 using Markdig.Syntax;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers;
+namespace RichasyAssistant.Libs.Markdown.Renderers;
 
 /// <summary>
 /// A base class for WinUI rendering <see cref="Block"/> and <see cref="Markdig.Syntax.Inlines.Inline"/> Markdown objects.

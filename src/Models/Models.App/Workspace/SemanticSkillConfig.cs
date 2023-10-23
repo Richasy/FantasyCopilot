@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App.Gpt;
+using RichasyAssistant.Models.App.Gpt;
 
-namespace FantasyCopilot.Models.App.Workspace;
+namespace RichasyAssistant.Models.App.Workspace;
 
 /// <summary>
 /// Semantic skill configuration.

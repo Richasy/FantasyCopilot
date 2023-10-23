@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using Markdig.Syntax.Inlines;
 using Microsoft.UI.Xaml.Documents;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Inlines;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Inlines;
 
 internal sealed class AutolinkInlineRenderer : WinUIObjectRenderer<AutolinkInline>
 {

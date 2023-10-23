@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Services.Interfaces;
+namespace RichasyAssistant.Services.Interfaces;
 
 /// <summary>
 /// A service that has a configuration.

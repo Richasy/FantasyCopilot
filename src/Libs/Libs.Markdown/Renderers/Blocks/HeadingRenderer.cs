@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Markdig.Syntax;
 using Microsoft.UI.Xaml.Documents;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Blocks;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Blocks;
 
 internal sealed class HeadingRenderer : WinUIObjectRenderer<HeadingBlock>
 {

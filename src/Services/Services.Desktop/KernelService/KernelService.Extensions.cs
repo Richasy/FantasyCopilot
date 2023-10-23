@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Libs.CustomConnector;
-using FantasyCopilot.Models.App.Connectors;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.Embeddings;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using RichasyAssistant.Libs.CustomConnector;
+using RichasyAssistant.Models.App.Connectors;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 internal static class CustomAIKernelBuilderExtensions
 {

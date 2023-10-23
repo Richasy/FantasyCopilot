@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using FantasyCopilot.Libs.Everything.Core;
-using FantasyCopilot.Libs.Everything.Interfaces;
-using FantasyCopilot.Models.App.Files;
 using Microsoft.Extensions.Logging;
 using Microsoft.Win32;
 using NeoSmart.PrettySize;
+using RichasyAssistant.Libs.Everything.Core;
+using RichasyAssistant.Libs.Everything.Interfaces;
+using RichasyAssistant.Models.App.Files;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Everything storage service.

@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Plugins;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Plugins;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Steps;
+namespace RichasyAssistant.App.Controls.Steps;
 
 /// <summary>
 /// Plugin step item.

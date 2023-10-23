@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App.Connectors;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using RichasyAssistant.Models.App.Connectors;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Connector config view model.

@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Globalization.NumberFormatting;
 
-namespace FantasyCopilot.App.Controls.Sessions;
+namespace RichasyAssistant.App.Controls.Sessions;
 
 /// <summary>
 /// Session options panel.

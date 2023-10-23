@@ -1,18 +1,18 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.App.Voice;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.CognitiveServices.Speech;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Models.App.Voice;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Azure text to speech service.

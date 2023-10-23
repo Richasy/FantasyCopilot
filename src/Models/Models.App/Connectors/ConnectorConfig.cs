@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json.Serialization;
 
-namespace FantasyCopilot.Models.App.Connectors;
+namespace RichasyAssistant.Models.App.Connectors;
 
 /// <summary>
 /// Connector configuration.

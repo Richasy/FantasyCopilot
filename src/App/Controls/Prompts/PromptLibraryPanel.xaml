@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:PromptLibraryPanelBase
-    x:Class="FantasyCopilot.App.Controls.Prompts.PromptLibraryPanel"
+    x:Class="RichasyAssistant.App.Controls.Prompts.PromptLibraryPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:app="using:FantasyCopilot.Models.App"
-    xmlns:constants="using:FantasyCopilot.Models.Constants"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:app="using:RichasyAssistant.Models.App"
+    xmlns:constants="using:RichasyAssistant.Models.Constants"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:local="using:FantasyCopilot.App.Controls.Prompts"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:local="using:RichasyAssistant.App.Controls.Prompts"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 

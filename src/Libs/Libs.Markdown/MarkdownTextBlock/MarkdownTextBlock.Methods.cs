@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Diagnostics;
-using FantasyCopilot.Libs.Markdown.Renderers;
 using Markdig;
 using Microsoft.UI.Xaml;
+using RichasyAssistant.Libs.Markdown.Renderers;
 
-namespace FantasyCopilot.Libs.Markdown;
+namespace RichasyAssistant.Libs.Markdown;
 
 /// <summary>
 /// An efficient and extensible control that can parse and render markdown.

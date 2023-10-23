@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App.Knowledge;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.Models.App.Knowledge;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Knowledge base item view model.

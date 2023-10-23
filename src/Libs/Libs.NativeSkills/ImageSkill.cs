@@ -1,23 +1,23 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Workspace.Steps;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Microsoft.SemanticKernel.TemplateEngine.Prompt;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Workspace.Steps;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.Libs.NativeSkills;
+namespace RichasyAssistant.Libs.NativeSkills;
 
 /// <summary>
 /// Image skill.

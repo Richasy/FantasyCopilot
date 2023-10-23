@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Globalization;
@@ -8,13 +8,13 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Plugins;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Plugins;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Toolkits.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.Toolkits;
+namespace RichasyAssistant.Toolkits;
 
 /// <summary>
 /// Cache toolkit.

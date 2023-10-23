@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.IO;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Knowledge;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Knowledge;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.App.Controls.Knowledge;
+namespace RichasyAssistant.App.Controls.Knowledge;
 
 /// <summary>
 /// Knowledge base save dialog.

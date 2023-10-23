@@ -1,20 +1,20 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Libs.NativeSkills;
-using FantasyCopilot.Models.App.Gpt;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Libs.NativeSkills;
+using RichasyAssistant.Models.App.Gpt;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Chat service.

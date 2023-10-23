@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers
+namespace RichasyAssistant.Libs.Markdown.Renderers
 {
     /// <summary>
     /// A custom panel control that arranges elements similar to how an HTML table would.

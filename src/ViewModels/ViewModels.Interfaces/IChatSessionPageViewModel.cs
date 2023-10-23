@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// New session page view model interface.

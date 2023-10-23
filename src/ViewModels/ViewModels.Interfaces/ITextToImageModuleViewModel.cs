@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Image;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Image;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// Interface definition for text to image module view model.

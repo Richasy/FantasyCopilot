@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:SettingsPageBase
-    x:Class="FantasyCopilot.App.Pages.SettingsPage"
+    x:Class="RichasyAssistant.App.Pages.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
-    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:settings="using:FantasyCopilot.App.Controls.Settings"
+    xmlns:settings="using:RichasyAssistant.App.Controls.Settings"
     mc:Ignorable="d">
 
     <Grid>
@@ -87,8 +87,8 @@
                     <labs:SettingsExpander.Items>
                         <labs:SettingsCard HorizontalContentAlignment="Stretch" ContentAlignment="Left">
                             <StackPanel x:Name="LinkContainer" Margin="-12,0,0,0">
-                                <HyperlinkButton Content="{ext:Locale Name=LicenseTerms}" NavigateUri="https://github.com/Richasy/FantasyCopilot/wiki/License" />
-                                <HyperlinkButton Content="{ext:Locale Name=PrivacyPolicy}" NavigateUri="https://github.com/Richasy/FantasyCopilot/wiki/Privacy" />
+                                <HyperlinkButton Content="{ext:Locale Name=LicenseTerms}" NavigateUri="https://github.com/Richasy/RichasyAssistant/wiki/License" />
+                                <HyperlinkButton Content="{ext:Locale Name=PrivacyPolicy}" NavigateUri="https://github.com/Richasy/RichasyAssistant/wiki/Privacy" />
                             </StackPanel>
                         </labs:SettingsCard>
                     </labs:SettingsExpander.Items>
@@ -99,7 +99,7 @@
                         <HyperlinkButton
                             Padding="8,4"
                             Content="{ext:Locale Name=SendFeedback}"
-                            NavigateUri="https://github.com/Richasy/FantasyCopilot/discussions" />
+                            NavigateUri="https://github.com/Richasy/RichasyAssistant/discussions" />
                         <StackPanel
                             Width="1"
                             Height="16"
@@ -107,7 +107,7 @@
                         <HyperlinkButton
                             Padding="8,4"
                             Content="{ext:Locale Name=RepositoryLink}"
-                            NavigateUri="https://github.com/Richasy/FantasyCopilot" />
+                            NavigateUri="https://github.com/Richasy/RichasyAssistant" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Spacing="8">

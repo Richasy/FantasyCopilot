@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Gpt;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Gpt;
 
-namespace FantasyCopilot.Services.Interfaces;
+namespace RichasyAssistant.Services.Interfaces;
 
 /// <summary>
 /// Session caching service interface.

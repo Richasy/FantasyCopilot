@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
-namespace FantasyCopilot.DI.Container;
+namespace RichasyAssistant.DI.Container;
 
 /// <summary>
 /// Dependency Injection Locator.

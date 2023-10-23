@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -9,11 +9,11 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using CsvHelper;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Web;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Web;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Prompt explorer service.

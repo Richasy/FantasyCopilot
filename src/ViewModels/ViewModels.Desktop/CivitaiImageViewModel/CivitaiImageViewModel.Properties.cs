@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App.Web;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Models.App.Web;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Civitai image view model.

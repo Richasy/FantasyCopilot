@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Linq;
-using FantasyCopilot.App.Controls;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using H.NotifyIcon;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.Windows.AppLifecycle;
+using RichasyAssistant.App.Controls;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.ApplicationModel.Activation;
 using Windows.Graphics;
 using Windows.Win32;
@@ -18,7 +18,7 @@ using Windows.Win32.Foundation;
 using WinRT.Interop;
 using WinUIEx;
 
-namespace FantasyCopilot.App;
+namespace RichasyAssistant.App;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.

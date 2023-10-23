@@ -1,13 +1,13 @@
 <local:SemanticSkillPanelBase
-    x:Class="FantasyCopilot.App.Controls.Workspace.SemanticSkillPanel"
+    x:Class="RichasyAssistant.App.Controls.Workspace.SemanticSkillPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:local="using:RichasyAssistant.App.Controls.Workspace"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ws="using:FantasyCopilot.Models.App.Workspace"
+    xmlns:ws="using:RichasyAssistant.Models.App.Workspace"
     mc:Ignorable="d">
 
     <Grid RowSpacing="2">

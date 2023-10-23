@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.Models.App;
+using RichasyAssistant.Models.App;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// Interface definition for the speech recognition module view model.

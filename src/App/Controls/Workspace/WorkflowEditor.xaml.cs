@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Workspace;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Workspace;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Workspace;
+namespace RichasyAssistant.App.Controls.Workspace;
 
 /// <summary>
 /// Workflow editor.

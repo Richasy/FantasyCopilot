@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Chat service.

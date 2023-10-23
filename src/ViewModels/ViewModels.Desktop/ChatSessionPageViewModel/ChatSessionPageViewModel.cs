@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Chat session page view model.

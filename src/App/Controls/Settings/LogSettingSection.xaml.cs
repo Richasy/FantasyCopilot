@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.App.Controls.Settings;
+namespace RichasyAssistant.App.Controls.Settings;
 
 /// <summary>
 /// Logging settings.

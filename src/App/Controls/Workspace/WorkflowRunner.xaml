@@ -1,11 +1,11 @@
 <local:WorkflowRunnerBase
-    x:Class="FantasyCopilot.App.Controls.Workspace.WorkflowRunner"
+    x:Class="RichasyAssistant.App.Controls.Workspace.WorkflowRunner"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:interfaces="using:FantasyCopilot.ViewModels.Interfaces"
-    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:interfaces="using:RichasyAssistant.ViewModels.Interfaces"
+    xmlns:local="using:RichasyAssistant.App.Controls.Workspace"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 

@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
-using FantasyCopilot.Models.App.Image;
+using RichasyAssistant.Models.App.Image;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// Image generate options view model.

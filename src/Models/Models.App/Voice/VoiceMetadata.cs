@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App.Voice;
+namespace RichasyAssistant.Models.App.Voice;
 
 /// <summary>
 /// Voice metadata.

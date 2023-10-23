@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.App.Controls.Steps;
 using Microsoft.UI.Xaml.Data;
+using RichasyAssistant.App.Controls.Steps;
 
-namespace FantasyCopilot.App.Controls.Workspace;
+namespace RichasyAssistant.App.Controls.Workspace;
 
 /// <summary>
 /// Workflow output item.

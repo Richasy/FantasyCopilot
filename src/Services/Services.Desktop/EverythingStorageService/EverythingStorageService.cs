@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using FantasyCopilot.Libs.Everything.Interfaces;
-using FantasyCopilot.Models.App.Files;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Libs.Everything.Interfaces;
+using RichasyAssistant.Models.App.Files;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Everything storage service.

@@ -9,12 +9,12 @@
   IgnorableNamespaces="uap uap4 rescap">
 
   <Identity
-    Name="Richasy.FantasyCopilot"
+    Name="Richasy.RichasyAssistant"
     Publisher="CN=richasy"
     Version="1.0.0.0" />
 
   <Properties>
-    <DisplayName>FantasyCopilot.App</DisplayName>
+    <DisplayName>RichasyAssistant.App</DisplayName>
     <PublisherDisplayName>anran</PublisherDisplayName>
     <Logo>Assets\Logo\StoreLogo.png</Logo>
   </Properties>
@@ -48,8 +48,8 @@
               <uap:SplashScreen Image="Assets\Logo\SplashScreen.png" />
           </uap:VisualElements>
           <Extensions>
-              <uap:Extension Category="windows.appService" EntryPoint="FantasyCopilot.AppServices.AIService">
-                  <uap:AppService Name="com.fantasycopilot.aiservice" uap4:SupportsMultipleInstances="true"/>
+              <uap:Extension Category="windows.appService" EntryPoint="RichasyAssistant.AppServices.AIService">
+                  <uap:AppService Name="com.RichasyAssistant.aiservice" uap4:SupportsMultipleInstances="true"/>
               </uap:Extension>
               <uap:Extension Category="windows.protocol">
                   <uap:Protocol Name="fancop" DesiredView="useLess" />
@@ -62,7 +62,7 @@
       <Extension Category="windows.activatableClass.inProcessServer">
           <InProcessServer>
               <Path>WinRT.Host.dll</Path>
-              <ActivatableClass ActivatableClassId="FantasyCopilot.AppServices.AIService" ThreadingModel="both" />
+              <ActivatableClass ActivatableClassId="RichasyAssistant.AppServices.AIService" ThreadingModel="both" />
           </InProcessServer>
       </Extension>
   </Extensions>

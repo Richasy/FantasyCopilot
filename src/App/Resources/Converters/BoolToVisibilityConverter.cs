@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Data;
 
-namespace FantasyCopilot.App.Resources.Converters
+namespace RichasyAssistant.App.Resources.Converters
 {
     /// <summary>
     /// <see cref="bool"/> to <see cref="Visibility"/>.

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:PluginCommandItemBase
-    x:Class="FantasyCopilot.App.Controls.Workspace.PluginCommandItem"
+    x:Class="RichasyAssistant.App.Controls.Workspace.PluginCommandItem"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
-    xmlns:local="using:FantasyCopilot.App.Controls.Workspace"
+    xmlns:local="using:RichasyAssistant.App.Controls.Workspace"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:plugins="using:FantasyCopilot.Models.App.Plugins"
+    xmlns:plugins="using:RichasyAssistant.Models.App.Plugins"
     mc:Ignorable="d">
 
     <Grid

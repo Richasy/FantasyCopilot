@@ -7,13 +7,10 @@
     <AssemblyName>RichasyAssistant.$(MSBuildProjectName)</AssemblyName>
     <RootNamespace>RichasyAssistant.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <AdditionalFiles Include="$(SolutionDir)\src\App\Resources\Strings\en-US\Resources.resw" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\..\Libs\Libs.ResourceGenerator\Libs.ResourceGenerator.csproj"  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
-
 </Project>

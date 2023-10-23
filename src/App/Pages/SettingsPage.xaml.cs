@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Xaml.Navigation;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.System;
 
-namespace FantasyCopilot.App.Pages;
+namespace RichasyAssistant.App.Pages;
 
 /// <summary>
 /// Settings page.

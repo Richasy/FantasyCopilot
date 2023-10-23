@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
-using FantasyCopilot.Models.App.Workspace;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App.Workspace;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// Interface definition for workflow step view model.

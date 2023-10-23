@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Translation.Text;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Azure translate service.

@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.App.Controls
+namespace RichasyAssistant.App.Controls
 {
     /// <summary>
     /// Empty holder.

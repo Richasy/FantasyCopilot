@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App;
+using RichasyAssistant.Models.App;
 
-namespace FantasyCopilot.App.Controls.Steps;
+namespace RichasyAssistant.App.Controls.Steps;
 
 /// <summary>
 /// Button for show text result.

@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using System.Linq;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Image;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Image;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Globalization.NumberFormatting;
 
-namespace FantasyCopilot.App.Controls.Images;
+namespace RichasyAssistant.App.Controls.Images;
 
 /// <summary>
 /// Image generate options panel.

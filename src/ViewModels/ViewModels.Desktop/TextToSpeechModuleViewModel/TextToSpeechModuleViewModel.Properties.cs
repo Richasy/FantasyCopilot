@@ -1,18 +1,18 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Voice;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Dispatching;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Voice;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Media.Playback;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Text to speech module view model.

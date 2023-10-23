@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Reflection;
 using ColorCode.Styling;
@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.Text;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers;
+namespace RichasyAssistant.Libs.Markdown.Renderers;
 
 internal sealed partial class RendererContext
 {

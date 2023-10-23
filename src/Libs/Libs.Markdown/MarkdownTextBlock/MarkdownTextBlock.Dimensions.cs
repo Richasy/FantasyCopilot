@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
-namespace FantasyCopilot.Libs.Markdown;
+namespace RichasyAssistant.Libs.Markdown;
 
 /// <summary>
 /// Measurement Properties for elements in the Markdown.

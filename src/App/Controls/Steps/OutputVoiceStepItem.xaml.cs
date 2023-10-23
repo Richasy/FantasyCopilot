@@ -1,15 +1,15 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using System.IO;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.System;
 
-namespace FantasyCopilot.App.Controls.Steps;
+namespace RichasyAssistant.App.Controls.Steps;
 
 /// <summary>
 /// Output voice step item.

@@ -4,7 +4,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
     xmlns:tb="using:H.NotifyIcon">
     <XamlUICommand x:Key="QuitCommand" Label="{ext:Locale Name=QuitApp}" />
     <XamlUICommand x:Key="ShowHideWindowCommand">

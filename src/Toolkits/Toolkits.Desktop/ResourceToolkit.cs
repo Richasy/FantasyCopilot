@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Toolkits.Interfaces;
 using Windows.ApplicationModel.Resources.Core;
 
-namespace FantasyCopilot.Toolkits;
+namespace RichasyAssistant.Toolkits;
 
 /// <summary>
 /// Resource toolkit.

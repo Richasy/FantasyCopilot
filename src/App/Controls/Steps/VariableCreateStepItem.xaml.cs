@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json;
-using FantasyCopilot.Models.App.Workspace.Steps;
+using RichasyAssistant.Models.App.Workspace.Steps;
 
-namespace FantasyCopilot.App.Controls.Steps;
+namespace RichasyAssistant.App.Controls.Steps;
 
 /// <summary>
 /// Text overwrite step item.

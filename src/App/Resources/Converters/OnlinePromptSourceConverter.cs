@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.UI.Xaml.Data;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.App.Resources.Converters;
+namespace RichasyAssistant.App.Resources.Converters;
 
 internal sealed class OnlinePromptSourceConverter : IValueConverter
 {

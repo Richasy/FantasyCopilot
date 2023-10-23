@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Authorize;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Authorize;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Settings;
+namespace RichasyAssistant.App.Controls.Settings;
 
 /// <summary>
 /// Authorization settings.

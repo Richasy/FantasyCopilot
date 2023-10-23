@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:SavedSessionPanelBase
-    x:Class="FantasyCopilot.App.Controls.Sessions.SavedSessionPanel"
+    x:Class="RichasyAssistant.App.Controls.Sessions.SavedSessionPanel"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
-    xmlns:core="using:FantasyCopilot.Models.App.Gpt"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
+    xmlns:core="using:RichasyAssistant.Models.App.Gpt"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:local="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:local="using:RichasyAssistant.App.Controls.Sessions"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 

@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Net.Http;
-using FantasyCopilot.Models.App.Image;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Models.App.Image;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Stable diffusion image service.

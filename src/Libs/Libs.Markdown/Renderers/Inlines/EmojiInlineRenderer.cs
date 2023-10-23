@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Markdig.Extensions.Emoji;
 using Microsoft.UI.Xaml.Documents;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Inlines;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Inlines;
 
 internal sealed class EmojiInlineRenderer : WinUIObjectRenderer<EmojiInline>
 {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using ColorCode.Styling;
@@ -8,7 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.Text;
 
-namespace FantasyCopilot.Libs.Markdown;
+namespace RichasyAssistant.Libs.Markdown;
 
 /// <summary>
 /// An efficient and extensible control that can parse and render markdown.
