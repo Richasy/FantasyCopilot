@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App.Workspace;
+using RichasyAssistant.Models.App.Workspace;
 
-namespace FantasyCopilot.Services.Interfaces;
+namespace RichasyAssistant.Services.Interfaces;
 
 /// <summary>
 /// The service can handle workflow, based on <see cref="IKernelService"/>.

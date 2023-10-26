@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json.Serialization;
 
-namespace FantasyCopilot.Models.App.Plugins;
+namespace RichasyAssistant.Models.App.Plugins;
 
 /// <summary>
 /// Plugin command.

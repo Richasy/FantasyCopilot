@@ -1,22 +1,22 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Image;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Image;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Text to image module view model.

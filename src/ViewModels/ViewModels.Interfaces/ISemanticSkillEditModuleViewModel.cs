@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.Models.App.Workspace;
+using RichasyAssistant.Models.App.Workspace;
 
-namespace FantasyCopilot.ViewModels.Interfaces;
+namespace RichasyAssistant.ViewModels.Interfaces;
 
 /// <summary>
 /// Interface definition for semantic skill edit module view model.

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.IO;
@@ -9,7 +9,7 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Inlines;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Inlines;
 
 internal sealed class LinkInlineRenderer : WinUIObjectRenderer<LinkInline>
 {

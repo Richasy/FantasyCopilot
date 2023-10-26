@@ -1,19 +1,19 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.IO;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.SemanticKernel;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.DI.App;
+namespace RichasyAssistant.DI.App;
 
 /// <summary>
 /// Dependency Injection Factory.

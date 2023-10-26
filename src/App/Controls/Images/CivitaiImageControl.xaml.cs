@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Images;
+namespace RichasyAssistant.App.Controls.Images;
 
 /// <summary>
 /// Civitai image control.

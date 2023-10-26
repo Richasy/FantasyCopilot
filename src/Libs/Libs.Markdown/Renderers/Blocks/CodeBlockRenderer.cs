@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using ColorCode;
 using CommunityToolkit.WinUI.UI;
@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Blocks;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Blocks;
 
 internal sealed class CodeBlockRenderer : WinUIObjectRenderer<CodeBlock>
 {

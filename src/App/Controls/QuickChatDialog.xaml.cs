@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Threading;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
 
-namespace FantasyCopilot.App.Controls;
+namespace RichasyAssistant.App.Controls;
 
 /// <summary>
 /// 快速对话框.

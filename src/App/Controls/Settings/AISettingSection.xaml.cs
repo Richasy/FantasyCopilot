@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Controls.Settings;
+namespace RichasyAssistant.App.Controls.Settings;
 
 /// <summary>
 /// Azure OpenAI setting section.

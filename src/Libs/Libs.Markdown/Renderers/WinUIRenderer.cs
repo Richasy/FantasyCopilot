@@ -1,18 +1,18 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FantasyCopilot.Libs.Markdown.Renderers.Blocks;
-using FantasyCopilot.Libs.Markdown.Renderers.Inlines;
 using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Syntax;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using RichasyAssistant.Libs.Markdown.Renderers.Blocks;
+using RichasyAssistant.Libs.Markdown.Renderers.Inlines;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers;
+namespace RichasyAssistant.Libs.Markdown.Renderers;
 
 internal class WinUIRenderer : RendererBase
 {

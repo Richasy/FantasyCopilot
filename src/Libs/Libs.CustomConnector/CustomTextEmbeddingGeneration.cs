@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using FantasyCopilot.Models.App.Connectors;
-using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel.AI.Embeddings;
+using RichasyAssistant.Models.App.Connectors;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Libs.CustomConnector;
+namespace RichasyAssistant.Libs.CustomConnector;
 
 /// <summary>
 /// Custom text embedding generation service.

@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App.Workspace;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.Models.App.Workspace;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Workflow step view model.

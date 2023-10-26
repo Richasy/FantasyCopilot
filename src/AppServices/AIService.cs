@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -6,18 +6,18 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.AppServices.Utils;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Authorize;
-using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
 using Microsoft.SemanticKernel.AI.TextCompletion;
+using RichasyAssistant.AppServices.Utils;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Authorize;
+using RichasyAssistant.Models.Constants;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
-using static FantasyCopilot.Models.App.AppConfig;
+using static RichasyAssistant.Models.App.AppConfig;
 
-namespace FantasyCopilot.AppServices;
+namespace RichasyAssistant.AppServices;
 
 /// <summary>
 /// Quick chat service.

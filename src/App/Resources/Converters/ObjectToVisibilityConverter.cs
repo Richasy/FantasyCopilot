@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml.Data;
 
-namespace FantasyCopilot.App.Resources.Converters
+namespace RichasyAssistant.App.Resources.Converters
 {
     /// <summary>
     /// Object to visibility converter. Returns Collapsed when the object is empty.

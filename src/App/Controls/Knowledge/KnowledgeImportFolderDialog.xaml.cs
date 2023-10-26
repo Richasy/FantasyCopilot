@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Knowledge;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Knowledge;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Storage;
 
-namespace FantasyCopilot.App.Controls.Knowledge;
+namespace RichasyAssistant.App.Controls.Knowledge;
 
 /// <summary>
 /// Knowledge import folder dialog.

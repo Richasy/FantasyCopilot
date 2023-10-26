@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using WinRT.Interop;
 
-namespace FantasyCopilot.Toolkits;
+namespace RichasyAssistant.Toolkits;
 
 /// <summary>
 /// File toolkit.

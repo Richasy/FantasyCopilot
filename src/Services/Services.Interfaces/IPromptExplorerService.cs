@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Services.Interfaces;
+namespace RichasyAssistant.Services.Interfaces;
 
 /// <summary>
 /// Interface definition of prompt explorer service.

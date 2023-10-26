@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using CommunityToolkit.Mvvm.ComponentModel;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Plugins;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Plugins;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Plugin command item view model.

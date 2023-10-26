@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Models.App;
+namespace RichasyAssistant.Models.App;
 
 /// <summary>
 /// Navigation event arguments.

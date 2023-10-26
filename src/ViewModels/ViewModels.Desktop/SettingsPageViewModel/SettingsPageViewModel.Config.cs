@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.Constants;
 using Windows.Storage;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Settings page view model.
@@ -167,7 +167,7 @@ public sealed partial class SettingsPageViewModel
                 return;
             }
 
-            var fileObj = await _fileToolkit.SaveFileAsync("FantasyCopilot_Config.json", _appViewModel.MainWindow);
+            var fileObj = await _fileToolkit.SaveFileAsync("RichasyAssistant_Config.json", _appViewModel.MainWindow);
             if (fileObj is not StorageFile file)
             {
                 return;

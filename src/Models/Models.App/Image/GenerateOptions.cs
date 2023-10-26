@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App.Image;
+namespace RichasyAssistant.Models.App.Image;
 
 /// <summary>
 /// Image generation configuration.

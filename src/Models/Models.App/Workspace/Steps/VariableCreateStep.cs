@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App.Workspace.Steps;
+namespace RichasyAssistant.Models.App.Workspace.Steps;
 
 /// <summary>
 /// Create variable.

@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Markdig.Syntax;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers.Blocks;
+namespace RichasyAssistant.Libs.Markdown.Renderers.Blocks;
 
 internal sealed class ListRenderer : WinUIObjectRenderer<ListBlock>
 {

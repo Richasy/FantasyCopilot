@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Input;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.UI.Core;
 
-namespace FantasyCopilot.App.Controls.Sessions;
+namespace RichasyAssistant.App.Controls.Sessions;
 
 /// <summary>
 /// Session panel.

@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Gpt;
-using FantasyCopilot.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Gpt;
+using RichasyAssistant.Services.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Session caching service.

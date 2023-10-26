@@ -1,11 +1,11 @@
 {
   "profiles": {
-    "FantasyCopilot.App (Package)": {
+    "RichasyAssistant.App (Package)": {
       "commandName": "MsixPackage",
       "remoteDebugEnabled": false,
       "authenticationMode": "None"
     },
-    "FantasyCopilot.App (Unpackaged)": {
+    "RichasyAssistant.App (Unpackaged)": {
       "commandName": "Project"
     }
   }

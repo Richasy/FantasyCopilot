@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Threading;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppLifecycle;
 
-namespace FantasyCopilot.App;
+namespace RichasyAssistant.App;
 
 /// <summary>
 /// Single instance mode:

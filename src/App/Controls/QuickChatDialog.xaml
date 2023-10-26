@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentDialog
-    x:Class="FantasyCopilot.App.Controls.QuickChatDialog"
+    x:Class="RichasyAssistant.App.Controls.QuickChatDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:local="using:FantasyCopilot.App.Controls"
-    xmlns:markdown="using:FantasyCopilot.Libs.Markdown"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:local="using:RichasyAssistant.App.Controls"
+    xmlns:markdown="using:RichasyAssistant.Libs.Markdown"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{ext:Locale Name=QuickChat}"
     CloseButtonClick="OnCloseButtonClick"

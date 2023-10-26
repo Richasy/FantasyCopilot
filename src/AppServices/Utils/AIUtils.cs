@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel;
-using static FantasyCopilot.AppServices.Utils.BasicUtils;
+using RichasyAssistant.Models.Constants;
+using static RichasyAssistant.AppServices.Utils.BasicUtils;
 
-namespace FantasyCopilot.AppServices.Utils;
+namespace RichasyAssistant.AppServices.Utils;
 
 internal static class AIUtils
 {

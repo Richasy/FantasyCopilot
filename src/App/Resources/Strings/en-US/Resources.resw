@@ -196,7 +196,7 @@
     <value>Application log-related configuration items</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Fantasy Copilot</value>
+    <value>Richasy Assistant</value>
   </data>
   <data name="AppRegistration" xml:space="preserve">
     <value>App Registration</value>
@@ -1312,7 +1312,7 @@ After getting your permission, the app can get the key information you configure
     <value>Service region</value>
   </data>
   <data name="RemoveAuthorizeWarning" xml:space="preserve">
-    <value>Do you want to deauthorize the app? After cancellation, Fantasy Copilot denies the app's access request for sensitive information</value>
+    <value>Do you want to deauthorize the app? After cancellation, Richasy Assistant denies the app's access request for sensitive information</value>
   </data>
   <data name="RemoveMessage" xml:space="preserve">
     <value>Remove message</value>

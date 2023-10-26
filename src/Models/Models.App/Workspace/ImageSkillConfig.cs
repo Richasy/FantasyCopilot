@@ -1,8 +1,8 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App.Image;
+using RichasyAssistant.Models.App.Image;
 
-namespace FantasyCopilot.Models.App.Workspace;
+namespace RichasyAssistant.Models.App.Workspace;
 
 /// <summary>
 /// Image skill configuration.

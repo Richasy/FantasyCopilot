@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App.Gpt;
+namespace RichasyAssistant.Models.App.Gpt;
 
 /// <summary>
 /// The message response returned by the service.

@@ -1,10 +1,10 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.Text;
 
-namespace FantasyCopilot.Libs.Markdown.Renderers;
+namespace RichasyAssistant.Libs.Markdown.Renderers;
 
 internal sealed partial class RendererContext
 {

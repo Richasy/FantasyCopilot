@@ -1,18 +1,18 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using System.Threading.Tasks;
 using CommunityToolkit.WinUI.Notifications;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Workspace.Steps;
-using FantasyCopilot.Models.Constants;
 using Microsoft.SemanticKernel.Diagnostics;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.SkillDefinition;
 using Microsoft.SemanticKernel.TemplateEngine.Prompt;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Workspace.Steps;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Libs.NativeSkills;
+namespace RichasyAssistant.Libs.NativeSkills;
 
 /// <summary>
 /// Some functions of the app.

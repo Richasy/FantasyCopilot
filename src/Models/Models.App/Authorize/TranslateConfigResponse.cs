@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Text.Json.Serialization;
-using static FantasyCopilot.Models.App.AppConfig;
+using static RichasyAssistant.Models.App.AppConfig;
 
-namespace FantasyCopilot.Models.App.Authorize;
+namespace RichasyAssistant.Models.App.Authorize;
 
 /// <summary>
 /// Translate config response.

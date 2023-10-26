@@ -1,9 +1,9 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits.Interfaces;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Toolkits.Interfaces;
 
-namespace FantasyCopilot.App.Controls
+namespace RichasyAssistant.App.Controls
 {
     /// <summary>
     /// Custom prompt save dialog.

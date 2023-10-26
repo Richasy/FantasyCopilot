@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <local:KnowledgePageBase
-    x:Class="FantasyCopilot.App.Pages.KnowledgePage"
+    x:Class="RichasyAssistant.App.Pages.KnowledgePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:FantasyCopilot.App.Controls"
+    xmlns:controls="using:RichasyAssistant.App.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:FantasyCopilot.App.Resources.Extension"
-    xmlns:knowledge="using:FantasyCopilot.App.Controls.Knowledge"
-    xmlns:local="using:FantasyCopilot.App.Pages"
+    xmlns:ext="using:RichasyAssistant.App.Resources.Extension"
+    xmlns:knowledge="using:RichasyAssistant.App.Controls.Knowledge"
+    xmlns:local="using:RichasyAssistant.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sessions="using:FantasyCopilot.App.Controls.Sessions"
+    xmlns:sessions="using:RichasyAssistant.App.Controls.Sessions"
     mc:Ignorable="d">
 
     <Grid>

@@ -1,16 +1,16 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.IO;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App.Files;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App.Files;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 
-namespace FantasyCopilot.App.Controls;
+namespace RichasyAssistant.App.Controls;
 
 /// <summary>
 /// Storage search item.

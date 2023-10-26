@@ -1,6 +1,6 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-namespace FantasyCopilot.Models.App;
+namespace RichasyAssistant.Models.App;
 
 /// <summary>
 /// 音频页面激活事件参数.

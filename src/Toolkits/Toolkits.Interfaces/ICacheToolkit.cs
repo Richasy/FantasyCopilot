@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.Models.App.Connectors;
-using FantasyCopilot.Models.App.Gpt;
-using FantasyCopilot.Models.App.Knowledge;
-using FantasyCopilot.Models.App.Plugins;
-using FantasyCopilot.Models.App.Workspace;
+using RichasyAssistant.Models.App.Connectors;
+using RichasyAssistant.Models.App.Gpt;
+using RichasyAssistant.Models.App.Knowledge;
+using RichasyAssistant.Models.App.Plugins;
+using RichasyAssistant.Models.App.Workspace;
 
-namespace FantasyCopilot.Toolkits.Interfaces;
+namespace RichasyAssistant.Toolkits.Interfaces;
 
 /// <summary>
 /// Interface for cache management tools.

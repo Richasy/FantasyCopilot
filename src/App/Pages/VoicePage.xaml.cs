@@ -1,12 +1,12 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Xaml.Navigation;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 
-namespace FantasyCopilot.App.Pages;
+namespace RichasyAssistant.App.Pages;
 
 /// <summary>
 /// Voice service page.

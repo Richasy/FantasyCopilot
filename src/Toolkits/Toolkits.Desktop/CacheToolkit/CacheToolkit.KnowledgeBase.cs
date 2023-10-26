@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.App.Knowledge;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App.Knowledge;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.Toolkits;
+namespace RichasyAssistant.Toolkits;
 
 /// <summary>
 /// Cache toolkit.

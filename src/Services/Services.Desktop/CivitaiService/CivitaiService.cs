@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Net;
@@ -7,12 +7,12 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.App.Web;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
 using Microsoft.Extensions.Logging;
+using RichasyAssistant.Models.App.Web;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Civitai service.

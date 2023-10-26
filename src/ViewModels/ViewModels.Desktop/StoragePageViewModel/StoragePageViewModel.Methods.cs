@@ -1,11 +1,11 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
-using FantasyCopilot.Models.App.Files;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.App.Files;
+using RichasyAssistant.Models.Constants;
 
-namespace FantasyCopilot.ViewModels;
+namespace RichasyAssistant.ViewModels;
 
 /// <summary>
 /// Storage page view model.

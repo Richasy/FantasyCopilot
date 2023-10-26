@@ -1,21 +1,21 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Web;
-using FantasyCopilot.App.Controls;
-using FantasyCopilot.App.Pages;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.ViewModels.Interfaces;
+using RichasyAssistant.App.Controls;
+using RichasyAssistant.App.Pages;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.ApplicationModel.Activation;
 using Windows.Graphics;
 using WinRT.Interop;
 using WinUIEx;
 
-namespace FantasyCopilot.App;
+namespace RichasyAssistant.App;
 
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.

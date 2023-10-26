@@ -1,4 +1,4 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.Collections.Generic;
@@ -7,23 +7,23 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Libs.NativeSkills;
-using FantasyCopilot.Models.App;
-using FantasyCopilot.Models.App.Workspace;
-using FantasyCopilot.Models.App.Workspace.Steps;
-using FantasyCopilot.Models.Constants;
-using FantasyCopilot.Services.Interfaces;
-using FantasyCopilot.Toolkits.Interfaces;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Orchestration;
 using Microsoft.SemanticKernel.Planning;
 using Microsoft.SemanticKernel.Planning.Sequential;
 using Microsoft.SemanticKernel.SkillDefinition;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Libs.NativeSkills;
+using RichasyAssistant.Models.App;
+using RichasyAssistant.Models.App.Workspace;
+using RichasyAssistant.Models.App.Workspace.Steps;
+using RichasyAssistant.Models.Constants;
+using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Toolkits.Interfaces;
 using Windows.ApplicationModel;
 
-namespace FantasyCopilot.Services;
+namespace RichasyAssistant.Services;
 
 /// <summary>
 /// Workflow service.

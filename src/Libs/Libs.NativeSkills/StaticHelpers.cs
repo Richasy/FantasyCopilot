@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using FantasyCopilot.Models.App;
 using Microsoft.SemanticKernel.AI.ChatCompletion;
+using RichasyAssistant.Models.App;
 
-namespace FantasyCopilot.Libs.NativeSkills;
+namespace RichasyAssistant.Libs.NativeSkills;
 
 internal static class StaticHelpers
 {

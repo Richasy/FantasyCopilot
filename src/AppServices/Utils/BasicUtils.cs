@@ -1,13 +1,13 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FantasyCopilot.Models.Constants;
+using RichasyAssistant.Models.Constants;
 using Windows.Storage;
 
-namespace FantasyCopilot.AppServices.Utils;
+namespace RichasyAssistant.AppServices.Utils;
 
 internal static class BasicUtils
 {

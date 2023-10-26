@@ -1,14 +1,14 @@
-﻿// Copyright (c) Fantasy Copilot. All rights reserved.
+﻿// Copyright (c) Richasy Assistant. All rights reserved.
 
 using System.IO;
-using FantasyCopilot.DI.Container;
-using FantasyCopilot.Toolkits.Interfaces;
-using FantasyCopilot.ViewModels.Interfaces;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Media.Imaging;
+using RichasyAssistant.DI.Container;
+using RichasyAssistant.Toolkits.Interfaces;
+using RichasyAssistant.ViewModels.Interfaces;
 using Windows.ApplicationModel.DataTransfer;
 
-namespace FantasyCopilot.App.Controls.Images;
+namespace RichasyAssistant.App.Controls.Images;
 
 /// <summary>
 /// Text to image panel.
