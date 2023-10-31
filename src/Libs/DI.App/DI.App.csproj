@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Services.Desktop\Services.Desktop.csproj" />
-    <ProjectReference Include="..\..\Services\Services.Interfaces\Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Services\Services.Desktop\Libs.Services.csproj" />
     <ProjectReference Include="..\..\Toolkits\Toolkits.Desktop\Toolkits.Desktop.csproj" />
     <ProjectReference Include="..\..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
     <ProjectReference Include="..\..\ViewModels\ViewModels.Desktop\ViewModels.Desktop.csproj" />

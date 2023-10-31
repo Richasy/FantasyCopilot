@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Image;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+    <RootNamespace>RichasyAssistant.Libs.Services</RootNamespace>
+    <RuntimeIdentifiers>win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <AssemblyName>RichasyAssistant.Libs.Services</AssemblyName>
+    <Platforms>AnyCPU;x64;arm64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.AI.Translation.Text" Version="1.0.0-beta.1" />
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" Version="1.32.1" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="0.24.230918.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.AI.OpenAI" Version="0.24.230918.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Memory.Sqlite" Version="0.24.230918.1-preview" />
+    <PackageReference Include="Microsoft.SemanticKernel.Skills.Memory.Sqlite" Version="0.10.72.1-preview" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231008000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.756" />
+    <PackageReference Include="NeoSmart.PrettySize" Version="3.1.1" />
+    <PackageReference Include="NLog" Version="5.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libs\Libs.CustomConnector\Libs.CustomConnector.csproj" />
+    <ProjectReference Include="..\..\Libs\Libs.Everything\Libs.Everything.csproj" />
+    <ProjectReference Include="..\..\Libs\Libs.NativeSkills\Libs.NativeSkills.csproj" />
+    <ProjectReference Include="..\..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
+    <ProjectReference Include="..\DI.Container\DI.Container.csproj" />
+  </ItemGroup>
+</Project>

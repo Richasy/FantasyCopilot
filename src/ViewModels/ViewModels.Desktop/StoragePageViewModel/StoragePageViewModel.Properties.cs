@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Files;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 

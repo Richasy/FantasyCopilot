@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Services\Services.Interfaces\Services.Interfaces.csproj" />
     <ProjectReference Include="..\..\Toolkits\Toolkits.Interfaces\Toolkits.Interfaces.csproj" />
     <ProjectReference Include="..\DI.Container\DI.Container.csproj" />
   </ItemGroup>

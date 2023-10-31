@@ -3,7 +3,7 @@
 using CommunityToolkit.Mvvm.Input;
 using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 
 namespace RichasyAssistant.ViewModels;

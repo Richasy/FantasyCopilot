@@ -17,7 +17,6 @@ using Microsoft.SemanticKernel.SkillDefinition;
 using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.App.Gpt;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
 
 namespace RichasyAssistant.Libs.NativeSkills;
 
@@ -274,7 +273,7 @@ public sealed class ChatSkill
         if (e == typeof(IKernel))
         {
             var kernel = Locator.Current.GetVariable<IKernel>();
-            var kernelService = Locator.Current.GetService<IKernelService>();
+            var kernelService = KernelService;
             if (!kernelService.HasChatModel)
             {
                 return;

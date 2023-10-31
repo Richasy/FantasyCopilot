@@ -6,7 +6,7 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Knowledge;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 

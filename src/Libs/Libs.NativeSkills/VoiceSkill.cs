@@ -10,7 +10,6 @@ using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Workspace.Steps;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
 using Windows.Storage;
 
 namespace RichasyAssistant.Libs.NativeSkills;
@@ -20,7 +19,6 @@ namespace RichasyAssistant.Libs.NativeSkills;
 /// </summary>
 public sealed class VoiceSkill
 {
-    private readonly IVoiceService _voiceService;
     private readonly WorkflowContext _workflowContext;
 
     /// <summary>
@@ -28,7 +26,6 @@ public sealed class VoiceSkill
     /// </summary>
     public VoiceSkill()
     {
-        _voiceService = Locator.Current.GetService<IVoiceService>();
         _workflowContext = Locator.Current.GetVariable<WorkflowContext>();
     }
 

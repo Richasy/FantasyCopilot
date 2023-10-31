@@ -3,7 +3,7 @@
 using Microsoft.UI.Xaml.Navigation;
 using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.App;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 
 namespace RichasyAssistant.App.Pages;

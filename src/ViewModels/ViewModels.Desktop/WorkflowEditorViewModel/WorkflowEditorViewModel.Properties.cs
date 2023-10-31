@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using CommunityToolkit.Mvvm.ComponentModel;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Workspace;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 

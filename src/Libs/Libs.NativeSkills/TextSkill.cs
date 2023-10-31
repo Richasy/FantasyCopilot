@@ -11,7 +11,6 @@ using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Workspace.Steps;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
 
 namespace RichasyAssistant.Libs.NativeSkills;
 
@@ -20,7 +19,6 @@ namespace RichasyAssistant.Libs.NativeSkills;
 /// </summary>
 public sealed class TextSkill
 {
-    private readonly ITranslateService _translateService;
     private readonly WorkflowContext _workflowContext;
 
     /// <summary>
@@ -29,7 +27,6 @@ public sealed class TextSkill
     public TextSkill()
     {
         _workflowContext = Locator.Current.GetVariable<WorkflowContext>();
-        _translateService = Locator.Current.GetService<ITranslateService>();
     }
 
     /// <summary>
@@ -51,7 +48,7 @@ public sealed class TextSkill
             throw new SKException("The text content to be translated cannot be empty");
         }
 
-        var result = await _translateService.TranslateTextAsync(text, parameters.Source, parameters.Target, cancellationToken);
+        var result = await TranslateService.Instance.TranslateTextAsync(text, parameters.Source, parameters.Target, cancellationToken);
         return result;
     }
 

@@ -5,7 +5,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 

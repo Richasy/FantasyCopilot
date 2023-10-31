@@ -7,7 +7,7 @@ using RichasyAssistant.DI.Container;
 using RichasyAssistant.Models.App;
 using RichasyAssistant.Models.App.Gpt;
 using RichasyAssistant.Models.Constants;
-using RichasyAssistant.Services.Interfaces;
+using RichasyAssistant.Libs.Services.Interfaces;
 using RichasyAssistant.Toolkits.Interfaces;
 using RichasyAssistant.ViewModels.Interfaces;
 using Windows.ApplicationModel.DataTransfer;

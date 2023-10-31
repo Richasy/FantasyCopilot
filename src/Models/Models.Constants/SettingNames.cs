@@ -79,4 +79,5 @@ public enum SettingNames
     TTSLanguage,
     TTSVoice,
     WindowHeight,
+    AzureOpenAIEndpointVersion,
 }
