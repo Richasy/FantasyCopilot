@@ -49,7 +49,7 @@
           </uap:VisualElements>
           <Extensions>
               <uap:Extension Category="windows.appService" EntryPoint="RichasyAssistant.AppServices.AIService">
-                  <uap:AppService Name="com.RichasyAssistant.aiservice" uap4:SupportsMultipleInstances="true"/>
+                  <uap:AppService Name="com.richasyassistant.aiservice" uap4:SupportsMultipleInstances="true"/>
               </uap:Extension>
               <uap:Extension Category="windows.protocol">
                   <uap:Protocol Name="fancop" DesiredView="useLess" />
