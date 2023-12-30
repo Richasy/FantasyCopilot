@@ -6,6 +6,9 @@
 
 # Fantasy Copilot
 
+### The repository has been migrated to [RichasyAssistant](https://github.com/Richasy/RichasyAssistant)
+### 这个仓库已经迁移至 [RichasyAssistant](https://github.com/Richasy/RichasyAssistant)
+
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Richasy/FantasyCopilot)](https://github.com/Richasy/FantasyCopilot/releases) ![GitHub Release Date](https://img.shields.io/github/release-date/Richasy/FantasyCopilot) ![GitHub All Releases](https://img.shields.io/github/downloads/Richasy/FantasyCopilot/total) ![GitHub stars](https://img.shields.io/github/stars/Richasy/FantasyCopilot?style=flat) ![GitHub forks](https://img.shields.io/github/forks/Richasy/FantasyCopilot)
 
 An exploration of mutual achievement between humans and AI.
